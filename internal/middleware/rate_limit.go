@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"fmt"
+	"jh_gateway/internal/util"
 	"sync"
 	"time"
 
@@ -42,15 +43,14 @@ func RateLimit(r *ghttp.Request) {
 	rateMutex.Unlock()
 
 	if count > cfg {
-		r.Response.WriteStatus(429)
-		r.Response.WriteJsonExit(g.Map{
-			"code": 429,
-			"msg":  "too many requests",
-		})
+		// 返回剩余次数和重置时间
+		r.Response.Header().Set("X-RateLimit-Remaining", "0")
+		r.Response.Header().Set("X-RateLimit-Reset", reset.Format(time.RFC3339))
+		util.WriteTooManyRequests(r, "")
 		return
 	}
 
-	// 返回剩余次数和重置时间（可选）
+	// 返回剩余次数和重置时间
 	r.Response.Header().Set("X-RateLimit-Remaining", fmt.Sprint(cfg-count))
 	r.Response.Header().Set("X-RateLimit-Reset", reset.Format(time.RFC3339))
 

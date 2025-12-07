@@ -3,6 +3,7 @@ package router
 import (
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/proxy"
+	"jh_gateway/internal/util"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 )
@@ -10,7 +11,7 @@ import (
 func Register(s *ghttp.Server) {
 	// 健康检查
 	s.BindHandler("/gateway/health", func(r *ghttp.Request) {
-		r.Response.Write("OK")
+		util.WriteSuccess(r, nil)
 	})
 
 	// 用户相关：转发到 user-service

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"jh_gateway/internal/util"
 	"sync"
 	"time"
 
@@ -40,10 +41,7 @@ func CircuitBreaker(r *ghttp.Request) {
 	}
 	if now.Before(state.OpenUntil) {
 		breakerMutex.Unlock()
-		r.Response.WriteJsonExit(g.Map{
-			"code": 503,
-			"msg":  "service temporarily unavailable",
-		})
+		util.WriteServiceUnavailable(r, "")
 		return
 	}
 	breakerMutex.Unlock()

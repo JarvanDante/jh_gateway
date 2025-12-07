@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"jh_gateway/internal/registry"
+	"jh_gateway/internal/util"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -13,11 +14,7 @@ func ToService(serviceName string) ghttp.HandlerFunc {
 
 		addr, err := registry.GetServiceAddr(serviceName)
 		if err != nil {
-			r.Response.WriteStatus(502)
-			r.Response.WriteJsonExit(g.Map{
-				"code": 502,
-				"msg":  "service not available",
-			})
+			util.WriteServiceUnavailable(r, "service not available")
 			return
 		}
 		r.SetCtxVar("serviceAddr", addr)
@@ -44,11 +41,7 @@ func Forward(r *ghttp.Request) {
 
 	resp, err := client.DoRequest(ctx, r.Method, targetURL, r.Body)
 	if err != nil {
-		r.Response.WriteStatus(502)
-		r.Response.WriteJsonExit(g.Map{
-			"code": 502,
-			"msg":  "upstream error: " + err.Error(),
-		})
+		util.WriteError(r, 502, "upstream error: "+err.Error())
 		return
 	}
 	defer resp.Close()
