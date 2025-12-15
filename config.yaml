@@ -2,7 +2,7 @@ server:
   address: ":8901"
 
 consul:
-  addr: "127.0.0.1:8500"
+  addr: "${CONSUL_ADDR:127.0.0.1:8500}"
 
 jwt:
   secret: "your-jwt-secret"

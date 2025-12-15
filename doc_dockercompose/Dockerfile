@@ -15,7 +15,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 COPY --from=builder /app/jh_gateway .
-COPY config.yaml .
+COPY ../config.yaml .
 
 EXPOSE 8901
 
