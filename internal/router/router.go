@@ -20,7 +20,7 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.JWTAuth,        // 需要登录的接口就加这个
+			// middleware.JWTAuth,        // 暂时注释，用于测试
 			middleware.CircuitBreaker, // 简单熔断
 			proxy.ToService("user-service"),
 		)
