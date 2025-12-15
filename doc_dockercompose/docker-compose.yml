@@ -1,0 +1,88 @@
+version: "3.8"
+
+services:
+  consul:
+    image: consul:latest
+    container_name: consul-server
+    ports:
+      - "8500:8500" # HTTP API
+      - "8600:8600/udp" # DNS
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    command: agent -server -ui -bootstrap-expect=1 -client=0.0.0.0
+    networks:
+      - jh-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 示例：user-service
+  user-service:
+    image: your-user-service:latest # 替换成你的镜像
+    container_name: user-service
+    ports:
+      - "8001:8001"
+    environment:
+      - SERVICE_NAME=user-service
+      - SERVICE_PORT=8001
+      - CONSUL_ADDR=consul:8500
+    depends_on:
+      consul:
+        condition: service_healthy
+    networks:
+      - jh-network
+    # 启动后自动注册到 Consul（需要你的服务支持）
+
+  # 示例：payment-service
+  payment-service:
+    image: your-payment-service:latest # 替换成你的镜像
+    container_name: payment-service
+    ports:
+      - "8002:8002"
+    environment:
+      - SERVICE_NAME=payment-service
+      - SERVICE_PORT=8002
+      - CONSUL_ADDR=consul:8500
+    depends_on:
+      consul:
+        condition: service_healthy
+    networks:
+      - jh-network
+
+  # 示例：game-service
+  game-service:
+    image: your-game-service:latest # 替换成你的镜像
+    container_name: game-service
+    ports:
+      - "8003:8003"
+    environment:
+      - SERVICE_NAME=game-service
+      - SERVICE_PORT=8003
+      - CONSUL_ADDR=consul:8500
+    depends_on:
+      consul:
+        condition: service_healthy
+    networks:
+      - jh-network
+
+  # 网关服务
+  jh-gateway:
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    container_name: jh-gateway
+    ports:
+      - "8901:8901"
+    environment:
+      - CONSUL_ADDR=consul:8500
+    depends_on:
+      consul:
+        condition: service_healthy
+    networks:
+      - jh-network
+
+networks:
+  jh-network:
+    driver: bridge
