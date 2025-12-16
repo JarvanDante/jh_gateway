@@ -22,7 +22,7 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 		// 从 Consul 获取服务地址
 		addr, err := registry.GetServiceAddr(serviceName)
 		if err != nil {
-			util.WriteServiceUnavailable(r, "service not available")
+			util.WriteServiceUnavailable(r, "["+serviceName+"]：service not available")
 			return
 		}
 
