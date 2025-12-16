@@ -14,7 +14,7 @@ func Register(s *ghttp.Server) {
 		util.WriteSuccess(r, nil)
 	})
 
-	// 用户相关：转发到 user-service
+	// 用户相关：通过 gRPC 调用 user-service
 	s.Group("/api/user", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
@@ -22,12 +22,11 @@ func Register(s *ghttp.Server) {
 			middleware.RateLimit,
 			// middleware.JWTAuth,        // 暂时注释，用于测试
 			middleware.CircuitBreaker, // 简单熔断
-			proxy.ToService("user-service"),
 		)
-		group.ALL("/*any", proxy.Forward)
+		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
 	})
 
-	// 支付相关：转发到 payment-service
+	// 支付相关：转发到 payment-service (HTTP)
 	s.Group("/api/pay", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
@@ -40,7 +39,7 @@ func Register(s *ghttp.Server) {
 		group.ALL("/*any", proxy.Forward)
 	})
 
-	// 游戏相关：转发到 game-service
+	// 游戏相关：转发到 game-service (HTTP)
 	s.Group("/api/game", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
@@ -52,4 +51,9 @@ func Register(s *ghttp.Server) {
 		)
 		group.ALL("/*any", proxy.Forward)
 	})
+
+	// gRPC 转发：用户服务 (gRPC)
+	// 注意：gRPC 需要通过 gRPC 客户端调用，不能通过 HTTP 网关直接转发
+	// 这里只是示例，实际使用需要客户端直接连接到 gRPC 服务
+	// 如果需要 gRPC 网关，可以使用 grpc-gateway 或 envoy 等专门的工具
 }

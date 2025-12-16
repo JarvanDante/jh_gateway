@@ -1,6 +1,9 @@
 server:
   address: ":8000"
 
+grpcGateway:
+  address: ":8003"
+
 consul:
   addr: "172.19.0.29:8500"
 
