@@ -6,7 +6,10 @@ import (
 	"fmt"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/util"
+	"strconv"
 	"strings"
+
+	userv1 "jh_gateway/api/user/v1"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -72,33 +75,79 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 // 由于没有生成的 gRPC 客户端代码，这里用通用的方式调用
 
 func callGetList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 模拟调用 gRPC GetList 方法
-	// 实际应该用生成的客户端代码
+	// 解析查询参数
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 10).Int32()
 
-	// 模拟返回数据
-	mockData := []map[string]interface{}{
-		{"id": 1, "name": "Alice", "email": "alice@example.com"},
-		{"id": 2, "name": "Bob", "email": "bob@example.com"},
-		{"id": 3, "name": "Charlie", "email": "charlie@example.com"},
+	g.Log().Infof(ctx, "calling gRPC GetList with page=%d, size=%d", page, size)
+
+	// 创建 gRPC 客户端
+	client := userv1.NewUserClient(conn)
+	req := &userv1.GetListReq{
+		Page: page,
+		Size: size,
 	}
 
-	util.WriteSuccess(r, mockData)
+	// 调用 gRPC 服务
+	res, err := client.GetList(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call GetList failed: %v", err)
+	}
+
+	// 转换响应数据
+	users := make([]map[string]interface{}, 0)
+	for _, user := range res.Users {
+		users = append(users, map[string]interface{}{
+			"id":       user.Id,
+			"passport": user.Passport,
+			"nickname": user.Nickname,
+			"createAt": user.CreateAt,
+			"updateAt": user.UpdateAt,
+		})
+	}
+
+	util.WriteSuccess(r, users)
 	return nil
 }
 
 func callGetOne(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 从路径中提取 ID
 	pathParts := strings.Split(r.URL.Path, "/")
-	id := pathParts[len(pathParts)-1]
+	idStr := pathParts[len(pathParts)-1]
 
-	// 模拟返回数据
-	mockData := map[string]interface{}{
-		"id":    id,
-		"name":  "User " + id,
-		"email": "user" + id + "@example.com",
+	// 转换 ID 为 uint64
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid user id: %s", idStr)
 	}
 
-	util.WriteSuccess(r, mockData)
+	g.Log().Infof(ctx, "calling gRPC GetOne with id=%d", id)
+
+	// 创建 gRPC 客户端
+	client := userv1.NewUserClient(conn)
+	req := &userv1.GetOneReq{
+		Id: id,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.GetOne(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call GetOne failed: %v", err)
+	}
+
+	// 转换响应数据
+	var userData map[string]interface{}
+	if res.User != nil {
+		userData = map[string]interface{}{
+			"id":       res.User.Id,
+			"passport": res.User.Passport,
+			"nickname": res.User.Nickname,
+			"createAt": res.User.CreateAt,
+			"updateAt": res.User.UpdateAt,
+		}
+	}
+
+	util.WriteSuccess(r, userData)
 	return nil
 }
 
@@ -109,27 +158,72 @@ func callCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 		return fmt.Errorf("invalid request body: %v", err)
 	}
 
-	// 模拟创建用户
-	mockData := map[string]interface{}{
-		"id":    999,
-		"name":  reqData["name"],
-		"email": reqData["email"],
+	// 提取必要字段
+	passport, ok := reqData["passport"].(string)
+	if !ok {
+		return fmt.Errorf("passport is required")
+	}
+	password, ok := reqData["password"].(string)
+	if !ok {
+		return fmt.Errorf("password is required")
+	}
+	nickname, ok := reqData["nickname"].(string)
+	if !ok {
+		return fmt.Errorf("nickname is required")
 	}
 
-	util.WriteSuccess(r, mockData)
+	g.Log().Infof(ctx, "calling gRPC Create with passport=%s, nickname=%s", passport, nickname)
+
+	// 创建 gRPC 客户端
+	client := userv1.NewUserClient(conn)
+	req := &userv1.CreateReq{
+		Passport: passport,
+		Password: password,
+		Nickname: nickname,
+	}
+
+	// 调用 gRPC 服务
+	_, err := client.Create(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call Create failed: %v", err)
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": "User created successfully",
+	})
 	return nil
 }
 
 func callDelete(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 从路径中提取 ID
 	pathParts := strings.Split(r.URL.Path, "/")
-	id := pathParts[len(pathParts)-1]
+	idStr := pathParts[len(pathParts)-1]
 
-	// 模拟删除
-	mockData := map[string]interface{}{
-		"id": id,
+	// 转换 ID 为 uint64
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid user id: %s", idStr)
 	}
 
-	util.WriteSuccess(r, mockData)
+	g.Log().Infof(ctx, "calling gRPC Delete with id=%d", id)
+
+	// 创建 gRPC 客户端
+	client := userv1.NewUserClient(conn)
+	req := &userv1.DeleteReq{
+		Id: id,
+	}
+
+	// 调用 gRPC 服务
+	_, err = client.Delete(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call Delete failed: %v", err)
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": "User deleted successfully",
+		"id":      id,
+	})
 	return nil
 }
