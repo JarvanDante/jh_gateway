@@ -155,7 +155,7 @@ func callCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 	// 解析 JSON 请求体
 	var reqData map[string]interface{}
 	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
-		return fmt.Errorf("invalid request body: %v", err)
+		return fmt.Errorf("invalid JSON request body: %v", err)
 	}
 
 	// 提取必要字段
