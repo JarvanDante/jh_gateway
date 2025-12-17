@@ -22,12 +22,15 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
 		ctx := r.Context()
 
-		// 从 Consul 获取服务地址
+		// 从 Consul 获取服务地址（支持负载均衡）
 		addr, err := registry.GetServiceAddr(serviceName)
 		if err != nil {
 			util.WriteServiceUnavailable(r, "["+serviceName+"]：service not available")
 			return
 		}
+
+		// 记录选择的服务实例
+		g.Log().Infof(ctx, "Selected service instance: %s -> %s", serviceName, addr)
 
 		// 连接到 gRPC 服务
 		conn, err := grpc.DialContext(
