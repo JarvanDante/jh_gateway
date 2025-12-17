@@ -152,7 +152,7 @@ func callGetOne(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 }
 
 func callCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 解析请求体
+	// 解析 JSON 请求体
 	var reqData map[string]interface{}
 	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
 		return fmt.Errorf("invalid request body: %v", err)
