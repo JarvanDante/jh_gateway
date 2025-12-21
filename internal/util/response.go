@@ -49,7 +49,7 @@ func WriteError(r *ghttp.Request, code int, msg string) {
 	if msg == "" {
 		msg = ErrorMessages[code]
 	}
-	r.Response.WriteStatus(code)
+	// 不设置HTTP状态码，始终返回200，错误信息在JSON中体现
 	r.Response.WriteJsonExit(Response{
 		Code: code,
 		Msg:  msg,

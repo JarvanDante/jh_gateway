@@ -22,6 +22,21 @@ import (
 func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
 		ctx := r.Context()
+		path := r.URL.Path
+		method := r.Method
+
+		// 先进行参数验证，避免无效请求浪费资源
+		var requestData map[string]interface{}
+		if shouldValidateEarly(path, method) {
+			var err error
+			requestData, err = validateAndParseRequest(ctx, r)
+			if err != nil {
+				// 验证失败，已经写入响应，直接返回
+				return
+			}
+			// 将解析后的数据存储到上下文中，供后续使用
+			ctx = context.WithValue(ctx, "requestData", requestData)
+		}
 
 		// 从 Consul 获取服务地址（支持负载均衡）
 		addr, err := registry.GetServiceAddr(serviceName)
@@ -251,23 +266,21 @@ func callDelete(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 
 // callAdminLogin 处理管理员登录
 func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 解析 JSON 请求体
+	// 从上下文中获取已解析的请求数据
 	var reqData map[string]interface{}
-	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
-		return fmt.Errorf("invalid JSON request body: %v", err)
+	if data := ctx.Value("requestData"); data != nil {
+		reqData = data.(map[string]interface{})
+	} else {
+		// 如果上下文中没有数据，重新解析（兼容性处理）
+		if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+			util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
+			return nil
+		}
 	}
 
-	// 提取必要字段
-	username, ok := reqData["username"].(string)
-	if !ok {
-		return fmt.Errorf("username is required")
-	}
-	password, ok := reqData["password"].(string)
-	if !ok {
-		return fmt.Errorf("password is required")
-	}
-
-	// 可选的2FA验证码
+	// 提取字段（这里不需要再次验证，因为已经在前面验证过了）
+	username := reqData["username"].(string)
+	password := reqData["password"].(string)
 	code, _ := reqData["code"].(string)
 
 	g.Log().Infof(ctx, "calling gRPC Admin Login with username=%s", username)
@@ -283,7 +296,15 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	// 调用 gRPC 服务
 	res, err := client.Login(ctx, req)
 	if err != nil {
-		return fmt.Errorf("grpc call Admin Login failed: %v", err)
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "用户名或密码错误") {
+			util.WriteForbidden(r, "用户名或密码错误")
+		} else if strings.Contains(err.Error(), "账号已被禁用") {
+			util.WriteForbidden(r, "账号已被禁用")
+		} else {
+			util.WriteInternalError(r, "登录服务暂时不可用，请稍后重试")
+		}
+		return nil
 	}
 
 	// 返回成功响应
@@ -305,7 +326,8 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	// 调用 gRPC 服务
 	res, err := client.RefreshToken(ctx, req)
 	if err != nil {
-		return fmt.Errorf("grpc call Admin RefreshToken failed: %v", err)
+		util.WriteInternalError(r, "刷新token失败，请重新登录")
+		return nil
 	}
 
 	// 返回成功响应
@@ -317,25 +339,22 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 // callAdminCreate 处理创建管理员
 func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 解析 JSON 请求体
+	// 从上下文中获取已解析的请求数据
 	var reqData map[string]interface{}
-	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
-		return fmt.Errorf("invalid JSON request body: %v", err)
+	if data := ctx.Value("requestData"); data != nil {
+		reqData = data.(map[string]interface{})
+	} else {
+		// 如果上下文中没有数据，重新解析（兼容性处理）
+		if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+			util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
+			return nil
+		}
 	}
 
-	// 提取必要字段
-	username, ok := reqData["username"].(string)
-	if !ok {
-		return fmt.Errorf("username is required")
-	}
-	password, ok := reqData["password"].(string)
-	if !ok {
-		return fmt.Errorf("password is required")
-	}
-	nickname, ok := reqData["nickname"].(string)
-	if !ok {
-		return fmt.Errorf("nickname is required")
-	}
+	// 提取字段（这里不需要再次验证，因为已经在前面验证过了）
+	username := reqData["username"].(string)
+	password := reqData["password"].(string)
+	nickname := reqData["nickname"].(string)
 
 	// 角色和状态字段
 	role := int32(1) // 默认角色
@@ -363,12 +382,113 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	// 调用 gRPC 服务
 	_, err := client.CreateAdmin(ctx, req)
 	if err != nil {
-		return fmt.Errorf("grpc call Admin CreateAdmin failed: %v", err)
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "用户名已经被使用") {
+			util.WriteBadRequest(r, "用户名已经被使用")
+		} else if strings.Contains(err.Error(), "数据库") {
+			util.WriteInternalError(r, "数据库操作失败，请稍后重试")
+		} else {
+			util.WriteInternalError(r, "创建管理员失败，请稍后重试")
+		}
+		return nil
 	}
 
 	// 返回成功响应
 	util.WriteSuccess(r, map[string]interface{}{
-		"message": "Admin created successfully",
+		"message": "管理员创建成功",
 	})
+	return nil
+}
+
+// shouldValidateEarly 判断是否需要提前验证参数
+func shouldValidateEarly(path, method string) bool {
+	// 对于admin相关的POST请求，提前验证
+	return (strings.HasSuffix(path, "/login") && method == "POST") ||
+		(strings.HasSuffix(path, "/create-admin") && method == "POST") ||
+		(path == "/login" && method == "POST") ||
+		(path == "/create-admin" && method == "POST")
+}
+
+// validateAndParseRequest 验证并解析请求参数
+func validateAndParseRequest(ctx context.Context, r *ghttp.Request) (map[string]interface{}, error) {
+	path := r.URL.Path
+	method := r.Method
+
+	// 解析 JSON 请求体
+	var reqData map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+		util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
+		return nil, fmt.Errorf("invalid json")
+	}
+
+	// 根据不同接口验证不同参数
+	if (strings.HasSuffix(path, "/login") || path == "/login") && method == "POST" {
+		if err := validateLoginRequest(r, reqData); err != nil {
+			return nil, err
+		}
+	}
+
+	if (strings.HasSuffix(path, "/create-admin") || path == "/create-admin") && method == "POST" {
+		if err := validateCreateAdminRequest(r, reqData); err != nil {
+			return nil, err
+		}
+	}
+
+	return reqData, nil
+}
+
+// validateLoginRequest 验证登录请求参数
+func validateLoginRequest(r *ghttp.Request, reqData map[string]interface{}) error {
+	username, ok := reqData["username"].(string)
+	if !ok || username == "" {
+		util.WriteBadRequest(r, "用户名不能为空")
+		return fmt.Errorf("missing username")
+	}
+
+	password, ok := reqData["password"].(string)
+	if !ok || password == "" {
+		util.WriteBadRequest(r, "密码不能为空")
+		return fmt.Errorf("missing password")
+	}
+
+	return nil
+}
+
+// validateCreateAdminRequest 验证创建管理员请求参数
+func validateCreateAdminRequest(r *ghttp.Request, reqData map[string]interface{}) error {
+	username, ok := reqData["username"].(string)
+	if !ok || username == "" {
+		util.WriteBadRequest(r, "用户名不能为空")
+		return fmt.Errorf("missing username")
+	}
+
+	password, ok := reqData["password"].(string)
+	if !ok || password == "" {
+		util.WriteBadRequest(r, "密码不能为空")
+		return fmt.Errorf("missing password")
+	}
+
+	nickname, ok := reqData["nickname"].(string)
+	if !ok || nickname == "" {
+		util.WriteBadRequest(r, "昵称不能为空")
+		return fmt.Errorf("missing nickname")
+	}
+
+	// 参数长度验证
+	if len(username) < 4 || len(username) > 12 {
+		util.WriteBadRequest(r, "用户名长度必须在4-12个字符之间")
+		return fmt.Errorf("invalid username length")
+	}
+
+	if len(password) < 6 || len(password) > 20 {
+		util.WriteBadRequest(r, "密码长度必须在6-20个字符之间")
+		return fmt.Errorf("invalid password length")
+	}
+
+	if len(nickname) < 2 || len(nickname) > 20 {
+		util.WriteBadRequest(r, "昵称长度必须在2-20个字符之间")
+		return fmt.Errorf("invalid nickname length")
+	}
+
 	return nil
 }
