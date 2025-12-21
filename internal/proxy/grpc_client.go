@@ -83,11 +83,6 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return callAdminRefreshToken(ctx, conn, r)
 	case strings.HasSuffix(path, "/create-admin") && method == "POST":
 		return callAdminCreate(ctx, conn, r)
-	// 兼容原有路径
-	case path == "/login" && method == "POST":
-		return callAdminLogin(ctx, conn, r)
-	case path == "/create-admin" && method == "POST":
-		return callAdminCreate(ctx, conn, r)
 	}
 
 	// 用户相关接口
@@ -404,9 +399,7 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 func shouldValidateEarly(path, method string) bool {
 	// 对于admin相关的POST请求，提前验证
 	return (strings.HasSuffix(path, "/login") && method == "POST") ||
-		(strings.HasSuffix(path, "/create-admin") && method == "POST") ||
-		(path == "/login" && method == "POST") ||
-		(path == "/create-admin" && method == "POST")
+		(strings.HasSuffix(path, "/create-admin") && method == "POST")
 }
 
 // validateAndParseRequest 验证并解析请求参数
@@ -422,13 +415,13 @@ func validateAndParseRequest(ctx context.Context, r *ghttp.Request) (map[string]
 	}
 
 	// 根据不同接口验证不同参数
-	if (strings.HasSuffix(path, "/login") || path == "/login") && method == "POST" {
+	if strings.HasSuffix(path, "/login") && method == "POST" {
 		if err := validateLoginRequest(r, reqData); err != nil {
 			return nil, err
 		}
 	}
 
-	if (strings.HasSuffix(path, "/create-admin") || path == "/create-admin") && method == "POST" {
+	if strings.HasSuffix(path, "/create-admin") && method == "POST" {
 		if err := validateCreateAdminRequest(r, reqData); err != nil {
 			return nil, err
 		}
