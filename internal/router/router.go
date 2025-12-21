@@ -26,6 +26,29 @@ func Register(s *ghttp.Server) {
 		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
 	})
 
+	// 管理员相关：通过 gRPC 调用 user-service (管理员功能也在 user-service 中)
+	s.Group("/api/admin", func(group *ghttp.RouterGroup) {
+		group.Middleware(
+			middleware.Logging,
+			middleware.Trace,
+			middleware.RateLimit,
+			middleware.CircuitBreaker,
+		)
+		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
+	})
+
+	// 后台登录接口 (兼容原有路径)
+	s.BindHandler("POST:/login", func(r *ghttp.Request) {
+		// 转发到管理员登录接口
+		proxy.GRPCToHTTP("user-service")(r)
+	})
+
+	// 后台创建管理员接口 (兼容原有路径)
+	s.BindHandler("POST:/create-admin", func(r *ghttp.Request) {
+		// 转发到管理员创建接口
+		proxy.GRPCToHTTP("user-service")(r)
+	})
+
 	// 支付相关：转发到 payment-service (HTTP)
 	s.Group("/api/pay", func(group *ghttp.RouterGroup) {
 		group.Middleware(

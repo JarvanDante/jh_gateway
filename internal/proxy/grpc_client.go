@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 
+	adminv1 "jh_gateway/api/admin/v1"
 	userv1 "jh_gateway/api/user/v1"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -59,7 +60,22 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 	g.Log().Infof(ctx, "calling gRPC method for path: %s, method: %s", path, method)
 
-	// 根据路径映射到 gRPC 方法
+	// 管理员相关接口
+	switch {
+	case strings.HasSuffix(path, "/login") && method == "POST":
+		return callAdminLogin(ctx, conn, r)
+	case strings.HasSuffix(path, "/refresh-token") && method == "GET":
+		return callAdminRefreshToken(ctx, conn, r)
+	case strings.HasSuffix(path, "/create-admin") && method == "POST":
+		return callAdminCreate(ctx, conn, r)
+	// 兼容原有路径
+	case path == "/login" && method == "POST":
+		return callAdminLogin(ctx, conn, r)
+	case path == "/create-admin" && method == "POST":
+		return callAdminCreate(ctx, conn, r)
+	}
+
+	// 用户相关接口
 	switch {
 	case strings.HasSuffix(path, "/list") && method == "GET":
 		return callGetList(ctx, conn, r)
@@ -227,6 +243,132 @@ func callDelete(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 	util.WriteSuccess(r, map[string]interface{}{
 		"message": "User deleted successfully",
 		"id":      id,
+	})
+	return nil
+}
+
+// Admin相关的gRPC调用函数
+
+// callAdminLogin 处理管理员登录
+func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 解析 JSON 请求体
+	var reqData map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+		return fmt.Errorf("invalid JSON request body: %v", err)
+	}
+
+	// 提取必要字段
+	username, ok := reqData["username"].(string)
+	if !ok {
+		return fmt.Errorf("username is required")
+	}
+	password, ok := reqData["password"].(string)
+	if !ok {
+		return fmt.Errorf("password is required")
+	}
+
+	// 可选的2FA验证码
+	code, _ := reqData["code"].(string)
+
+	g.Log().Infof(ctx, "calling gRPC Admin Login with username=%s", username)
+
+	// 创建 gRPC 客户端
+	client := adminv1.NewAdminClient(conn)
+	req := &adminv1.LoginReq{
+		Username: username,
+		Password: password,
+		Code:     code,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.Login(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call Admin Login failed: %v", err)
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"token":  res.Token,
+		"socket": res.Socket,
+	})
+	return nil
+}
+
+// callAdminRefreshToken 处理管理员token刷新
+func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	g.Log().Infof(ctx, "calling gRPC Admin RefreshToken")
+
+	// 创建 gRPC 客户端
+	client := adminv1.NewAdminClient(conn)
+	req := &adminv1.RefreshTokenReq{}
+
+	// 调用 gRPC 服务
+	res, err := client.RefreshToken(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call Admin RefreshToken failed: %v", err)
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"token": res.Token,
+	})
+	return nil
+}
+
+// callAdminCreate 处理创建管理员
+func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 解析 JSON 请求体
+	var reqData map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+		return fmt.Errorf("invalid JSON request body: %v", err)
+	}
+
+	// 提取必要字段
+	username, ok := reqData["username"].(string)
+	if !ok {
+		return fmt.Errorf("username is required")
+	}
+	password, ok := reqData["password"].(string)
+	if !ok {
+		return fmt.Errorf("password is required")
+	}
+	nickname, ok := reqData["nickname"].(string)
+	if !ok {
+		return fmt.Errorf("nickname is required")
+	}
+
+	// 角色和状态字段
+	role := int32(1) // 默认角色
+	if r, ok := reqData["role"].(float64); ok {
+		role = int32(r)
+	}
+
+	status := int32(1) // 默认启用
+	if s, ok := reqData["status"].(float64); ok {
+		status = int32(s)
+	}
+
+	g.Log().Infof(ctx, "calling gRPC Admin CreateAdmin with username=%s, nickname=%s", username, nickname)
+
+	// 创建 gRPC 客户端
+	client := adminv1.NewAdminClient(conn)
+	req := &adminv1.CreateAdminReq{
+		Username: username,
+		Password: password,
+		Nickname: nickname,
+		Role:     role,
+		Status:   status,
+	}
+
+	// 调用 gRPC 服务
+	_, err := client.CreateAdmin(ctx, req)
+	if err != nil {
+		return fmt.Errorf("grpc call Admin CreateAdmin failed: %v", err)
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": "Admin created successfully",
 	})
 	return nil
 }
