@@ -8,6 +8,7 @@ import (
 	"jh_gateway/internal/util"
 	"strconv"
 	"strings"
+	"time"
 
 	adminv1 "jh_gateway/api/admin/v1"
 	userv1 "jh_gateway/api/user/v1"
@@ -16,6 +17,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 )
 
 // GRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
@@ -72,6 +74,9 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	path := r.URL.Path
 	method := r.Method
+
+	// 统一添加traceId到gRPC上下文 - 只需要在这里添加一次
+	ctx = addTraceToContext(ctx, r)
 
 	g.Log().Infof(ctx, "calling gRPC method for path: %s, method: %s", path, method)
 
@@ -400,6 +405,39 @@ func shouldValidateEarly(path, method string) bool {
 	// 对于admin相关的POST请求，提前验证
 	return (strings.HasSuffix(path, "/login") && method == "POST") ||
 		(strings.HasSuffix(path, "/create-admin") && method == "POST")
+}
+
+// addTraceToContext 添加traceId到gRPC上下文
+func addTraceToContext(ctx context.Context, r *ghttp.Request) context.Context {
+	// 从HTTP请求中获取或生成traceId
+	traceID := r.Header.Get("X-Trace-Id")
+	if traceID == "" {
+		traceID = r.Header.Get("Trace-Id")
+	}
+	if traceID == "" {
+		// 如果没有traceId，从GoFrame的请求上下文中获取
+		if reqCtx := r.Context(); reqCtx != nil {
+			if ctxId := reqCtx.Value("CtxId"); ctxId != nil {
+				if id, ok := ctxId.(string); ok {
+					traceID = id
+				}
+			}
+		}
+	}
+	if traceID == "" {
+		// 最后生成一个新的traceId，使用简单的方法
+		traceID = fmt.Sprintf("gw-%d", time.Now().UnixNano())
+	}
+
+	// 将traceId添加到gRPC metadata中
+	md := metadata.New(map[string]string{
+		"trace-id": traceID,
+	})
+
+	// 记录traceId传递
+	g.Log().Debugf(ctx, "传递traceId到gRPC服务: %s", traceID)
+
+	return metadata.NewOutgoingContext(ctx, md)
 }
 
 // validateAndParseRequest 验证并解析请求参数
