@@ -13,3 +13,12 @@ jwt:
 rateLimit:
   # 每个 IP 每分钟最多请求次数
   requestsPerMinute: 120
+
+# 日志配置 - JSON格式
+logger:
+  level: "all"
+  stdout: true
+  # 使用JSON格式输出
+  format: "json"
+  # 时间格式
+  timeFormat: "2006-01-02T15:04:05.000Z07:00"

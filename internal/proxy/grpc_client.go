@@ -13,7 +13,6 @@ import (
 	adminv1 "jh_gateway/api/admin/v1"
 	userv1 "jh_gateway/api/user/v1"
 
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -48,7 +47,7 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 		}
 
 		// 记录选择的服务实例
-		g.Log().Infof(ctx, "Selected service instance: %s -> %s", serviceName, addr)
+		util.LogWithTrace(ctx, "info", "Selected service instance: %s -> %s", serviceName, addr)
 
 		// 连接到 gRPC 服务
 		conn, err := grpc.DialContext(
@@ -78,7 +77,7 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	// 统一添加traceId到gRPC上下文 - 只需要在这里添加一次
 	ctx = addTraceToContext(ctx, r)
 
-	g.Log().Infof(ctx, "calling gRPC method for path: %s, method: %s", path, method)
+	util.LogWithTrace(ctx, "info", "calling gRPC method for path: %s, method: %s", path, method)
 
 	// 管理员相关接口
 	switch {
@@ -113,7 +112,7 @@ func callGetList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) e
 	page := r.Get("page", 1).Int32()
 	size := r.Get("size", 10).Int32()
 
-	g.Log().Infof(ctx, "calling gRPC GetList with page=%d, size=%d", page, size)
+	util.LogWithTrace(ctx, "info", "calling gRPC GetList with page=%d, size=%d", page, size)
 
 	// 创建 gRPC 客户端
 	client := userv1.NewUserClient(conn)
@@ -155,7 +154,7 @@ func callGetOne(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 		return fmt.Errorf("invalid user id: %s", idStr)
 	}
 
-	g.Log().Infof(ctx, "calling gRPC GetOne with id=%d", id)
+	util.LogWithTrace(ctx, "info", "calling gRPC GetOne with id=%d", id)
 
 	// 创建 gRPC 客户端
 	client := userv1.NewUserClient(conn)
@@ -206,7 +205,7 @@ func callCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 		return fmt.Errorf("nickname is required")
 	}
 
-	g.Log().Infof(ctx, "calling gRPC Create with passport=%s, nickname=%s", passport, nickname)
+	util.LogWithTrace(ctx, "info", "calling gRPC Create with passport=%s, nickname=%s", passport, nickname)
 
 	// 创建 gRPC 客户端
 	client := userv1.NewUserClient(conn)
@@ -240,7 +239,7 @@ func callDelete(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 		return fmt.Errorf("invalid user id: %s", idStr)
 	}
 
-	g.Log().Infof(ctx, "calling gRPC Delete with id=%d", id)
+	util.LogWithTrace(ctx, "info", "calling gRPC Delete with id=%d", id)
 
 	// 创建 gRPC 客户端
 	client := userv1.NewUserClient(conn)
@@ -283,7 +282,7 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	password := reqData["password"].(string)
 	code, _ := reqData["code"].(string)
 
-	g.Log().Infof(ctx, "calling gRPC Admin Login with username=%s", username)
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin Login with username=%s", username)
 
 	// 创建 gRPC 客户端
 	client := adminv1.NewAdminClient(conn)
@@ -317,7 +316,7 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 // callAdminRefreshToken 处理管理员token刷新
 func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	g.Log().Infof(ctx, "calling gRPC Admin RefreshToken")
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin RefreshToken")
 
 	// 创建 gRPC 客户端
 	client := adminv1.NewAdminClient(conn)
@@ -367,7 +366,7 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 		status = int32(s)
 	}
 
-	g.Log().Infof(ctx, "calling gRPC Admin CreateAdmin with username=%s, nickname=%s", username, nickname)
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin CreateAdmin with username=%s, nickname=%s", username, nickname)
 
 	// 创建 gRPC 客户端
 	client := adminv1.NewAdminClient(conn)
@@ -435,7 +434,7 @@ func addTraceToContext(ctx context.Context, r *ghttp.Request) context.Context {
 	})
 
 	// 记录traceId传递
-	g.Log().Debugf(ctx, "传递traceId到gRPC服务: %s", traceID)
+	util.LogWithTrace(ctx, "debug", "传递traceId到gRPC服务: %s", traceID)
 
 	return metadata.NewOutgoingContext(ctx, md)
 }
