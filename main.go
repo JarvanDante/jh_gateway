@@ -24,7 +24,7 @@ func main() {
 	fmt.Println("========================")
 
 	// 初始化Jaeger追踪
-	jaegerEndpoint := "172.19.0.25:4317" // 只使用主机名和端口，不包含协议
+	jaegerEndpoint := "jaeger:4317" // 只使用主机名和端口，不包含协议
 	cleanup, err := tracing.InitJaeger("jh_gateway", jaegerEndpoint)
 	if err != nil {
 		fmt.Printf("初始化Jaeger失败: %v\n", err)
