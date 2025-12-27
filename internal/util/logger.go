@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"go.opentelemetry.io/otel/trace"
 )
 
 // LogWithTrace 网关带traceId的日志记录 - JSON格式
@@ -37,24 +38,11 @@ func LogWithTrace(ctx context.Context, level string, message string, args ...int
 	}
 }
 
-// getTraceIDFromRequest 从请求中获取traceId
+// getTraceIDFromRequest 从请求中获取OpenTelemetry的TraceID
 func getTraceIDFromRequest(ctx context.Context) string {
-	if r := g.RequestFromCtx(ctx); r != nil {
-		// 尝试从HTTP头中获取traceId
-		traceID := r.Header.Get("X-Trace-Id")
-		if traceID == "" {
-			traceID = r.Header.Get("Trace-Id")
-		}
-		if traceID != "" {
-			return traceID
-		}
-	}
-
-	// 从上下文中获取
-	if traceID := ctx.Value("traceId"); traceID != nil {
-		if id, ok := traceID.(string); ok {
-			return id
-		}
+	// 只使用OpenTelemetry的TraceID
+	if span := trace.SpanFromContext(ctx); span.SpanContext().IsValid() {
+		return span.SpanContext().TraceID().String()
 	}
 
 	return ""

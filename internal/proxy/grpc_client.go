@@ -5,18 +5,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"jh_gateway/internal/registry"
+	"jh_gateway/internal/tracing"
 	"jh_gateway/internal/util"
 	"strconv"
 	"strings"
-	"time"
 
 	adminv1 "jh_gateway/api/admin/v1"
 	userv1 "jh_gateway/api/user/v1"
 
 	"github.com/gogf/gf/v2/net/ghttp"
+	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/metadata"
 )
 
 // GRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
@@ -26,12 +28,25 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 		path := r.URL.Path
 		method := r.Method
 
+		// 创建HTTP请求的Jaeger span
+		ctx, span := tracing.StartSpan(ctx, "http.request", trace.WithAttributes(
+			attribute.String("http.method", method),
+			attribute.String("http.path", path),
+			attribute.String("service.name", serviceName),
+		))
+		defer span.End()
+
 		// 先进行参数验证，避免无效请求浪费资源
 		var requestData map[string]interface{}
 		if shouldValidateEarly(path, method) {
+			ctx, validateSpan := tracing.StartSpan(ctx, "http.validate_request")
 			var err error
 			requestData, err = validateAndParseRequest(ctx, r)
+			validateSpan.End()
+
 			if err != nil {
+				tracing.SetSpanError(span, err)
+				tracing.SetSpanError(validateSpan, err)
 				// 验证失败，已经写入响应，直接返回
 				return
 			}
@@ -40,22 +55,38 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 		}
 
 		// 从 Consul 获取服务地址（支持负载均衡）
+		ctx, discoverySpan := tracing.StartSpan(ctx, "service.discovery", trace.WithAttributes(
+			attribute.String("service.name", serviceName),
+		))
 		addr, err := registry.GetServiceAddr(serviceName)
+		discoverySpan.End()
+
 		if err != nil {
+			tracing.SetSpanError(span, err)
+			tracing.SetSpanError(discoverySpan, err)
 			util.WriteServiceUnavailable(r, "["+serviceName+"]：service not available")
 			return
 		}
 
+		tracing.SetSpanAttributes(span, attribute.String("service.address", addr))
 		// 记录选择的服务实例
 		util.LogWithTrace(ctx, "info", "Selected service instance: %s -> %s", serviceName, addr)
 
 		// 连接到 gRPC 服务
+		ctx, connSpan := tracing.StartSpan(ctx, "grpc.connect", trace.WithAttributes(
+			attribute.String("grpc.target", addr),
+		))
 		conn, err := grpc.DialContext(
 			ctx,
 			addr,
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
+			grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()), // 添加OpenTelemetry gRPC拦截器
 		)
+		connSpan.End()
+
 		if err != nil {
+			tracing.SetSpanError(span, err)
+			tracing.SetSpanError(connSpan, err)
 			util.WriteServiceUnavailable(r, "failed to connect to service")
 			return
 		}
@@ -63,9 +94,12 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 
 		// 根据路径调用不同的 gRPC 方法
 		if err := callGRPCMethod(ctx, conn, r); err != nil {
+			tracing.SetSpanError(span, err)
 			util.WriteInternalError(r, err.Error())
 			return
 		}
+
+		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
 	}
 }
 
@@ -270,14 +304,25 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	if data := ctx.Value("requestData"); data != nil {
 		reqData = data.(map[string]interface{})
 	} else {
-		// 如果上下文中没有数据，重新解析（兼容性处理）
-		if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+		// 如果上下文中没有数据，使用GoFrame方式解析
+		bodyBytes := r.GetBody()
+		if len(bodyBytes) == 0 {
+			util.WriteBadRequest(r, "请求体不能为空")
+			return nil
+		}
+
+		if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
 			util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
+			return nil
+		}
+
+		// 进行基本验证
+		if err := validateLoginRequest(r, reqData); err != nil {
 			return nil
 		}
 	}
 
-	// 提取字段（这里不需要再次验证，因为已经在前面验证过了）
+	// 提取字段
 	username := reqData["username"].(string)
 	password := reqData["password"].(string)
 	code, _ := reqData["code"].(string)
@@ -343,14 +388,25 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	if data := ctx.Value("requestData"); data != nil {
 		reqData = data.(map[string]interface{})
 	} else {
-		// 如果上下文中没有数据，重新解析（兼容性处理）
-		if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+		// 如果上下文中没有数据，使用GoFrame方式解析
+		bodyBytes := r.GetBody()
+		if len(bodyBytes) == 0 {
+			util.WriteBadRequest(r, "请求体不能为空")
+			return nil
+		}
+
+		if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
 			util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
+			return nil
+		}
+
+		// 进行基本验证
+		if err := validateCreateAdminRequest(r, reqData); err != nil {
 			return nil
 		}
 	}
 
-	// 提取字段（这里不需要再次验证，因为已经在前面验证过了）
+	// 提取字段
 	username := reqData["username"].(string)
 	password := reqData["password"].(string)
 	nickname := reqData["nickname"].(string)
@@ -406,37 +462,19 @@ func shouldValidateEarly(path, method string) bool {
 		(strings.HasSuffix(path, "/create-admin") && method == "POST")
 }
 
-// addTraceToContext 添加traceId到gRPC上下文
+// addTraceToContext 添加OpenTelemetry trace context到gRPC上下文
 func addTraceToContext(ctx context.Context, r *ghttp.Request) context.Context {
-	// 从HTTP请求中获取或生成traceId
-	traceID := r.Header.Get("X-Trace-Id")
-	if traceID == "" {
-		traceID = r.Header.Get("Trace-Id")
-	}
-	if traceID == "" {
-		// 如果没有traceId，从GoFrame的请求上下文中获取
-		if reqCtx := r.Context(); reqCtx != nil {
-			if ctxId := reqCtx.Value("CtxId"); ctxId != nil {
-				if id, ok := ctxId.(string); ok {
-					traceID = id
-				}
-			}
-		}
-	}
-	if traceID == "" {
-		// 最后生成一个新的traceId，使用简单的方法
-		traceID = fmt.Sprintf("gw-%d", time.Now().UnixNano())
+	// OpenTelemetry会自动处理trace context的传播
+	// 我们不需要手动传递trace_id，只需要确保使用正确的context
+
+	// 记录当前的TraceID（仅用于调试）
+	if span := trace.SpanFromContext(ctx); span.SpanContext().IsValid() {
+		traceID := span.SpanContext().TraceID().String()
+		util.LogWithTrace(ctx, "debug", "使用OpenTelemetry TraceID: %s", traceID)
 	}
 
-	// 将traceId添加到gRPC metadata中
-	md := metadata.New(map[string]string{
-		"trace-id": traceID,
-	})
-
-	// 记录traceId传递
-	util.LogWithTrace(ctx, "debug", "传递traceId到gRPC服务: %s", traceID)
-
-	return metadata.NewOutgoingContext(ctx, md)
+	// 直接返回context，让OpenTelemetry自动处理trace传播
+	return ctx
 }
 
 // validateAndParseRequest 验证并解析请求参数
@@ -444,9 +482,16 @@ func validateAndParseRequest(ctx context.Context, r *ghttp.Request) (map[string]
 	path := r.URL.Path
 	method := r.Method
 
+	// 使用GoFrame的方式获取请求体内容
+	bodyBytes := r.GetBody()
+	if len(bodyBytes) == 0 {
+		util.WriteBadRequest(r, "请求体不能为空")
+		return nil, fmt.Errorf("empty body")
+	}
+
 	// 解析 JSON 请求体
 	var reqData map[string]interface{}
-	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
+	if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
 		util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
 		return nil, fmt.Errorf("invalid json")
 	}
