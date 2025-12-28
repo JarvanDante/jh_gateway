@@ -2,8 +2,8 @@ package proxy
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
+	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/tracing"
 	"jh_gateway/internal/util"
@@ -219,24 +219,28 @@ func callGetOne(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 }
 
 func callCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 解析 JSON 请求体
-	var reqData map[string]interface{}
-	if err := json.NewDecoder(r.Body).Decode(&reqData); err != nil {
-		return fmt.Errorf("invalid JSON request body: %v", err)
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return nil
 	}
 
 	// 提取必要字段
 	passport, ok := reqData["passport"].(string)
 	if !ok {
-		return fmt.Errorf("passport is required")
+		util.WriteBadRequest(r, "passport is required")
+		return nil
 	}
 	password, ok := reqData["password"].(string)
 	if !ok {
-		return fmt.Errorf("password is required")
+		util.WriteBadRequest(r, "password is required")
+		return nil
 	}
 	nickname, ok := reqData["nickname"].(string)
 	if !ok {
-		return fmt.Errorf("nickname is required")
+		util.WriteBadRequest(r, "nickname is required")
+		return nil
 	}
 
 	util.LogWithTrace(ctx, "info", "calling gRPC Create with passport=%s, nickname=%s", passport, nickname)
@@ -250,7 +254,7 @@ func callCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 	}
 
 	// 调用 gRPC 服务
-	_, err := client.Create(ctx, req)
+	_, err = client.Create(ctx, req)
 	if err != nil {
 		return fmt.Errorf("grpc call Create failed: %v", err)
 	}
@@ -299,27 +303,16 @@ func callDelete(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) er
 
 // callAdminLogin 处理管理员登录
 func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 从上下文中获取已解析的请求数据
-	var reqData map[string]interface{}
-	if data := ctx.Value("requestData"); data != nil {
-		reqData = data.(map[string]interface{})
-	} else {
-		// 如果上下文中没有数据，使用GoFrame方式解析
-		bodyBytes := r.GetBody()
-		if len(bodyBytes) == 0 {
-			util.WriteBadRequest(r, "请求体不能为空")
-			return nil
-		}
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return nil
+	}
 
-		if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
-			util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
-			return nil
-		}
-
-		// 进行基本验证
-		if err := validateLoginRequest(r, reqData); err != nil {
-			return nil
-		}
+	// 进行基本验证
+	if err := validateLoginRequest(r, reqData); err != nil {
+		return nil
 	}
 
 	// 提取字段
@@ -383,27 +376,16 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 // callAdminCreate 处理创建管理员
 func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	// 从上下文中获取已解析的请求数据
-	var reqData map[string]interface{}
-	if data := ctx.Value("requestData"); data != nil {
-		reqData = data.(map[string]interface{})
-	} else {
-		// 如果上下文中没有数据，使用GoFrame方式解析
-		bodyBytes := r.GetBody()
-		if len(bodyBytes) == 0 {
-			util.WriteBadRequest(r, "请求体不能为空")
-			return nil
-		}
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return nil
+	}
 
-		if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
-			util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
-			return nil
-		}
-
-		// 进行基本验证
-		if err := validateCreateAdminRequest(r, reqData); err != nil {
-			return nil
-		}
+	// 进行基本验证
+	if err := validateCreateAdminRequest(r, reqData); err != nil {
+		return nil
 	}
 
 	// 提取字段
@@ -435,7 +417,7 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	}
 
 	// 调用 gRPC 服务
-	_, err := client.CreateAdmin(ctx, req)
+	_, err = client.CreateAdmin(ctx, req)
 	if err != nil {
 		// 根据gRPC错误类型返回不同的HTTP状态码
 		if strings.Contains(err.Error(), "用户名已经被使用") {
@@ -478,23 +460,17 @@ func addTraceToContext(ctx context.Context, r *ghttp.Request) context.Context {
 }
 
 // validateAndParseRequest 验证并解析请求参数
+// 注意：这个函数现在主要用于向后兼容，推荐使用 RequestParser 中间件
 func validateAndParseRequest(ctx context.Context, r *ghttp.Request) (map[string]interface{}, error) {
+	// 使用中间件的辅助函数获取请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return nil, err
+	}
+
 	path := r.URL.Path
 	method := r.Method
-
-	// 使用GoFrame的方式获取请求体内容
-	bodyBytes := r.GetBody()
-	if len(bodyBytes) == 0 {
-		util.WriteBadRequest(r, "请求体不能为空")
-		return nil, fmt.Errorf("empty body")
-	}
-
-	// 解析 JSON 请求体
-	var reqData map[string]interface{}
-	if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
-		util.WriteBadRequest(r, "请求体必须是有效的JSON格式")
-		return nil, fmt.Errorf("invalid json")
-	}
 
 	// 根据不同接口验证不同参数
 	if strings.HasSuffix(path, "/login") && method == "POST" {

@@ -20,6 +20,7 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
+			middleware.RequestParser, // 解析请求体数据
 			// middleware.JWTAuth,        // 暂时注释，用于测试
 			middleware.CircuitBreaker, // 简单熔断
 		)
@@ -32,6 +33,7 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
+			middleware.RequestParser, // 解析请求体数据
 			middleware.CircuitBreaker,
 		)
 		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
