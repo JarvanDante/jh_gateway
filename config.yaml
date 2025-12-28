@@ -5,7 +5,7 @@ grpcGateway:
   address: ":8003"
 
 consul:
-  addr: "localhost:8500"
+  addr: "172.19.0.29:8500" # 容器内直接访问Consul
 
 jwt:
   secret: "your-jwt-secret"
