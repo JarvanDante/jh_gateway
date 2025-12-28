@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	adminv1 "jh_gateway/api/admin/v1"
+	sitev1 "jh_gateway/api/site/v1"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
@@ -119,6 +120,10 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return callAdminRefreshToken(ctx, conn, r)
 	case strings.HasSuffix(path, "/create-admin") && method == "POST":
 		return callAdminCreate(ctx, conn, r)
+	case strings.HasSuffix(path, "/basic-setting") && method == "GET":
+		return callGetBasicSetting(ctx, conn, r)
+	case strings.HasSuffix(path, "/update-basic-setting") && method == "POST":
+		return callUpdateBasicSetting(ctx, conn, r)
 	}
 
 	// 用户相关接口已删除
@@ -270,7 +275,8 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 func shouldValidateEarly(path, method string) bool {
 	// 对于admin相关的POST请求，提前验证
 	return (strings.HasSuffix(path, "/login") && method == "POST") ||
-		(strings.HasSuffix(path, "/create-admin") && method == "POST")
+		(strings.HasSuffix(path, "/create-admin") && method == "POST") ||
+		(strings.HasSuffix(path, "/update-basic-setting") && method == "POST")
 }
 
 // addTraceToContext 添加OpenTelemetry trace context到gRPC上下文
@@ -371,4 +377,122 @@ func validateCreateAdminRequest(r *ghttp.Request, reqData map[string]interface{}
 	}
 
 	return nil
+}
+
+// Site相关的gRPC调用函数
+
+// callGetBasicSetting 处理获取基本设置
+func callGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Site GetBasicSetting")
+
+	// 创建 gRPC 客户端
+	client := sitev1.NewSiteClient(conn)
+	req := &sitev1.GetBasicSettingReq{
+		SiteId: r.Get("site_id", 1).Int32(),
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.GetBasicSetting(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取基本设置失败，请稍后重试")
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+// callUpdateBasicSetting 处理更新基本设置
+func callUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC Site UpdateBasicSetting")
+
+	// 创建 gRPC 客户端
+	client := sitev1.NewSiteClient(conn)
+	req := &sitev1.UpdateBasicSettingReq{
+		SiteId:           getInt32FromMap(reqData, "site_id"),
+		IpRegisterTime:   getInt32FromMap(reqData, "ip_register_time"),
+		OpenRegister:     getBoolFromMap(reqData, "open_register"),
+		Close:            getBoolFromMap(reqData, "close"),
+		CloseReason:      getStringFromMap(reqData, "close_reason"),
+		AgentUrl:         getStringFromMap(reqData, "agent_url"),
+		MobileUrl:        getStringFromMap(reqData, "mobile_url"),
+		AgentRegisterUrl: getStringFromMap(reqData, "agent_register_url"),
+		MinWithdraw:      getFloat64FromMap(reqData, "minWithdraw"),
+		MaxWithdraw:      getFloat64FromMap(reqData, "maxWithdraw"),
+		MobileLogo:       getStringFromMap(reqData, "mobile_logo"),
+		ServiceUrl:       getStringFromMap(reqData, "service_url"),
+	}
+
+	// 如果没有指定站点ID，使用默认值
+	if req.SiteId == 0 {
+		req.SiteId = 1
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.UpdateBasicSetting(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "更新基本设置失败，请稍后重试")
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": res.Message,
+	})
+	return nil
+}
+
+// 辅助函数：从 map 中安全获取各种类型的值
+func getStringFromMap(data map[string]interface{}, key string) string {
+	if val, ok := data[key]; ok {
+		if str, ok := val.(string); ok {
+			return str
+		}
+	}
+	return ""
+}
+
+func getInt32FromMap(data map[string]interface{}, key string) int32 {
+	if val, ok := data[key]; ok {
+		switch v := val.(type) {
+		case int32:
+			return v
+		case int:
+			return int32(v)
+		case float64:
+			return int32(v)
+		}
+	}
+	return 0
+}
+
+func getBoolFromMap(data map[string]interface{}, key string) bool {
+	if val, ok := data[key]; ok {
+		if b, ok := val.(bool); ok {
+			return b
+		}
+	}
+	return false
+}
+
+func getFloat64FromMap(data map[string]interface{}, key string) float64 {
+	if val, ok := data[key]; ok {
+		switch v := val.(type) {
+		case float64:
+			return v
+		case int:
+			return float64(v)
+		case int32:
+			return float64(v)
+		}
+	}
+	return 0.0
 }

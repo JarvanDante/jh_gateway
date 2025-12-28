@@ -5,7 +5,7 @@ grpcGateway:
   address: ":8003"
 
 consul:
-  addr: "172.19.0.29:8500"
+  addr: "localhost:8500"
 
 jwt:
   secret: "your-jwt-secret"

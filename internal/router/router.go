@@ -27,7 +27,7 @@ func Register(s *ghttp.Server) {
 		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
 	})
 
-	// 管理员相关：通过 gRPC 调用 user-service (管理员功能也在 user-service 中)
+	// 管理员相关：通过 gRPC 调用 user-service (包含管理员功能和站点设置)
 	s.Group("/api/admin", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
