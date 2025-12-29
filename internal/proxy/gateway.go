@@ -3,6 +3,7 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
 	"net"
 
@@ -21,8 +22,9 @@ func StartGRPCGateway(ctx context.Context, gatewayPort string) error {
 
 	g.Log().Infof(ctx, "gRPC gateway listening on %s", gatewayPort)
 
-	// 创建 gRPC 服务器
+	// 创建 gRPC 服务器，使用 StatsHandler
 	grpcServer := grpc.NewServer(
+		grpc.StatsHandler(middleware.NewGatewayStatsHandler()),
 		grpc.UnknownServiceHandler(grpcProxyHandler),
 	)
 
