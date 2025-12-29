@@ -222,7 +222,7 @@ const file_role_v1_role_proto_rawDesc = "" +
 	"\x0eGetRoleListRes\x12$\n" +
 	"\x05roles\x18\x01 \x03(\v2\x0e.role.RoleInfoR\x05roles2C\n" +
 	"\x04Role\x12;\n" +
-	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00B\x1dZ\x1bjh_user_service/api/role/v1b\x06proto3"
+	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00B\x1eZ\x1cjh_admin_service/api/role/v1b\x06proto3"
 
 var (
 	file_role_v1_role_proto_rawDescOnce sync.Once

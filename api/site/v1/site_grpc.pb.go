@@ -4,12 +4,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.0
 // - protoc             v6.33.1
-// source: manifest/protobuf/site/v1/site.proto
+// source: site/v1/site.proto
 
 package v1
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -157,5 +158,5 @@ var Site_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "manifest/protobuf/site/v1/site.proto",
+	Metadata: "site/v1/site.proto",
 }
