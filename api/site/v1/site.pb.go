@@ -26,7 +26,7 @@ const (
 type GetBasicSettingReq struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// 站点ID，可选，如果不传则使用当前站点
-	SiteId        int32 `protobuf:"varint,1,opt,name=SiteId,proto3" json:"SiteId,omitempty"`
+	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -70,23 +70,23 @@ func (x *GetBasicSettingReq) GetSiteId() int32 {
 
 type GetBasicSettingRes struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Code                 string                 `protobuf:"bytes,1,opt,name=Code,proto3" json:"Code,omitempty"`                                  // 站点代码
-	Name                 string                 `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`                                  // 站点名称
-	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=RegisterTimeInterval,proto3" json:"RegisterTimeInterval,omitempty"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=SwitchRegister,proto3" json:"SwitchRegister,omitempty"`             // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,5,opt,name=IsClose,proto3" json:"IsClose,omitempty"`                           // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,6,opt,name=CloseReason,proto3" json:"CloseReason,omitempty"`                    // 关闭原因
-	ServiceUrl           string                 `protobuf:"bytes,7,opt,name=ServiceUrl,proto3" json:"ServiceUrl,omitempty"`                      // 客服链接
-	AgentUrl             string                 `protobuf:"bytes,8,opt,name=AgentUrl,proto3" json:"AgentUrl,omitempty"`                          // 代理链接地址
-	MobileUrl            string                 `protobuf:"bytes,9,opt,name=MobileUrl,proto3" json:"MobileUrl,omitempty"`                        // 手机域名地址
-	AgentRegisterUrl     string                 `protobuf:"bytes,10,opt,name=AgentRegisterUrl,proto3" json:"AgentRegisterUrl,omitempty"`         // 代理推广地址
-	MinWithdraw          float64                `protobuf:"fixed64,11,opt,name=MinWithdraw,proto3" json:"MinWithdraw,omitempty"`                 // 单笔最低提现金额
-	MaxWithdraw          float64                `protobuf:"fixed64,12,opt,name=MaxWithdraw,proto3" json:"MaxWithdraw,omitempty"`                 // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,13,opt,name=MobileLogo,proto3" json:"MobileLogo,omitempty"`                     // 手机端Logo
-	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=DefaultAgentId,proto3" json:"DefaultAgentId,omitempty"`            // 默认代理ID
-	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=DefaultAgentName,proto3" json:"DefaultAgentName,omitempty"`         // 默认代理名称
-	Balance              float64                `protobuf:"fixed64,16,opt,name=Balance,proto3" json:"Balance,omitempty"`                         // 总可用额度
-	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=BalanceReset,proto3" json:"BalanceReset,omitempty"`               // 剩余额度
+	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                                                // 站点代码
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                // 站点名称
+	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
+	ServiceUrl           string                 `protobuf:"bytes,7,opt,name=service_url,json=serviceUrl,proto3" json:"service_url,omitempty"`                                  // 客服链接
+	AgentUrl             string                 `protobuf:"bytes,8,opt,name=agent_url,json=agentUrl,proto3" json:"agent_url,omitempty"`                                        // 代理链接地址
+	MobileUrl            string                 `protobuf:"bytes,9,opt,name=mobile_url,json=mobileUrl,proto3" json:"mobile_url,omitempty"`                                     // 手机域名地址
+	AgentRegisterUrl     string                 `protobuf:"bytes,10,opt,name=agent_register_url,json=agentRegisterUrl,proto3" json:"agent_register_url,omitempty"`             // 代理推广地址
+	MinWithdraw          float64                `protobuf:"fixed64,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                            // 单笔最低提现金额
+	MaxWithdraw          float64                `protobuf:"fixed64,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                            // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
+	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty"`                  // 默认代理ID
+	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name,omitempty"`             // 默认代理名称
+	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance,omitempty"`                                                       // 总可用额度
+	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset,omitempty"`                         // 剩余额度
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -242,18 +242,18 @@ func (x *GetBasicSettingRes) GetBalanceReset() float64 {
 
 type UpdateBasicSettingReq struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	SiteId           int32                  `protobuf:"varint,1,opt,name=SiteId,proto3" json:"SiteId,omitempty"`                    // 站点ID，可选
-	IpRegisterTime   int32                  `protobuf:"varint,2,opt,name=IpRegisterTime,proto3" json:"IpRegisterTime,omitempty"`    // 同一IP重复注册时间间隔
-	OpenRegister     bool                   `protobuf:"varint,3,opt,name=OpenRegister,proto3" json:"OpenRegister,omitempty"`        // 是否开放注册
-	Close            bool                   `protobuf:"varint,4,opt,name=Close,proto3" json:"Close,omitempty"`                      // 是否关闭站点
-	CloseReason      string                 `protobuf:"bytes,5,opt,name=CloseReason,proto3" json:"CloseReason,omitempty"`           // 关闭原因
-	AgentUrl         string                 `protobuf:"bytes,6,opt,name=AgentUrl,proto3" json:"AgentUrl,omitempty"`                 // 代理链接地址
-	MobileUrl        string                 `protobuf:"bytes,7,opt,name=MobileUrl,proto3" json:"MobileUrl,omitempty"`               // 手机域名地址
-	AgentRegisterUrl string                 `protobuf:"bytes,8,opt,name=AgentRegisterUrl,proto3" json:"AgentRegisterUrl,omitempty"` // 代理推广地址
-	MinWithdraw      float64                `protobuf:"fixed64,9,opt,name=MinWithdraw,proto3" json:"MinWithdraw,omitempty"`         // 单笔最低提现金额
-	MaxWithdraw      float64                `protobuf:"fixed64,10,opt,name=MaxWithdraw,proto3" json:"MaxWithdraw,omitempty"`        // 单笔最高提现金额
-	MobileLogo       string                 `protobuf:"bytes,11,opt,name=MobileLogo,proto3" json:"MobileLogo,omitempty"`            // 手机端Logo
-	ServiceUrl       string                 `protobuf:"bytes,12,opt,name=ServiceUrl,proto3" json:"ServiceUrl,omitempty"`            // 客服链接
+	SiteId           int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`                                // 站点ID，可选
+	IpRegisterTime   int32                  `protobuf:"varint,2,opt,name=ip_register_time,json=ipRegisterTime,proto3" json:"ip_register_time,omitempty"`      // 同一IP重复注册时间间隔
+	OpenRegister     bool                   `protobuf:"varint,3,opt,name=open_register,json=openRegister,proto3" json:"open_register,omitempty"`              // 是否开放注册
+	Close            bool                   `protobuf:"varint,4,opt,name=close,proto3" json:"close,omitempty"`                                                // 是否关闭站点
+	CloseReason      string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                  // 关闭原因
+	AgentUrl         string                 `protobuf:"bytes,6,opt,name=agent_url,json=agentUrl,proto3" json:"agent_url,omitempty"`                           // 代理链接地址
+	MobileUrl        string                 `protobuf:"bytes,7,opt,name=mobile_url,json=mobileUrl,proto3" json:"mobile_url,omitempty"`                        // 手机域名地址
+	AgentRegisterUrl string                 `protobuf:"bytes,8,opt,name=agent_register_url,json=agentRegisterUrl,proto3" json:"agent_register_url,omitempty"` // 代理推广地址
+	MinWithdraw      float64                `protobuf:"fixed64,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                // 单笔最低提现金额
+	MaxWithdraw      float64                `protobuf:"fixed64,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`               // 单笔最高提现金额
+	MobileLogo       string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                    // 手机端Logo
+	ServiceUrl       string                 `protobuf:"bytes,12,opt,name=service_url,json=serviceUrl,proto3" json:"service_url,omitempty"`                    // 客服链接
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -374,7 +374,7 @@ func (x *UpdateBasicSettingReq) GetServiceUrl() string {
 
 type UpdateBasicSettingRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=Message,proto3" json:"Message,omitempty"` // 响应消息
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -420,52 +420,50 @@ var File_site_v1_site_proto protoreflect.FileDescriptor
 
 const file_site_v1_site_proto_rawDesc = "" +
 	"\n" +
-	"\x12site/v1/site.proto\x12\x04site\",\n" +
-	"\x12GetBasicSettingReq\x12\x16\n" +
-	"\x06SiteId\x18\x01 \x01(\x05R\x06SiteId\"\xd0\x04\n" +
+	"\x12site/v1/site.proto\x12\x04site\"-\n" +
+	"\x12GetBasicSettingReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xe2\x04\n" +
 	"\x12GetBasicSettingRes\x12\x12\n" +
-	"\x04Code\x18\x01 \x01(\tR\x04Code\x12\x12\n" +
-	"\x04Name\x18\x02 \x01(\tR\x04Name\x122\n" +
-	"\x14RegisterTimeInterval\x18\x03 \x01(\x05R\x14RegisterTimeInterval\x12&\n" +
-	"\x0eSwitchRegister\x18\x04 \x01(\bR\x0eSwitchRegister\x12\x18\n" +
-	"\aIsClose\x18\x05 \x01(\bR\aIsClose\x12 \n" +
-	"\vCloseReason\x18\x06 \x01(\tR\vCloseReason\x12\x1e\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x124\n" +
+	"\x16register_time_interval\x18\x03 \x01(\x05R\x14registerTimeInterval\x12'\n" +
+	"\x0fswitch_register\x18\x04 \x01(\bR\x0eswitchRegister\x12\x19\n" +
+	"\bis_close\x18\x05 \x01(\bR\aisClose\x12!\n" +
+	"\fclose_reason\x18\x06 \x01(\tR\vcloseReason\x12\x1f\n" +
+	"\vservice_url\x18\a \x01(\tR\n" +
+	"serviceUrl\x12\x1b\n" +
+	"\tagent_url\x18\b \x01(\tR\bagentUrl\x12\x1d\n" +
 	"\n" +
-	"ServiceUrl\x18\a \x01(\tR\n" +
-	"ServiceUrl\x12\x1a\n" +
-	"\bAgentUrl\x18\b \x01(\tR\bAgentUrl\x12\x1c\n" +
-	"\tMobileUrl\x18\t \x01(\tR\tMobileUrl\x12*\n" +
-	"\x10AgentRegisterUrl\x18\n" +
-	" \x01(\tR\x10AgentRegisterUrl\x12 \n" +
-	"\vMinWithdraw\x18\v \x01(\x01R\vMinWithdraw\x12 \n" +
-	"\vMaxWithdraw\x18\f \x01(\x01R\vMaxWithdraw\x12\x1e\n" +
+	"mobile_url\x18\t \x01(\tR\tmobileUrl\x12,\n" +
+	"\x12agent_register_url\x18\n" +
+	" \x01(\tR\x10agentRegisterUrl\x12!\n" +
+	"\fmin_withdraw\x18\v \x01(\x01R\vminWithdraw\x12!\n" +
+	"\fmax_withdraw\x18\f \x01(\x01R\vmaxWithdraw\x12\x1f\n" +
+	"\vmobile_logo\x18\r \x01(\tR\n" +
+	"mobileLogo\x12(\n" +
+	"\x10default_agent_id\x18\x0e \x01(\x05R\x0edefaultAgentId\x12,\n" +
+	"\x12default_agent_name\x18\x0f \x01(\tR\x10defaultAgentName\x12\x18\n" +
+	"\abalance\x18\x10 \x01(\x01R\abalance\x12#\n" +
+	"\rbalance_reset\x18\x11 \x01(\x01R\fbalanceReset\"\xaa\x03\n" +
+	"\x15UpdateBasicSettingReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12(\n" +
+	"\x10ip_register_time\x18\x02 \x01(\x05R\x0eipRegisterTime\x12#\n" +
+	"\ropen_register\x18\x03 \x01(\bR\fopenRegister\x12\x14\n" +
+	"\x05close\x18\x04 \x01(\bR\x05close\x12!\n" +
+	"\fclose_reason\x18\x05 \x01(\tR\vcloseReason\x12\x1b\n" +
+	"\tagent_url\x18\x06 \x01(\tR\bagentUrl\x12\x1d\n" +
 	"\n" +
-	"MobileLogo\x18\r \x01(\tR\n" +
-	"MobileLogo\x12&\n" +
-	"\x0eDefaultAgentId\x18\x0e \x01(\x05R\x0eDefaultAgentId\x12*\n" +
-	"\x10DefaultAgentName\x18\x0f \x01(\tR\x10DefaultAgentName\x12\x18\n" +
-	"\aBalance\x18\x10 \x01(\x01R\aBalance\x12\"\n" +
-	"\fBalanceReset\x18\x11 \x01(\x01R\fBalanceReset\"\x9d\x03\n" +
-	"\x15UpdateBasicSettingReq\x12\x16\n" +
-	"\x06SiteId\x18\x01 \x01(\x05R\x06SiteId\x12&\n" +
-	"\x0eIpRegisterTime\x18\x02 \x01(\x05R\x0eIpRegisterTime\x12\"\n" +
-	"\fOpenRegister\x18\x03 \x01(\bR\fOpenRegister\x12\x14\n" +
-	"\x05Close\x18\x04 \x01(\bR\x05Close\x12 \n" +
-	"\vCloseReason\x18\x05 \x01(\tR\vCloseReason\x12\x1a\n" +
-	"\bAgentUrl\x18\x06 \x01(\tR\bAgentUrl\x12\x1c\n" +
-	"\tMobileUrl\x18\a \x01(\tR\tMobileUrl\x12*\n" +
-	"\x10AgentRegisterUrl\x18\b \x01(\tR\x10AgentRegisterUrl\x12 \n" +
-	"\vMinWithdraw\x18\t \x01(\x01R\vMinWithdraw\x12 \n" +
-	"\vMaxWithdraw\x18\n" +
-	" \x01(\x01R\vMaxWithdraw\x12\x1e\n" +
-	"\n" +
-	"MobileLogo\x18\v \x01(\tR\n" +
-	"MobileLogo\x12\x1e\n" +
-	"\n" +
-	"ServiceUrl\x18\f \x01(\tR\n" +
-	"ServiceUrl\"1\n" +
+	"mobile_url\x18\a \x01(\tR\tmobileUrl\x12,\n" +
+	"\x12agent_register_url\x18\b \x01(\tR\x10agentRegisterUrl\x12!\n" +
+	"\fmin_withdraw\x18\t \x01(\x01R\vminWithdraw\x12!\n" +
+	"\fmax_withdraw\x18\n" +
+	" \x01(\x01R\vmaxWithdraw\x12\x1f\n" +
+	"\vmobile_logo\x18\v \x01(\tR\n" +
+	"mobileLogo\x12\x1f\n" +
+	"\vservice_url\x18\f \x01(\tR\n" +
+	"serviceUrl\"1\n" +
 	"\x15UpdateBasicSettingRes\x12\x18\n" +
-	"\aMessage\x18\x01 \x01(\tR\aMessage2\xa1\x01\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xa1\x01\n" +
 	"\x04Site\x12G\n" +
 	"\x0fGetBasicSetting\x12\x18.site.GetBasicSettingReq\x1a\x18.site.GetBasicSettingRes\"\x00\x12P\n" +
 	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B\x1dZ\x1bjh_user_service/api/site/v1b\x06proto3"

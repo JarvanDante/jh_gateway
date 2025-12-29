@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v6.33.1
-// source: manifest/protobuf/admin/v1/admin.proto
+// source: admin/v1/admin.proto
 
 package v1
 
@@ -32,7 +32,7 @@ type LoginReq struct {
 
 func (x *LoginReq) Reset() {
 	*x = LoginReq{}
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[0]
+	mi := &file_admin_v1_admin_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +44,7 @@ func (x *LoginReq) String() string {
 func (*LoginReq) ProtoMessage() {}
 
 func (x *LoginReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[0]
+	mi := &file_admin_v1_admin_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +57,7 @@ func (x *LoginReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginReq.ProtoReflect.Descriptor instead.
 func (*LoginReq) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP(), []int{0}
+	return file_admin_v1_admin_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *LoginReq) GetUsername() string {
@@ -91,7 +91,7 @@ type LoginRes struct {
 
 func (x *LoginRes) Reset() {
 	*x = LoginRes{}
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[1]
+	mi := &file_admin_v1_admin_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -103,7 +103,7 @@ func (x *LoginRes) String() string {
 func (*LoginRes) ProtoMessage() {}
 
 func (x *LoginRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[1]
+	mi := &file_admin_v1_admin_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -116,7 +116,7 @@ func (x *LoginRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRes.ProtoReflect.Descriptor instead.
 func (*LoginRes) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP(), []int{1}
+	return file_admin_v1_admin_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *LoginRes) GetToken() string {
@@ -141,7 +141,7 @@ type RefreshTokenReq struct {
 
 func (x *RefreshTokenReq) Reset() {
 	*x = RefreshTokenReq{}
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[2]
+	mi := &file_admin_v1_admin_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -153,7 +153,7 @@ func (x *RefreshTokenReq) String() string {
 func (*RefreshTokenReq) ProtoMessage() {}
 
 func (x *RefreshTokenReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[2]
+	mi := &file_admin_v1_admin_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -166,7 +166,7 @@ func (x *RefreshTokenReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshTokenReq.ProtoReflect.Descriptor instead.
 func (*RefreshTokenReq) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP(), []int{2}
+	return file_admin_v1_admin_proto_rawDescGZIP(), []int{2}
 }
 
 type RefreshTokenRes struct {
@@ -178,7 +178,7 @@ type RefreshTokenRes struct {
 
 func (x *RefreshTokenRes) Reset() {
 	*x = RefreshTokenRes{}
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[3]
+	mi := &file_admin_v1_admin_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -190,7 +190,7 @@ func (x *RefreshTokenRes) String() string {
 func (*RefreshTokenRes) ProtoMessage() {}
 
 func (x *RefreshTokenRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[3]
+	mi := &file_admin_v1_admin_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -203,7 +203,7 @@ func (x *RefreshTokenRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshTokenRes.ProtoReflect.Descriptor instead.
 func (*RefreshTokenRes) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP(), []int{3}
+	return file_admin_v1_admin_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *RefreshTokenRes) GetToken() string {
@@ -226,7 +226,7 @@ type CreateAdminReq struct {
 
 func (x *CreateAdminReq) Reset() {
 	*x = CreateAdminReq{}
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[4]
+	mi := &file_admin_v1_admin_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -238,7 +238,7 @@ func (x *CreateAdminReq) String() string {
 func (*CreateAdminReq) ProtoMessage() {}
 
 func (x *CreateAdminReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[4]
+	mi := &file_admin_v1_admin_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -251,7 +251,7 @@ func (x *CreateAdminReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAdminReq.ProtoReflect.Descriptor instead.
 func (*CreateAdminReq) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP(), []int{4}
+	return file_admin_v1_admin_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CreateAdminReq) GetUsername() string {
@@ -297,7 +297,7 @@ type CreateAdminRes struct {
 
 func (x *CreateAdminRes) Reset() {
 	*x = CreateAdminRes{}
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[5]
+	mi := &file_admin_v1_admin_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -309,7 +309,7 @@ func (x *CreateAdminRes) String() string {
 func (*CreateAdminRes) ProtoMessage() {}
 
 func (x *CreateAdminRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_admin_v1_admin_proto_msgTypes[5]
+	mi := &file_admin_v1_admin_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -322,14 +322,14 @@ func (x *CreateAdminRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAdminRes.ProtoReflect.Descriptor instead.
 func (*CreateAdminRes) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP(), []int{5}
+	return file_admin_v1_admin_proto_rawDescGZIP(), []int{5}
 }
 
-var File_manifest_protobuf_admin_v1_admin_proto protoreflect.FileDescriptor
+var File_admin_v1_admin_proto protoreflect.FileDescriptor
 
-const file_manifest_protobuf_admin_v1_admin_proto_rawDesc = "" +
+const file_admin_v1_admin_proto_rawDesc = "" +
 	"\n" +
-	"&manifest/protobuf/admin/v1/admin.proto\x12\x05admin\"V\n" +
+	"\x14admin/v1/admin.proto\x12\x05admin\"V\n" +
 	"\bLoginReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x12\n" +
@@ -350,22 +350,22 @@ const file_manifest_protobuf_admin_v1_admin_proto_rawDesc = "" +
 	"\x05Admin\x12+\n" +
 	"\x05Login\x12\x0f.admin.LoginReq\x1a\x0f.admin.LoginRes\"\x00\x12@\n" +
 	"\fRefreshToken\x12\x16.admin.RefreshTokenReq\x1a\x16.admin.RefreshTokenRes\"\x00\x12=\n" +
-	"\vCreateAdmin\x12\x15.admin.CreateAdminReq\x1a\x15.admin.CreateAdminRes\"\x00B\x19Z\x17jh_gateway/api/admin/v1b\x06proto3"
+	"\vCreateAdmin\x12\x15.admin.CreateAdminReq\x1a\x15.admin.CreateAdminRes\"\x00B\x1eZ\x1cjh_user_service/api/admin/v1b\x06proto3"
 
 var (
-	file_manifest_protobuf_admin_v1_admin_proto_rawDescOnce sync.Once
-	file_manifest_protobuf_admin_v1_admin_proto_rawDescData []byte
+	file_admin_v1_admin_proto_rawDescOnce sync.Once
+	file_admin_v1_admin_proto_rawDescData []byte
 )
 
-func file_manifest_protobuf_admin_v1_admin_proto_rawDescGZIP() []byte {
-	file_manifest_protobuf_admin_v1_admin_proto_rawDescOnce.Do(func() {
-		file_manifest_protobuf_admin_v1_admin_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_manifest_protobuf_admin_v1_admin_proto_rawDesc), len(file_manifest_protobuf_admin_v1_admin_proto_rawDesc)))
+func file_admin_v1_admin_proto_rawDescGZIP() []byte {
+	file_admin_v1_admin_proto_rawDescOnce.Do(func() {
+		file_admin_v1_admin_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_admin_v1_admin_proto_rawDesc), len(file_admin_v1_admin_proto_rawDesc)))
 	})
-	return file_manifest_protobuf_admin_v1_admin_proto_rawDescData
+	return file_admin_v1_admin_proto_rawDescData
 }
 
-var file_manifest_protobuf_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_manifest_protobuf_admin_v1_admin_proto_goTypes = []any{
+var file_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_admin_v1_admin_proto_goTypes = []any{
 	(*LoginReq)(nil),        // 0: admin.LoginReq
 	(*LoginRes)(nil),        // 1: admin.LoginRes
 	(*RefreshTokenReq)(nil), // 2: admin.RefreshTokenReq
@@ -373,7 +373,7 @@ var file_manifest_protobuf_admin_v1_admin_proto_goTypes = []any{
 	(*CreateAdminReq)(nil),  // 4: admin.CreateAdminReq
 	(*CreateAdminRes)(nil),  // 5: admin.CreateAdminRes
 }
-var file_manifest_protobuf_admin_v1_admin_proto_depIdxs = []int32{
+var file_admin_v1_admin_proto_depIdxs = []int32{
 	0, // 0: admin.Admin.Login:input_type -> admin.LoginReq
 	2, // 1: admin.Admin.RefreshToken:input_type -> admin.RefreshTokenReq
 	4, // 2: admin.Admin.CreateAdmin:input_type -> admin.CreateAdminReq
@@ -387,26 +387,26 @@ var file_manifest_protobuf_admin_v1_admin_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_manifest_protobuf_admin_v1_admin_proto_init() }
-func file_manifest_protobuf_admin_v1_admin_proto_init() {
-	if File_manifest_protobuf_admin_v1_admin_proto != nil {
+func init() { file_admin_v1_admin_proto_init() }
+func file_admin_v1_admin_proto_init() {
+	if File_admin_v1_admin_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manifest_protobuf_admin_v1_admin_proto_rawDesc), len(file_manifest_protobuf_admin_v1_admin_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_admin_v1_admin_proto_rawDesc), len(file_admin_v1_admin_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_manifest_protobuf_admin_v1_admin_proto_goTypes,
-		DependencyIndexes: file_manifest_protobuf_admin_v1_admin_proto_depIdxs,
-		MessageInfos:      file_manifest_protobuf_admin_v1_admin_proto_msgTypes,
+		GoTypes:           file_admin_v1_admin_proto_goTypes,
+		DependencyIndexes: file_admin_v1_admin_proto_depIdxs,
+		MessageInfos:      file_admin_v1_admin_proto_msgTypes,
 	}.Build()
-	File_manifest_protobuf_admin_v1_admin_proto = out.File
-	file_manifest_protobuf_admin_v1_admin_proto_goTypes = nil
-	file_manifest_protobuf_admin_v1_admin_proto_depIdxs = nil
+	File_admin_v1_admin_proto = out.File
+	file_admin_v1_admin_proto_goTypes = nil
+	file_admin_v1_admin_proto_depIdxs = nil
 }

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package admin;
 
-option go_package = "jh_gateway/api/admin/v1";
+option go_package = "jh_user_service/api/admin/v1";
 
 service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
