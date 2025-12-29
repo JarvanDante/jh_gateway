@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,9 +24,9 @@ const (
 
 type LoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"` // v: required
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"` // v: required
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`         // Google 2FA code (optional)
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" v:"required"`            // v: required
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" v:"required"`            // v: required
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty" dc:"Google 2FA code (optional)"` // Google 2FA code (optional)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -215,11 +216,11 @@ func (x *RefreshTokenRes) GetToken() string {
 
 type CreateAdminReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"` // v: required|alpha_num|min:4|max:12
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"` // v: required|alpha_num|min:6|max:20
-	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty"` // v: required|alpha_num|min:2|max:20
-	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty"`        // v: required|numeric
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`    // v: required|boolean
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" v:"required|alpha_num|min:4|max:12"` // v: required|alpha_num|min:4|max:12
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" v:"required|alpha_num|min:6|max:20"` // v: required|alpha_num|min:6|max:20
+	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty" v:"required|alpha_num|min:2|max:20"` // v: required|alpha_num|min:2|max:20
+	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty" v:"required|numeric"`                       // v: required|numeric
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"required|boolean"`                   // v: required|boolean
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
