@@ -16,7 +16,7 @@ jaeger:
   enabled: true # 是否启用追踪
 
 jwt:
-  secret: "your-jwt-secret"
+  secret: "be0axSSXmguDZ2Q0EIPgRwq9e5G9nRH3zq3iEw6nllU="
 
 rateLimit:
   # 每个 IP 每分钟最多请求次数
