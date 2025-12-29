@@ -130,12 +130,23 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	return fmt.Errorf("unsupported path: %s", path)
 }
 
-// 这里需要根据实际的 proto 定义来实现具体的调用
-// 由于没有生成的 gRPC 客户端代码，这里用通用的方式调用
-
-// Admin相关的gRPC调用函数
-
-// callAdminLogin 处理管理员登录
+/**
+ * showdoc
+ * @catalog 后台
+ * @title 登录
+ * @description 员工登录的接口
+ * @method post
+ * @url /api/admin/login
+ * @param username 必选 string 用户名
+ * @param password 必选 string 密码
+ * @param code 可选 string 动态验证码
+ * @return {"code":0,"msg":"success","data":{"socket":"","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MjcsImV4cCI6MTc2NzA4NDI5MSwiaWF0IjoxNzY2OTk3ODkxLCJzaXRlX2lkIjoxLCJ1c2VybmFtZSI6Im1pY2hhZWwifQ.FvPBCn9I_vyD5zgNBxIpb2xPDNbYQ3NWpJj2EL99g6I"}}
+ * @return_param code int 状态码
+ * @return_param data string 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
 func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
@@ -379,9 +390,39 @@ func validateCreateAdminRequest(r *ghttp.Request, reqData map[string]interface{}
 	return nil
 }
 
-// Site相关的gRPC调用函数
-
-// callGetBasicSetting 处理获取基本设置
+/**
+ * showdoc
+ * @catalog 后台/系统/全局设置
+ * @title 获取站点配置信息
+ * @description 获取站点配置信息
+ * @method get
+ * @url /api/admin/basic-setting
+ * @param token 必选 string 员工token
+ * @return {"code":0,"msg":"success","data":{"code":"site_1","name":"站点_1","register_time_interval":1179844069,"switch_register":true,"close_reason":"aute Duis dolor dolor","service_url":"http://fruy.中国互联.公司/yfxohunw","agent_url":"http://bngmrpdvfm.ee/ixn","mobile_url":"http://efoccuis.aq/nikrlrw","agent_register_url":"http://vuwku.li/rcxpcsphf","min_withdraw":79,"max_withdraw":86,"mobile_logo":"18110356852"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data array 数组
+ * @return_param data.code string 应用代码
+ * @return_param data.name string 应用名称
+ * @return_param data.register_time_interval int 同一IP重复注册次数
+ * @return_param data.switch_register int 是否开放注册
+ * @return_param data.is_close int 是否关站
+ * @return_param data.close_reason string 关站提示语
+ * @return_param data.service_url string 客服链接
+ * @return_param data.agent_url string 代理链接
+ * @return_param data.mobile_url string APP下载地址
+ * @return_param data.agent_register_url string 代理推广地址
+ * @return_param data.min_withdraw string 默认单笔最小提现金额
+ * @return_param data.max_withdraw string 默认单笔最大提现金额
+ * @return_param data.game_free_play string 游戏试玩地址
+ * @return_param data.mobile_logo string 手机logo地址
+ * @return_param data.default_agent_id string 默认代理ID
+ * @return_param data.default_agent_name string 默认代理名称
+ * @return_param data.balance string 默认额度
+ * @return_param data.balance_reset string 可用额度
+ * @remark 备注
+ * @number 1
+ */
 func callGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling gRPC Site GetBasicSetting")
 
