@@ -4,7 +4,7 @@ syntax = "proto3";
 
 package site;
 
-option go_package = "jh_user_service/api/site/v1";
+option go_package = "jh_gateway/api/site/v1";
 
 service Site {
     rpc GetBasicSetting(GetBasicSettingReq) returns (GetBasicSettingRes) {}
@@ -23,12 +23,12 @@ message GetBasicSettingRes {
     bool switch_register = 4;               // 是否开放注册
     bool is_close = 5;                      // 是否关闭站点
     string close_reason = 6;                // 关闭原因
-    string service_url = 7;                 // 客服链接
-    string agent_url = 8;                   // 代理链接地址
-    string mobile_url = 9;                  // 手机域名地址
-    string agent_register_url = 10;         // 代理推广地址
-    double min_withdraw = 11;               // 单笔最低提现金额
-    double max_withdraw = 12;               // 单笔最高提现金额
+    string url_service = 7;                 // 客服链接
+    string url_agent_pc = 8;                // 代理链接地址
+    string url_mobile = 9;                  // 手机域名地址
+    string url_agent_register = 10;         // 代理推广地址
+    int32 min_withdraw = 11;                // 单笔最低提现金额
+    int32 max_withdraw = 12;                // 单笔最高提现金额
     string mobile_logo = 13;                // 手机端Logo
     int32 default_agent_id = 14;            // 默认代理ID
     string default_agent_name = 15;         // 默认代理名称
@@ -38,17 +38,17 @@ message GetBasicSettingRes {
 
 message UpdateBasicSettingReq {
     int32 site_id = 1;                      // 站点ID，可选
-    int32 ip_register_time = 2;             // 同一IP重复注册时间间隔
-    bool open_register = 3;                 // 是否开放注册
-    bool close = 4;                         // 是否关闭站点
+    int32 register_time_interval = 2;       // 同一IP重复注册时间间隔
+    bool switch_register = 3;               // 是否开放注册
+    bool is_close = 4;                      // 是否关闭站点
     string close_reason = 5;                // 关闭原因
-    string agent_url = 6;                   // 代理链接地址
-    string mobile_url = 7;                  // 手机域名地址
-    string agent_register_url = 8;          // 代理推广地址
-    double min_withdraw = 9;                // 单笔最低提现金额
-    double max_withdraw = 10;               // 单笔最高提现金额
+    string url_agent_pc = 6;                // 代理链接地址
+    string url_mobile = 7;                  // 手机域名地址
+    string url_agent_register = 8;          // 代理推广地址
+    int32 min_withdraw = 9;                 // 单笔最低提现金额
+    int32 max_withdraw = 10;                // 单笔最高提现金额
     string mobile_logo = 11;                // 手机端Logo
-    string service_url = 12;                // 客服链接
+    string url_service = 12;                // 客服链接
 }
 
 message UpdateBasicSettingRes {

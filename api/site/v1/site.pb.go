@@ -4,17 +4,16 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v6.33.1
-// source: site/v1/site.proto
+// source: manifest/protobuf/site/v1/site.proto
 
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -27,14 +26,14 @@ const (
 type GetBasicSettingReq struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// 站点ID，可选，如果不传则使用当前站点
-	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID，可选，如果不传则使用当前站点"`
+	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetBasicSettingReq) Reset() {
 	*x = GetBasicSettingReq{}
-	mi := &file_site_v1_site_proto_msgTypes[0]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +45,7 @@ func (x *GetBasicSettingReq) String() string {
 func (*GetBasicSettingReq) ProtoMessage() {}
 
 func (x *GetBasicSettingReq) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[0]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +58,7 @@ func (x *GetBasicSettingReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBasicSettingReq.ProtoReflect.Descriptor instead.
 func (*GetBasicSettingReq) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{0}
+	return file_manifest_protobuf_site_v1_site_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *GetBasicSettingReq) GetSiteId() int32 {
@@ -71,30 +70,30 @@ func (x *GetBasicSettingReq) GetSiteId() int32 {
 
 type GetBasicSettingRes struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty" dc:"站点代码"`                                                                        // 站点代码
-	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" dc:"站点名称"`                                                                        // 站点名称
-	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty" dc:"是否开放注册"`                           // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty" dc:"是否关闭站点"`                                                // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty" dc:"关闭原因"`                                       // 关闭原因
-	ServiceUrl           string                 `protobuf:"bytes,7,opt,name=service_url,json=serviceUrl,proto3" json:"service_url,omitempty" dc:"客服链接"`                                          // 客服链接
-	AgentUrl             string                 `protobuf:"bytes,8,opt,name=agent_url,json=agentUrl,proto3" json:"agent_url,omitempty" dc:"代理链接地址"`                                              // 代理链接地址
-	MobileUrl            string                 `protobuf:"bytes,9,opt,name=mobile_url,json=mobileUrl,proto3" json:"mobile_url,omitempty" dc:"手机域名地址"`                                           // 手机域名地址
-	AgentRegisterUrl     string                 `protobuf:"bytes,10,opt,name=agent_register_url,json=agentRegisterUrl,proto3" json:"agent_register_url,omitempty" dc:"代理推广地址"`                   // 代理推广地址
-	MinWithdraw          float64                `protobuf:"fixed64,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty" dc:"单笔最低提现金额"`                                // 单笔最低提现金额
-	MaxWithdraw          float64                `protobuf:"fixed64,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty" dc:"单笔最高提现金额"`                                // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty" dc:"手机端Logo"`                                      // 手机端Logo
-	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty" dc:"默认代理ID"`                        // 默认代理ID
-	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name,omitempty" dc:"默认代理名称"`                   // 默认代理名称
-	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance,omitempty" dc:"总可用额度"`                                                              // 总可用额度
-	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset,omitempty" dc:"剩余额度"`                                 // 剩余额度
+	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                                                // 站点代码
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                // 站点名称
+	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
+	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty"`                                  // 客服链接
+	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty"`                                // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty"`                                     // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty"`             // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                             // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                             // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
+	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty"`                  // 默认代理ID
+	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name,omitempty"`             // 默认代理名称
+	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance,omitempty"`                                                       // 总可用额度
+	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset,omitempty"`                         // 剩余额度
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
 
 func (x *GetBasicSettingRes) Reset() {
 	*x = GetBasicSettingRes{}
-	mi := &file_site_v1_site_proto_msgTypes[1]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -106,7 +105,7 @@ func (x *GetBasicSettingRes) String() string {
 func (*GetBasicSettingRes) ProtoMessage() {}
 
 func (x *GetBasicSettingRes) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[1]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -119,7 +118,7 @@ func (x *GetBasicSettingRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBasicSettingRes.ProtoReflect.Descriptor instead.
 func (*GetBasicSettingRes) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{1}
+	return file_manifest_protobuf_site_v1_site_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetBasicSettingRes) GetCode() string {
@@ -164,42 +163,42 @@ func (x *GetBasicSettingRes) GetCloseReason() string {
 	return ""
 }
 
-func (x *GetBasicSettingRes) GetServiceUrl() string {
+func (x *GetBasicSettingRes) GetUrlService() string {
 	if x != nil {
-		return x.ServiceUrl
+		return x.UrlService
 	}
 	return ""
 }
 
-func (x *GetBasicSettingRes) GetAgentUrl() string {
+func (x *GetBasicSettingRes) GetUrlAgentPc() string {
 	if x != nil {
-		return x.AgentUrl
+		return x.UrlAgentPc
 	}
 	return ""
 }
 
-func (x *GetBasicSettingRes) GetMobileUrl() string {
+func (x *GetBasicSettingRes) GetUrlMobile() string {
 	if x != nil {
-		return x.MobileUrl
+		return x.UrlMobile
 	}
 	return ""
 }
 
-func (x *GetBasicSettingRes) GetAgentRegisterUrl() string {
+func (x *GetBasicSettingRes) GetUrlAgentRegister() string {
 	if x != nil {
-		return x.AgentRegisterUrl
+		return x.UrlAgentRegister
 	}
 	return ""
 }
 
-func (x *GetBasicSettingRes) GetMinWithdraw() float64 {
+func (x *GetBasicSettingRes) GetMinWithdraw() int32 {
 	if x != nil {
 		return x.MinWithdraw
 	}
 	return 0
 }
 
-func (x *GetBasicSettingRes) GetMaxWithdraw() float64 {
+func (x *GetBasicSettingRes) GetMaxWithdraw() int32 {
 	if x != nil {
 		return x.MaxWithdraw
 	}
@@ -242,26 +241,26 @@ func (x *GetBasicSettingRes) GetBalanceReset() float64 {
 }
 
 type UpdateBasicSettingReq struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	SiteId           int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID，可选"`                                // 站点ID，可选
-	IpRegisterTime   int32                  `protobuf:"varint,2,opt,name=ip_register_time,json=ipRegisterTime,proto3" json:"ip_register_time,omitempty" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
-	OpenRegister     bool                   `protobuf:"varint,3,opt,name=open_register,json=openRegister,proto3" json:"open_register,omitempty" dc:"是否开放注册"`               // 是否开放注册
-	Close            bool                   `protobuf:"varint,4,opt,name=close,proto3" json:"close,omitempty" dc:"是否关闭站点"`                                                 // 是否关闭站点
-	CloseReason      string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty" dc:"关闭原因"`                     // 关闭原因
-	AgentUrl         string                 `protobuf:"bytes,6,opt,name=agent_url,json=agentUrl,proto3" json:"agent_url,omitempty" dc:"代理链接地址"`                            // 代理链接地址
-	MobileUrl        string                 `protobuf:"bytes,7,opt,name=mobile_url,json=mobileUrl,proto3" json:"mobile_url,omitempty" dc:"手机域名地址"`                         // 手机域名地址
-	AgentRegisterUrl string                 `protobuf:"bytes,8,opt,name=agent_register_url,json=agentRegisterUrl,proto3" json:"agent_register_url,omitempty" dc:"代理推广地址"`  // 代理推广地址
-	MinWithdraw      float64                `protobuf:"fixed64,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty" dc:"单笔最低提现金额"`               // 单笔最低提现金额
-	MaxWithdraw      float64                `protobuf:"fixed64,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty" dc:"单笔最高提现金额"`              // 单笔最高提现金额
-	MobileLogo       string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty" dc:"手机端Logo"`                    // 手机端Logo
-	ServiceUrl       string                 `protobuf:"bytes,12,opt,name=service_url,json=serviceUrl,proto3" json:"service_url,omitempty" dc:"客服链接"`                       // 客服链接
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`                                             // 站点ID，可选
+	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
+	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty"`                                // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty"`                                     // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty"`              // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                              // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                             // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
+	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty"`                                 // 客服链接
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *UpdateBasicSettingReq) Reset() {
 	*x = UpdateBasicSettingReq{}
-	mi := &file_site_v1_site_proto_msgTypes[2]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -273,7 +272,7 @@ func (x *UpdateBasicSettingReq) String() string {
 func (*UpdateBasicSettingReq) ProtoMessage() {}
 
 func (x *UpdateBasicSettingReq) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[2]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -286,7 +285,7 @@ func (x *UpdateBasicSettingReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBasicSettingReq.ProtoReflect.Descriptor instead.
 func (*UpdateBasicSettingReq) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{2}
+	return file_manifest_protobuf_site_v1_site_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UpdateBasicSettingReq) GetSiteId() int32 {
@@ -296,23 +295,23 @@ func (x *UpdateBasicSettingReq) GetSiteId() int32 {
 	return 0
 }
 
-func (x *UpdateBasicSettingReq) GetIpRegisterTime() int32 {
+func (x *UpdateBasicSettingReq) GetRegisterTimeInterval() int32 {
 	if x != nil {
-		return x.IpRegisterTime
+		return x.RegisterTimeInterval
 	}
 	return 0
 }
 
-func (x *UpdateBasicSettingReq) GetOpenRegister() bool {
+func (x *UpdateBasicSettingReq) GetSwitchRegister() bool {
 	if x != nil {
-		return x.OpenRegister
+		return x.SwitchRegister
 	}
 	return false
 }
 
-func (x *UpdateBasicSettingReq) GetClose() bool {
+func (x *UpdateBasicSettingReq) GetIsClose() bool {
 	if x != nil {
-		return x.Close
+		return x.IsClose
 	}
 	return false
 }
@@ -324,35 +323,35 @@ func (x *UpdateBasicSettingReq) GetCloseReason() string {
 	return ""
 }
 
-func (x *UpdateBasicSettingReq) GetAgentUrl() string {
+func (x *UpdateBasicSettingReq) GetUrlAgentPc() string {
 	if x != nil {
-		return x.AgentUrl
+		return x.UrlAgentPc
 	}
 	return ""
 }
 
-func (x *UpdateBasicSettingReq) GetMobileUrl() string {
+func (x *UpdateBasicSettingReq) GetUrlMobile() string {
 	if x != nil {
-		return x.MobileUrl
+		return x.UrlMobile
 	}
 	return ""
 }
 
-func (x *UpdateBasicSettingReq) GetAgentRegisterUrl() string {
+func (x *UpdateBasicSettingReq) GetUrlAgentRegister() string {
 	if x != nil {
-		return x.AgentRegisterUrl
+		return x.UrlAgentRegister
 	}
 	return ""
 }
 
-func (x *UpdateBasicSettingReq) GetMinWithdraw() float64 {
+func (x *UpdateBasicSettingReq) GetMinWithdraw() int32 {
 	if x != nil {
 		return x.MinWithdraw
 	}
 	return 0
 }
 
-func (x *UpdateBasicSettingReq) GetMaxWithdraw() float64 {
+func (x *UpdateBasicSettingReq) GetMaxWithdraw() int32 {
 	if x != nil {
 		return x.MaxWithdraw
 	}
@@ -366,23 +365,23 @@ func (x *UpdateBasicSettingReq) GetMobileLogo() string {
 	return ""
 }
 
-func (x *UpdateBasicSettingReq) GetServiceUrl() string {
+func (x *UpdateBasicSettingReq) GetUrlService() string {
 	if x != nil {
-		return x.ServiceUrl
+		return x.UrlService
 	}
 	return ""
 }
 
 type UpdateBasicSettingRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"` // 响应消息
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateBasicSettingRes) Reset() {
 	*x = UpdateBasicSettingRes{}
-	mi := &file_site_v1_site_proto_msgTypes[3]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +393,7 @@ func (x *UpdateBasicSettingRes) String() string {
 func (*UpdateBasicSettingRes) ProtoMessage() {}
 
 func (x *UpdateBasicSettingRes) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[3]
+	mi := &file_manifest_protobuf_site_v1_site_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,7 +406,7 @@ func (x *UpdateBasicSettingRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBasicSettingRes.ProtoReflect.Descriptor instead.
 func (*UpdateBasicSettingRes) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{3}
+	return file_manifest_protobuf_site_v1_site_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *UpdateBasicSettingRes) GetMessage() string {
@@ -417,13 +416,13 @@ func (x *UpdateBasicSettingRes) GetMessage() string {
 	return ""
 }
 
-var File_site_v1_site_proto protoreflect.FileDescriptor
+var File_manifest_protobuf_site_v1_site_proto protoreflect.FileDescriptor
 
-const file_site_v1_site_proto_rawDesc = "" +
+const file_manifest_protobuf_site_v1_site_proto_rawDesc = "" +
 	"\n" +
-	"\x12site/v1/site.proto\x12\x04site\"-\n" +
+	"$manifest/protobuf/site/v1/site.proto\x12\x04site\"-\n" +
 	"\x12GetBasicSettingReq\x12\x17\n" +
-	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xe2\x04\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xe7\x04\n" +
 	"\x12GetBasicSettingRes\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x124\n" +
@@ -431,64 +430,66 @@ const file_site_v1_site_proto_rawDesc = "" +
 	"\x0fswitch_register\x18\x04 \x01(\bR\x0eswitchRegister\x12\x19\n" +
 	"\bis_close\x18\x05 \x01(\bR\aisClose\x12!\n" +
 	"\fclose_reason\x18\x06 \x01(\tR\vcloseReason\x12\x1f\n" +
-	"\vservice_url\x18\a \x01(\tR\n" +
-	"serviceUrl\x12\x1b\n" +
-	"\tagent_url\x18\b \x01(\tR\bagentUrl\x12\x1d\n" +
+	"\vurl_service\x18\a \x01(\tR\n" +
+	"urlService\x12 \n" +
+	"\furl_agent_pc\x18\b \x01(\tR\n" +
+	"urlAgentPc\x12\x1d\n" +
 	"\n" +
-	"mobile_url\x18\t \x01(\tR\tmobileUrl\x12,\n" +
-	"\x12agent_register_url\x18\n" +
-	" \x01(\tR\x10agentRegisterUrl\x12!\n" +
-	"\fmin_withdraw\x18\v \x01(\x01R\vminWithdraw\x12!\n" +
-	"\fmax_withdraw\x18\f \x01(\x01R\vmaxWithdraw\x12\x1f\n" +
+	"url_mobile\x18\t \x01(\tR\turlMobile\x12,\n" +
+	"\x12url_agent_register\x18\n" +
+	" \x01(\tR\x10urlAgentRegister\x12!\n" +
+	"\fmin_withdraw\x18\v \x01(\x05R\vminWithdraw\x12!\n" +
+	"\fmax_withdraw\x18\f \x01(\x05R\vmaxWithdraw\x12\x1f\n" +
 	"\vmobile_logo\x18\r \x01(\tR\n" +
 	"mobileLogo\x12(\n" +
 	"\x10default_agent_id\x18\x0e \x01(\x05R\x0edefaultAgentId\x12,\n" +
 	"\x12default_agent_name\x18\x0f \x01(\tR\x10defaultAgentName\x12\x18\n" +
 	"\abalance\x18\x10 \x01(\x01R\abalance\x12#\n" +
-	"\rbalance_reset\x18\x11 \x01(\x01R\fbalanceReset\"\xaa\x03\n" +
+	"\rbalance_reset\x18\x11 \x01(\x01R\fbalanceReset\"\xc4\x03\n" +
 	"\x15UpdateBasicSettingReq\x12\x17\n" +
-	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12(\n" +
-	"\x10ip_register_time\x18\x02 \x01(\x05R\x0eipRegisterTime\x12#\n" +
-	"\ropen_register\x18\x03 \x01(\bR\fopenRegister\x12\x14\n" +
-	"\x05close\x18\x04 \x01(\bR\x05close\x12!\n" +
-	"\fclose_reason\x18\x05 \x01(\tR\vcloseReason\x12\x1b\n" +
-	"\tagent_url\x18\x06 \x01(\tR\bagentUrl\x12\x1d\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x124\n" +
+	"\x16register_time_interval\x18\x02 \x01(\x05R\x14registerTimeInterval\x12'\n" +
+	"\x0fswitch_register\x18\x03 \x01(\bR\x0eswitchRegister\x12\x19\n" +
+	"\bis_close\x18\x04 \x01(\bR\aisClose\x12!\n" +
+	"\fclose_reason\x18\x05 \x01(\tR\vcloseReason\x12 \n" +
+	"\furl_agent_pc\x18\x06 \x01(\tR\n" +
+	"urlAgentPc\x12\x1d\n" +
 	"\n" +
-	"mobile_url\x18\a \x01(\tR\tmobileUrl\x12,\n" +
-	"\x12agent_register_url\x18\b \x01(\tR\x10agentRegisterUrl\x12!\n" +
-	"\fmin_withdraw\x18\t \x01(\x01R\vminWithdraw\x12!\n" +
+	"url_mobile\x18\a \x01(\tR\turlMobile\x12,\n" +
+	"\x12url_agent_register\x18\b \x01(\tR\x10urlAgentRegister\x12!\n" +
+	"\fmin_withdraw\x18\t \x01(\x05R\vminWithdraw\x12!\n" +
 	"\fmax_withdraw\x18\n" +
-	" \x01(\x01R\vmaxWithdraw\x12\x1f\n" +
+	" \x01(\x05R\vmaxWithdraw\x12\x1f\n" +
 	"\vmobile_logo\x18\v \x01(\tR\n" +
 	"mobileLogo\x12\x1f\n" +
-	"\vservice_url\x18\f \x01(\tR\n" +
-	"serviceUrl\"1\n" +
+	"\vurl_service\x18\f \x01(\tR\n" +
+	"urlService\"1\n" +
 	"\x15UpdateBasicSettingRes\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xa1\x01\n" +
 	"\x04Site\x12G\n" +
 	"\x0fGetBasicSetting\x12\x18.site.GetBasicSettingReq\x1a\x18.site.GetBasicSettingRes\"\x00\x12P\n" +
-	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B\x1dZ\x1bjh_user_service/api/site/v1b\x06proto3"
+	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B\x18Z\x16jh_gateway/api/site/v1b\x06proto3"
 
 var (
-	file_site_v1_site_proto_rawDescOnce sync.Once
-	file_site_v1_site_proto_rawDescData []byte
+	file_manifest_protobuf_site_v1_site_proto_rawDescOnce sync.Once
+	file_manifest_protobuf_site_v1_site_proto_rawDescData []byte
 )
 
-func file_site_v1_site_proto_rawDescGZIP() []byte {
-	file_site_v1_site_proto_rawDescOnce.Do(func() {
-		file_site_v1_site_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_site_v1_site_proto_rawDesc), len(file_site_v1_site_proto_rawDesc)))
+func file_manifest_protobuf_site_v1_site_proto_rawDescGZIP() []byte {
+	file_manifest_protobuf_site_v1_site_proto_rawDescOnce.Do(func() {
+		file_manifest_protobuf_site_v1_site_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_manifest_protobuf_site_v1_site_proto_rawDesc), len(file_manifest_protobuf_site_v1_site_proto_rawDesc)))
 	})
-	return file_site_v1_site_proto_rawDescData
+	return file_manifest_protobuf_site_v1_site_proto_rawDescData
 }
 
-var file_site_v1_site_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_site_v1_site_proto_goTypes = []any{
+var file_manifest_protobuf_site_v1_site_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_manifest_protobuf_site_v1_site_proto_goTypes = []any{
 	(*GetBasicSettingReq)(nil),    // 0: site.GetBasicSettingReq
 	(*GetBasicSettingRes)(nil),    // 1: site.GetBasicSettingRes
 	(*UpdateBasicSettingReq)(nil), // 2: site.UpdateBasicSettingReq
 	(*UpdateBasicSettingRes)(nil), // 3: site.UpdateBasicSettingRes
 }
-var file_site_v1_site_proto_depIdxs = []int32{
+var file_manifest_protobuf_site_v1_site_proto_depIdxs = []int32{
 	0, // 0: site.Site.GetBasicSetting:input_type -> site.GetBasicSettingReq
 	2, // 1: site.Site.UpdateBasicSetting:input_type -> site.UpdateBasicSettingReq
 	1, // 2: site.Site.GetBasicSetting:output_type -> site.GetBasicSettingRes
@@ -500,26 +501,26 @@ var file_site_v1_site_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_site_v1_site_proto_init() }
-func file_site_v1_site_proto_init() {
-	if File_site_v1_site_proto != nil {
+func init() { file_manifest_protobuf_site_v1_site_proto_init() }
+func file_manifest_protobuf_site_v1_site_proto_init() {
+	if File_manifest_protobuf_site_v1_site_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_site_v1_site_proto_rawDesc), len(file_site_v1_site_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manifest_protobuf_site_v1_site_proto_rawDesc), len(file_manifest_protobuf_site_v1_site_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_site_v1_site_proto_goTypes,
-		DependencyIndexes: file_site_v1_site_proto_depIdxs,
-		MessageInfos:      file_site_v1_site_proto_msgTypes,
+		GoTypes:           file_manifest_protobuf_site_v1_site_proto_goTypes,
+		DependencyIndexes: file_manifest_protobuf_site_v1_site_proto_depIdxs,
+		MessageInfos:      file_manifest_protobuf_site_v1_site_proto_msgTypes,
 	}.Build()
-	File_site_v1_site_proto = out.File
-	file_site_v1_site_proto_goTypes = nil
-	file_site_v1_site_proto_depIdxs = nil
+	File_manifest_protobuf_site_v1_site_proto = out.File
+	file_manifest_protobuf_site_v1_site_proto_goTypes = nil
+	file_manifest_protobuf_site_v1_site_proto_depIdxs = nil
 }

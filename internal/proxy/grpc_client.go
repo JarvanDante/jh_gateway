@@ -458,18 +458,18 @@ func callUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	// 创建 gRPC 客户端
 	client := sitev1.NewSiteClient(conn)
 	req := &sitev1.UpdateBasicSettingReq{
-		SiteId:           getInt32FromMap(reqData, "site_id"),
-		IpRegisterTime:   getInt32FromMap(reqData, "ip_register_time"),
-		OpenRegister:     getBoolFromMap(reqData, "open_register"),
-		Close:            getBoolFromMap(reqData, "close"),
-		CloseReason:      getStringFromMap(reqData, "close_reason"),
-		AgentUrl:         getStringFromMap(reqData, "agent_url"),
-		MobileUrl:        getStringFromMap(reqData, "mobile_url"),
-		AgentRegisterUrl: getStringFromMap(reqData, "agent_register_url"),
-		MinWithdraw:      getFloat64FromMap(reqData, "minWithdraw"),
-		MaxWithdraw:      getFloat64FromMap(reqData, "maxWithdraw"),
-		MobileLogo:       getStringFromMap(reqData, "mobile_logo"),
-		ServiceUrl:       getStringFromMap(reqData, "service_url"),
+		SiteId:               getInt32FromMap(reqData, "site_id"),
+		RegisterTimeInterval: getInt32FromMap(reqData, "register_time_interval"),
+		SwitchRegister:       getBoolFromMap(reqData, "switch_register"),
+		IsClose:              getBoolFromMap(reqData, "is_close"),
+		CloseReason:          getStringFromMap(reqData, "close_reason"),
+		UrlAgentPc:           getStringFromMap(reqData, "url_agent_pc"),
+		UrlMobile:            getStringFromMap(reqData, "url_mobile"),
+		UrlAgentRegister:     getStringFromMap(reqData, "url_agent_register"),
+		MinWithdraw:          getInt32FromMap(reqData, "min_withdraw"),
+		MaxWithdraw:          getInt32FromMap(reqData, "max_withdraw"),
+		MobileLogo:           getStringFromMap(reqData, "mobile_logo"),
+		UrlService:           getStringFromMap(reqData, "url_service"),
 	}
 
 	// 如果没有指定站点ID，使用默认值
