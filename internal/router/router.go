@@ -27,7 +27,7 @@ func Register(s *ghttp.Server) {
 		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
 	})
 
-	// 管理员相关：通过 gRPC 调用 user-service (包含管理员功能和站点设置)
+	// 管理员相关：通过 gRPC 调用 admin-service (包含管理员功能和站点设置)
 	s.Group("/api/admin", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
@@ -37,7 +37,7 @@ func Register(s *ghttp.Server) {
 			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
-		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
+		group.ALL("/*any", proxy.GRPCToHTTP("admin-service"))
 	})
 
 	// 支付相关：转发到 payment-service (HTTP)

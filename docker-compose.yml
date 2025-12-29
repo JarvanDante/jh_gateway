@@ -90,12 +90,67 @@ services:
     networks:
       jarven:
         ipv4_address: 172.19.0.29
+  elasticsearch:
+    build: ./elasticsearch
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    restart: always
+    networks:
+      jarven:
+        ipv4_address: 172.19.0.28
+  kibana:
+    build: ./kibana
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://172.19.0.28:9200
+    ports:
+      - "5601:5601"
+    restart: always
+    networks:
+      jarven:
+        ipv4_address: 172.19.0.27
+  fluent-bit:
+    build: ./fluent-bit
+    container_name: fluent-bit
+    depends_on:
+      - elasticsearch
+    ports:
+      - "24224:24224"
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf
+    restart: always
+    networks:
+      jarven:
+        ipv4_address: 172.19.0.26
+  jaeger:
+    build: ./jaeger
+    container_name: jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    restart: always
+    networks:
+      jarven:
+        ipv4_address: 172.19.0.25
   jh_gateway:
     build: ./jh_gateway
     container_name: jh_gateway
     ports:
       - "8000:8000"
-      - "2345:2345"
     volumes:
       - /Users/wangdante/D/kugou/:/var/www/html/
     environment:
@@ -104,7 +159,7 @@ services:
     depends_on:
       consul:
         condition: service_healthy
-      jh_user:
+      jh_user_service:
         condition: service_started
     restart: always
     stdin_open: true
@@ -112,17 +167,18 @@ services:
     networks:
       jarven:
         ipv4_address: 172.19.0.30
-  jh_user:
-    build: ./jh_user
-    container_name: jh_user
+  jh_admin_service:
+    build: ./jh_admin_service
+    container_name: jh_admin_service
     ports:
       - "8001:8001"
       - "8002:8002"
+      - "2345:2345"
     volumes:
       - /Users/wangdante/D/kugou/:/var/www/html/
     environment:
       - CONSUL_ADDR=consul:8500
-      - SERVICE_ADDR=user-service
+      - SERVICE_ADDR=admin-service
     depends_on:
       consul:
         condition: service_healthy
@@ -172,10 +228,27 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass 654321
+    volumes:
+      - redis-data:/data
     restart: always
     networks:
       jarven:
         ipv4_address: 172.19.0.6
+  redisinsight:
+    build: ./redisinsight
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    restart: always
+    networks:
+      jarven:
+        ipv4_address: 172.19.0.24
   #    volumes:
   #      - /Users/wangdante/D/mydocker/redis/data:/var/docker/redis/
   swagger:
@@ -192,6 +265,7 @@ services:
     networks:
       jarven:
         ipv4_address: 172.19.0.19
+
 # 自定义网络
 networks:
   jarven:
@@ -201,5 +275,7 @@ networks:
       config:
         - subnet: 172.19.0.0/16
           gateway: 172.19.0.1
-
+volumes:
+  es_data:
+  redis-data:
 
