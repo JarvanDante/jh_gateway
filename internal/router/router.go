@@ -14,20 +14,7 @@ func Register(s *ghttp.Server) {
 		util.WriteSuccess(r, nil)
 	})
 
-	// 用户相关：通过 gRPC 调用 user-service
-	s.Group("/api/user", func(group *ghttp.RouterGroup) {
-		group.Middleware(
-			middleware.Logging,
-			middleware.Trace,
-			middleware.RateLimit,
-			middleware.RequestParser, // 解析请求体数据
-			middleware.AuthWithSkip("/register", "/login", "/captcha"), // 跳过注册、登录、验证码接口
-			middleware.CircuitBreaker,                                  // 简单熔断
-		)
-		group.ALL("/*any", proxy.GRPCToHTTP("user-service"))
-	})
-
-	// 管理员相关：通过 gRPC 调用 admin-service (包含管理员功能和站点设置)
+	// 管理员相关：通过 gRPC 调用 admin_service (包含管理员功能和站点设置)
 	s.Group("/api/admin", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
@@ -37,7 +24,7 @@ func Register(s *ghttp.Server) {
 			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
-		group.ALL("/*any", proxy.GRPCToHTTP("admin-service"))
+		group.ALL("/*any", proxy.GRPCToHTTP("admin_service"))
 	})
 
 	// 支付相关：转发到 payment-service (HTTP)
