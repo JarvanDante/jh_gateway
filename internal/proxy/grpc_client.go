@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	adminv1 "jh_gateway/api/admin/v1"
+	rolev1 "jh_gateway/api/role/v1"
 	sitev1 "jh_gateway/api/site/v1"
 
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -124,6 +125,8 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return callGetBasicSetting(ctx, conn, r)
 	case strings.HasSuffix(path, "/update-basic-setting") && method == "POST":
 		return callUpdateBasicSetting(ctx, conn, r)
+	case strings.HasSuffix(path, "/roles") && method == "GET":
+		return callGetRoleList(ctx, conn, r)
 	}
 
 	// 用户相关接口已删除
@@ -562,4 +565,48 @@ func getFloat64FromMap(data map[string]interface{}, key string) float64 {
 		}
 	}
 	return 0.0
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/角色管理
+ * @title 获取角色列表
+ * @description 获取站点角色列表
+ * @method get
+ * @url /api/admin/roles
+ * @param token 必选 string 员工token
+ * @return {"code":0,"msg":"success","data":{"roles":[{"id":1,"site_id":1,"name":"管理员","status":1,"created_at":1640995200,"updated_at":1640995200,"permissions":"1,2,3"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.roles array 角色列表
+ * @return_param data.roles.id int 角色ID
+ * @return_param data.roles.site_id int 站点ID
+ * @return_param data.roles.name string 角色名称
+ * @return_param data.roles.status int 状态：0=禁用，1=启用
+ * @return_param data.roles.created_at int 创建时间戳
+ * @return_param data.roles.updated_at int 更新时间戳
+ * @return_param data.roles.permissions string 权限配置
+ * @remark 备注
+ * @number 1
+ */
+func callGetRoleList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Role GetRoleList")
+
+	// 创建 gRPC 客户端
+	client := rolev1.NewRoleClient(conn)
+	req := &rolev1.GetRoleListReq{
+		SiteId: r.Get("site_id", 1).Int32(),
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.GetRoleList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取角色列表失败，请稍后重试")
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
 }

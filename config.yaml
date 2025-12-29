@@ -7,6 +7,14 @@ grpcGateway:
 consul:
   addr: "172.19.0.29:8500" # 容器内直接访问Consul
 
+# Jaeger 配置
+jaeger:
+  endpoint: "jaeger:4317" # Jaeger OTLP gRPC 端点
+  serviceName: "jh_gateway" # 服务名称
+  serviceVersion: "1.0.0" # 服务版本
+  environment: "development" # 环境
+  enabled: true # 是否启用追踪
+
 jwt:
   secret: "your-jwt-secret"
 
