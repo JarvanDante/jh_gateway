@@ -444,7 +444,33 @@ func callGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	return nil
 }
 
-// callUpdateBasicSetting 处理更新基本设置
+/**
+ * showdoc
+ * @catalog 后台/系统/全局设置
+ * @title 设置站点配置信息
+ * @description 设置站点配置信息
+ * @method post
+ * @url /api/admin/update-basic-setting
+ * @param token 必选 string 员工token
+ * @param site_id 必选 int 站点id
+ * @param register_time_interval 必选 int 同一IP重复注册时间间隔
+ * @param switch_register 必选 bool 同一IP重复注册时间间隔
+ * @param is_close 必选 bool 是否关闭站点
+ * @param close_reason 必选 string 关闭原因
+ * @param url_agent_pc 必选 string 代理链接地址
+ * @param url_mobile 必选 string 手机域名地址
+ * @param url_agent_register 必选 string 代理推广地址
+ * @param min_withdraw 必选 int 单笔最低提现金额
+ * @param max_withdraw 必选 int 单笔最高提现金额
+ * @param mobile_logo 必选 string 手机端Logo
+ * @param url_service 必选 string 客服链接
+ * @return {"code":0,"msg":"success","data":{"message":"设置成功"}}
+ * @return_param code int 状态码
+ * @return_param message string 提示说明
+ * @return_param data array 数组
+ * @remark 备注
+ * @number 1
+ */
 func callUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
