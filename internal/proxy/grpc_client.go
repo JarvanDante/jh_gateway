@@ -569,7 +569,7 @@ func getFloat64FromMap(data map[string]interface{}, key string) float64 {
 
 /**
  * showdoc
- * @catalog 后台/系统/角色管理
+ * @catalog 后台/系统/员工账号
  * @title 获取角色列表
  * @description 获取站点角色列表
  * @method get

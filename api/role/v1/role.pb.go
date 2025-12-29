@@ -2,16 +2,17 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v6.33.1
-// source: manifest/protobuf/role/v1/role.proto
+// source: role/v1/role.proto
 
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,14 +24,14 @@ const (
 
 type GetRoleListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetRoleListReq) Reset() {
 	*x = GetRoleListReq{}
-	mi := &file_manifest_protobuf_role_v1_role_proto_msgTypes[0]
+	mi := &file_role_v1_role_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +43,7 @@ func (x *GetRoleListReq) String() string {
 func (*GetRoleListReq) ProtoMessage() {}
 
 func (x *GetRoleListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_role_v1_role_proto_msgTypes[0]
+	mi := &file_role_v1_role_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +56,7 @@ func (x *GetRoleListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRoleListReq.ProtoReflect.Descriptor instead.
 func (*GetRoleListReq) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_role_v1_role_proto_rawDescGZIP(), []int{0}
+	return file_role_v1_role_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *GetRoleListReq) GetSiteId() int32 {
@@ -67,20 +68,20 @@ func (x *GetRoleListReq) GetSiteId() int32 {
 
 type RoleInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`          // 站点ID
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                             // 角色名称
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`                        // 状态：0=禁用，1=启用
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // 创建时间戳
-	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"` // 更新时间戳
-	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty"`               // 权限配置
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                                 // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"`           // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                              // 角色名称
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty" dc:"状态：0=禁用，1=启用"`                 // 状态：0=禁用，1=启用
+	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty" dc:"创建时间戳"` // 创建时间戳
+	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty" dc:"更新时间戳"` // 更新时间戳
+	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty" dc:"权限配置"`                // 权限配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *RoleInfo) Reset() {
 	*x = RoleInfo{}
-	mi := &file_manifest_protobuf_role_v1_role_proto_msgTypes[1]
+	mi := &file_role_v1_role_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -92,7 +93,7 @@ func (x *RoleInfo) String() string {
 func (*RoleInfo) ProtoMessage() {}
 
 func (x *RoleInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_role_v1_role_proto_msgTypes[1]
+	mi := &file_role_v1_role_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -105,7 +106,7 @@ func (x *RoleInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RoleInfo.ProtoReflect.Descriptor instead.
 func (*RoleInfo) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_role_v1_role_proto_rawDescGZIP(), []int{1}
+	return file_role_v1_role_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *RoleInfo) GetId() int32 {
@@ -159,14 +160,14 @@ func (x *RoleInfo) GetPermissions() string {
 
 type GetRoleListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"` // 角色列表
+	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty" dc:"角色列表"` // 角色列表
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetRoleListRes) Reset() {
 	*x = GetRoleListRes{}
-	mi := &file_manifest_protobuf_role_v1_role_proto_msgTypes[2]
+	mi := &file_role_v1_role_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -178,7 +179,7 @@ func (x *GetRoleListRes) String() string {
 func (*GetRoleListRes) ProtoMessage() {}
 
 func (x *GetRoleListRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manifest_protobuf_role_v1_role_proto_msgTypes[2]
+	mi := &file_role_v1_role_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -191,7 +192,7 @@ func (x *GetRoleListRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRoleListRes.ProtoReflect.Descriptor instead.
 func (*GetRoleListRes) Descriptor() ([]byte, []int) {
-	return file_manifest_protobuf_role_v1_role_proto_rawDescGZIP(), []int{2}
+	return file_role_v1_role_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetRoleListRes) GetRoles() []*RoleInfo {
@@ -201,11 +202,11 @@ func (x *GetRoleListRes) GetRoles() []*RoleInfo {
 	return nil
 }
 
-var File_manifest_protobuf_role_v1_role_proto protoreflect.FileDescriptor
+var File_role_v1_role_proto protoreflect.FileDescriptor
 
-const file_manifest_protobuf_role_v1_role_proto_rawDesc = "" +
+const file_role_v1_role_proto_rawDesc = "" +
 	"\n" +
-	"$manifest/protobuf/role/v1/role.proto\x12\x04role\")\n" +
+	"\x12role/v1/role.proto\x12\x04role\")\n" +
 	"\x0eGetRoleListReq\x12\x17\n" +
 	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xbf\x01\n" +
 	"\bRoleInfo\x12\x0e\n" +
@@ -221,27 +222,27 @@ const file_manifest_protobuf_role_v1_role_proto_rawDesc = "" +
 	"\x0eGetRoleListRes\x12$\n" +
 	"\x05roles\x18\x01 \x03(\v2\x0e.role.RoleInfoR\x05roles2C\n" +
 	"\x04Role\x12;\n" +
-	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00B\x18Z\x16jh_gateway/api/role/v1b\x06proto3"
+	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00B\x1dZ\x1bjh_user_service/api/role/v1b\x06proto3"
 
 var (
-	file_manifest_protobuf_role_v1_role_proto_rawDescOnce sync.Once
-	file_manifest_protobuf_role_v1_role_proto_rawDescData []byte
+	file_role_v1_role_proto_rawDescOnce sync.Once
+	file_role_v1_role_proto_rawDescData []byte
 )
 
-func file_manifest_protobuf_role_v1_role_proto_rawDescGZIP() []byte {
-	file_manifest_protobuf_role_v1_role_proto_rawDescOnce.Do(func() {
-		file_manifest_protobuf_role_v1_role_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_manifest_protobuf_role_v1_role_proto_rawDesc), len(file_manifest_protobuf_role_v1_role_proto_rawDesc)))
+func file_role_v1_role_proto_rawDescGZIP() []byte {
+	file_role_v1_role_proto_rawDescOnce.Do(func() {
+		file_role_v1_role_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_role_v1_role_proto_rawDesc), len(file_role_v1_role_proto_rawDesc)))
 	})
-	return file_manifest_protobuf_role_v1_role_proto_rawDescData
+	return file_role_v1_role_proto_rawDescData
 }
 
-var file_manifest_protobuf_role_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_manifest_protobuf_role_v1_role_proto_goTypes = []any{
+var file_role_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_role_v1_role_proto_goTypes = []any{
 	(*GetRoleListReq)(nil), // 0: role.GetRoleListReq
 	(*RoleInfo)(nil),       // 1: role.RoleInfo
 	(*GetRoleListRes)(nil), // 2: role.GetRoleListRes
 }
-var file_manifest_protobuf_role_v1_role_proto_depIdxs = []int32{
+var file_role_v1_role_proto_depIdxs = []int32{
 	1, // 0: role.GetRoleListRes.roles:type_name -> role.RoleInfo
 	0, // 1: role.Role.GetRoleList:input_type -> role.GetRoleListReq
 	2, // 2: role.Role.GetRoleList:output_type -> role.GetRoleListRes
@@ -252,26 +253,26 @@ var file_manifest_protobuf_role_v1_role_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_manifest_protobuf_role_v1_role_proto_init() }
-func file_manifest_protobuf_role_v1_role_proto_init() {
-	if File_manifest_protobuf_role_v1_role_proto != nil {
+func init() { file_role_v1_role_proto_init() }
+func file_role_v1_role_proto_init() {
+	if File_role_v1_role_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manifest_protobuf_role_v1_role_proto_rawDesc), len(file_manifest_protobuf_role_v1_role_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_role_v1_role_proto_rawDesc), len(file_role_v1_role_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_manifest_protobuf_role_v1_role_proto_goTypes,
-		DependencyIndexes: file_manifest_protobuf_role_v1_role_proto_depIdxs,
-		MessageInfos:      file_manifest_protobuf_role_v1_role_proto_msgTypes,
+		GoTypes:           file_role_v1_role_proto_goTypes,
+		DependencyIndexes: file_role_v1_role_proto_depIdxs,
+		MessageInfos:      file_role_v1_role_proto_msgTypes,
 	}.Build()
-	File_manifest_protobuf_role_v1_role_proto = out.File
-	file_manifest_protobuf_role_v1_role_proto_goTypes = nil
-	file_manifest_protobuf_role_v1_role_proto_depIdxs = nil
+	File_role_v1_role_proto = out.File
+	file_role_v1_role_proto_goTypes = nil
+	file_role_v1_role_proto_depIdxs = nil
 }
