@@ -2,10 +2,13 @@ syntax = "proto3";
 
 package role;
 
-option go_package = "jh_admin_service/api/backend/role/v1";
+option go_package = "jh_gateway/api/backend/role/v1";
 
 service Role {
     rpc GetRoleList(GetRoleListReq) returns (GetRoleListRes) {}
+    rpc CreateRole(CreateRoleReq) returns (CreateRoleRes) {}
+    rpc UpdateRole(UpdateRoleReq) returns (UpdateRoleRes) {}
+    rpc DeleteRole(DeleteRoleReq) returns (DeleteRoleRes) {}
 }
 
 message GetRoleListReq {
@@ -24,4 +27,41 @@ message RoleInfo {
 
 message GetRoleListRes {
     repeated RoleInfo roles = 1;                         // 角色列表
+}
+
+// 创建角色请求
+message CreateRoleReq {
+    int32 site_id = 1;                                   // 站点ID
+    string name = 2;                                     // 角色名称
+}
+
+// 创建角色响应
+message CreateRoleRes {
+    bool success = 1;                                    // 是否成功
+    string message = 2;                                  // 响应消息
+}
+
+// 更新角色请求
+message UpdateRoleReq {
+    int32 id = 1;                                        // 角色ID
+    int32 site_id = 2;                                   // 站点ID
+    string name = 3;                                     // 角色名称
+}
+
+// 更新角色响应
+message UpdateRoleRes {
+    bool success = 1;                                    // 是否成功
+    string message = 2;                                  // 响应消息
+}
+
+// 删除角色请求
+message DeleteRoleReq {
+    int32 id = 1;                                        // 角色ID
+    int32 site_id = 2;                                   // 站点ID
+}
+
+// 删除角色响应
+message DeleteRoleRes {
+    bool success = 1;                                    // 是否成功
+    string message = 2;                                  // 响应消息
 }

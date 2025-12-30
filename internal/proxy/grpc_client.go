@@ -126,6 +126,12 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return callUpdateBasicSetting(ctx, conn, r)
 	case strings.HasSuffix(path, "/roles") && method == "GET":
 		return callGetRoleList(ctx, conn, r)
+	case strings.HasSuffix(path, "/create-role") && method == "POST":
+		return callCreateRole(ctx, conn, r)
+	case strings.HasSuffix(path, "/update-role") && method == "POST":
+		return callUpdateRole(ctx, conn, r)
+	case strings.HasSuffix(path, "/delete-role") && method == "POST":
+		return callDeleteRole(ctx, conn, r)
 	}
 
 	// 用户相关接口已删除
@@ -602,6 +608,207 @@ func callGetRoleList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	res, err := client.GetRoleList(ctx, req)
 	if err != nil {
 		util.WriteInternalError(r, "获取角色列表失败，请稍后重试")
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 创建角色
+ * @description 创建角色
+ * @method post
+ * @url /api/admin/create-role
+ * @param site_id 必选 int 应用ID
+ * @param name 必选 string 角色名称
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"创建成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callCreateRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Role CreateRole")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	name, ok := reqData["name"].(string)
+	if !ok || name == "" {
+		util.WriteBadRequest(r, "角色名称不能为空")
+		return nil
+	}
+
+	siteId := int32(1) // 默认站点ID
+	if s, ok := reqData["site_id"].(float64); ok {
+		siteId = int32(s)
+	}
+
+	// 创建 gRPC 客户端
+	client := v2.NewRoleClient(conn)
+	req := &v2.CreateRoleReq{
+		SiteId: siteId,
+		Name:   name,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.CreateRole(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "创建角色失败，请稍后重试")
+		return nil
+	}
+
+	// 根据业务逻辑返回响应
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 更新角色
+ * @description 更新角色
+ * @method post
+ * @url /api/admin/update-role
+ * @param id 必选 int 角色ID
+ * @param name 必选 string 角色名称
+ * @return {"code":0,"msg":"更新成功","data":{"success":true,"message":"更新成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callUpdateRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Role UpdateRole")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	name, ok := reqData["name"].(string)
+	if !ok || name == "" {
+		util.WriteBadRequest(r, "角色名称不能为空")
+		return nil
+	}
+
+	id := int32(0)
+	if i, ok := reqData["id"].(float64); ok {
+		id = int32(i)
+	}
+	if id <= 0 {
+		util.WriteBadRequest(r, "角色ID无效")
+		return nil
+	}
+
+	siteId := int32(1) // 默认站点ID
+	if s, ok := reqData["site_id"].(float64); ok {
+		siteId = int32(s)
+	}
+
+	// 创建 gRPC 客户端
+	client := v2.NewRoleClient(conn)
+	req := &v2.UpdateRoleReq{
+		Id:     id,
+		SiteId: siteId,
+		Name:   name,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.UpdateRole(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "更新角色失败，请稍后重试")
+		return nil
+	}
+
+	// 根据业务逻辑返回响应
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 删除角色
+ * @description 删除角色的接口
+ * @method post
+ * @url /api/admin/delete-role
+ * @param id 必选 int 角色ID
+ * @return {"code":0,"msg":"删除成功","data":{"success":true,"message":"删除成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callDeleteRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Role DeleteRole")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	id := int32(0)
+	if i, ok := reqData["id"].(float64); ok {
+		id = int32(i)
+	}
+	if id <= 0 {
+		util.WriteBadRequest(r, "角色ID无效")
+		return nil
+	}
+
+	siteId := int32(1) // 默认站点ID
+	if s, ok := reqData["site_id"].(float64); ok {
+		siteId = int32(s)
+	}
+
+	// 创建 gRPC 客户端
+	client := v2.NewRoleClient(conn)
+	req := &v2.DeleteRoleReq{
+		Id:     id,
+		SiteId: siteId,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.DeleteRole(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "删除角色失败，请稍后重试")
+		return nil
+	}
+
+	// 根据业务逻辑返回响应
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
 		return nil
 	}
 

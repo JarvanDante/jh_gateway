@@ -7,12 +7,11 @@
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -24,7 +23,7 @@ const (
 
 type GetRoleListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -68,13 +67,13 @@ func (x *GetRoleListReq) GetSiteId() int32 {
 
 type RoleInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                                 // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"`           // 站点ID
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                              // 角色名称
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty" dc:"状态：0=禁用，1=启用"`                 // 状态：0=禁用，1=启用
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty" dc:"创建时间戳"` // 创建时间戳
-	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty" dc:"更新时间戳"` // 更新时间戳
-	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty" dc:"权限配置"`                // 权限配置
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`          // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                             // 角色名称
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`                        // 状态：0=禁用，1=启用
+	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // 创建时间戳
+	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"` // 更新时间戳
+	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty"`               // 权限配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -160,7 +159,7 @@ func (x *RoleInfo) GetPermissions() string {
 
 type GetRoleListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty" dc:"角色列表"` // 角色列表
+	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"` // 角色列表
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -202,6 +201,332 @@ func (x *GetRoleListRes) GetRoles() []*RoleInfo {
 	return nil
 }
 
+// 创建角色请求
+type CreateRoleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                    // 角色名称
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateRoleReq) Reset() {
+	*x = CreateRoleReq{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateRoleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateRoleReq) ProtoMessage() {}
+
+func (x *CreateRoleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateRoleReq.ProtoReflect.Descriptor instead.
+func (*CreateRoleReq) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateRoleReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *CreateRoleReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+// 创建角色响应
+type CreateRoleRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateRoleRes) Reset() {
+	*x = CreateRoleRes{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateRoleRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateRoleRes) ProtoMessage() {}
+
+func (x *CreateRoleRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateRoleRes.ProtoReflect.Descriptor instead.
+func (*CreateRoleRes) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateRoleRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CreateRoleRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 更新角色请求
+type UpdateRoleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                    // 角色名称
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRoleReq) Reset() {
+	*x = UpdateRoleReq{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRoleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRoleReq) ProtoMessage() {}
+
+func (x *UpdateRoleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRoleReq.ProtoReflect.Descriptor instead.
+func (*UpdateRoleReq) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateRoleReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateRoleReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *UpdateRoleReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+// 更新角色响应
+type UpdateRoleRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRoleRes) Reset() {
+	*x = UpdateRoleRes{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRoleRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRoleRes) ProtoMessage() {}
+
+func (x *UpdateRoleRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRoleRes.ProtoReflect.Descriptor instead.
+func (*UpdateRoleRes) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateRoleRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *UpdateRoleRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 删除角色请求
+type DeleteRoleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRoleReq) Reset() {
+	*x = DeleteRoleReq{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRoleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRoleReq) ProtoMessage() {}
+
+func (x *DeleteRoleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRoleReq.ProtoReflect.Descriptor instead.
+func (*DeleteRoleReq) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *DeleteRoleReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *DeleteRoleReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 删除角色响应
+type DeleteRoleRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRoleRes) Reset() {
+	*x = DeleteRoleRes{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRoleRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRoleRes) ProtoMessage() {}
+
+func (x *DeleteRoleRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRoleRes.ProtoReflect.Descriptor instead.
+func (*DeleteRoleRes) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeleteRoleRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteRoleRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_backend_role_v1_role_proto protoreflect.FileDescriptor
 
 const file_backend_role_v1_role_proto_rawDesc = "" +
@@ -220,9 +545,34 @@ const file_backend_role_v1_role_proto_rawDesc = "" +
 	"updated_at\x18\x06 \x01(\x03R\tupdatedAt\x12 \n" +
 	"\vpermissions\x18\a \x01(\tR\vpermissions\"6\n" +
 	"\x0eGetRoleListRes\x12$\n" +
-	"\x05roles\x18\x01 \x03(\v2\x0e.role.RoleInfoR\x05roles2C\n" +
+	"\x05roles\x18\x01 \x03(\v2\x0e.role.RoleInfoR\x05roles\"<\n" +
+	"\rCreateRoleReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"C\n" +
+	"\rCreateRoleRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"L\n" +
+	"\rUpdateRoleReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"C\n" +
+	"\rUpdateRoleRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"8\n" +
+	"\rDeleteRoleReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\asite_id\x18\x02 \x01(\x05R\x06siteId\"C\n" +
+	"\rDeleteRoleRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xf1\x01\n" +
 	"\x04Role\x12;\n" +
-	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00B&Z$jh_admin_service/api/backend/role/v1b\x06proto3"
+	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00\x128\n" +
+	"\n" +
+	"CreateRole\x12\x13.role.CreateRoleReq\x1a\x13.role.CreateRoleRes\"\x00\x128\n" +
+	"\n" +
+	"UpdateRole\x12\x13.role.UpdateRoleReq\x1a\x13.role.UpdateRoleRes\"\x00\x128\n" +
+	"\n" +
+	"DeleteRole\x12\x13.role.DeleteRoleReq\x1a\x13.role.DeleteRoleRes\"\x00B Z\x1ejh_gateway/api/backend/role/v1b\x06proto3"
 
 var (
 	file_backend_role_v1_role_proto_rawDescOnce sync.Once
@@ -236,18 +586,30 @@ func file_backend_role_v1_role_proto_rawDescGZIP() []byte {
 	return file_backend_role_v1_role_proto_rawDescData
 }
 
-var file_backend_role_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_backend_role_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_backend_role_v1_role_proto_goTypes = []any{
 	(*GetRoleListReq)(nil), // 0: role.GetRoleListReq
 	(*RoleInfo)(nil),       // 1: role.RoleInfo
 	(*GetRoleListRes)(nil), // 2: role.GetRoleListRes
+	(*CreateRoleReq)(nil),  // 3: role.CreateRoleReq
+	(*CreateRoleRes)(nil),  // 4: role.CreateRoleRes
+	(*UpdateRoleReq)(nil),  // 5: role.UpdateRoleReq
+	(*UpdateRoleRes)(nil),  // 6: role.UpdateRoleRes
+	(*DeleteRoleReq)(nil),  // 7: role.DeleteRoleReq
+	(*DeleteRoleRes)(nil),  // 8: role.DeleteRoleRes
 }
 var file_backend_role_v1_role_proto_depIdxs = []int32{
 	1, // 0: role.GetRoleListRes.roles:type_name -> role.RoleInfo
 	0, // 1: role.Role.GetRoleList:input_type -> role.GetRoleListReq
-	2, // 2: role.Role.GetRoleList:output_type -> role.GetRoleListRes
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	3, // 2: role.Role.CreateRole:input_type -> role.CreateRoleReq
+	5, // 3: role.Role.UpdateRole:input_type -> role.UpdateRoleReq
+	7, // 4: role.Role.DeleteRole:input_type -> role.DeleteRoleReq
+	2, // 5: role.Role.GetRoleList:output_type -> role.GetRoleListRes
+	4, // 6: role.Role.CreateRole:output_type -> role.CreateRoleRes
+	6, // 7: role.Role.UpdateRole:output_type -> role.UpdateRoleRes
+	8, // 8: role.Role.DeleteRole:output_type -> role.DeleteRoleRes
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -264,7 +626,7 @@ func file_backend_role_v1_role_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_role_v1_role_proto_rawDesc), len(file_backend_role_v1_role_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
