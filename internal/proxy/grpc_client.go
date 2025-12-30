@@ -136,20 +136,28 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		//删除员工
 	case strings.HasSuffix(path, "/delete-admin") && method == "POST":
 		return callDeleteAdmin(ctx, conn, r)
+		//退出登录
 	case strings.HasSuffix(path, "/logout") && method == "POST":
 		return callAdminLogout(ctx, conn, r)
+		//修改密码
 	case strings.HasSuffix(path, "/change-password") && method == "POST":
 		return callAdminChangePassword(ctx, conn, r)
+		//站点配置信息
 	case strings.HasSuffix(path, "/basic-setting") && method == "GET":
 		return callGetBasicSetting(ctx, conn, r)
+		//更新站点配置信息
 	case strings.HasSuffix(path, "/update-basic-setting") && method == "POST":
 		return callUpdateBasicSetting(ctx, conn, r)
+		//职务列表
 	case strings.HasSuffix(path, "/roles") && method == "GET":
 		return callGetRoleList(ctx, conn, r)
+		//添加职务
 	case strings.HasSuffix(path, "/create-role") && method == "POST":
 		return callCreateRole(ctx, conn, r)
+		//编辑职务
 	case strings.HasSuffix(path, "/update-role") && method == "POST":
 		return callUpdateRole(ctx, conn, r)
+		//删除职务
 	case strings.HasSuffix(path, "/delete-role") && method == "POST":
 		return callDeleteRole(ctx, conn, r)
 	}
