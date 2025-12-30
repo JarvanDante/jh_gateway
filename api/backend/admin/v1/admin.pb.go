@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,9 +24,9 @@ const (
 
 type LoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"` // v: required
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"` // v: required
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`         // Google 2FA code (optional)
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" v:"required"`            // v: required
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" v:"required"`            // v: required
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty" dc:"Google 2FA code (optional)"` // Google 2FA code (optional)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -215,11 +216,11 @@ func (x *RefreshTokenRes) GetToken() string {
 
 type CreateAdminReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"` // v: required|alpha_num|min:4|max:12
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"` // v: required|alpha_num|min:6|max:20
-	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty"` // v: required|alpha_num|min:2|max:20
-	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty"`        // v: required|numeric
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`    // v: required|boolean
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" v:"required|alpha_num|min:4|max:12"` // v: required|alpha_num|min:4|max:12
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" v:"required|alpha_num|min:6|max:20"` // v: required|alpha_num|min:6|max:20
+	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty" v:"required|alpha_num|min:2|max:20"` // v: required|alpha_num|min:2|max:20
+	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty" v:"required|numeric"`                       // v: required|numeric
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"required|boolean"`                   // v: required|boolean
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -365,8 +366,8 @@ func (*LogoutReq) Descriptor() ([]byte, []int) {
 // 退出登录响应
 type LogoutRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -418,8 +419,8 @@ func (x *LogoutRes) GetMessage() string {
 // 修改密码请求
 type ChangePasswordReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty"` // 旧密码
-	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"` // 新密码
+	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty" dc:"旧密码"` // 旧密码
+	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty" dc:"新密码"` // 新密码
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -471,8 +472,8 @@ func (x *ChangePasswordReq) GetNewPassword() string {
 // 修改密码响应
 type ChangePasswordRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -558,7 +559,7 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\fRefreshToken\x12\x16.admin.RefreshTokenReq\x1a\x16.admin.RefreshTokenRes\"\x00\x12=\n" +
 	"\vCreateAdmin\x12\x15.admin.CreateAdminReq\x1a\x15.admin.CreateAdminRes\"\x00\x12.\n" +
 	"\x06Logout\x12\x10.admin.LogoutReq\x1a\x10.admin.LogoutRes\"\x00\x12F\n" +
-	"\x0eChangePassword\x12\x18.admin.ChangePasswordReq\x1a\x18.admin.ChangePasswordRes\"\x00B!Z\x1fjh_gateway/api/backend/admin/v1b\x06proto3"
+	"\x0eChangePassword\x12\x18.admin.ChangePasswordReq\x1a\x18.admin.ChangePasswordRes\"\x00B'Z%jh_admin_service/api/backend/admin/v1b\x06proto3"
 
 var (
 	file_backend_admin_v1_admin_proto_rawDescOnce sync.Once

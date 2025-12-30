@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,7 +24,7 @@ const (
 
 type GetRoleListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -67,13 +68,13 @@ func (x *GetRoleListReq) GetSiteId() int32 {
 
 type RoleInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`          // 站点ID
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                             // 角色名称
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`                        // 状态：0=禁用，1=启用
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // 创建时间戳
-	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"` // 更新时间戳
-	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty"`               // 权限配置
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                                 // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"`           // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                              // 角色名称
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty" dc:"状态：0=禁用，1=启用"`                 // 状态：0=禁用，1=启用
+	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty" dc:"创建时间戳"` // 创建时间戳
+	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty" dc:"更新时间戳"` // 更新时间戳
+	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty" dc:"权限配置"`                // 权限配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -159,7 +160,7 @@ func (x *RoleInfo) GetPermissions() string {
 
 type GetRoleListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"` // 角色列表
+	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty" dc:"角色列表"` // 角色列表
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -204,8 +205,8 @@ func (x *GetRoleListRes) GetRoles() []*RoleInfo {
 // 创建角色请求
 type CreateRoleReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                    // 角色名称
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                    // 角色名称
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -257,8 +258,8 @@ func (x *CreateRoleReq) GetName() string {
 // 创建角色响应
 type CreateRoleRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -310,9 +311,9 @@ func (x *CreateRoleRes) GetMessage() string {
 // 更新角色请求
 type UpdateRoleReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                    // 角色名称
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                       // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                    // 角色名称
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -371,8 +372,8 @@ func (x *UpdateRoleReq) GetName() string {
 // 更新角色响应
 type UpdateRoleRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -424,8 +425,8 @@ func (x *UpdateRoleRes) GetMessage() string {
 // 删除角色请求
 type DeleteRoleReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                       // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -477,8 +478,8 @@ func (x *DeleteRoleReq) GetSiteId() int32 {
 // 删除角色响应
 type DeleteRoleRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -572,7 +573,7 @@ const file_backend_role_v1_role_proto_rawDesc = "" +
 	"\n" +
 	"UpdateRole\x12\x13.role.UpdateRoleReq\x1a\x13.role.UpdateRoleRes\"\x00\x128\n" +
 	"\n" +
-	"DeleteRole\x12\x13.role.DeleteRoleReq\x1a\x13.role.DeleteRoleRes\"\x00B Z\x1ejh_gateway/api/backend/role/v1b\x06proto3"
+	"DeleteRole\x12\x13.role.DeleteRoleReq\x1a\x13.role.DeleteRoleRes\"\x00B&Z$jh_admin_service/api/backend/role/v1b\x06proto3"
 
 var (
 	file_backend_role_v1_role_proto_rawDescOnce sync.Once
