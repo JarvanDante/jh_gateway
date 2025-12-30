@@ -23,8 +23,12 @@ func RequestParser(r *ghttp.Request) {
 
 	// 使用GoFrame的方式获取请求体内容
 	bodyBytes := r.GetBody()
+
+	// 如果请求体为空，存储空的map到上下文中，让具体接口决定是否需要验证
 	if len(bodyBytes) == 0 {
-		util.WriteBadRequest(r, "请求体不能为空")
+		ctx = context.WithValue(ctx, "requestData", map[string]interface{}{})
+		r.SetCtx(ctx)
+		r.Middleware.Next()
 		return
 	}
 
@@ -56,10 +60,21 @@ func GetRequestData(ctx context.Context) (map[string]interface{}, error) {
 
 // GetRequestDataWithFallback 从上下文中获取请求数据，如果没有则尝试解析请求体
 // 这个函数用于向后兼容，确保即使没有使用中间件也能正常工作
+// allowEmpty: 是否允许空请求体
 func GetRequestDataWithFallback(ctx context.Context, r *ghttp.Request) (map[string]interface{}, error) {
+	return GetRequestDataWithOptions(ctx, r, false)
+}
+
+// GetRequestDataWithOptions 从上下文中获取请求数据，支持更多选项
+// allowEmpty: 是否允许空请求体
+func GetRequestDataWithOptions(ctx context.Context, r *ghttp.Request, allowEmpty bool) (map[string]interface{}, error) {
 	// 首先尝试从上下文获取
 	if data := ctx.Value("requestData"); data != nil {
 		if reqData, ok := data.(map[string]interface{}); ok {
+			// 如果不允许空请求体且数据为空，返回错误
+			if !allowEmpty && len(reqData) == 0 {
+				return nil, fmt.Errorf("请求体不能为空")
+			}
 			return reqData, nil
 		}
 	}
@@ -67,6 +82,9 @@ func GetRequestDataWithFallback(ctx context.Context, r *ghttp.Request) (map[stri
 	// 如果上下文中没有数据，尝试解析请求体
 	bodyBytes := r.GetBody()
 	if len(bodyBytes) == 0 {
+		if allowEmpty {
+			return map[string]interface{}{}, nil
+		}
 		return nil, fmt.Errorf("请求体不能为空")
 	}
 

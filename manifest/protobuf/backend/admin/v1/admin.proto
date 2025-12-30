@@ -2,12 +2,14 @@ syntax = "proto3";
 
 package admin;
 
-option go_package = "jh_admin_service/api/backend/admin/v1";
+option go_package = "jh_gateway/api/backend/admin/v1";
 
 service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRes) {}
     rpc CreateAdmin(CreateAdminReq) returns (CreateAdminRes) {}
+    rpc Logout(LogoutReq) returns (LogoutRes) {}
+    rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordRes) {}
 }
 
 message LoginReq {
@@ -36,3 +38,24 @@ message CreateAdminReq {
 }
 
 message CreateAdminRes {}
+
+// 退出登录请求
+message LogoutReq {}
+
+// 退出登录响应
+message LogoutRes {
+    bool success = 1;                                    // 是否成功
+    string message = 2;                                  // 响应消息
+}
+
+// 修改密码请求
+message ChangePasswordReq {
+    string old_password = 1;                             // 旧密码
+    string new_password = 2;                             // 新密码
+}
+
+// 修改密码响应
+message ChangePasswordRes {
+    bool success = 1;                                    // 是否成功
+    string message = 2;                                  // 响应消息
+}

@@ -39,14 +39,16 @@ func AuthWithSkip(skipPaths ...string) ghttp.HandlerFunc {
 			return
 		}
 
-		// 验证成功，将用户信息放入上下文和请求头
-		r.SetCtxVar("userId", claims.UserID)
-		r.Header.Set("X-User-Id", fmt.Sprint(claims.UserID))
-
 		// 如果是管理员相关接口，也设置管理员ID
 		if strings.HasPrefix(path, "/api/admin") {
-			r.SetCtxVar("adminId", claims.UserID)
-			r.Header.Set("X-Admin-Id", fmt.Sprint(claims.UserID))
+			r.SetCtxVar("admin_id", claims.AdminID)
+			r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
+			util.LogWithTrace(ctx, "info", "管理员信息admin_id放入上下文: %d", claims.AdminID)
+		} else {
+			// 验证成功，将用户信息放入上下文和请求头
+			r.SetCtxVar("user_id", claims.UserID)
+			r.Header.Set("X-User-Id", fmt.Sprint(claims.UserID))
+			util.LogWithTrace(ctx, "info", "用户信息user_id放入上下文: %d", claims.UserID)
 		}
 
 		util.LogWithTrace(ctx, "debug", "token验证成功: %s, userId: %d", path, claims.UserID)

@@ -18,6 +18,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 )
 
 // GRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
@@ -110,6 +111,9 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	// 统一添加traceId到gRPC上下文 - 只需要在这里添加一次
 	ctx = addTraceToContext(ctx, r)
 
+	// 添加用户信息到 gRPC metadata
+	ctx = addUserInfoToGRPCContext(ctx, r)
+
 	util.LogWithTrace(ctx, "info", "calling gRPC method for path: %s, method: %s", path, method)
 
 	// 管理员相关接口
@@ -120,6 +124,10 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return callAdminRefreshToken(ctx, conn, r)
 	case strings.HasSuffix(path, "/create-admin") && method == "POST":
 		return callAdminCreate(ctx, conn, r)
+	case strings.HasSuffix(path, "/logout") && method == "POST":
+		return callAdminLogout(ctx, conn, r)
+	case strings.HasSuffix(path, "/change-password") && method == "POST":
+		return callAdminChangePassword(ctx, conn, r)
 	case strings.HasSuffix(path, "/basic-setting") && method == "GET":
 		return callGetBasicSetting(ctx, conn, r)
 	case strings.HasSuffix(path, "/update-basic-setting") && method == "POST":
@@ -159,7 +167,7 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
 	if err != nil {
-		util.WriteBadRequest(r, err.Error())
+		util.WriteBadRequest(r, "请求数据格式错误")
 		return nil
 	}
 
@@ -232,7 +240,7 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
 	if err != nil {
-		util.WriteBadRequest(r, err.Error())
+		util.WriteBadRequest(r, "请求数据格式错误")
 		return nil
 	}
 
@@ -313,13 +321,47 @@ func addTraceToContext(ctx context.Context, r *ghttp.Request) context.Context {
 	return ctx
 }
 
+// addUserInfoToGRPCContext 将用户信息添加到 gRPC metadata 中
+func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Context {
+	md := metadata.New(map[string]string{})
+
+	// 添加管理员ID
+	if adminIdVar := r.GetCtxVar("admin_id"); adminIdVar != nil {
+		if id := adminIdVar.Int(); id > 0 {
+			md.Set("admin_id", fmt.Sprint(id))
+			util.LogWithTrace(ctx, "debug", "添加 admin_id 到 gRPC metadata: %d", id)
+		}
+	}
+
+	// 添加用户ID
+	if userIdVar := r.GetCtxVar("user_id"); userIdVar != nil {
+		if id := userIdVar.Int(); id > 0 {
+			md.Set("user_id", fmt.Sprint(id))
+			util.LogWithTrace(ctx, "debug", "添加 user_id 到 gRPC metadata: %d", id)
+		}
+	}
+
+	// 添加客户端IP
+	if clientIP := r.GetClientIp(); clientIP != "" {
+		md.Set("client_ip", clientIP)
+		util.LogWithTrace(ctx, "debug", "添加 client_ip 到 gRPC metadata: %s", clientIP)
+	}
+
+	// 如果有metadata，则创建新的outgoing context
+	if len(md) > 0 {
+		return metadata.NewOutgoingContext(ctx, md)
+	}
+
+	return ctx
+}
+
 // validateAndParseRequest 验证并解析请求参数
 // 注意：这个函数现在主要用于向后兼容，推荐使用 RequestParser 中间件
 func validateAndParseRequest(ctx context.Context, r *ghttp.Request) (map[string]interface{}, error) {
 	// 使用中间件的辅助函数获取请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
 	if err != nil {
-		util.WriteBadRequest(r, err.Error())
+		util.WriteBadRequest(r, "请求数据格式错误")
 		return nil, err
 	}
 
@@ -483,7 +525,7 @@ func callUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
 	if err != nil {
-		util.WriteBadRequest(r, err.Error())
+		util.WriteBadRequest(r, "请求数据格式错误")
 		return nil
 	}
 
@@ -803,6 +845,109 @@ func callDeleteRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	res, err := client.DeleteRole(ctx, req)
 	if err != nil {
 		util.WriteInternalError(r, "删除角色失败，请稍后重试")
+		return nil
+	}
+
+	// 根据业务逻辑返回响应
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台
+ * @title 退出登录
+ * @description 管理员退出登录的接口
+ * @method post
+ * @url /api/admin/logout
+ * @return {"code":0,"msg":"退出成功","data":{"success":true,"message":"退出成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callAdminLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin Logout")
+
+	// logout 接口不需要请求体，直接创建空的请求
+	client := v1.NewAdminClient(conn)
+	req := &v1.LogoutReq{}
+
+	// 调用 gRPC 服务
+	res, err := client.Logout(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "退出登录失败，请稍后重试")
+		return nil
+	}
+
+	// 根据业务逻辑返回响应
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台
+ * @title 修改密码
+ * @description 管理员修改密码的接口
+ * @method post
+ * @url /api/admin/change-password
+ * @param old_password 必选 string 旧密码
+ * @param new_password 必选 string 新密码
+ * @return {"code":0,"msg":"修改密码成功","data":{"success":true,"message":"修改密码成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callAdminChangePassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin ChangePassword")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	oldPassword, ok := reqData["old_password"].(string)
+	if !ok || oldPassword == "" {
+		util.WriteBadRequest(r, "请输入旧密码")
+		return nil
+	}
+
+	newPassword, ok := reqData["new_password"].(string)
+	if !ok || newPassword == "" {
+		util.WriteBadRequest(r, "请输入新密码")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.ChangePasswordReq{
+		OldPassword: oldPassword,
+		NewPassword: newPassword,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.ChangePassword(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "修改密码失败，请稍后重试")
 		return nil
 	}
 
