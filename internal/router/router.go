@@ -24,7 +24,7 @@ func Register(s *ghttp.Server) {
 			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
-		group.ALL("/*any", proxy.GRPCToHTTP("admin_service"))
+		group.ALL("/*any", proxy.AdminGRPCToHTTP("admin_service"))
 	})
 
 	// 支付相关：转发到 payment-service (HTTP)
@@ -53,8 +53,4 @@ func Register(s *ghttp.Server) {
 		group.ALL("/*any", proxy.Forward)
 	})
 
-	// gRPC 转发：用户服务 (gRPC)
-	// 注意：gRPC 需要通过 gRPC 客户端调用，不能通过 HTTP 网关直接转发
-	// 这里只是示例，实际使用需要客户端直接连接到 gRPC 服务
-	// 如果需要 gRPC 网关，可以使用 grpc-gateway 或 envoy 等专门的工具
 }

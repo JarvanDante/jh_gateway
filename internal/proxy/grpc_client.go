@@ -21,8 +21,8 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-// GRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
-func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
+// AdminGRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
+func AdminGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
 		ctx := r.Context()
 		path := r.URL.Path
@@ -93,7 +93,7 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 		defer conn.Close()
 
 		// 根据路径调用不同的 gRPC 方法
-		if err := callGRPCMethod(ctx, conn, r); err != nil {
+		if err := callAdminGRPCMethod(ctx, conn, r); err != nil {
 			tracing.SetSpanError(span, err)
 			util.WriteInternalError(r, err.Error())
 			return
@@ -103,8 +103,8 @@ func GRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 	}
 }
 
-// callGRPCMethod 根据 HTTP 路径调用对应的 gRPC 方法
-func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+// callAdminGRPCMethod 根据 HTTP 路径调用对应的 gRPC 方法
+func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	path := r.URL.Path
 	method := r.Method
 
