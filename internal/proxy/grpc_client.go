@@ -900,9 +900,9 @@ func callAdminLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 
 /**
  * showdoc
- * @catalog 后台
- * @title 修改密码
- * @description 管理员修改密码的接口
+ * @catalog 后台/系统/员工账号
+ * @title 管理员修改密码
+ * @description 管理员修改密码
  * @method post
  * @url /api/admin/change-password
  * @param old_password 必选 string 旧密码
