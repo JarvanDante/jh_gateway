@@ -3,15 +3,14 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"jh_gateway/api/backend/admin/v1"
+	v2 "jh_gateway/api/backend/role/v1"
+	v3 "jh_gateway/api/backend/site/v1"
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/tracing"
 	"jh_gateway/internal/util"
 	"strings"
-
-	adminv1 "jh_gateway/api/admin/v1"
-	rolev1 "jh_gateway/api/role/v1"
-	sitev1 "jh_gateway/api/site/v1"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
@@ -171,8 +170,8 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	util.LogWithTrace(ctx, "info", "calling gRPC Admin Login with username=%s", username)
 
 	// 创建 gRPC 客户端
-	client := adminv1.NewAdminClient(conn)
-	req := &adminv1.LoginReq{
+	client := v1.NewAdminClient(conn)
+	req := &v1.LoginReq{
 		Username: username,
 		Password: password,
 		Code:     code,
@@ -205,8 +204,8 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	util.LogWithTrace(ctx, "info", "calling gRPC Admin RefreshToken")
 
 	// 创建 gRPC 客户端
-	client := adminv1.NewAdminClient(conn)
-	req := &adminv1.RefreshTokenReq{}
+	client := v1.NewAdminClient(conn)
+	req := &v1.RefreshTokenReq{}
 
 	// 调用 gRPC 服务
 	res, err := client.RefreshToken(ctx, req)
@@ -255,8 +254,8 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	util.LogWithTrace(ctx, "info", "calling gRPC Admin CreateAdmin with username=%s, nickname=%s", username, nickname)
 
 	// 创建 gRPC 客户端
-	client := adminv1.NewAdminClient(conn)
-	req := &adminv1.CreateAdminReq{
+	client := v1.NewAdminClient(conn)
+	req := &v1.CreateAdminReq{
 		Username: username,
 		Password: password,
 		Nickname: nickname,
@@ -430,8 +429,8 @@ func callGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	util.LogWithTrace(ctx, "info", "calling gRPC Site GetBasicSetting")
 
 	// 创建 gRPC 客户端
-	client := sitev1.NewSiteClient(conn)
-	req := &sitev1.GetBasicSettingReq{
+	client := v3.NewSiteClient(conn)
+	req := &v3.GetBasicSettingReq{
 		SiteId: r.Get("site_id", 1).Int32(),
 	}
 
@@ -485,8 +484,8 @@ func callUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	util.LogWithTrace(ctx, "info", "calling gRPC Site UpdateBasicSetting")
 
 	// 创建 gRPC 客户端
-	client := sitev1.NewSiteClient(conn)
-	req := &sitev1.UpdateBasicSettingReq{
+	client := v3.NewSiteClient(conn)
+	req := &v3.UpdateBasicSettingReq{
 		SiteId:               getInt32FromMap(reqData, "site_id"),
 		RegisterTimeInterval: getInt32FromMap(reqData, "register_time_interval"),
 		SwitchRegister:       getBoolFromMap(reqData, "switch_register"),
@@ -594,8 +593,8 @@ func callGetRoleList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	util.LogWithTrace(ctx, "info", "calling gRPC Role GetRoleList")
 
 	// 创建 gRPC 客户端
-	client := rolev1.NewRoleClient(conn)
-	req := &rolev1.GetRoleListReq{
+	client := v2.NewRoleClient(conn)
+	req := &v2.GetRoleListReq{
 		SiteId: r.Get("site_id", 1).Int32(),
 	}
 

@@ -4,7 +4,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.0
 // - protoc             v6.33.1
-// source: site/v1/site.proto
+// source: backend/site/v1/site.proto
 
 package v1
 
@@ -158,5 +158,5 @@ var Site_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "site/v1/site.proto",
+	Metadata: "backend/site/v1/site.proto",
 }

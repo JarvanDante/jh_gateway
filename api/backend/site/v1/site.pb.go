@@ -4,7 +4,7 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v6.33.1
-// source: site/v1/site.proto
+// source: backend/site/v1/site.proto
 
 package v1
 
@@ -34,7 +34,7 @@ type GetBasicSettingReq struct {
 
 func (x *GetBasicSettingReq) Reset() {
 	*x = GetBasicSettingReq{}
-	mi := &file_site_v1_site_proto_msgTypes[0]
+	mi := &file_backend_site_v1_site_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +46,7 @@ func (x *GetBasicSettingReq) String() string {
 func (*GetBasicSettingReq) ProtoMessage() {}
 
 func (x *GetBasicSettingReq) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[0]
+	mi := &file_backend_site_v1_site_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +59,7 @@ func (x *GetBasicSettingReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBasicSettingReq.ProtoReflect.Descriptor instead.
 func (*GetBasicSettingReq) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{0}
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *GetBasicSettingReq) GetSiteId() int32 {
@@ -94,7 +94,7 @@ type GetBasicSettingRes struct {
 
 func (x *GetBasicSettingRes) Reset() {
 	*x = GetBasicSettingRes{}
-	mi := &file_site_v1_site_proto_msgTypes[1]
+	mi := &file_backend_site_v1_site_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -106,7 +106,7 @@ func (x *GetBasicSettingRes) String() string {
 func (*GetBasicSettingRes) ProtoMessage() {}
 
 func (x *GetBasicSettingRes) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[1]
+	mi := &file_backend_site_v1_site_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -119,7 +119,7 @@ func (x *GetBasicSettingRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBasicSettingRes.ProtoReflect.Descriptor instead.
 func (*GetBasicSettingRes) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{1}
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetBasicSettingRes) GetCode() string {
@@ -261,7 +261,7 @@ type UpdateBasicSettingReq struct {
 
 func (x *UpdateBasicSettingReq) Reset() {
 	*x = UpdateBasicSettingReq{}
-	mi := &file_site_v1_site_proto_msgTypes[2]
+	mi := &file_backend_site_v1_site_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -273,7 +273,7 @@ func (x *UpdateBasicSettingReq) String() string {
 func (*UpdateBasicSettingReq) ProtoMessage() {}
 
 func (x *UpdateBasicSettingReq) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[2]
+	mi := &file_backend_site_v1_site_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -286,7 +286,7 @@ func (x *UpdateBasicSettingReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBasicSettingReq.ProtoReflect.Descriptor instead.
 func (*UpdateBasicSettingReq) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{2}
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UpdateBasicSettingReq) GetSiteId() int32 {
@@ -382,7 +382,7 @@ type UpdateBasicSettingRes struct {
 
 func (x *UpdateBasicSettingRes) Reset() {
 	*x = UpdateBasicSettingRes{}
-	mi := &file_site_v1_site_proto_msgTypes[3]
+	mi := &file_backend_site_v1_site_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +394,7 @@ func (x *UpdateBasicSettingRes) String() string {
 func (*UpdateBasicSettingRes) ProtoMessage() {}
 
 func (x *UpdateBasicSettingRes) ProtoReflect() protoreflect.Message {
-	mi := &file_site_v1_site_proto_msgTypes[3]
+	mi := &file_backend_site_v1_site_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,7 +407,7 @@ func (x *UpdateBasicSettingRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBasicSettingRes.ProtoReflect.Descriptor instead.
 func (*UpdateBasicSettingRes) Descriptor() ([]byte, []int) {
-	return file_site_v1_site_proto_rawDescGZIP(), []int{3}
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *UpdateBasicSettingRes) GetMessage() string {
@@ -417,11 +417,11 @@ func (x *UpdateBasicSettingRes) GetMessage() string {
 	return ""
 }
 
-var File_site_v1_site_proto protoreflect.FileDescriptor
+var File_backend_site_v1_site_proto protoreflect.FileDescriptor
 
-const file_site_v1_site_proto_rawDesc = "" +
+const file_backend_site_v1_site_proto_rawDesc = "" +
 	"\n" +
-	"\x12site/v1/site.proto\x12\x04site\"-\n" +
+	"\x1abackend/site/v1/site.proto\x12\x04site\"-\n" +
 	"\x12GetBasicSettingReq\x12\x17\n" +
 	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xe7\x04\n" +
 	"\x12GetBasicSettingRes\x12\x12\n" +
@@ -469,28 +469,28 @@ const file_site_v1_site_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xa1\x01\n" +
 	"\x04Site\x12G\n" +
 	"\x0fGetBasicSetting\x12\x18.site.GetBasicSettingReq\x1a\x18.site.GetBasicSettingRes\"\x00\x12P\n" +
-	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B\x1eZ\x1cjh_admin_service/api/site/v1b\x06proto3"
+	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B&Z$jh_admin_service/api/backend/site/v1b\x06proto3"
 
 var (
-	file_site_v1_site_proto_rawDescOnce sync.Once
-	file_site_v1_site_proto_rawDescData []byte
+	file_backend_site_v1_site_proto_rawDescOnce sync.Once
+	file_backend_site_v1_site_proto_rawDescData []byte
 )
 
-func file_site_v1_site_proto_rawDescGZIP() []byte {
-	file_site_v1_site_proto_rawDescOnce.Do(func() {
-		file_site_v1_site_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_site_v1_site_proto_rawDesc), len(file_site_v1_site_proto_rawDesc)))
+func file_backend_site_v1_site_proto_rawDescGZIP() []byte {
+	file_backend_site_v1_site_proto_rawDescOnce.Do(func() {
+		file_backend_site_v1_site_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_backend_site_v1_site_proto_rawDesc), len(file_backend_site_v1_site_proto_rawDesc)))
 	})
-	return file_site_v1_site_proto_rawDescData
+	return file_backend_site_v1_site_proto_rawDescData
 }
 
-var file_site_v1_site_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_site_v1_site_proto_goTypes = []any{
+var file_backend_site_v1_site_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_backend_site_v1_site_proto_goTypes = []any{
 	(*GetBasicSettingReq)(nil),    // 0: site.GetBasicSettingReq
 	(*GetBasicSettingRes)(nil),    // 1: site.GetBasicSettingRes
 	(*UpdateBasicSettingReq)(nil), // 2: site.UpdateBasicSettingReq
 	(*UpdateBasicSettingRes)(nil), // 3: site.UpdateBasicSettingRes
 }
-var file_site_v1_site_proto_depIdxs = []int32{
+var file_backend_site_v1_site_proto_depIdxs = []int32{
 	0, // 0: site.Site.GetBasicSetting:input_type -> site.GetBasicSettingReq
 	2, // 1: site.Site.UpdateBasicSetting:input_type -> site.UpdateBasicSettingReq
 	1, // 2: site.Site.GetBasicSetting:output_type -> site.GetBasicSettingRes
@@ -502,26 +502,26 @@ var file_site_v1_site_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_site_v1_site_proto_init() }
-func file_site_v1_site_proto_init() {
-	if File_site_v1_site_proto != nil {
+func init() { file_backend_site_v1_site_proto_init() }
+func file_backend_site_v1_site_proto_init() {
+	if File_backend_site_v1_site_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_site_v1_site_proto_rawDesc), len(file_site_v1_site_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_site_v1_site_proto_rawDesc), len(file_backend_site_v1_site_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_site_v1_site_proto_goTypes,
-		DependencyIndexes: file_site_v1_site_proto_depIdxs,
-		MessageInfos:      file_site_v1_site_proto_msgTypes,
+		GoTypes:           file_backend_site_v1_site_proto_goTypes,
+		DependencyIndexes: file_backend_site_v1_site_proto_depIdxs,
+		MessageInfos:      file_backend_site_v1_site_proto_msgTypes,
 	}.Build()
-	File_site_v1_site_proto = out.File
-	file_site_v1_site_proto_goTypes = nil
-	file_site_v1_site_proto_depIdxs = nil
+	File_backend_site_v1_site_proto = out.File
+	file_backend_site_v1_site_proto_goTypes = nil
+	file_backend_site_v1_site_proto_depIdxs = nil
 }

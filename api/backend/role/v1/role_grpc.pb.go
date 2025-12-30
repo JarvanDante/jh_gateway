@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.0
 // - protoc             v6.33.1
-// source: role/v1/role.proto
+// source: backend/role/v1/role.proto
 
 package v1
 
@@ -118,5 +118,5 @@ var Role_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "role/v1/role.proto",
+	Metadata: "backend/role/v1/role.proto",
 }

@@ -4,7 +4,7 @@ syntax = "proto3";
 
 package site;
 
-option go_package = "jh_admin_service/api/site/v1";
+option go_package = "jh_admin_service/api/backend/site/v1";
 
 service Site {
     rpc GetBasicSetting(GetBasicSettingReq) returns (GetBasicSettingRes) {}
