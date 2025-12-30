@@ -118,12 +118,24 @@ func callGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 	// 管理员相关接口
 	switch {
+	//后台登录
 	case strings.HasSuffix(path, "/login") && method == "POST":
 		return callAdminLogin(ctx, conn, r)
+		//刷新token
 	case strings.HasSuffix(path, "/refresh-token") && method == "GET":
 		return callAdminRefreshToken(ctx, conn, r)
+		//获取员工列表
+	case strings.HasSuffix(path, "/admins") && method == "GET":
+		return callGetAdminList(ctx, conn, r)
+		//添加员工
 	case strings.HasSuffix(path, "/create-admin") && method == "POST":
 		return callAdminCreate(ctx, conn, r)
+		//编辑员工
+	case strings.HasSuffix(path, "/update-admin") && method == "POST":
+		return callUpdateAdmin(ctx, conn, r)
+		//删除员工
+	case strings.HasSuffix(path, "/delete-admin") && method == "POST":
+		return callDeleteAdmin(ctx, conn, r)
 	case strings.HasSuffix(path, "/logout") && method == "POST":
 		return callAdminLogout(ctx, conn, r)
 	case strings.HasSuffix(path, "/change-password") && method == "POST":
@@ -213,6 +225,22 @@ func callAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	return nil
 }
 
+/**
+ * showdoc
+ * @catalog 后台
+ * @title 刷新Token
+ * @description 刷新管理员登录token的接口
+ * @method get
+ * @url /api/admin/refresh-token
+ * @param Authorization 必选 string Bearer token (Header中)
+ * @return {"code":0,"msg":"success","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MjcsImV4cCI6MTc2NzIwNjg5NCwiaWF0IjoxNzY3MTIwNDk0LCJzaXRlX2lkIjoxLCJ1c2VyX2lkIjowLCJ1c2VybmFtZSI6Im1pY2hhZWwifQ.KCuhEKfidhecigJP-W5O9F8LaOligchsVy6QgugqTwA"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.token string 新的JWT token
+ * @return_param msg string 提示说明
+ * @remark 需要在Header中提供有效的JWT token，返回新的token用于延长登录状态
+ * @number 2
+ */
 // callAdminRefreshToken 处理管理员token刷新
 func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling gRPC Admin RefreshToken")
@@ -224,7 +252,14 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	// 调用 gRPC 服务
 	res, err := client.RefreshToken(ctx, req)
 	if err != nil {
-		util.WriteInternalError(r, "刷新token失败，请重新登录")
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "未登录或登录已过期") ||
+			strings.Contains(err.Error(), "管理员不存在") ||
+			strings.Contains(err.Error(), "账号已被禁用") {
+			util.WriteUnauthorized(r, "登录已过期，请重新登录")
+		} else {
+			util.WriteInternalError(r, "刷新token失败，请重新登录")
+		}
 		return nil
 	}
 
@@ -235,7 +270,22 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	return nil
 }
 
-// callAdminCreate 处理创建管理员
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 添加员工
+ * @description 添加员工
+ * @method post
+ * @url /api/admin/create-admin
+ * @param Authorization 必选 string Bearer token (Header中)
+ * @return {"code":0,"msg":"success","data":{"message":"管理员创建成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.message string message
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 2
+ */
 func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
@@ -303,6 +353,8 @@ func shouldValidateEarly(path, method string) bool {
 	// 对于admin相关的POST请求，提前验证
 	return (strings.HasSuffix(path, "/login") && method == "POST") ||
 		(strings.HasSuffix(path, "/create-admin") && method == "POST") ||
+		(strings.HasSuffix(path, "/update-admin") && method == "POST") ||
+		(strings.HasSuffix(path, "/delete-admin") && method == "POST") ||
 		(strings.HasSuffix(path, "/update-basic-setting") && method == "POST")
 }
 
@@ -959,5 +1011,200 @@ func callAdminChangePassword(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 
 	// 返回成功响应
 	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 获取员工列表
+ * @description 获取员工列表
+ * @method get
+ * @url /api/admin/admins
+ * @param username 可选 string 用户名筛选
+ * @param status 可选 int 状态筛选
+ * @param page 可选 int 页码
+ * @param size 可选 int 每页数量
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":58,"username":"karson22139","nickname":"马军","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":57,"username":"karson66","nickname":"叶强","role":1,"status":1,"last_login_ip":"127.0.0.1","last_login_time":"2006-01-02 15:04:05","created_at":"2006-01-02 15:04:05"},{"id":56,"username":"刘涛","nickname":"石娟","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":55,"username":"karson","nickname":"马军","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":54,"username":"xuping22","nickname":"马军","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":53,"username":"xuping7","nickname":"马军","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":52,"username":"xuping3","nickname":"马军","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":51,"username":"xuping2","nickname":"马军","role":1,"status":1,"created_at":"2006-01-02 15:04:05"},{"id":50,"username":"xuping6","nickname":"马军","role":1,"status":1,"last_login_ip":"127.0.0.1","last_login_time":"2006-01-02 15:04:05","created_at":"2006-01-02 15:04:05"},{"id":49,"username":"xuping","nickname":"马军","role":1,"status":1,"last_login_ip":"127.0.0.1","last_login_time":"2006-01-02 15:04:05","created_at":"2006-01-02 15:04:05"}],"total":58,"page":1,"size":10}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callGetAdminList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin GetAdminList")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	status := r.Get("status", 0).Int32()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 10).Int32()
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.GetAdminListReq{
+		Username: username,
+		Status:   status,
+		Page:     page,
+		Size:     size,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.GetAdminList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取员工列表失败，请稍后重试")
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, res)
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 编辑员工
+ * @description 编辑员工信息
+ * @method post
+ * @url /api/admin/update-admin
+ * @param id 必选 int 员工ID
+ * @param password 可选 string 密码
+ * @param nickname 可选 string 昵称
+ * @param role 可选 int 角色
+ * @param status 可选 int 状态
+ * @return {"code":0,"msg":"编辑员工成功","data":{}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callUpdateAdmin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin UpdateAdmin")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	id := int32(0)
+	if i, ok := reqData["id"].(float64); ok {
+		id = int32(i)
+	}
+	if id <= 0 {
+		util.WriteBadRequest(r, "员工ID无效")
+		return nil
+	}
+
+	password, _ := reqData["password"].(string)
+	nickname, _ := reqData["nickname"].(string)
+
+	role := int32(0)
+	if r, ok := reqData["role"].(float64); ok {
+		role = int32(r)
+	}
+
+	status := int32(-1) // 使用-1表示不更新状态
+	if s, ok := reqData["status"].(float64); ok {
+		status = int32(s)
+	}
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.UpdateAdminReq{
+		Id:       id,
+		Password: password,
+		Nickname: nickname,
+		Role:     role,
+		Status:   status,
+	}
+
+	// 调用 gRPC 服务
+	_, err = client.UpdateAdmin(ctx, req)
+	if err != nil {
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "管理员不存在") {
+			util.WriteBadRequest(r, "管理员不存在")
+		} else if strings.Contains(err.Error(), "数据库") {
+			util.WriteInternalError(r, "数据库操作失败，请稍后重试")
+		} else {
+			util.WriteInternalError(r, "编辑员工失败，请稍后重试")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": "编辑员工成功",
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/员工账号
+ * @title 删除员工
+ * @description 删除员工
+ * @method post
+ * @url /api/admin/delete-admin
+ * @param id 必选 int 员工ID
+ * @return {"code":0,"msg":"删除员工成功","data":{}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 1
+ */
+func callDeleteAdmin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin DeleteAdmin")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	id := int32(0)
+	if i, ok := reqData["id"].(float64); ok {
+		id = int32(i)
+	}
+	if id <= 0 {
+		util.WriteBadRequest(r, "员工ID无效")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.DeleteAdminReq{
+		Id: id,
+	}
+
+	// 调用 gRPC 服务
+	_, err = client.DeleteAdmin(ctx, req)
+	if err != nil {
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "管理员不存在") {
+			util.WriteBadRequest(r, "管理员不存在")
+		} else if strings.Contains(err.Error(), "不能删除自己") {
+			util.WriteBadRequest(r, "不能删除自己")
+		} else if strings.Contains(err.Error(), "数据库") {
+			util.WriteInternalError(r, "数据库操作失败，请稍后重试")
+		} else {
+			util.WriteInternalError(r, "删除员工失败，请稍后重试")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": "删除员工成功",
+	})
 	return nil
 }

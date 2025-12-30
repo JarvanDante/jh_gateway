@@ -7,7 +7,10 @@ option go_package = "jh_gateway/api/backend/admin/v1";
 service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRes) {}
+    rpc GetAdminList(GetAdminListReq) returns (GetAdminListRes) {}
     rpc CreateAdmin(CreateAdminReq) returns (CreateAdminRes) {}
+    rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminRes) {}
+    rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminRes) {}
     rpc Logout(LogoutReq) returns (LogoutRes) {}
     rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordRes) {}
 }
@@ -30,14 +33,62 @@ message RefreshTokenRes {
 }
 
 message CreateAdminReq {
-    string username = 1; // v: required|alpha_num|min:4|max:12
-    string password = 2; // v: required|alpha_num|min:6|max:20
-    string nickname = 3; // v: required|alpha_num|min:2|max:20
-    int32 role = 4;      // v: required|numeric
-    int32 status = 5;    // v: required|boolean
+    string username = 1;
+    string password = 2;
+    string nickname = 3;
+    int32 role = 4;
+    int32 status = 5;
 }
 
 message CreateAdminRes {}
+
+// 获取管理员列表请求
+message GetAdminListReq {
+    string username = 1;  // 用户名筛选 (可选)
+    int32 status = 2;     // 状态筛选 (可选)
+    int32 page = 3;       // 页码
+    int32 size = 4;       // 每页数量
+}
+
+// 管理员信息
+message AdminInfo {
+    int32 id = 1;
+    string username = 2;
+    string nickname = 3;
+    int32 role = 4;
+    string role_name = 5;
+    int32 status = 6;
+    string last_login_ip = 7;
+    string last_login_time = 8;
+    string created_at = 9;
+}
+
+// 获取管理员列表响应
+message GetAdminListRes {
+    repeated AdminInfo list = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 size = 4;
+    bool google2fa_access = 5; // Google 2FA 权限
+}
+
+// 更新管理员请求
+message UpdateAdminReq {
+    int32 id = 1;         // 管理员ID
+    string password = 2;  // 密码 (可选)
+    string nickname = 3;  // 昵称 (可选)
+    int32 role = 4;       // 角色 (可选)
+    int32 status = 5;     // 状态 (可选)
+}
+
+message UpdateAdminRes {}
+
+// 删除管理员请求
+message DeleteAdminReq {
+    int32 id = 1;         // 管理员ID
+}
+
+message DeleteAdminRes {}
 
 // 退出登录请求
 message LogoutReq {}

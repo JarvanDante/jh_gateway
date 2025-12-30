@@ -7,12 +7,11 @@
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -24,9 +23,9 @@ const (
 
 type LoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" v:"required"`            // v: required
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" v:"required"`            // v: required
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty" dc:"Google 2FA code (optional)"` // Google 2FA code (optional)
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"` // v: required
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"` // v: required
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`         // Google 2FA code (optional)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -216,11 +215,11 @@ func (x *RefreshTokenRes) GetToken() string {
 
 type CreateAdminReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" v:"required|alpha_num|min:4|max:12"` // v: required|alpha_num|min:4|max:12
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" v:"required|alpha_num|min:6|max:20"` // v: required|alpha_num|min:6|max:20
-	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty" v:"required|alpha_num|min:2|max:20"` // v: required|alpha_num|min:2|max:20
-	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty" v:"required|numeric"`                       // v: required|numeric
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"required|boolean"`                   // v: required|boolean
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty"`
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -326,6 +325,455 @@ func (*CreateAdminRes) Descriptor() ([]byte, []int) {
 	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{5}
 }
 
+// 获取管理员列表请求
+type GetAdminListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"` // 用户名筛选 (可选)
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`    // 状态筛选 (可选)
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`        // 页码
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`        // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAdminListReq) Reset() {
+	*x = GetAdminListReq{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAdminListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAdminListReq) ProtoMessage() {}
+
+func (x *GetAdminListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAdminListReq.ProtoReflect.Descriptor instead.
+func (*GetAdminListReq) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetAdminListReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetAdminListReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *GetAdminListReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetAdminListReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 管理员信息
+type AdminInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty"`
+	RoleName      string                 `protobuf:"bytes,5,opt,name=role_name,json=roleName,proto3" json:"role_name,omitempty"`
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
+	LastLoginIp   string                 `protobuf:"bytes,7,opt,name=last_login_ip,json=lastLoginIp,proto3" json:"last_login_ip,omitempty"`
+	LastLoginTime string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AdminInfo) Reset() {
+	*x = AdminInfo{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AdminInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AdminInfo) ProtoMessage() {}
+
+func (x *AdminInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AdminInfo.ProtoReflect.Descriptor instead.
+func (*AdminInfo) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *AdminInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *AdminInfo) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *AdminInfo) GetNickname() string {
+	if x != nil {
+		return x.Nickname
+	}
+	return ""
+}
+
+func (x *AdminInfo) GetRole() int32 {
+	if x != nil {
+		return x.Role
+	}
+	return 0
+}
+
+func (x *AdminInfo) GetRoleName() string {
+	if x != nil {
+		return x.RoleName
+	}
+	return ""
+}
+
+func (x *AdminInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *AdminInfo) GetLastLoginIp() string {
+	if x != nil {
+		return x.LastLoginIp
+	}
+	return ""
+}
+
+func (x *AdminInfo) GetLastLoginTime() string {
+	if x != nil {
+		return x.LastLoginTime
+	}
+	return ""
+}
+
+func (x *AdminInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取管理员列表响应
+type GetAdminListRes struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	List            []*AdminInfo           `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	Total           int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	Page            int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Size            int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	Google2FaAccess bool                   `protobuf:"varint,5,opt,name=google2fa_access,json=google2faAccess,proto3" json:"google2fa_access,omitempty"` // Google 2FA 权限
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetAdminListRes) Reset() {
+	*x = GetAdminListRes{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAdminListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAdminListRes) ProtoMessage() {}
+
+func (x *GetAdminListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAdminListRes.ProtoReflect.Descriptor instead.
+func (*GetAdminListRes) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetAdminListRes) GetList() []*AdminInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetAdminListRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *GetAdminListRes) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetAdminListRes) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetAdminListRes) GetGoogle2FaAccess() bool {
+	if x != nil {
+		return x.Google2FaAccess
+	}
+	return false
+}
+
+// 更新管理员请求
+type UpdateAdminReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`            // 管理员ID
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"` // 密码 (可选)
+	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty"` // 昵称 (可选)
+	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty"`        // 角色 (可选)
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`    // 状态 (可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAdminReq) Reset() {
+	*x = UpdateAdminReq{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAdminReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAdminReq) ProtoMessage() {}
+
+func (x *UpdateAdminReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAdminReq.ProtoReflect.Descriptor instead.
+func (*UpdateAdminReq) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *UpdateAdminReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateAdminReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *UpdateAdminReq) GetNickname() string {
+	if x != nil {
+		return x.Nickname
+	}
+	return ""
+}
+
+func (x *UpdateAdminReq) GetRole() int32 {
+	if x != nil {
+		return x.Role
+	}
+	return 0
+}
+
+func (x *UpdateAdminReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+type UpdateAdminRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAdminRes) Reset() {
+	*x = UpdateAdminRes{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAdminRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAdminRes) ProtoMessage() {}
+
+func (x *UpdateAdminRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAdminRes.ProtoReflect.Descriptor instead.
+func (*UpdateAdminRes) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{10}
+}
+
+// 删除管理员请求
+type DeleteAdminReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"` // 管理员ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteAdminReq) Reset() {
+	*x = DeleteAdminReq{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteAdminReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAdminReq) ProtoMessage() {}
+
+func (x *DeleteAdminReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAdminReq.ProtoReflect.Descriptor instead.
+func (*DeleteAdminReq) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *DeleteAdminReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteAdminRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteAdminRes) Reset() {
+	*x = DeleteAdminRes{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteAdminRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAdminRes) ProtoMessage() {}
+
+func (x *DeleteAdminRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAdminRes.ProtoReflect.Descriptor instead.
+func (*DeleteAdminRes) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{12}
+}
+
 // 退出登录请求
 type LogoutReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -335,7 +783,7 @@ type LogoutReq struct {
 
 func (x *LogoutReq) Reset() {
 	*x = LogoutReq{}
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[6]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -347,7 +795,7 @@ func (x *LogoutReq) String() string {
 func (*LogoutReq) ProtoMessage() {}
 
 func (x *LogoutReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[6]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -360,21 +808,21 @@ func (x *LogoutReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutReq.ProtoReflect.Descriptor instead.
 func (*LogoutReq) Descriptor() ([]byte, []int) {
-	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{6}
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{13}
 }
 
 // 退出登录响应
 type LogoutRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *LogoutRes) Reset() {
 	*x = LogoutRes{}
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[7]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -386,7 +834,7 @@ func (x *LogoutRes) String() string {
 func (*LogoutRes) ProtoMessage() {}
 
 func (x *LogoutRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[7]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -399,7 +847,7 @@ func (x *LogoutRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutRes.ProtoReflect.Descriptor instead.
 func (*LogoutRes) Descriptor() ([]byte, []int) {
-	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{7}
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *LogoutRes) GetSuccess() bool {
@@ -419,15 +867,15 @@ func (x *LogoutRes) GetMessage() string {
 // 修改密码请求
 type ChangePasswordReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty" dc:"旧密码"` // 旧密码
-	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty" dc:"新密码"` // 新密码
+	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty"` // 旧密码
+	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"` // 新密码
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ChangePasswordReq) Reset() {
 	*x = ChangePasswordReq{}
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[8]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -439,7 +887,7 @@ func (x *ChangePasswordReq) String() string {
 func (*ChangePasswordReq) ProtoMessage() {}
 
 func (x *ChangePasswordReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[8]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -452,7 +900,7 @@ func (x *ChangePasswordReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangePasswordReq.ProtoReflect.Descriptor instead.
 func (*ChangePasswordReq) Descriptor() ([]byte, []int) {
-	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{8}
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ChangePasswordReq) GetOldPassword() string {
@@ -472,15 +920,15 @@ func (x *ChangePasswordReq) GetNewPassword() string {
 // 修改密码响应
 type ChangePasswordRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ChangePasswordRes) Reset() {
 	*x = ChangePasswordRes{}
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[9]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -492,7 +940,7 @@ func (x *ChangePasswordRes) String() string {
 func (*ChangePasswordRes) ProtoMessage() {}
 
 func (x *ChangePasswordRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_admin_v1_admin_proto_msgTypes[9]
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -505,7 +953,7 @@ func (x *ChangePasswordRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangePasswordRes.ProtoReflect.Descriptor instead.
 func (*ChangePasswordRes) Descriptor() ([]byte, []int) {
-	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{9}
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ChangePasswordRes) GetSuccess() bool {
@@ -543,7 +991,39 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\bnickname\x18\x03 \x01(\tR\bnickname\x12\x12\n" +
 	"\x04role\x18\x04 \x01(\x05R\x04role\x12\x16\n" +
 	"\x06status\x18\x05 \x01(\x05R\x06status\"\x10\n" +
-	"\x0eCreateAdminRes\"\v\n" +
+	"\x0eCreateAdminRes\"m\n" +
+	"\x0fGetAdminListReq\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\x05R\x06status\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\x87\x02\n" +
+	"\tAdminInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
+	"\bnickname\x18\x03 \x01(\tR\bnickname\x12\x12\n" +
+	"\x04role\x18\x04 \x01(\x05R\x04role\x12\x1b\n" +
+	"\trole_name\x18\x05 \x01(\tR\broleName\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\x05R\x06status\x12\"\n" +
+	"\rlast_login_ip\x18\a \x01(\tR\vlastLoginIp\x12&\n" +
+	"\x0flast_login_time\x18\b \x01(\tR\rlastLoginTime\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\"\xa0\x01\n" +
+	"\x0fGetAdminListRes\x12$\n" +
+	"\x04list\x18\x01 \x03(\v2\x10.admin.AdminInfoR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\x12)\n" +
+	"\x10google2fa_access\x18\x05 \x01(\bR\x0fgoogle2faAccess\"\x84\x01\n" +
+	"\x0eUpdateAdminReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1a\n" +
+	"\bnickname\x18\x03 \x01(\tR\bnickname\x12\x12\n" +
+	"\x04role\x18\x04 \x01(\x05R\x04role\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\"\x10\n" +
+	"\x0eUpdateAdminRes\" \n" +
+	"\x0eDeleteAdminReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\x10\n" +
+	"\x0eDeleteAdminRes\"\v\n" +
 	"\tLogoutReq\"?\n" +
 	"\tLogoutRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
@@ -553,13 +1033,16 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"G\n" +
 	"\x11ChangePasswordRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xad\x02\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xed\x03\n" +
 	"\x05Admin\x12+\n" +
 	"\x05Login\x12\x0f.admin.LoginReq\x1a\x0f.admin.LoginRes\"\x00\x12@\n" +
-	"\fRefreshToken\x12\x16.admin.RefreshTokenReq\x1a\x16.admin.RefreshTokenRes\"\x00\x12=\n" +
-	"\vCreateAdmin\x12\x15.admin.CreateAdminReq\x1a\x15.admin.CreateAdminRes\"\x00\x12.\n" +
+	"\fRefreshToken\x12\x16.admin.RefreshTokenReq\x1a\x16.admin.RefreshTokenRes\"\x00\x12@\n" +
+	"\fGetAdminList\x12\x16.admin.GetAdminListReq\x1a\x16.admin.GetAdminListRes\"\x00\x12=\n" +
+	"\vCreateAdmin\x12\x15.admin.CreateAdminReq\x1a\x15.admin.CreateAdminRes\"\x00\x12=\n" +
+	"\vUpdateAdmin\x12\x15.admin.UpdateAdminReq\x1a\x15.admin.UpdateAdminRes\"\x00\x12=\n" +
+	"\vDeleteAdmin\x12\x15.admin.DeleteAdminReq\x1a\x15.admin.DeleteAdminRes\"\x00\x12.\n" +
 	"\x06Logout\x12\x10.admin.LogoutReq\x1a\x10.admin.LogoutRes\"\x00\x12F\n" +
-	"\x0eChangePassword\x12\x18.admin.ChangePasswordReq\x1a\x18.admin.ChangePasswordRes\"\x00B'Z%jh_admin_service/api/backend/admin/v1b\x06proto3"
+	"\x0eChangePassword\x12\x18.admin.ChangePasswordReq\x1a\x18.admin.ChangePasswordRes\"\x00B!Z\x1fjh_gateway/api/backend/admin/v1b\x06proto3"
 
 var (
 	file_backend_admin_v1_admin_proto_rawDescOnce sync.Once
@@ -573,7 +1056,7 @@ func file_backend_admin_v1_admin_proto_rawDescGZIP() []byte {
 	return file_backend_admin_v1_admin_proto_rawDescData
 }
 
-var file_backend_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_backend_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_backend_admin_v1_admin_proto_goTypes = []any{
 	(*LoginReq)(nil),          // 0: admin.LoginReq
 	(*LoginRes)(nil),          // 1: admin.LoginRes
@@ -581,27 +1064,41 @@ var file_backend_admin_v1_admin_proto_goTypes = []any{
 	(*RefreshTokenRes)(nil),   // 3: admin.RefreshTokenRes
 	(*CreateAdminReq)(nil),    // 4: admin.CreateAdminReq
 	(*CreateAdminRes)(nil),    // 5: admin.CreateAdminRes
-	(*LogoutReq)(nil),         // 6: admin.LogoutReq
-	(*LogoutRes)(nil),         // 7: admin.LogoutRes
-	(*ChangePasswordReq)(nil), // 8: admin.ChangePasswordReq
-	(*ChangePasswordRes)(nil), // 9: admin.ChangePasswordRes
+	(*GetAdminListReq)(nil),   // 6: admin.GetAdminListReq
+	(*AdminInfo)(nil),         // 7: admin.AdminInfo
+	(*GetAdminListRes)(nil),   // 8: admin.GetAdminListRes
+	(*UpdateAdminReq)(nil),    // 9: admin.UpdateAdminReq
+	(*UpdateAdminRes)(nil),    // 10: admin.UpdateAdminRes
+	(*DeleteAdminReq)(nil),    // 11: admin.DeleteAdminReq
+	(*DeleteAdminRes)(nil),    // 12: admin.DeleteAdminRes
+	(*LogoutReq)(nil),         // 13: admin.LogoutReq
+	(*LogoutRes)(nil),         // 14: admin.LogoutRes
+	(*ChangePasswordReq)(nil), // 15: admin.ChangePasswordReq
+	(*ChangePasswordRes)(nil), // 16: admin.ChangePasswordRes
 }
 var file_backend_admin_v1_admin_proto_depIdxs = []int32{
-	0, // 0: admin.Admin.Login:input_type -> admin.LoginReq
-	2, // 1: admin.Admin.RefreshToken:input_type -> admin.RefreshTokenReq
-	4, // 2: admin.Admin.CreateAdmin:input_type -> admin.CreateAdminReq
-	6, // 3: admin.Admin.Logout:input_type -> admin.LogoutReq
-	8, // 4: admin.Admin.ChangePassword:input_type -> admin.ChangePasswordReq
-	1, // 5: admin.Admin.Login:output_type -> admin.LoginRes
-	3, // 6: admin.Admin.RefreshToken:output_type -> admin.RefreshTokenRes
-	5, // 7: admin.Admin.CreateAdmin:output_type -> admin.CreateAdminRes
-	7, // 8: admin.Admin.Logout:output_type -> admin.LogoutRes
-	9, // 9: admin.Admin.ChangePassword:output_type -> admin.ChangePasswordRes
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	7,  // 0: admin.GetAdminListRes.list:type_name -> admin.AdminInfo
+	0,  // 1: admin.Admin.Login:input_type -> admin.LoginReq
+	2,  // 2: admin.Admin.RefreshToken:input_type -> admin.RefreshTokenReq
+	6,  // 3: admin.Admin.GetAdminList:input_type -> admin.GetAdminListReq
+	4,  // 4: admin.Admin.CreateAdmin:input_type -> admin.CreateAdminReq
+	9,  // 5: admin.Admin.UpdateAdmin:input_type -> admin.UpdateAdminReq
+	11, // 6: admin.Admin.DeleteAdmin:input_type -> admin.DeleteAdminReq
+	13, // 7: admin.Admin.Logout:input_type -> admin.LogoutReq
+	15, // 8: admin.Admin.ChangePassword:input_type -> admin.ChangePasswordReq
+	1,  // 9: admin.Admin.Login:output_type -> admin.LoginRes
+	3,  // 10: admin.Admin.RefreshToken:output_type -> admin.RefreshTokenRes
+	8,  // 11: admin.Admin.GetAdminList:output_type -> admin.GetAdminListRes
+	5,  // 12: admin.Admin.CreateAdmin:output_type -> admin.CreateAdminRes
+	10, // 13: admin.Admin.UpdateAdmin:output_type -> admin.UpdateAdminRes
+	12, // 14: admin.Admin.DeleteAdmin:output_type -> admin.DeleteAdminRes
+	14, // 15: admin.Admin.Logout:output_type -> admin.LogoutRes
+	16, // 16: admin.Admin.ChangePassword:output_type -> admin.ChangePasswordRes
+	9,  // [9:17] is the sub-list for method output_type
+	1,  // [1:9] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_backend_admin_v1_admin_proto_init() }
@@ -615,7 +1112,7 @@ func file_backend_admin_v1_admin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_admin_v1_admin_proto_rawDesc), len(file_backend_admin_v1_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
