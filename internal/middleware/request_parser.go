@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"jh_gateway/internal/util"
+	"strings"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 )
@@ -14,9 +15,23 @@ import (
 func RequestParser(r *ghttp.Request) {
 	ctx := r.Context()
 	method := r.Method
+	path := r.URL.Path
 
 	// 只处理有请求体的方法
 	if method != "POST" && method != "PUT" && method != "PATCH" {
+		r.Middleware.Next()
+		return
+	}
+
+	// 跳过文件上传接口，因为它们使用 multipart/form-data 格式
+	if isFileUploadEndpoint(path) {
+		r.Middleware.Next()
+		return
+	}
+
+	// 检查 Content-Type，如果是 multipart/form-data 则跳过 JSON 解析
+	contentType := r.Header.Get("Content-Type")
+	if strings.HasPrefix(contentType, "multipart/form-data") {
 		r.Middleware.Next()
 		return
 	}
@@ -44,6 +59,24 @@ func RequestParser(r *ghttp.Request) {
 	r.SetCtx(ctx)
 
 	r.Middleware.Next()
+}
+
+// isFileUploadEndpoint 判断是否为文件上传接口
+func isFileUploadEndpoint(path string) bool {
+	// 文件上传相关的接口路径
+	uploadPaths := []string{
+		"/upload-image",
+		"/upload-file",
+		"/upload",
+	}
+
+	for _, uploadPath := range uploadPaths {
+		if strings.HasSuffix(path, uploadPath) {
+			return true
+		}
+	}
+
+	return false
 }
 
 // GetRequestData 从上下文中获取已解析的请求数据

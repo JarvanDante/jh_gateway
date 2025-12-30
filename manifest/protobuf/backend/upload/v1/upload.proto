@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package upload;
+
+option go_package = "jh_gateway/api/backend/upload/v1";
+
+service Upload {
+    rpc UploadImage(UploadImageReq) returns (UploadImageRes) {}
+}
+
+message UploadImageReq {
+    bytes file_data = 1;        // 文件二进制数据
+    string file_name = 2;       // 原始文件名
+    string content_type = 3;    // 文件MIME类型
+    int64 file_size = 4;        // 文件大小
+    string upload_code = 5;     // 上传标识 (default, mobile_logo等)
+}
+
+message UploadImageRes {
+    string image_url = 1;       // 图片访问URL
+    string file_path = 2;       // 存储路径
+    int64 file_size = 3;        // 文件大小
+}

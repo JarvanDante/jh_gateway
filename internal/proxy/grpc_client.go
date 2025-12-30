@@ -3,13 +3,16 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"io"
 	"jh_gateway/api/backend/admin/v1"
 	v2 "jh_gateway/api/backend/role/v1"
 	v3 "jh_gateway/api/backend/site/v1"
+	v4 "jh_gateway/api/backend/upload/v1"
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/tracing"
 	"jh_gateway/internal/util"
+	"path/filepath"
 	"strings"
 
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -160,6 +163,9 @@ func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		//删除职务
 	case strings.HasSuffix(path, "/delete-role") && method == "POST":
 		return callDeleteRole(ctx, conn, r)
+		//上传图片
+	case strings.HasSuffix(path, "/upload-image") && method == "POST":
+		return callUploadImage(ctx, conn, r)
 	}
 
 	// 用户相关接口已删除
@@ -358,7 +364,12 @@ func callAdminCreate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 
 // shouldValidateEarly 判断是否需要提前验证参数
 func shouldValidateEarly(path, method string) bool {
-	// 对于admin相关的POST请求，提前验证
+	// 文件上传接口使用 multipart/form-data，不需要 JSON 验证
+	if strings.HasSuffix(path, "/upload-image") && method == "POST" {
+		return false
+	}
+
+	// 对于其他 admin 相关的 POST 请求，提前验证
 	return (strings.HasSuffix(path, "/login") && method == "POST") ||
 		(strings.HasSuffix(path, "/create-admin") && method == "POST") ||
 		(strings.HasSuffix(path, "/update-admin") && method == "POST") ||
@@ -1214,5 +1225,137 @@ func callDeleteAdmin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	util.WriteSuccess(r, map[string]interface{}{
 		"message": "删除员工成功",
 	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/文件上传
+ * @title 上传图片
+ * @description 上传图片文件的接口
+ * @method post
+ * @url /api/admin/upload-image
+ * @param image 必选 file 图片文件
+ * @param code 可选 string 上传标识 (default, mobile_logo)
+ * @return {"code":0,"msg":"success","data":{"image":"http://localhost:19000/uploads/site_1/2025/12/电子游戏_1767127541.jpeg"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.image string 图片访问URL
+ * @return_param msg string 提示说明
+ * @remark 支持jpg、jpeg、gif、png格式，默认最大500KB，mobile_logo类型支持svg格式最大100KB
+ * @number 10
+ */
+func callUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Upload UploadImage")
+
+	// 检查请求的 Content-Type 是否为 multipart/form-data
+	contentType := r.Header.Get("Content-Type")
+	if !strings.HasPrefix(contentType, "multipart/form-data") {
+		util.WriteBadRequest(r, "请使用 multipart/form-data 格式上传文件")
+		return nil
+	}
+
+	// 获取上传的文件
+	file := r.GetUploadFile("image")
+	if file == nil {
+		util.WriteBadRequest(r, "请选择要上传的图片")
+		return nil
+	}
+
+	// 获取上传标识
+	uploadCode := r.Get("code", "default").String()
+
+	// 验证文件类型 - 通过文件扩展名和Content-Type判断
+	fileContentType := file.Header.Get("Content-Type")
+	if fileContentType == "" {
+		// 如果没有 Content-Type，尝试从文件扩展名推断
+		ext := strings.ToLower(filepath.Ext(file.Filename))
+		switch ext {
+		case ".jpg", ".jpeg":
+			fileContentType = "image/jpeg"
+		case ".png":
+			fileContentType = "image/png"
+		case ".gif":
+			fileContentType = "image/gif"
+		case ".svg":
+			fileContentType = "image/svg+xml"
+		default:
+			util.WriteBadRequest(r, "不支持的文件格式")
+			return nil
+		}
+	}
+
+	if !strings.HasPrefix(fileContentType, "image/") {
+		util.WriteBadRequest(r, "请上传图片文件")
+		return nil
+	}
+
+	// 读取文件内容
+	fileReader, err := file.Open()
+	if err != nil {
+		util.WriteInternalError(r, "读取文件失败")
+		return nil
+	}
+	defer fileReader.Close()
+
+	fileData, err := io.ReadAll(fileReader)
+	if err != nil {
+		util.WriteInternalError(r, "读取文件内容失败")
+		return nil
+	}
+
+	// 验证文件大小
+	if len(fileData) == 0 {
+		util.WriteBadRequest(r, "文件内容为空")
+		return nil
+	}
+
+	// 验证文件大小限制 (在这里做基本检查，详细检查在服务端)
+	maxSize := int64(5 * 1024 * 1024) // 5MB 硬限制
+	if int64(len(fileData)) > maxSize {
+		util.WriteBadRequest(r, "文件大小不能超过5MB")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "上传文件信息 - 文件名: %s, 大小: %d, 类型: %s, 上传标识: %s",
+		file.Filename, len(fileData), fileContentType, uploadCode)
+
+	// 创建 gRPC 客户端
+	client := v4.NewUploadClient(conn)
+	req := &v4.UploadImageReq{
+		FileData:    fileData,
+		FileName:    file.Filename,
+		ContentType: fileContentType,
+		FileSize:    int64(len(fileData)),
+		UploadCode:  uploadCode,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.UploadImage(ctx, req)
+	if err != nil {
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		errorMsg := err.Error()
+		util.LogWithTrace(ctx, "error", "gRPC上传失败: %v", err)
+
+		if strings.Contains(errorMsg, "文件类型") || strings.Contains(errorMsg, "不支持") {
+			util.WriteBadRequest(r, "不支持的文件类型")
+		} else if strings.Contains(errorMsg, "文件大小") || strings.Contains(errorMsg, "超过") {
+			util.WriteBadRequest(r, "文件大小超出限制")
+		} else if strings.Contains(errorMsg, "文件名") || strings.Contains(errorMsg, "为空") {
+			util.WriteBadRequest(r, "文件参数错误")
+		} else if strings.Contains(errorMsg, "上传失败") || strings.Contains(errorMsg, "MinIO") {
+			util.WriteInternalError(r, "文件上传失败，请稍后重试")
+		} else {
+			util.WriteInternalError(r, "上传服务暂时不可用，请稍后重试")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"image": res.ImageUrl,
+	})
+
+	util.LogWithTrace(ctx, "info", "文件上传成功 - URL: %s", res.ImageUrl)
 	return nil
 }
