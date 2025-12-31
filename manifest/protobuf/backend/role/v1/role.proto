@@ -9,6 +9,8 @@ service Role {
     rpc CreateRole(CreateRoleReq) returns (CreateRoleRes) {}
     rpc UpdateRole(UpdateRoleReq) returns (UpdateRoleRes) {}
     rpc DeleteRole(DeleteRoleReq) returns (DeleteRoleRes) {}
+    rpc GetPermissions(GetPermissionsReq) returns (GetPermissionsRes) {}
+    rpc SavePermission(SavePermissionReq) returns (SavePermissionRes) {}
 }
 
 message GetRoleListReq {
@@ -62,6 +64,50 @@ message DeleteRoleReq {
 
 // 删除角色响应
 message DeleteRoleRes {
+    bool success = 1;                                    // 是否成功
+    string message = 2;                                  // 响应消息
+}
+
+// 获取权限列表请求
+message GetPermissionsReq {
+    int32 site_id = 1;                                   // 站点ID
+}
+
+// 权限信息
+message PermissionInfo {
+    int32 id = 1;                                        // 权限ID
+    int32 parent_id = 2;                                 // 父权限ID
+    int32 type = 3;                                      // 权限类型：1=菜单，2=操作权限
+    string name = 4;                                     // 权限名称
+    string backend_url = 5;                              // 后台URL
+    string frontend_url = 6;                             // 前台URL
+    bool open = 7;                                       // 是否展开
+    bool checked = 8;                                    // 是否选中
+    repeated PermissionInfo children = 9;                // 子权限列表
+}
+
+// 角色权限信息
+message RolePermissionInfo {
+    int32 id = 1;                                        // 角色ID
+    string name = 2;                                     // 角色名称
+    repeated string permission_list = 3;                 // 权限ID列表
+}
+
+// 获取权限列表响应
+message GetPermissionsRes {
+    repeated PermissionInfo permission_list = 1;         // 权限树列表
+    repeated RolePermissionInfo role_list = 2;           // 角色权限列表
+}
+
+// 保存权限请求
+message SavePermissionReq {
+    int32 id = 1;                                        // 角色ID
+    int32 site_id = 2;                                   // 站点ID
+    string permission_list = 3;                          // 权限ID列表，逗号分隔
+}
+
+// 保存权限响应
+message SavePermissionRes {
     bool success = 1;                                    // 是否成功
     string message = 2;                                  // 响应消息
 }

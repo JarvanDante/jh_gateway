@@ -8,7 +8,6 @@ package v1
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,10 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Role_GetRoleList_FullMethodName = "/role.Role/GetRoleList"
-	Role_CreateRole_FullMethodName  = "/role.Role/CreateRole"
-	Role_UpdateRole_FullMethodName  = "/role.Role/UpdateRole"
-	Role_DeleteRole_FullMethodName  = "/role.Role/DeleteRole"
+	Role_GetRoleList_FullMethodName    = "/role.Role/GetRoleList"
+	Role_CreateRole_FullMethodName     = "/role.Role/CreateRole"
+	Role_UpdateRole_FullMethodName     = "/role.Role/UpdateRole"
+	Role_DeleteRole_FullMethodName     = "/role.Role/DeleteRole"
+	Role_GetPermissions_FullMethodName = "/role.Role/GetPermissions"
+	Role_SavePermission_FullMethodName = "/role.Role/SavePermission"
 )
 
 // RoleClient is the client API for Role service.
@@ -34,6 +35,8 @@ type RoleClient interface {
 	CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*CreateRoleRes, error)
 	UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*UpdateRoleRes, error)
 	DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...grpc.CallOption) (*DeleteRoleRes, error)
+	GetPermissions(ctx context.Context, in *GetPermissionsReq, opts ...grpc.CallOption) (*GetPermissionsRes, error)
+	SavePermission(ctx context.Context, in *SavePermissionReq, opts ...grpc.CallOption) (*SavePermissionRes, error)
 }
 
 type roleClient struct {
@@ -84,6 +87,26 @@ func (c *roleClient) DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...
 	return out, nil
 }
 
+func (c *roleClient) GetPermissions(ctx context.Context, in *GetPermissionsReq, opts ...grpc.CallOption) (*GetPermissionsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPermissionsRes)
+	err := c.cc.Invoke(ctx, Role_GetPermissions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleClient) SavePermission(ctx context.Context, in *SavePermissionReq, opts ...grpc.CallOption) (*SavePermissionRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SavePermissionRes)
+	err := c.cc.Invoke(ctx, Role_SavePermission_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RoleServer is the server API for Role service.
 // All implementations must embed UnimplementedRoleServer
 // for forward compatibility.
@@ -92,6 +115,8 @@ type RoleServer interface {
 	CreateRole(context.Context, *CreateRoleReq) (*CreateRoleRes, error)
 	UpdateRole(context.Context, *UpdateRoleReq) (*UpdateRoleRes, error)
 	DeleteRole(context.Context, *DeleteRoleReq) (*DeleteRoleRes, error)
+	GetPermissions(context.Context, *GetPermissionsReq) (*GetPermissionsRes, error)
+	SavePermission(context.Context, *SavePermissionReq) (*SavePermissionRes, error)
 	mustEmbedUnimplementedRoleServer()
 }
 
@@ -113,6 +138,12 @@ func (UnimplementedRoleServer) UpdateRole(context.Context, *UpdateRoleReq) (*Upd
 }
 func (UnimplementedRoleServer) DeleteRole(context.Context, *DeleteRoleReq) (*DeleteRoleRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteRole not implemented")
+}
+func (UnimplementedRoleServer) GetPermissions(context.Context, *GetPermissionsReq) (*GetPermissionsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetPermissions not implemented")
+}
+func (UnimplementedRoleServer) SavePermission(context.Context, *SavePermissionReq) (*SavePermissionRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method SavePermission not implemented")
 }
 func (UnimplementedRoleServer) mustEmbedUnimplementedRoleServer() {}
 func (UnimplementedRoleServer) testEmbeddedByValue()              {}
@@ -207,6 +238,42 @@ func _Role_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Role_GetPermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPermissionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServer).GetPermissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Role_GetPermissions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServer).GetPermissions(ctx, req.(*GetPermissionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Role_SavePermission_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SavePermissionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServer).SavePermission(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Role_SavePermission_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServer).SavePermission(ctx, req.(*SavePermissionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Role_ServiceDesc is the grpc.ServiceDesc for Role service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +296,14 @@ var Role_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRole",
 			Handler:    _Role_DeleteRole_Handler,
+		},
+		{
+			MethodName: "GetPermissions",
+			Handler:    _Role_GetPermissions_Handler,
+		},
+		{
+			MethodName: "SavePermission",
+			Handler:    _Role_SavePermission_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

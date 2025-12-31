@@ -7,12 +7,11 @@
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -24,7 +23,7 @@ const (
 
 type GetRoleListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -68,13 +67,13 @@ func (x *GetRoleListReq) GetSiteId() int32 {
 
 type RoleInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                                 // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"`           // 站点ID
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                              // 角色名称
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty" dc:"状态：0=禁用，1=启用"`                 // 状态：0=禁用，1=启用
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty" dc:"创建时间戳"` // 创建时间戳
-	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty" dc:"更新时间戳"` // 更新时间戳
-	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty" dc:"权限配置"`                // 权限配置
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`          // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                             // 角色名称
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`                        // 状态：0=禁用，1=启用
+	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // 创建时间戳
+	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"` // 更新时间戳
+	Permissions   string                 `protobuf:"bytes,7,opt,name=permissions,proto3" json:"permissions,omitempty"`               // 权限配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -160,7 +159,7 @@ func (x *RoleInfo) GetPermissions() string {
 
 type GetRoleListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty" dc:"角色列表"` // 角色列表
+	Roles         []*RoleInfo            `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"` // 角色列表
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -205,8 +204,8 @@ func (x *GetRoleListRes) GetRoles() []*RoleInfo {
 // 创建角色请求
 type CreateRoleReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                    // 角色名称
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                    // 角色名称
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -258,8 +257,8 @@ func (x *CreateRoleReq) GetName() string {
 // 创建角色响应
 type CreateRoleRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -311,9 +310,9 @@ func (x *CreateRoleRes) GetMessage() string {
 // 更新角色请求
 type UpdateRoleReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                       // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty" dc:"角色名称"`                    // 角色名称
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                    // 角色名称
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -372,8 +371,8 @@ func (x *UpdateRoleReq) GetName() string {
 // 更新角色响应
 type UpdateRoleRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -425,8 +424,8 @@ func (x *UpdateRoleRes) GetMessage() string {
 // 删除角色请求
 type DeleteRoleReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" dc:"角色ID"`                       // 角色ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID"` // 站点ID
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       // 角色ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -478,8 +477,8 @@ func (x *DeleteRoleReq) GetSiteId() int32 {
 // 删除角色响应
 type DeleteRoleRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -528,6 +527,388 @@ func (x *DeleteRoleRes) GetMessage() string {
 	return ""
 }
 
+// 获取权限列表请求
+type GetPermissionsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPermissionsReq) Reset() {
+	*x = GetPermissionsReq{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPermissionsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPermissionsReq) ProtoMessage() {}
+
+func (x *GetPermissionsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPermissionsReq.ProtoReflect.Descriptor instead.
+func (*GetPermissionsReq) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetPermissionsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 权限信息
+type PermissionInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                     // 权限ID
+	ParentId      int32                  `protobuf:"varint,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`         // 父权限ID
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty"`                                 // 权限类型：1=菜单，2=操作权限
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`                                  // 权限名称
+	BackendUrl    string                 `protobuf:"bytes,5,opt,name=backend_url,json=backendUrl,proto3" json:"backend_url,omitempty"`    // 后台URL
+	FrontendUrl   string                 `protobuf:"bytes,6,opt,name=frontend_url,json=frontendUrl,proto3" json:"frontend_url,omitempty"` // 前台URL
+	Open          bool                   `protobuf:"varint,7,opt,name=open,proto3" json:"open,omitempty"`                                 // 是否展开
+	Checked       bool                   `protobuf:"varint,8,opt,name=checked,proto3" json:"checked,omitempty"`                           // 是否选中
+	Children      []*PermissionInfo      `protobuf:"bytes,9,rep,name=children,proto3" json:"children,omitempty"`                          // 子权限列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PermissionInfo) Reset() {
+	*x = PermissionInfo{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PermissionInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PermissionInfo) ProtoMessage() {}
+
+func (x *PermissionInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PermissionInfo.ProtoReflect.Descriptor instead.
+func (*PermissionInfo) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *PermissionInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *PermissionInfo) GetParentId() int32 {
+	if x != nil {
+		return x.ParentId
+	}
+	return 0
+}
+
+func (x *PermissionInfo) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *PermissionInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PermissionInfo) GetBackendUrl() string {
+	if x != nil {
+		return x.BackendUrl
+	}
+	return ""
+}
+
+func (x *PermissionInfo) GetFrontendUrl() string {
+	if x != nil {
+		return x.FrontendUrl
+	}
+	return ""
+}
+
+func (x *PermissionInfo) GetOpen() bool {
+	if x != nil {
+		return x.Open
+	}
+	return false
+}
+
+func (x *PermissionInfo) GetChecked() bool {
+	if x != nil {
+		return x.Checked
+	}
+	return false
+}
+
+func (x *PermissionInfo) GetChildren() []*PermissionInfo {
+	if x != nil {
+		return x.Children
+	}
+	return nil
+}
+
+// 角色权限信息
+type RolePermissionInfo struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                              // 角色ID
+	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                           // 角色名称
+	PermissionList []string               `protobuf:"bytes,3,rep,name=permission_list,json=permissionList,proto3" json:"permission_list,omitempty"` // 权限ID列表
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RolePermissionInfo) Reset() {
+	*x = RolePermissionInfo{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RolePermissionInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RolePermissionInfo) ProtoMessage() {}
+
+func (x *RolePermissionInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RolePermissionInfo.ProtoReflect.Descriptor instead.
+func (*RolePermissionInfo) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RolePermissionInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *RolePermissionInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *RolePermissionInfo) GetPermissionList() []string {
+	if x != nil {
+		return x.PermissionList
+	}
+	return nil
+}
+
+// 获取权限列表响应
+type GetPermissionsRes struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	PermissionList []*PermissionInfo      `protobuf:"bytes,1,rep,name=permission_list,json=permissionList,proto3" json:"permission_list,omitempty"` // 权限树列表
+	RoleList       []*RolePermissionInfo  `protobuf:"bytes,2,rep,name=role_list,json=roleList,proto3" json:"role_list,omitempty"`                   // 角色权限列表
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetPermissionsRes) Reset() {
+	*x = GetPermissionsRes{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPermissionsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPermissionsRes) ProtoMessage() {}
+
+func (x *GetPermissionsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPermissionsRes.ProtoReflect.Descriptor instead.
+func (*GetPermissionsRes) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetPermissionsRes) GetPermissionList() []*PermissionInfo {
+	if x != nil {
+		return x.PermissionList
+	}
+	return nil
+}
+
+func (x *GetPermissionsRes) GetRoleList() []*RolePermissionInfo {
+	if x != nil {
+		return x.RoleList
+	}
+	return nil
+}
+
+// 保存权限请求
+type SavePermissionReq struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                              // 角色ID
+	SiteId         int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`                        // 站点ID
+	PermissionList string                 `protobuf:"bytes,3,opt,name=permission_list,json=permissionList,proto3" json:"permission_list,omitempty"` // 权限ID列表，逗号分隔
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SavePermissionReq) Reset() {
+	*x = SavePermissionReq{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SavePermissionReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SavePermissionReq) ProtoMessage() {}
+
+func (x *SavePermissionReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SavePermissionReq.ProtoReflect.Descriptor instead.
+func (*SavePermissionReq) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SavePermissionReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *SavePermissionReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *SavePermissionReq) GetPermissionList() string {
+	if x != nil {
+		return x.PermissionList
+	}
+	return ""
+}
+
+// 保存权限响应
+type SavePermissionRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SavePermissionRes) Reset() {
+	*x = SavePermissionRes{}
+	mi := &file_backend_role_v1_role_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SavePermissionRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SavePermissionRes) ProtoMessage() {}
+
+func (x *SavePermissionRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_role_v1_role_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SavePermissionRes.ProtoReflect.Descriptor instead.
+func (*SavePermissionRes) Descriptor() ([]byte, []int) {
+	return file_backend_role_v1_role_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SavePermissionRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SavePermissionRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_backend_role_v1_role_proto protoreflect.FileDescriptor
 
 const file_backend_role_v1_role_proto_rawDesc = "" +
@@ -565,7 +946,34 @@ const file_backend_role_v1_role_proto_rawDesc = "" +
 	"\asite_id\x18\x02 \x01(\x05R\x06siteId\"C\n" +
 	"\rDeleteRoleRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xf1\x01\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\",\n" +
+	"\x11GetPermissionsReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\x89\x02\n" +
+	"\x0ePermissionInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1b\n" +
+	"\tparent_id\x18\x02 \x01(\x05R\bparentId\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\x05R\x04type\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12\x1f\n" +
+	"\vbackend_url\x18\x05 \x01(\tR\n" +
+	"backendUrl\x12!\n" +
+	"\ffrontend_url\x18\x06 \x01(\tR\vfrontendUrl\x12\x12\n" +
+	"\x04open\x18\a \x01(\bR\x04open\x12\x18\n" +
+	"\achecked\x18\b \x01(\bR\achecked\x120\n" +
+	"\bchildren\x18\t \x03(\v2\x14.role.PermissionInfoR\bchildren\"a\n" +
+	"\x12RolePermissionInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12'\n" +
+	"\x0fpermission_list\x18\x03 \x03(\tR\x0epermissionList\"\x89\x01\n" +
+	"\x11GetPermissionsRes\x12=\n" +
+	"\x0fpermission_list\x18\x01 \x03(\v2\x14.role.PermissionInfoR\x0epermissionList\x125\n" +
+	"\trole_list\x18\x02 \x03(\v2\x18.role.RolePermissionInfoR\broleList\"e\n" +
+	"\x11SavePermissionReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12'\n" +
+	"\x0fpermission_list\x18\x03 \x01(\tR\x0epermissionList\"G\n" +
+	"\x11SavePermissionRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xfd\x02\n" +
 	"\x04Role\x12;\n" +
 	"\vGetRoleList\x12\x14.role.GetRoleListReq\x1a\x14.role.GetRoleListRes\"\x00\x128\n" +
 	"\n" +
@@ -573,7 +981,9 @@ const file_backend_role_v1_role_proto_rawDesc = "" +
 	"\n" +
 	"UpdateRole\x12\x13.role.UpdateRoleReq\x1a\x13.role.UpdateRoleRes\"\x00\x128\n" +
 	"\n" +
-	"DeleteRole\x12\x13.role.DeleteRoleReq\x1a\x13.role.DeleteRoleRes\"\x00B&Z$jh_admin_service/api/backend/role/v1b\x06proto3"
+	"DeleteRole\x12\x13.role.DeleteRoleReq\x1a\x13.role.DeleteRoleRes\"\x00\x12D\n" +
+	"\x0eGetPermissions\x12\x17.role.GetPermissionsReq\x1a\x17.role.GetPermissionsRes\"\x00\x12D\n" +
+	"\x0eSavePermission\x12\x17.role.SavePermissionReq\x1a\x17.role.SavePermissionRes\"\x00B Z\x1ejh_gateway/api/backend/role/v1b\x06proto3"
 
 var (
 	file_backend_role_v1_role_proto_rawDescOnce sync.Once
@@ -587,33 +997,46 @@ func file_backend_role_v1_role_proto_rawDescGZIP() []byte {
 	return file_backend_role_v1_role_proto_rawDescData
 }
 
-var file_backend_role_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_backend_role_v1_role_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_backend_role_v1_role_proto_goTypes = []any{
-	(*GetRoleListReq)(nil), // 0: role.GetRoleListReq
-	(*RoleInfo)(nil),       // 1: role.RoleInfo
-	(*GetRoleListRes)(nil), // 2: role.GetRoleListRes
-	(*CreateRoleReq)(nil),  // 3: role.CreateRoleReq
-	(*CreateRoleRes)(nil),  // 4: role.CreateRoleRes
-	(*UpdateRoleReq)(nil),  // 5: role.UpdateRoleReq
-	(*UpdateRoleRes)(nil),  // 6: role.UpdateRoleRes
-	(*DeleteRoleReq)(nil),  // 7: role.DeleteRoleReq
-	(*DeleteRoleRes)(nil),  // 8: role.DeleteRoleRes
+	(*GetRoleListReq)(nil),     // 0: role.GetRoleListReq
+	(*RoleInfo)(nil),           // 1: role.RoleInfo
+	(*GetRoleListRes)(nil),     // 2: role.GetRoleListRes
+	(*CreateRoleReq)(nil),      // 3: role.CreateRoleReq
+	(*CreateRoleRes)(nil),      // 4: role.CreateRoleRes
+	(*UpdateRoleReq)(nil),      // 5: role.UpdateRoleReq
+	(*UpdateRoleRes)(nil),      // 6: role.UpdateRoleRes
+	(*DeleteRoleReq)(nil),      // 7: role.DeleteRoleReq
+	(*DeleteRoleRes)(nil),      // 8: role.DeleteRoleRes
+	(*GetPermissionsReq)(nil),  // 9: role.GetPermissionsReq
+	(*PermissionInfo)(nil),     // 10: role.PermissionInfo
+	(*RolePermissionInfo)(nil), // 11: role.RolePermissionInfo
+	(*GetPermissionsRes)(nil),  // 12: role.GetPermissionsRes
+	(*SavePermissionReq)(nil),  // 13: role.SavePermissionReq
+	(*SavePermissionRes)(nil),  // 14: role.SavePermissionRes
 }
 var file_backend_role_v1_role_proto_depIdxs = []int32{
-	1, // 0: role.GetRoleListRes.roles:type_name -> role.RoleInfo
-	0, // 1: role.Role.GetRoleList:input_type -> role.GetRoleListReq
-	3, // 2: role.Role.CreateRole:input_type -> role.CreateRoleReq
-	5, // 3: role.Role.UpdateRole:input_type -> role.UpdateRoleReq
-	7, // 4: role.Role.DeleteRole:input_type -> role.DeleteRoleReq
-	2, // 5: role.Role.GetRoleList:output_type -> role.GetRoleListRes
-	4, // 6: role.Role.CreateRole:output_type -> role.CreateRoleRes
-	6, // 7: role.Role.UpdateRole:output_type -> role.UpdateRoleRes
-	8, // 8: role.Role.DeleteRole:output_type -> role.DeleteRoleRes
-	5, // [5:9] is the sub-list for method output_type
-	1, // [1:5] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1,  // 0: role.GetRoleListRes.roles:type_name -> role.RoleInfo
+	10, // 1: role.PermissionInfo.children:type_name -> role.PermissionInfo
+	10, // 2: role.GetPermissionsRes.permission_list:type_name -> role.PermissionInfo
+	11, // 3: role.GetPermissionsRes.role_list:type_name -> role.RolePermissionInfo
+	0,  // 4: role.Role.GetRoleList:input_type -> role.GetRoleListReq
+	3,  // 5: role.Role.CreateRole:input_type -> role.CreateRoleReq
+	5,  // 6: role.Role.UpdateRole:input_type -> role.UpdateRoleReq
+	7,  // 7: role.Role.DeleteRole:input_type -> role.DeleteRoleReq
+	9,  // 8: role.Role.GetPermissions:input_type -> role.GetPermissionsReq
+	13, // 9: role.Role.SavePermission:input_type -> role.SavePermissionReq
+	2,  // 10: role.Role.GetRoleList:output_type -> role.GetRoleListRes
+	4,  // 11: role.Role.CreateRole:output_type -> role.CreateRoleRes
+	6,  // 12: role.Role.UpdateRole:output_type -> role.UpdateRoleRes
+	8,  // 13: role.Role.DeleteRole:output_type -> role.DeleteRoleRes
+	12, // 14: role.Role.GetPermissions:output_type -> role.GetPermissionsRes
+	14, // 15: role.Role.SavePermission:output_type -> role.SavePermissionRes
+	10, // [10:16] is the sub-list for method output_type
+	4,  // [4:10] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_backend_role_v1_role_proto_init() }
@@ -627,7 +1050,7 @@ func file_backend_role_v1_role_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_role_v1_role_proto_rawDesc), len(file_backend_role_v1_role_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
