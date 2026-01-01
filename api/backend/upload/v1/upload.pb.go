@@ -23,11 +23,11 @@ const (
 
 type UploadImageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty"`          // 文件二进制数据
-	FileName      string                 `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`          // 原始文件名
-	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"` // 文件MIME类型
-	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`         // 文件大小
-	UploadCode    string                 `protobuf:"bytes,5,opt,name=upload_code,json=uploadCode,proto3" json:"upload_code,omitempty"`    // 上传标识 (default, mobile_logo等)
+	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data"`          // 文件二进制数据
+	FileName      string                 `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name"`          // 原始文件名
+	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type"` // 文件MIME类型
+	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size"`         // 文件大小
+	UploadCode    string                 `protobuf:"bytes,5,opt,name=upload_code,json=uploadCode,proto3" json:"upload_code"`    // 上传标识 (default, mobile_logo等)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -99,9 +99,9 @@ func (x *UploadImageReq) GetUploadCode() string {
 
 type UploadImageRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ImageUrl      string                 `protobuf:"bytes,1,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`  // 图片访问URL
-	FilePath      string                 `protobuf:"bytes,2,opt,name=file_path,json=filePath,proto3" json:"file_path,omitempty"`  // 存储路径
-	FileSize      int64                  `protobuf:"varint,3,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"` // 文件大小
+	ImageUrl      string                 `protobuf:"bytes,1,opt,name=image_url,json=imageUrl,proto3" json:"image_url"`  // 图片访问URL
+	FilePath      string                 `protobuf:"bytes,2,opt,name=file_path,json=filePath,proto3" json:"file_path"`  // 存储路径
+	FileSize      int64                  `protobuf:"varint,3,opt,name=file_size,json=fileSize,proto3" json:"file_size"` // 文件大小
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

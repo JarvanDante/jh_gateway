@@ -1202,7 +1202,7 @@ func callGetAdminList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		return nil
 	}
 
-	// 返回成功响应
+	// 现在可以直接返回响应，因为已经移除了 omitempty 标签
 	util.WriteSuccess(r, res)
 	return nil
 }

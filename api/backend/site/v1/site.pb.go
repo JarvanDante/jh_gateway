@@ -27,7 +27,7 @@ const (
 type GetBasicSettingReq struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// 站点ID，可选，如果不传则使用当前站点
-	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID，可选，如果不传则使用当前站点"`
+	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选，如果不传则使用当前站点"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -71,23 +71,23 @@ func (x *GetBasicSettingReq) GetSiteId() int32 {
 
 type GetBasicSettingRes struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty" dc:"站点代码"`                                                                        // 站点代码
-	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" dc:"站点名称"`                                                                        // 站点名称
-	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty" dc:"是否开放注册"`                           // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty" dc:"是否关闭站点"`                                                // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty" dc:"关闭原因"`                                       // 关闭原因
-	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty" dc:"客服链接"`                                          // 客服链接
-	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty" dc:"代理链接地址"`                                      // 代理链接地址
-	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty" dc:"手机域名地址"`                                           // 手机域名地址
-	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty" dc:"代理推广地址"`                   // 代理推广地址
-	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty" dc:"单笔最低提现金额"`                                 // 单笔最低提现金额
-	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty" dc:"手机端Logo"`                                      // 手机端Logo
-	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty" dc:"默认代理ID"`                        // 默认代理ID
-	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name,omitempty" dc:"默认代理名称"`                   // 默认代理名称
-	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance,omitempty" dc:"总可用额度"`                                                              // 总可用额度
-	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset,omitempty" dc:"剩余额度"`                                 // 剩余额度
+	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code" dc:"站点代码"`                                                                        // 站点代码
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"站点名称"`                                                                        // 站点名称
+	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"是否开放注册"`                           // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close" dc:"是否关闭站点"`                                                // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"关闭原因"`                                       // 关闭原因
+	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service" dc:"客服链接"`                                          // 客服链接
+	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc" dc:"代理链接地址"`                                      // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile" dc:"手机域名地址"`                                           // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register" dc:"代理推广地址"`                   // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最低提现金额"`                                 // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端Logo"`                                      // 手机端Logo
+	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id" dc:"默认代理ID"`                        // 默认代理ID
+	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name" dc:"默认代理名称"`                   // 默认代理名称
+	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance" dc:"总可用额度"`                                                              // 总可用额度
+	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset" dc:"剩余额度"`                                 // 剩余额度
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -243,18 +243,18 @@ func (x *GetBasicSettingRes) GetBalanceReset() float64 {
 
 type UpdateBasicSettingReq struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty" dc:"站点ID，可选"`                                                  // 站点ID，可选
-	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty" dc:"是否开放注册"`                           // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty" dc:"是否关闭站点"`                                                // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty" dc:"关闭原因"`                                       // 关闭原因
-	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty" dc:"代理链接地址"`                                      // 代理链接地址
-	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty" dc:"手机域名地址"`                                           // 手机域名地址
-	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty" dc:"代理推广地址"`                    // 代理推广地址
-	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty" dc:"单笔最低提现金额"`                                  // 单笔最低提现金额
-	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty" dc:"手机端Logo"`                                      // 手机端Logo
-	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty" dc:"客服链接"`                                         // 客服链接
+	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`                                                  // 站点ID，可选
+	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"是否开放注册"`                           // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close" dc:"是否关闭站点"`                                                // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"关闭原因"`                                       // 关闭原因
+	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc" dc:"代理链接地址"`                                      // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile" dc:"手机域名地址"`                                           // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register" dc:"代理推广地址"`                    // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最低提现金额"`                                  // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端Logo"`                                      // 手机端Logo
+	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service" dc:"客服链接"`                                         // 客服链接
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -375,7 +375,7 @@ func (x *UpdateBasicSettingReq) GetUrlService() string {
 
 type UpdateBasicSettingRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty" dc:"响应消息"` // 响应消息
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
