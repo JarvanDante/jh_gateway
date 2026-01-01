@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package upload;
 
-option go_package = "jh_gateway/api/backend/upload/v1";
+option go_package = "jh_admin_service/api/backend/upload/v1";
 
 service Upload {
     rpc UploadImage(UploadImageReq) returns (UploadImageRes) {}

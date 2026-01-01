@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,11 +24,11 @@ const (
 
 type UploadImageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data"`          // 文件二进制数据
-	FileName      string                 `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name"`          // 原始文件名
-	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type"` // 文件MIME类型
-	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size"`         // 文件大小
-	UploadCode    string                 `protobuf:"bytes,5,opt,name=upload_code,json=uploadCode,proto3" json:"upload_code"`    // 上传标识 (default, mobile_logo等)
+	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data" dc:"文件二进制数据"`                            // 文件二进制数据
+	FileName      string                 `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name" dc:"原始文件名"`                              // 原始文件名
+	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type" dc:"文件MIME类型"`                  // 文件MIME类型
+	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size" dc:"文件大小"`                              // 文件大小
+	UploadCode    string                 `protobuf:"bytes,5,opt,name=upload_code,json=uploadCode,proto3" json:"upload_code" dc:"上传标识 (default, mobile_logo等)"` // 上传标识 (default, mobile_logo等)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -99,9 +100,9 @@ func (x *UploadImageReq) GetUploadCode() string {
 
 type UploadImageRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ImageUrl      string                 `protobuf:"bytes,1,opt,name=image_url,json=imageUrl,proto3" json:"image_url"`  // 图片访问URL
-	FilePath      string                 `protobuf:"bytes,2,opt,name=file_path,json=filePath,proto3" json:"file_path"`  // 存储路径
-	FileSize      int64                  `protobuf:"varint,3,opt,name=file_size,json=fileSize,proto3" json:"file_size"` // 文件大小
+	ImageUrl      string                 `protobuf:"bytes,1,opt,name=image_url,json=imageUrl,proto3" json:"image_url" dc:"图片访问URL"` // 图片访问URL
+	FilePath      string                 `protobuf:"bytes,2,opt,name=file_path,json=filePath,proto3" json:"file_path" dc:"存储路径"`    // 存储路径
+	FileSize      int64                  `protobuf:"varint,3,opt,name=file_size,json=fileSize,proto3" json:"file_size" dc:"文件大小"`   // 文件大小
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -174,7 +175,7 @@ const file_backend_upload_v1_upload_proto_rawDesc = "" +
 	"\tfile_path\x18\x02 \x01(\tR\bfilePath\x12\x1b\n" +
 	"\tfile_size\x18\x03 \x01(\x03R\bfileSize2I\n" +
 	"\x06Upload\x12?\n" +
-	"\vUploadImage\x12\x16.upload.UploadImageReq\x1a\x16.upload.UploadImageRes\"\x00B\"Z jh_gateway/api/backend/upload/v1b\x06proto3"
+	"\vUploadImage\x12\x16.upload.UploadImageReq\x1a\x16.upload.UploadImageRes\"\x00B(Z&jh_admin_service/api/backend/upload/v1b\x06proto3"
 
 var (
 	file_backend_upload_v1_upload_proto_rawDescOnce sync.Once
