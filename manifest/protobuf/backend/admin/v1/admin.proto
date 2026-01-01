@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package admin;
 
-option go_package = "jh_admin_service/api/backend/admin/v1";
+option go_package = "jh_gateway/api/backend/admin/v1";
 
 service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
@@ -13,6 +13,7 @@ service Admin {
     rpc DeleteAdmin(DeleteAdminReq) returns (DeleteAdminRes) {}
     rpc Logout(LogoutReq) returns (LogoutRes) {}
     rpc ChangePassword(ChangePasswordReq) returns (ChangePasswordRes) {}
+    rpc GetAdminLogs(GetAdminLogsReq) returns (GetAdminLogsRes) {}
 }
 
 message LoginReq {
@@ -109,4 +110,27 @@ message ChangePasswordReq {
 message ChangePasswordRes {
     bool success = 1;                                    // 是否成功
     string message = 2;                                  // 响应消息
+}
+
+// 获取管理员日志请求
+message GetAdminLogsReq {
+    string username = 1;  // 用户名筛选 (可选)
+    string start = 2;     // 开始时间 (可选)
+    string end = 3;       // 结束时间 (可选)
+    int32 page = 4;       // 页码
+    int32 size = 5;       // 每页数量
+}
+
+// 管理员日志信息
+message AdminLogInfo {
+    string username = 1;    // 管理员用户名
+    string ip = 2;          // IP地址
+    string remark = 3;      // 操作备注
+    string created_at = 4;  // 创建时间
+}
+
+// 获取管理员日志响应
+message GetAdminLogsRes {
+    repeated AdminLogInfo list = 1;  // 日志列表
+    int32 count = 2;                 // 总数量
 }

@@ -200,6 +200,9 @@ func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		//保存权限
 	case strings.HasSuffix(path, "/save-permission") && method == "POST":
 		return callSavePermission(ctx, conn, r)
+		//管理员日志列表
+	case strings.HasSuffix(path, "/admin-logs") && method == "GET":
+		return callGetAdminLogs(ctx, conn, r)
 		//上传图片
 	case strings.HasSuffix(path, "/upload-image") && method == "POST":
 		return callUploadImage(ctx, conn, r)
@@ -1521,4 +1524,64 @@ func callUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 
 	util.LogWithTrace(ctx, "info", "文件上传成功 - URL: %s", res.ImageUrl)
 	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/后台操作日志
+ * @title 后台操作日志
+ * @description 后台操作日志
+ * @method get
+ * @url /api/admin/admin-logs
+ * @param username 可选 string 用户名筛选
+ * @param start 可选 string 开始时间 (格式: 2023-01-01 00:00:00)
+ * @param end 可选 string 结束时间 (格式: 2023-01-31 23:59:59)
+ * @param page 可选 int 页码 (默认: 1)
+ * @param size 可选 int 每页数量 (默认: 50)
+ * @return {"code":0,"msg":"success","data":{"list":[{"username":"admin","ip":"127.0.0.1","remark":"登录成功","created_at":"2023-01-01 12:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.list array 日志列表
+ * @return_param data.list.username string 管理员用户名
+ * @return_param data.list.ip string IP地址
+ * @return_param data.list.remark string 操作备注
+ * @return_param data.list.created_at string 创建时间
+ * @return_param data.count int 总数量
+ * @return_param msg string 提示说明
+ * @remark 支持按用户名和时间范围筛选，支持分页查询
+ * @number 11
+ */
+func callGetAdminLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin GetAdminLogs")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.GetAdminLogsReq{
+		Username: getStringFromMap(reqData, "username"),
+		Start:    getStringFromMap(reqData, "start"),
+		End:      getStringFromMap(reqData, "end"),
+		Page:     getInt32FromMap(reqData, "page"),
+		Size:     getInt32FromMap(reqData, "size"),
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, Start: %s, End: %s, Page: %d, Size: %d",
+		req.Username, req.Start, req.End, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetAdminLogs(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取管理员日志失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
 }
