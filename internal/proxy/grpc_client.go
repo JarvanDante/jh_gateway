@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"jh_gateway/api/backend/admin/v1"
@@ -22,7 +23,37 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 )
+
+// writeProtobufResponse 统一处理protobuf响应的JSON序列化
+func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage proto.Message) error {
+	marshaler := protojson.MarshalOptions{
+		UseProtoNames:   true, // 使用proto字段名（下划线格式）保持与原API一致
+		EmitUnpopulated: true, // 输出零值字段，确保空数组显示为[]而不是null
+	}
+
+	jsonData, err := marshaler.Marshal(pbMessage)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "protobuf JSON marshal failed: %v", err)
+		util.WriteInternalError(r, "数据序列化失败")
+		return err
+	}
+
+	// 将JSON字符串解析为map，然后返回
+	var responseData map[string]interface{}
+	if err := json.Unmarshal(jsonData, &responseData); err != nil {
+		util.LogWithTrace(ctx, "error", "JSON parse to map failed: %v", err)
+		// 如果解析失败，直接返回原始响应
+		util.WriteSuccess(r, pbMessage)
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, responseData)
+	return nil
+}
 
 // AdminGRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
 func AdminGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
@@ -566,9 +597,8 @@ func callGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -730,9 +760,8 @@ func callGetRoleList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -793,9 +822,8 @@ func callCreateRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -866,9 +894,8 @@ func callUpdateRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -931,9 +958,8 @@ func callDeleteRole(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -976,9 +1002,24 @@ func callGetPermissions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 添加调试日志检查gRPC响应数据
+	util.LogWithTrace(ctx, "debug", "gRPC response - permission count: %d, role count: %d",
+		len(res.PermissionList), len(res.RoleList))
+
+	if len(res.PermissionList) > 0 {
+		firstPerm := res.PermissionList[0]
+		util.LogWithTrace(ctx, "debug", "first permission - ID: %d, Name: %s, Children count: %d, Children is nil: %v",
+			firstPerm.Id, firstPerm.Name, len(firstPerm.Children), firstPerm.Children == nil)
+
+		if len(firstPerm.Children) > 0 {
+			firstChild := firstPerm.Children[0]
+			util.LogWithTrace(ctx, "debug", "first child permission - ID: %d, Name: %s, Children count: %d, Children is nil: %v",
+				firstChild.Id, firstChild.Name, len(firstChild.Children), firstChild.Children == nil)
+		}
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -1051,9 +1092,8 @@ func callSavePermission(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -1090,9 +1130,8 @@ func callAdminLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -1154,9 +1193,8 @@ func callAdminChangePassword(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 		return nil
 	}
 
-	// 返回成功响应
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
@@ -1202,9 +1240,8 @@ func callGetAdminList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		return nil
 	}
 
-	// 现在可以直接返回响应，因为已经移除了 omitempty 标签
-	util.WriteSuccess(r, res)
-	return nil
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 /**
