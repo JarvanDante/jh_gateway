@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "jh_gateway/api/backend/user/v1";
+
+service User {
+    rpc GetUserList(GetUserListReq) returns (GetUserListRes) {}
+    rpc UpdateUser(UpdateUserReq) returns (UpdateUserRes) {}
+    rpc GetUserBasicInfo(GetUserBasicInfoReq) returns (GetUserBasicInfoRes) {}
+}
+
+// 获取用户列表请求
+message GetUserListReq {
+    int32 grade_id = 1;         // 等级ID (可选)
+    int32 level_id = 2;         // 层级ID (可选)
+    int32 status = 3;           // 状态 (可选)
+    string username = 4;        // 用户名 (可选)
+    string realname = 5;        // 真实姓名 (可选)
+    string agent_username = 6;  // 代理用户名 (可选)
+    string mobile = 7;          // 手机号 (可选)
+    int32 page = 8;             // 页码
+    int32 size = 9;             // 每页数量
+    string sort_field = 10;     // 排序字段 (可选)
+    int32 sort_rule = 11;       // 排序规则 1=ASC, 0=DESC (可选)
+    string card_no = 12;        // 银行卡号 (可选)
+    string domain = 13;         // 注册域名 (可选)
+    string start_date = 14;     // 开始日期 (可选)
+    string end_date = 15;       // 结束日期 (可选)
+    int32 charge = 16;          // 是否首存 1=是, 0=否 (可选)
+}
+
+// 用户信息
+message UserInfo {
+    int32 id = 1;                       // 用户ID
+    string username = 2;                // 用户名
+    int32 grade_id = 3;                 // 等级ID
+    string grade_name = 4;              // 等级名称
+    int32 level_id = 5;                 // 层级ID
+    string level_name = 6;              // 层级名称
+    int32 agent_id = 7;                 // 代理ID
+    string agent_username = 8;          // 代理用户名
+    int32 status = 9;                   // 状态
+    string register_ip = 10;            // 注册IP
+    string register_time = 11;          // 注册时间
+    string register_url = 12;           // 注册URL
+    string last_login_ip = 13;          // 最后登录IP
+    string last_login_time = 14;        // 最后登录时间
+    string last_login_address = 15;     // 最后登录地址
+    string realname = 16;               // 真实姓名
+    string mobile = 17;                 // 手机号
+    string email = 18;                  // 邮箱
+    int32 focus_level = 19;             // 关注级别
+    int32 balance_status = 20;          // 资金状态
+    string balance = 21;                // 余额
+    string balance_frozen = 22;         // 冻结余额
+    string points = 23;                 // 积分
+    string card_no = 24;                // 银行卡号
+    int32 is_online = 25;               // 是否在线
+    int32 pay_times = 26;               // 存款次数
+}
+
+// 获取用户列表响应
+message GetUserListRes {
+    repeated UserInfo list = 1;         // 用户列表
+    int32 count = 2;                    // 总数量
+    int32 total_users = 3;              // 总用户数
+    int32 total_charge_users = 4;       // 总充值用户数
+}
+
+// 更新用户请求
+message UpdateUserReq {
+    int32 id = 1;                       // 用户ID
+    string login_password = 2;          // 登录密码 (可选)
+    string pay_password = 3;            // 资金密码 (可选)
+    int32 grade_id = 4;                 // 等级ID
+    int32 level_id = 5;                 // 层级ID
+    int32 agent_id = 6;                 // 代理ID
+    string realname = 7;                // 真实姓名 (可选)
+    string mobile = 8;                  // 手机号 (可选)
+    string email = 9;                   // 邮箱 (可选)
+    string qq = 10;                     // QQ号 (可选)
+    string birthday = 11;               // 生日 (可选)
+    int32 sex = 12;                     // 性别
+    int32 focus_level = 13;             // 关注级别
+    int32 balance_status = 14;          // 资金状态
+    int32 status = 15;                  // 状态
+    string remark = 16;                 // 备注 (可选)
+}
+
+// 更新用户响应
+message UpdateUserRes {
+    bool success = 1;                   // 是否成功
+    string message = 2;                 // 响应消息
+}
+
+// 获取用户基本信息请求
+message GetUserBasicInfoReq {
+    int32 id = 1;                       // 用户ID
+}
+
+// 用户基本信息
+message UserBasicInfo {
+    int32 id = 1;                       // 用户ID
+    string username = 2;                // 用户名
+    string grade_name = 3;              // 等级名称
+    string level_name = 4;              // 层级名称
+    string balance = 5;                 // 余额
+    string register_time = 6;           // 注册时间
+    string register_ip = 7;             // 注册IP
+    string last_login_ip = 8;           // 最后登录IP
+    string last_login_time = 9;         // 最后登录时间
+    string last_login_address = 10;     // 最后登录地址
+    string agent_name = 11;             // 代理名称
+    string realname = 12;               // 真实姓名
+    string mobile = 13;                 // 手机号
+    string email = 14;                  // 邮箱
+    int32 sex = 15;                     // 性别
+    string birthday = 16;               // 生日
+    string qq = 17;                     // QQ号
+    int32 balance_status = 18;          // 资金状态
+    int32 focus_level = 19;             // 关注级别
+    string remark = 20;                 // 备注
+    int32 status = 21;                  // 状态
+    string device = 22;                 // 最后登录设备
+    int32 is_online = 23;               // 是否在线
+    repeated BankInfo banks = 24;       // 银行卡列表
+}
+
+// 银行卡信息
+message BankInfo {
+    string bank_name = 1;               // 银行名称
+    string card_no = 2;                 // 银行卡号
+}
+
+// 获取用户基本信息响应
+message GetUserBasicInfoRes {
+    UserBasicInfo user = 1;             // 用户基本信息
+}

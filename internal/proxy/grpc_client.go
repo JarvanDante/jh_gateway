@@ -9,6 +9,7 @@ import (
 	v2 "jh_gateway/api/backend/role/v1"
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
+	v5 "jh_gateway/api/backend/user/v1"
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/tracing"
@@ -203,6 +204,15 @@ func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		//管理员日志列表
 	case strings.HasSuffix(path, "/admin-logs") && method == "GET":
 		return callGetAdminLogs(ctx, conn, r)
+		//获取会员列表
+	case strings.HasSuffix(path, "/users") && method == "GET":
+		return callGetUserList(ctx, conn, r)
+		//编辑会员信息
+	case strings.HasSuffix(path, "/update-user") && method == "POST":
+		return callUpdateUser(ctx, conn, r)
+		//获取会员基本信息
+	case strings.HasSuffix(path, "/user-basic-info") && method == "GET":
+		return callGetUserBasicInfo(ctx, conn, r)
 		//上传图片
 	case strings.HasSuffix(path, "/upload-image") && method == "POST":
 		return callUploadImage(ctx, conn, r)
@@ -699,6 +709,20 @@ func getInt32FromMap(data map[string]interface{}, key string) int32 {
 		}
 	}
 	return 0
+}
+
+func getInt32FromMapWithDefault(data map[string]interface{}, key string, defaultValue int32) int32 {
+	if val, ok := data[key]; ok {
+		switch v := val.(type) {
+		case int32:
+			return v
+		case int:
+			return int32(v)
+		case float64:
+			return int32(v)
+		}
+	}
+	return defaultValue
 }
 
 func getBoolFromMap(data map[string]interface{}, key string) bool {
@@ -1579,6 +1603,224 @@ func callGetAdminLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
 		util.WriteInternalError(r, "获取管理员日志失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员/会员列表
+ * @title 获取会员列表
+ * @description 获取会员列表的接口
+ * @method get
+ * @url /api/admin/users
+ * @param grade_id 可选 int 等级ID
+ * @param level_id 可选 int 层级ID
+ * @param status 可选 int 状态
+ * @param username 可选 string 用户名
+ * @param realname 可选 string 真实姓名
+ * @param agent_username 可选 string 代理用户名
+ * @param mobile 可选 string 手机号
+ * @param page 可选 int 页码 (默认: 1)
+ * @param size 可选 int 每页数量 (默认: 20)
+ * @param sort_field 可选 string 排序字段
+ * @param sort_rule 可选 int 排序规则 1=ASC, 0=DESC
+ * @param card_no 可选 string 银行卡号
+ * @param domain 可选 string 注册域名
+ * @param start_date 可选 string 开始日期
+ * @param end_date 可选 string 结束日期
+ * @param charge 可选 int 是否首存 1=是, 0=否
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"username":"test","grade_name":"普通会员","level_name":"一级","agent_username":"agent1","status":1}],"count":1,"total_users":100,"total_charge_users":50}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.list array 用户列表
+ * @return_param data.count int 总数量
+ * @return_param data.total_users int 总用户数
+ * @return_param data.total_charge_users int 总充值用户数
+ * @return_param msg string 提示说明
+ * @remark 支持多种筛选条件和排序，支持分页查询
+ * @number 12
+ */
+func callGetUserList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User GetUserList")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.GetUserListReq{
+		GradeId:       getInt32FromMapWithDefault(reqData, "grade_id", 0),
+		LevelId:       getInt32FromMapWithDefault(reqData, "level_id", 0),
+		Status:        getInt32FromMapWithDefault(reqData, "status", 0),
+		Username:      getStringFromMap(reqData, "username"),
+		Realname:      getStringFromMap(reqData, "realname"),
+		AgentUsername: getStringFromMap(reqData, "agent_username"),
+		Mobile:        getStringFromMap(reqData, "mobile"),
+		Page:          getInt32FromMapWithDefault(reqData, "page", 1),
+		Size:          getInt32FromMapWithDefault(reqData, "size", 20),
+		SortField:     getStringFromMap(reqData, "sort_field"),
+		SortRule:      getInt32FromMapWithDefault(reqData, "sort_rule", 1),
+		CardNo:        getStringFromMap(reqData, "card_no"),
+		Domain:        getStringFromMap(reqData, "domain"),
+		StartDate:     getStringFromMap(reqData, "start_date"),
+		EndDate:       getStringFromMap(reqData, "end_date"),
+		Charge:        getInt32FromMapWithDefault(reqData, "charge", 0),
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Page: %d, Size: %d, Username: %s",
+		req.Page, req.Size, req.Username)
+
+	// 调用 gRPC 服务
+	res, err := client.GetUserList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取会员列表失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员管理
+ * @title 编辑会员信息
+ * @description 编辑会员信息的接口
+ * @method post
+ * @url /api/admin/update-user
+ * @param id 必选 int 用户ID
+ * @param login_password 可选 string 登录密码
+ * @param pay_password 可选 string 资金密码
+ * @param grade_id 必选 int 等级ID
+ * @param level_id 必选 int 层级ID
+ * @param agent_id 必选 int 代理ID
+ * @param realname 可选 string 真实姓名
+ * @param mobile 可选 string 手机号
+ * @param email 可选 string 邮箱
+ * @param qq 可选 string QQ号
+ * @param birthday 可选 string 生日
+ * @param sex 必选 int 性别
+ * @param focus_level 必选 int 关注级别
+ * @param balance_status 必选 int 资金状态
+ * @param status 必选 int 状态
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新用户成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @return_param msg string 提示说明
+ * @remark 用于编辑会员的基本信息和状态
+ * @number 13
+ */
+func callUpdateUser(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User UpdateUser")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.UpdateUserReq{
+		Id:            getInt32FromMapWithDefault(reqData, "id", 0),
+		LoginPassword: getStringFromMap(reqData, "login_password"),
+		PayPassword:   getStringFromMap(reqData, "pay_password"),
+		GradeId:       getInt32FromMapWithDefault(reqData, "grade_id", 0),
+		LevelId:       getInt32FromMapWithDefault(reqData, "level_id", 0),
+		AgentId:       getInt32FromMapWithDefault(reqData, "agent_id", 0),
+		Realname:      getStringFromMap(reqData, "realname"),
+		Mobile:        getStringFromMap(reqData, "mobile"),
+		Email:         getStringFromMap(reqData, "email"),
+		Qq:            getStringFromMap(reqData, "qq"),
+		Birthday:      getStringFromMap(reqData, "birthday"),
+		Sex:           getInt32FromMapWithDefault(reqData, "sex", 0),
+		FocusLevel:    getInt32FromMapWithDefault(reqData, "focus_level", 1),
+		BalanceStatus: getInt32FromMapWithDefault(reqData, "balance_status", 1),
+		Status:        getInt32FromMapWithDefault(reqData, "status", 1),
+		Remark:        getStringFromMap(reqData, "remark"),
+	}
+
+	if req.Id <= 0 {
+		util.WriteBadRequest(r, "用户ID不能为空")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - ID: %d, GradeId: %d, LevelId: %d",
+		req.Id, req.GradeId, req.LevelId)
+
+	// 调用 gRPC 服务
+	res, err := client.UpdateUser(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "编辑会员信息失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员管理
+ * @title 获取会员基本信息
+ * @description 获取会员基本信息的接口
+ * @method get
+ * @url /api/admin/user-basic-info
+ * @param id 必选 int 用户ID
+ * @return {"code":0,"msg":"success","data":{"user":{"id":1,"username":"test","grade_name":"普通会员","level_name":"一级","balance":"100.00","register_time":"2023-01-01 12:00:00","agent_name":"agent1","realname":"张三","mobile":"138****1234","email":"test@example.com","sex":1,"birthday":"1990-01-01","qq":"123456789","balance_status":1,"focus_level":1,"remark":"","status":1,"device":"电脑","is_online":0,"banks":[{"bank_name":"工商银行","card_no":"6222****1234"}]}}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.user object 用户基本信息
+ * @return_param msg string 提示说明
+ * @remark 获取指定用户的详细基本信息，包括银行卡信息
+ * @number 14
+ */
+func callGetUserBasicInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User GetUserBasicInfo")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.GetUserBasicInfoReq{
+		Id: getInt32FromMapWithDefault(reqData, "id", 0),
+	}
+
+	if req.Id <= 0 {
+		util.WriteBadRequest(r, "用户ID不能为空")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - ID: %d", req.Id)
+
+	// 调用 gRPC 服务
+	res, err := client.GetUserBasicInfo(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		if strings.Contains(err.Error(), "不存在") {
+			util.WriteBadRequest(r, "用户不存在")
+		} else {
+			util.WriteInternalError(r, "获取会员基本信息失败，请稍后重试")
+		}
 		return nil
 	}
 
