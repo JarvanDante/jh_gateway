@@ -23,6 +23,9 @@ const (
 	User_GetUserList_FullMethodName      = "/user.User/GetUserList"
 	User_UpdateUser_FullMethodName       = "/user.User/UpdateUser"
 	User_GetUserBasicInfo_FullMethodName = "/user.User/GetUserBasicInfo"
+	User_GetUserGrades_FullMethodName    = "/user.User/GetUserGrades"
+	User_SaveUserGrades_FullMethodName   = "/user.User/SaveUserGrades"
+	User_DeleteUserGrades_FullMethodName = "/user.User/DeleteUserGrades"
 )
 
 // UserClient is the client API for User service.
@@ -32,6 +35,10 @@ type UserClient interface {
 	GetUserList(ctx context.Context, in *GetUserListReq, opts ...grpc.CallOption) (*GetUserListRes, error)
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserRes, error)
 	GetUserBasicInfo(ctx context.Context, in *GetUserBasicInfoReq, opts ...grpc.CallOption) (*GetUserBasicInfoRes, error)
+	// 用户等级相关接口
+	GetUserGrades(ctx context.Context, in *GetUserGradesReq, opts ...grpc.CallOption) (*GetUserGradesRes, error)
+	SaveUserGrades(ctx context.Context, in *SaveUserGradesReq, opts ...grpc.CallOption) (*SaveUserGradesRes, error)
+	DeleteUserGrades(ctx context.Context, in *DeleteUserGradesReq, opts ...grpc.CallOption) (*DeleteUserGradesRes, error)
 }
 
 type userClient struct {
@@ -72,6 +79,36 @@ func (c *userClient) GetUserBasicInfo(ctx context.Context, in *GetUserBasicInfoR
 	return out, nil
 }
 
+func (c *userClient) GetUserGrades(ctx context.Context, in *GetUserGradesReq, opts ...grpc.CallOption) (*GetUserGradesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserGradesRes)
+	err := c.cc.Invoke(ctx, User_GetUserGrades_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) SaveUserGrades(ctx context.Context, in *SaveUserGradesReq, opts ...grpc.CallOption) (*SaveUserGradesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SaveUserGradesRes)
+	err := c.cc.Invoke(ctx, User_SaveUserGrades_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) DeleteUserGrades(ctx context.Context, in *DeleteUserGradesReq, opts ...grpc.CallOption) (*DeleteUserGradesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteUserGradesRes)
+	err := c.cc.Invoke(ctx, User_DeleteUserGrades_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -79,6 +116,10 @@ type UserServer interface {
 	GetUserList(context.Context, *GetUserListReq) (*GetUserListRes, error)
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserRes, error)
 	GetUserBasicInfo(context.Context, *GetUserBasicInfoReq) (*GetUserBasicInfoRes, error)
+	// 用户等级相关接口
+	GetUserGrades(context.Context, *GetUserGradesReq) (*GetUserGradesRes, error)
+	SaveUserGrades(context.Context, *SaveUserGradesReq) (*SaveUserGradesRes, error)
+	DeleteUserGrades(context.Context, *DeleteUserGradesReq) (*DeleteUserGradesRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -97,6 +138,15 @@ func (UnimplementedUserServer) UpdateUser(context.Context, *UpdateUserReq) (*Upd
 }
 func (UnimplementedUserServer) GetUserBasicInfo(context.Context, *GetUserBasicInfoReq) (*GetUserBasicInfoRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUserBasicInfo not implemented")
+}
+func (UnimplementedUserServer) GetUserGrades(context.Context, *GetUserGradesReq) (*GetUserGradesRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserGrades not implemented")
+}
+func (UnimplementedUserServer) SaveUserGrades(context.Context, *SaveUserGradesReq) (*SaveUserGradesRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method SaveUserGrades not implemented")
+}
+func (UnimplementedUserServer) DeleteUserGrades(context.Context, *DeleteUserGradesReq) (*DeleteUserGradesRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteUserGrades not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -173,6 +223,60 @@ func _User_GetUserBasicInfo_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserGrades_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserGradesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserGrades(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserGrades_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserGrades(ctx, req.(*GetUserGradesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_SaveUserGrades_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveUserGradesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SaveUserGrades(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SaveUserGrades_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SaveUserGrades(ctx, req.(*SaveUserGradesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_DeleteUserGrades_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserGradesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).DeleteUserGrades(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_DeleteUserGrades_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).DeleteUserGrades(ctx, req.(*DeleteUserGradesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -191,6 +295,18 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserBasicInfo",
 			Handler:    _User_GetUserBasicInfo_Handler,
+		},
+		{
+			MethodName: "GetUserGrades",
+			Handler:    _User_GetUserGrades_Handler,
+		},
+		{
+			MethodName: "SaveUserGrades",
+			Handler:    _User_SaveUserGrades_Handler,
+		},
+		{
+			MethodName: "DeleteUserGrades",
+			Handler:    _User_DeleteUserGrades_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

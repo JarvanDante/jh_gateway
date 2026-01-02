@@ -1091,6 +1091,489 @@ func (x *GetUserBasicInfoRes) GetUser() *UserBasicInfo {
 	return nil
 }
 
+// 获取用户等级列表请求
+type GetUserGradesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"` // 站点ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserGradesReq) Reset() {
+	*x = GetUserGradesReq{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserGradesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserGradesReq) ProtoMessage() {}
+
+func (x *GetUserGradesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserGradesReq.ProtoReflect.Descriptor instead.
+func (*GetUserGradesReq) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetUserGradesReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 用户等级信息
+type UserGradeInfo struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Id                   int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"等级ID"`                                                                      // 等级ID
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"等级名称"`                                                                   // 等级名称
+	PointsUpgrade        int32                  `protobuf:"varint,3,opt,name=points_upgrade,json=pointsUpgrade,proto3" json:"points_upgrade" dc:"升级所需积分"`                         // 升级所需积分
+	BonusUpgrade         float64                `protobuf:"fixed64,4,opt,name=bonus_upgrade,json=bonusUpgrade,proto3" json:"bonus_upgrade" dc:"升级赠送彩金"`                           // 升级赠送彩金
+	BonusBirthday        float64                `protobuf:"fixed64,5,opt,name=bonus_birthday,json=bonusBirthday,proto3" json:"bonus_birthday" dc:"生日彩金"`                          // 生日彩金
+	RebatePercentSports  float64                `protobuf:"fixed64,6,opt,name=rebate_percent_sports,json=rebatePercentSports,proto3" json:"rebate_percent_sports" dc:"体育返水比例"`    // 体育返水比例
+	RebatePercentLottery float64                `protobuf:"fixed64,7,opt,name=rebate_percent_lottery,json=rebatePercentLottery,proto3" json:"rebate_percent_lottery" dc:"彩票返水比例"` // 彩票返水比例
+	RebatePercentLive    float64                `protobuf:"fixed64,8,opt,name=rebate_percent_live,json=rebatePercentLive,proto3" json:"rebate_percent_live" dc:"真人视讯返水比例"`        // 真人视讯返水比例
+	RebatePercentEgame   float64                `protobuf:"fixed64,9,opt,name=rebate_percent_egame,json=rebatePercentEgame,proto3" json:"rebate_percent_egame" dc:"电子游戏返水比例"`     // 电子游戏返水比例
+	RebatePercentPoker   float64                `protobuf:"fixed64,10,opt,name=rebate_percent_poker,json=rebatePercentPoker,proto3" json:"rebate_percent_poker" dc:"扑克返水比例"`      // 扑克返水比例
+	UserCount            int32                  `protobuf:"varint,11,opt,name=user_count,json=userCount,proto3" json:"user_count" dc:"该等级用户数量"`                                   // 该等级用户数量
+	FieldsDisable        string                 `protobuf:"bytes,12,opt,name=fields_disable,json=fieldsDisable,proto3" json:"fields_disable" dc:"禁用字段配置"`                         // 禁用字段配置
+	AutoProviding        string                 `protobuf:"bytes,13,opt,name=auto_providing,json=autoProviding,proto3" json:"auto_providing" dc:"自动发放配置"`                         // 自动发放配置
+	Activities           []string               `protobuf:"bytes,14,rep,name=activities,proto3" json:"activities" dc:"关联活动列表"`                                                    // 关联活动列表
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *UserGradeInfo) Reset() {
+	*x = UserGradeInfo{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserGradeInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserGradeInfo) ProtoMessage() {}
+
+func (x *UserGradeInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserGradeInfo.ProtoReflect.Descriptor instead.
+func (*UserGradeInfo) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UserGradeInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UserGradeInfo) GetPointsUpgrade() int32 {
+	if x != nil {
+		return x.PointsUpgrade
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetBonusUpgrade() float64 {
+	if x != nil {
+		return x.BonusUpgrade
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetBonusBirthday() float64 {
+	if x != nil {
+		return x.BonusBirthday
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetRebatePercentSports() float64 {
+	if x != nil {
+		return x.RebatePercentSports
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetRebatePercentLottery() float64 {
+	if x != nil {
+		return x.RebatePercentLottery
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetRebatePercentLive() float64 {
+	if x != nil {
+		return x.RebatePercentLive
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetRebatePercentEgame() float64 {
+	if x != nil {
+		return x.RebatePercentEgame
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetRebatePercentPoker() float64 {
+	if x != nil {
+		return x.RebatePercentPoker
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetUserCount() int32 {
+	if x != nil {
+		return x.UserCount
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetFieldsDisable() string {
+	if x != nil {
+		return x.FieldsDisable
+	}
+	return ""
+}
+
+func (x *UserGradeInfo) GetAutoProviding() string {
+	if x != nil {
+		return x.AutoProviding
+	}
+	return ""
+}
+
+func (x *UserGradeInfo) GetActivities() []string {
+	if x != nil {
+		return x.Activities
+	}
+	return nil
+}
+
+// 获取用户等级列表响应
+type GetUserGradesRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code" dc:"响应码"`       // 响应码
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"` // 响应消息
+	Data          []*UserGradeInfo       `protobuf:"bytes,3,rep,name=data,proto3" json:"data" dc:"等级列表数据"`     // 等级列表数据
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserGradesRes) Reset() {
+	*x = GetUserGradesRes{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserGradesRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserGradesRes) ProtoMessage() {}
+
+func (x *GetUserGradesRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserGradesRes.ProtoReflect.Descriptor instead.
+func (*GetUserGradesRes) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetUserGradesRes) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GetUserGradesRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetUserGradesRes) GetData() []*UserGradeInfo {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 保存用户等级请求
+type SaveUserGradesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                       // 站点ID
+	Data          []*UserGradeInfo       `protobuf:"bytes,2,rep,name=data,proto3" json:"data" dc:"等级数据列表"`                                        // 等级数据列表
+	FieldsDisable string                 `protobuf:"bytes,3,opt,name=fields_disable,json=fieldsDisable,proto3" json:"fields_disable" dc:"禁用字段配置"` // 禁用字段配置
+	AutoProviding string                 `protobuf:"bytes,4,opt,name=auto_providing,json=autoProviding,proto3" json:"auto_providing" dc:"自动发放配置"` // 自动发放配置
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveUserGradesReq) Reset() {
+	*x = SaveUserGradesReq{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveUserGradesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveUserGradesReq) ProtoMessage() {}
+
+func (x *SaveUserGradesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveUserGradesReq.ProtoReflect.Descriptor instead.
+func (*SaveUserGradesReq) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SaveUserGradesReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *SaveUserGradesReq) GetData() []*UserGradeInfo {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *SaveUserGradesReq) GetFieldsDisable() string {
+	if x != nil {
+		return x.FieldsDisable
+	}
+	return ""
+}
+
+func (x *SaveUserGradesReq) GetAutoProviding() string {
+	if x != nil {
+		return x.AutoProviding
+	}
+	return ""
+}
+
+// 保存用户等级响应
+type SaveUserGradesRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code" dc:"响应码"`       // 响应码
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"` // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveUserGradesRes) Reset() {
+	*x = SaveUserGradesRes{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveUserGradesRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveUserGradesRes) ProtoMessage() {}
+
+func (x *SaveUserGradesRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveUserGradesRes.ProtoReflect.Descriptor instead.
+func (*SaveUserGradesRes) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SaveUserGradesRes) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SaveUserGradesRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 删除用户等级请求
+type DeleteUserGradesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"` // 站点ID
+	Id            int32                  `protobuf:"varint,2,opt,name=id,proto3" json:"id" dc:"等级ID"`                       // 等级ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteUserGradesReq) Reset() {
+	*x = DeleteUserGradesReq{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteUserGradesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteUserGradesReq) ProtoMessage() {}
+
+func (x *DeleteUserGradesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteUserGradesReq.ProtoReflect.Descriptor instead.
+func (*DeleteUserGradesReq) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *DeleteUserGradesReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *DeleteUserGradesReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 删除用户等级响应
+type DeleteUserGradesRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code" dc:"响应码"`       // 响应码
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"` // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteUserGradesRes) Reset() {
+	*x = DeleteUserGradesRes{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteUserGradesRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteUserGradesRes) ProtoMessage() {}
+
+func (x *DeleteUserGradesRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteUserGradesRes.ProtoReflect.Descriptor instead.
+func (*DeleteUserGradesRes) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DeleteUserGradesRes) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *DeleteUserGradesRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_backend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_backend_user_v1_user_proto_rawDesc = "" +
@@ -1213,12 +1696,54 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\tbank_name\x18\x01 \x01(\tR\bbankName\x12\x17\n" +
 	"\acard_no\x18\x02 \x01(\tR\x06cardNo\">\n" +
 	"\x13GetUserBasicInfoRes\x12'\n" +
-	"\x04user\x18\x01 \x01(\v2\x13.user.UserBasicInfoR\x04user2\xc9\x01\n" +
+	"\x04user\x18\x01 \x01(\v2\x13.user.UserBasicInfoR\x04user\"+\n" +
+	"\x10GetUserGradesReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xb1\x04\n" +
+	"\rUserGradeInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
+	"\x0epoints_upgrade\x18\x03 \x01(\x05R\rpointsUpgrade\x12#\n" +
+	"\rbonus_upgrade\x18\x04 \x01(\x01R\fbonusUpgrade\x12%\n" +
+	"\x0ebonus_birthday\x18\x05 \x01(\x01R\rbonusBirthday\x122\n" +
+	"\x15rebate_percent_sports\x18\x06 \x01(\x01R\x13rebatePercentSports\x124\n" +
+	"\x16rebate_percent_lottery\x18\a \x01(\x01R\x14rebatePercentLottery\x12.\n" +
+	"\x13rebate_percent_live\x18\b \x01(\x01R\x11rebatePercentLive\x120\n" +
+	"\x14rebate_percent_egame\x18\t \x01(\x01R\x12rebatePercentEgame\x120\n" +
+	"\x14rebate_percent_poker\x18\n" +
+	" \x01(\x01R\x12rebatePercentPoker\x12\x1d\n" +
+	"\n" +
+	"user_count\x18\v \x01(\x05R\tuserCount\x12%\n" +
+	"\x0efields_disable\x18\f \x01(\tR\rfieldsDisable\x12%\n" +
+	"\x0eauto_providing\x18\r \x01(\tR\rautoProviding\x12\x1e\n" +
+	"\n" +
+	"activities\x18\x0e \x03(\tR\n" +
+	"activities\"i\n" +
+	"\x10GetUserGradesRes\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12'\n" +
+	"\x04data\x18\x03 \x03(\v2\x13.user.UserGradeInfoR\x04data\"\xa3\x01\n" +
+	"\x11SaveUserGradesReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12'\n" +
+	"\x04data\x18\x02 \x03(\v2\x13.user.UserGradeInfoR\x04data\x12%\n" +
+	"\x0efields_disable\x18\x03 \x01(\tR\rfieldsDisable\x12%\n" +
+	"\x0eauto_providing\x18\x04 \x01(\tR\rautoProviding\"A\n" +
+	"\x11SaveUserGradesRes\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\">\n" +
+	"\x13DeleteUserGradesReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\x05R\x02id\"C\n" +
+	"\x13DeleteUserGradesRes\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\x9e\x03\n" +
 	"\x04User\x12;\n" +
 	"\vGetUserList\x12\x14.user.GetUserListReq\x1a\x14.user.GetUserListRes\"\x00\x128\n" +
 	"\n" +
 	"UpdateUser\x12\x13.user.UpdateUserReq\x1a\x13.user.UpdateUserRes\"\x00\x12J\n" +
-	"\x10GetUserBasicInfo\x12\x19.user.GetUserBasicInfoReq\x1a\x19.user.GetUserBasicInfoRes\"\x00B&Z$jh_admin_service/api/backend/user/v1b\x06proto3"
+	"\x10GetUserBasicInfo\x12\x19.user.GetUserBasicInfoReq\x1a\x19.user.GetUserBasicInfoRes\"\x00\x12A\n" +
+	"\rGetUserGrades\x12\x16.user.GetUserGradesReq\x1a\x16.user.GetUserGradesRes\"\x00\x12D\n" +
+	"\x0eSaveUserGrades\x12\x17.user.SaveUserGradesReq\x1a\x17.user.SaveUserGradesRes\"\x00\x12J\n" +
+	"\x10DeleteUserGrades\x12\x19.user.DeleteUserGradesReq\x1a\x19.user.DeleteUserGradesRes\"\x00B&Z$jh_admin_service/api/backend/user/v1b\x06proto3"
 
 var (
 	file_backend_user_v1_user_proto_rawDescOnce sync.Once
@@ -1232,7 +1757,7 @@ func file_backend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_backend_user_v1_user_proto_rawDescData
 }
 
-var file_backend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_backend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_backend_user_v1_user_proto_goTypes = []any{
 	(*GetUserListReq)(nil),      // 0: user.GetUserListReq
 	(*UserInfo)(nil),            // 1: user.UserInfo
@@ -1243,22 +1768,37 @@ var file_backend_user_v1_user_proto_goTypes = []any{
 	(*UserBasicInfo)(nil),       // 6: user.UserBasicInfo
 	(*BankInfo)(nil),            // 7: user.BankInfo
 	(*GetUserBasicInfoRes)(nil), // 8: user.GetUserBasicInfoRes
+	(*GetUserGradesReq)(nil),    // 9: user.GetUserGradesReq
+	(*UserGradeInfo)(nil),       // 10: user.UserGradeInfo
+	(*GetUserGradesRes)(nil),    // 11: user.GetUserGradesRes
+	(*SaveUserGradesReq)(nil),   // 12: user.SaveUserGradesReq
+	(*SaveUserGradesRes)(nil),   // 13: user.SaveUserGradesRes
+	(*DeleteUserGradesReq)(nil), // 14: user.DeleteUserGradesReq
+	(*DeleteUserGradesRes)(nil), // 15: user.DeleteUserGradesRes
 }
 var file_backend_user_v1_user_proto_depIdxs = []int32{
-	1, // 0: user.GetUserListRes.list:type_name -> user.UserInfo
-	7, // 1: user.UserBasicInfo.banks:type_name -> user.BankInfo
-	6, // 2: user.GetUserBasicInfoRes.user:type_name -> user.UserBasicInfo
-	0, // 3: user.User.GetUserList:input_type -> user.GetUserListReq
-	3, // 4: user.User.UpdateUser:input_type -> user.UpdateUserReq
-	5, // 5: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
-	2, // 6: user.User.GetUserList:output_type -> user.GetUserListRes
-	4, // 7: user.User.UpdateUser:output_type -> user.UpdateUserRes
-	8, // 8: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	1,  // 0: user.GetUserListRes.list:type_name -> user.UserInfo
+	7,  // 1: user.UserBasicInfo.banks:type_name -> user.BankInfo
+	6,  // 2: user.GetUserBasicInfoRes.user:type_name -> user.UserBasicInfo
+	10, // 3: user.GetUserGradesRes.data:type_name -> user.UserGradeInfo
+	10, // 4: user.SaveUserGradesReq.data:type_name -> user.UserGradeInfo
+	0,  // 5: user.User.GetUserList:input_type -> user.GetUserListReq
+	3,  // 6: user.User.UpdateUser:input_type -> user.UpdateUserReq
+	5,  // 7: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
+	9,  // 8: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
+	12, // 9: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
+	14, // 10: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
+	2,  // 11: user.User.GetUserList:output_type -> user.GetUserListRes
+	4,  // 12: user.User.UpdateUser:output_type -> user.UpdateUserRes
+	8,  // 13: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
+	11, // 14: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
+	13, // 15: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
+	15, // 16: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
+	11, // [11:17] is the sub-list for method output_type
+	5,  // [5:11] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_backend_user_v1_user_proto_init() }
@@ -1272,7 +1812,7 @@ func file_backend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_user_v1_user_proto_rawDesc), len(file_backend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

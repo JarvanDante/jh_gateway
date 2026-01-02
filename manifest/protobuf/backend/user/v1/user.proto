@@ -2,12 +2,17 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "jh_gateway/api/backend/user/v1";
+option go_package = "jh_admin_service/api/backend/user/v1";
 
 service User {
     rpc GetUserList(GetUserListReq) returns (GetUserListRes) {}
     rpc UpdateUser(UpdateUserReq) returns (UpdateUserRes) {}
     rpc GetUserBasicInfo(GetUserBasicInfoReq) returns (GetUserBasicInfoRes) {}
+    
+    // 用户等级相关接口
+    rpc GetUserGrades(GetUserGradesReq) returns (GetUserGradesRes) {}
+    rpc SaveUserGrades(SaveUserGradesReq) returns (SaveUserGradesRes) {}
+    rpc DeleteUserGrades(DeleteUserGradesReq) returns (DeleteUserGradesRes) {}
 }
 
 // 获取用户列表请求
@@ -136,4 +141,62 @@ message BankInfo {
 // 获取用户基本信息响应
 message GetUserBasicInfoRes {
     UserBasicInfo user = 1;             // 用户基本信息
+}
+
+// ============= 用户等级相关消息定义 =============
+
+// 获取用户等级列表请求
+message GetUserGradesReq {
+    int32 site_id = 1;  // 站点ID
+}
+
+// 用户等级信息
+message UserGradeInfo {
+    int32 id = 1;                           // 等级ID
+    string name = 2;                        // 等级名称
+    int32 points_upgrade = 3;               // 升级所需积分
+    double bonus_upgrade = 4;               // 升级赠送彩金
+    double bonus_birthday = 5;              // 生日彩金
+    double rebate_percent_sports = 6;       // 体育返水比例
+    double rebate_percent_lottery = 7;      // 彩票返水比例
+    double rebate_percent_live = 8;         // 真人视讯返水比例
+    double rebate_percent_egame = 9;        // 电子游戏返水比例
+    double rebate_percent_poker = 10;       // 扑克返水比例
+    int32 user_count = 11;                  // 该等级用户数量
+    string fields_disable = 12;             // 禁用字段配置
+    string auto_providing = 13;             // 自动发放配置
+    repeated string activities = 14;        // 关联活动列表
+}
+
+// 获取用户等级列表响应
+message GetUserGradesRes {
+    int32 code = 1;                         // 响应码
+    string message = 2;                     // 响应消息
+    repeated UserGradeInfo data = 3;        // 等级列表数据
+}
+
+// 保存用户等级请求
+message SaveUserGradesReq {
+    int32 site_id = 1;                      // 站点ID
+    repeated UserGradeInfo data = 2;        // 等级数据列表
+    string fields_disable = 3;              // 禁用字段配置
+    string auto_providing = 4;              // 自动发放配置
+}
+
+// 保存用户等级响应
+message SaveUserGradesRes {
+    int32 code = 1;                         // 响应码
+    string message = 2;                     // 响应消息
+}
+
+// 删除用户等级请求
+message DeleteUserGradesReq {
+    int32 site_id = 1;                      // 站点ID
+    int32 id = 2;                           // 等级ID
+}
+
+// 删除用户等级响应
+message DeleteUserGradesRes {
+    int32 code = 1;                         // 响应码
+    string message = 2;                     // 响应消息
 }

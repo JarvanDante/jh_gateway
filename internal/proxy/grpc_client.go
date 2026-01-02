@@ -213,6 +213,15 @@ func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		//获取会员基本信息
 	case strings.HasSuffix(path, "/user-basic-info") && method == "GET":
 		return callGetUserBasicInfo(ctx, conn, r)
+		//获取会员等级列表
+	case strings.HasSuffix(path, "/user-grades") && method == "GET":
+		return callGetUserGrades(ctx, conn, r)
+		//保存会员等级
+	case strings.HasSuffix(path, "/save-user-grades") && method == "POST":
+		return callSaveUserGrades(ctx, conn, r)
+		//删除会员等级
+	case strings.HasSuffix(path, "/delete-user-grades") && method == "POST":
+		return callDeleteUserGrades(ctx, conn, r)
 		//上传图片
 	case strings.HasSuffix(path, "/upload-image") && method == "POST":
 		return callUploadImage(ctx, conn, r)
@@ -1820,6 +1829,212 @@ func callGetUserBasicInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 			util.WriteBadRequest(r, "用户不存在")
 		} else {
 			util.WriteInternalError(r, "获取会员基本信息失败，请稍后重试")
+		}
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员/会员等级
+ * @title 获取会员等级列表
+ * @description 获取会员等级列表的接口
+ * @method get
+ * @url /api/admin/user-grades
+ * @param site_id 可选 int 站点ID (默认: 1)
+ * @return {"code":200,"msg":"获取数据成功","data":[{"id":1,"name":"普通会员","points_upgrade":0,"bonus_upgrade":"0.00","bonus_birthday":"0.00","rebate_percent_sports":"0.00","rebate_percent_lottery":"0.00","rebate_percent_live":"0.00","rebate_percent_egame":"0.00","rebate_percent_poker":"0.00","user_count":10,"fields_disable":"","auto_providing":"","activities":[]}]}
+ * @return_param code int 状态码
+ * @return_param data array 等级列表
+ * @return_param data.id int 等级ID
+ * @return_param data.name string 等级名称
+ * @return_param data.points_upgrade int 升级所需积分
+ * @return_param data.bonus_upgrade string 升级赠送彩金
+ * @return_param data.bonus_birthday string 生日彩金
+ * @return_param data.rebate_percent_sports string 体育返水比例
+ * @return_param data.rebate_percent_lottery string 彩票返水比例
+ * @return_param data.rebate_percent_live string 真人视讯返水比例
+ * @return_param data.rebate_percent_egame string 电子游戏返水比例
+ * @return_param data.rebate_percent_poker string 扑克返水比例
+ * @return_param data.user_count int 该等级用户数量
+ * @return_param data.fields_disable string 禁用字段配置
+ * @return_param data.auto_providing string 自动发放配置
+ * @return_param data.activities array 关联活动列表
+ * @return_param msg string 提示说明
+ * @remark 获取站点的所有会员等级信息
+ * @number 15
+ */
+func callGetUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User GetUserGrades")
+
+	// 获取站点ID
+	siteId := r.Get("site_id", 1).Int32()
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.GetUserGradesReq{
+		SiteId: siteId,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - SiteId: %d", req.SiteId)
+
+	// 调用 gRPC 服务
+	res, err := client.GetUserGrades(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取会员等级列表失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员/会员等级
+ * @title 保存会员等级
+ * @description 保存会员等级的接口
+ * @method post
+ * @url /api/admin/save-user-grades
+ * @param site_id 必选 int 站点ID
+ * @param data 必选 array 等级数据列表
+ * @param fields_disable 可选 string 禁用字段配置
+ * @param auto_providing 可选 string 自动发放配置
+ * @return {"code":200,"msg":"保存成功","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @remark 批量保存会员等级信息，支持新增和更新
+ * @number 16
+ */
+func callSaveUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User SaveUserGrades")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取站点ID
+	siteId := getInt32FromMapWithDefault(reqData, "site_id", 1)
+
+	// 获取等级数据
+	dataInterface, ok := reqData["data"]
+	if !ok {
+		util.WriteBadRequest(r, "等级数据不能为空")
+		return nil
+	}
+
+	// 解析等级数据
+	var gradeInfos []*v5.UserGradeInfo
+	if dataArray, ok := dataInterface.([]interface{}); ok {
+		for _, item := range dataArray {
+			if gradeMap, ok := item.(map[string]interface{}); ok {
+				gradeInfo := &v5.UserGradeInfo{
+					Id:                   getInt32FromMap(gradeMap, "id"),
+					Name:                 getStringFromMap(gradeMap, "name"),
+					PointsUpgrade:        getInt32FromMap(gradeMap, "points_upgrade"),
+					BonusUpgrade:         getFloat64FromMap(gradeMap, "bonus_upgrade"),
+					BonusBirthday:        getFloat64FromMap(gradeMap, "bonus_birthday"),
+					RebatePercentSports:  getFloat64FromMap(gradeMap, "rebate_percent_sports"),
+					RebatePercentLottery: getFloat64FromMap(gradeMap, "rebate_percent_lottery"),
+					RebatePercentLive:    getFloat64FromMap(gradeMap, "rebate_percent_live"),
+					RebatePercentEgame:   getFloat64FromMap(gradeMap, "rebate_percent_egame"),
+					RebatePercentPoker:   getFloat64FromMap(gradeMap, "rebate_percent_poker"),
+				}
+				gradeInfos = append(gradeInfos, gradeInfo)
+			}
+		}
+	} else {
+		util.WriteBadRequest(r, "等级数据格式错误")
+		return nil
+	}
+
+	if len(gradeInfos) == 0 {
+		util.WriteBadRequest(r, "等级数据不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.SaveUserGradesReq{
+		SiteId:        siteId,
+		Data:          gradeInfos,
+		FieldsDisable: getStringFromMap(reqData, "fields_disable"),
+		AutoProviding: getStringFromMap(reqData, "auto_providing"),
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - SiteId: %d, GradeCount: %d", req.SiteId, len(req.Data))
+
+	// 调用 gRPC 服务
+	res, err := client.SaveUserGrades(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "保存会员等级失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员/会员等级
+ * @title 删除会员等级
+ * @description 删除会员等级的接口
+ * @method post
+ * @url /api/admin/delete-user-grades
+ * @param site_id 必选 int 站点ID
+ * @param id 必选 int 等级ID
+ * @return {"code":200,"msg":"删除成功","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @remark 删除指定的会员等级，会检查是否为默认等级和是否有用户使用
+ * @number 17
+ */
+func callDeleteUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User DeleteUserGrades")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	siteId := getInt32FromMapWithDefault(reqData, "site_id", 1)
+	id := getInt32FromMap(reqData, "id")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "等级ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.DeleteUserGradesReq{
+		SiteId: siteId,
+		Id:     id,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - SiteId: %d, Id: %d", req.SiteId, req.Id)
+
+	// 调用 gRPC 服务
+	res, err := client.DeleteUserGrades(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		if strings.Contains(err.Error(), "默认等级") {
+			util.WriteBadRequest(r, "默认等级不能删除")
+		} else if strings.Contains(err.Error(), "有会员") {
+			util.WriteBadRequest(r, "该等级下面有会员，请先将会员变更为其它等级，才能删除该等级")
+		} else {
+			util.WriteInternalError(r, "删除会员等级失败，请稍后重试")
 		}
 		return nil
 	}
