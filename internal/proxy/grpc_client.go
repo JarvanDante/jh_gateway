@@ -222,6 +222,9 @@ func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		//删除会员等级
 	case strings.HasSuffix(path, "/delete-user-grades") && method == "POST":
 		return callDeleteUserGrades(ctx, conn, r)
+		//获取会员登录日志
+	case strings.HasSuffix(path, "/user-login-logs") && method == "GET":
+		return callGetUserLoginLogs(ctx, conn, r)
 		//上传图片
 	case strings.HasSuffix(path, "/upload-image") && method == "POST":
 		return callUploadImage(ctx, conn, r)
@@ -2036,6 +2039,64 @@ func callDeleteUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 		} else {
 			util.WriteInternalError(r, "删除会员等级失败，请稍后重试")
 		}
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/会员/会员日志
+ * @title 获取会员登录日志
+ * @description 获取会员登录日志列表
+ * @method get
+ * @url /api/admin/user-login-logs
+ * @param username 可选 string 用户名
+ * @param ip 可选 string 登录IP
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"user_id":123,"username":"testuser","referer_url":"","login_url":"","login_time":"2024-01-01 10:00:00","login_ip":"192.168.1.1","login_address":"北京市","os":"Windows","network":"","screen":"1920x1080","browser":"Chrome","device":"电脑","is_robot":0,"created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 登录日志列表
+ * @return_param data.count int 总数量
+ * @remark 获取会员登录日志，支持按用户名、IP、时间范围筛选
+ * @number 18
+ */
+func callGetUserLoginLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC User GetUserLoginLogs")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	ip := r.Get("ip", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v5.NewUserClient(conn)
+	req := &v5.GetUserLoginLogsReq{
+		Username:  username,
+		Ip:        ip,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, IP: %s, Page: %d, Size: %d", req.Username, req.Ip, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetUserLoginLogs(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取会员登录日志失败，请稍后重试")
 		return nil
 	}
 

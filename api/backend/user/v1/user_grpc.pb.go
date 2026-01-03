@@ -26,6 +26,7 @@ const (
 	User_GetUserGrades_FullMethodName    = "/user.User/GetUserGrades"
 	User_SaveUserGrades_FullMethodName   = "/user.User/SaveUserGrades"
 	User_DeleteUserGrades_FullMethodName = "/user.User/DeleteUserGrades"
+	User_GetUserLoginLogs_FullMethodName = "/user.User/GetUserLoginLogs"
 )
 
 // UserClient is the client API for User service.
@@ -39,6 +40,8 @@ type UserClient interface {
 	GetUserGrades(ctx context.Context, in *GetUserGradesReq, opts ...grpc.CallOption) (*GetUserGradesRes, error)
 	SaveUserGrades(ctx context.Context, in *SaveUserGradesReq, opts ...grpc.CallOption) (*SaveUserGradesRes, error)
 	DeleteUserGrades(ctx context.Context, in *DeleteUserGradesReq, opts ...grpc.CallOption) (*DeleteUserGradesRes, error)
+	// 用户登录日志接口
+	GetUserLoginLogs(ctx context.Context, in *GetUserLoginLogsReq, opts ...grpc.CallOption) (*GetUserLoginLogsRes, error)
 }
 
 type userClient struct {
@@ -109,6 +112,16 @@ func (c *userClient) DeleteUserGrades(ctx context.Context, in *DeleteUserGradesR
 	return out, nil
 }
 
+func (c *userClient) GetUserLoginLogs(ctx context.Context, in *GetUserLoginLogsReq, opts ...grpc.CallOption) (*GetUserLoginLogsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserLoginLogsRes)
+	err := c.cc.Invoke(ctx, User_GetUserLoginLogs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -120,6 +133,8 @@ type UserServer interface {
 	GetUserGrades(context.Context, *GetUserGradesReq) (*GetUserGradesRes, error)
 	SaveUserGrades(context.Context, *SaveUserGradesReq) (*SaveUserGradesRes, error)
 	DeleteUserGrades(context.Context, *DeleteUserGradesReq) (*DeleteUserGradesRes, error)
+	// 用户登录日志接口
+	GetUserLoginLogs(context.Context, *GetUserLoginLogsReq) (*GetUserLoginLogsRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -147,6 +162,9 @@ func (UnimplementedUserServer) SaveUserGrades(context.Context, *SaveUserGradesRe
 }
 func (UnimplementedUserServer) DeleteUserGrades(context.Context, *DeleteUserGradesReq) (*DeleteUserGradesRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteUserGrades not implemented")
+}
+func (UnimplementedUserServer) GetUserLoginLogs(context.Context, *GetUserLoginLogsReq) (*GetUserLoginLogsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserLoginLogs not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -277,6 +295,24 @@ func _User_DeleteUserGrades_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserLoginLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserLoginLogsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserLoginLogs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserLoginLogs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserLoginLogs(ctx, req.(*GetUserLoginLogsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -307,6 +343,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteUserGrades",
 			Handler:    _User_DeleteUserGrades_Handler,
+		},
+		{
+			MethodName: "GetUserLoginLogs",
+			Handler:    _User_GetUserLoginLogs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

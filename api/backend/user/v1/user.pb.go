@@ -1574,6 +1574,301 @@ func (x *DeleteUserGradesRes) GetMessage() string {
 	return ""
 }
 
+// 获取用户登录日志请求
+type GetUserLoginLogsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
+	Ip            string                 `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip" dc:"登录IP (可选)"`                                // 登录IP (可选)
+	StartTime     string                 `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserLoginLogsReq) Reset() {
+	*x = GetUserLoginLogsReq{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserLoginLogsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserLoginLogsReq) ProtoMessage() {}
+
+func (x *GetUserLoginLogsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserLoginLogsReq.ProtoReflect.Descriptor instead.
+func (*GetUserLoginLogsReq) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetUserLoginLogsReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetUserLoginLogsReq) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *GetUserLoginLogsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *GetUserLoginLogsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *GetUserLoginLogsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetUserLoginLogsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 用户登录日志信息
+type UserLoginLogInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"日志ID"`                                        // 日志ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                  // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                              // 用户名
+	RefererUrl    string                 `protobuf:"bytes,4,opt,name=referer_url,json=refererUrl,proto3" json:"referer_url" dc:"来源网址"`       // 来源网址
+	LoginUrl      string                 `protobuf:"bytes,5,opt,name=login_url,json=loginUrl,proto3" json:"login_url" dc:"登录网址"`             // 登录网址
+	LoginTime     string                 `protobuf:"bytes,6,opt,name=login_time,json=loginTime,proto3" json:"login_time" dc:"登录时间"`          // 登录时间
+	LoginIp       string                 `protobuf:"bytes,7,opt,name=login_ip,json=loginIp,proto3" json:"login_ip" dc:"登录IP"`                // 登录IP
+	LoginAddress  string                 `protobuf:"bytes,8,opt,name=login_address,json=loginAddress,proto3" json:"login_address" dc:"登录地址"` // 登录地址
+	Os            string                 `protobuf:"bytes,9,opt,name=os,proto3" json:"os" dc:"操作系统"`                                         // 操作系统
+	Network       string                 `protobuf:"bytes,10,opt,name=network,proto3" json:"network" dc:"网络"`                                // 网络
+	Screen        string                 `protobuf:"bytes,11,opt,name=screen,proto3" json:"screen" dc:"分辨率"`                                 // 分辨率
+	Browser       string                 `protobuf:"bytes,12,opt,name=browser,proto3" json:"browser" dc:"浏览器"`                               // 浏览器
+	Device        string                 `protobuf:"bytes,13,opt,name=device,proto3" json:"device" dc:"设备类型"`                                // 设备类型
+	IsRobot       int32                  `protobuf:"varint,14,opt,name=is_robot,json=isRobot,proto3" json:"is_robot" dc:"是否机器人"`             // 是否机器人
+	CreatedAt     string                 `protobuf:"bytes,15,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`         // 创建时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserLoginLogInfo) Reset() {
+	*x = UserLoginLogInfo{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserLoginLogInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserLoginLogInfo) ProtoMessage() {}
+
+func (x *UserLoginLogInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserLoginLogInfo.ProtoReflect.Descriptor instead.
+func (*UserLoginLogInfo) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *UserLoginLogInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserLoginLogInfo) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *UserLoginLogInfo) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetRefererUrl() string {
+	if x != nil {
+		return x.RefererUrl
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetLoginUrl() string {
+	if x != nil {
+		return x.LoginUrl
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetLoginTime() string {
+	if x != nil {
+		return x.LoginTime
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetLoginIp() string {
+	if x != nil {
+		return x.LoginIp
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetLoginAddress() string {
+	if x != nil {
+		return x.LoginAddress
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetOs() string {
+	if x != nil {
+		return x.Os
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetNetwork() string {
+	if x != nil {
+		return x.Network
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetScreen() string {
+	if x != nil {
+		return x.Screen
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetBrowser() string {
+	if x != nil {
+		return x.Browser
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetDevice() string {
+	if x != nil {
+		return x.Device
+	}
+	return ""
+}
+
+func (x *UserLoginLogInfo) GetIsRobot() int32 {
+	if x != nil {
+		return x.IsRobot
+	}
+	return 0
+}
+
+func (x *UserLoginLogInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取用户登录日志响应
+type GetUserLoginLogsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*UserLoginLogInfo    `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"登录日志列表"` // 登录日志列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserLoginLogsRes) Reset() {
+	*x = GetUserLoginLogsRes{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserLoginLogsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserLoginLogsRes) ProtoMessage() {}
+
+func (x *GetUserLoginLogsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserLoginLogsRes.ProtoReflect.Descriptor instead.
+func (*GetUserLoginLogsRes) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetUserLoginLogsRes) GetList() []*UserLoginLogInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetUserLoginLogsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
 var File_backend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_backend_user_v1_user_proto_rawDesc = "" +
@@ -1735,7 +2030,38 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\x02id\x18\x02 \x01(\x05R\x02id\"C\n" +
 	"\x13DeleteUserGradesRes\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\x9e\x03\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xa3\x01\n" +
+	"\x13GetUserLoginLogsReq\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x0e\n" +
+	"\x02ip\x18\x02 \x01(\tR\x02ip\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x03 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x04 \x01(\tR\aendTime\x12\x12\n" +
+	"\x04page\x18\x05 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x06 \x01(\x05R\x04size\"\xa2\x03\n" +
+	"\x10UserLoginLogInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12\x1f\n" +
+	"\vreferer_url\x18\x04 \x01(\tR\n" +
+	"refererUrl\x12\x1b\n" +
+	"\tlogin_url\x18\x05 \x01(\tR\bloginUrl\x12\x1d\n" +
+	"\n" +
+	"login_time\x18\x06 \x01(\tR\tloginTime\x12\x19\n" +
+	"\blogin_ip\x18\a \x01(\tR\aloginIp\x12#\n" +
+	"\rlogin_address\x18\b \x01(\tR\floginAddress\x12\x0e\n" +
+	"\x02os\x18\t \x01(\tR\x02os\x12\x18\n" +
+	"\anetwork\x18\n" +
+	" \x01(\tR\anetwork\x12\x16\n" +
+	"\x06screen\x18\v \x01(\tR\x06screen\x12\x18\n" +
+	"\abrowser\x18\f \x01(\tR\abrowser\x12\x16\n" +
+	"\x06device\x18\r \x01(\tR\x06device\x12\x19\n" +
+	"\bis_robot\x18\x0e \x01(\x05R\aisRobot\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x0f \x01(\tR\tcreatedAt\"W\n" +
+	"\x13GetUserLoginLogsRes\x12*\n" +
+	"\x04list\x18\x01 \x03(\v2\x16.user.UserLoginLogInfoR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count2\xea\x03\n" +
 	"\x04User\x12;\n" +
 	"\vGetUserList\x12\x14.user.GetUserListReq\x1a\x14.user.GetUserListRes\"\x00\x128\n" +
 	"\n" +
@@ -1743,7 +2069,8 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\x10GetUserBasicInfo\x12\x19.user.GetUserBasicInfoReq\x1a\x19.user.GetUserBasicInfoRes\"\x00\x12A\n" +
 	"\rGetUserGrades\x12\x16.user.GetUserGradesReq\x1a\x16.user.GetUserGradesRes\"\x00\x12D\n" +
 	"\x0eSaveUserGrades\x12\x17.user.SaveUserGradesReq\x1a\x17.user.SaveUserGradesRes\"\x00\x12J\n" +
-	"\x10DeleteUserGrades\x12\x19.user.DeleteUserGradesReq\x1a\x19.user.DeleteUserGradesRes\"\x00B&Z$jh_admin_service/api/backend/user/v1b\x06proto3"
+	"\x10DeleteUserGrades\x12\x19.user.DeleteUserGradesReq\x1a\x19.user.DeleteUserGradesRes\"\x00\x12J\n" +
+	"\x10GetUserLoginLogs\x12\x19.user.GetUserLoginLogsReq\x1a\x19.user.GetUserLoginLogsRes\"\x00B&Z$jh_admin_service/api/backend/user/v1b\x06proto3"
 
 var (
 	file_backend_user_v1_user_proto_rawDescOnce sync.Once
@@ -1757,7 +2084,7 @@ func file_backend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_backend_user_v1_user_proto_rawDescData
 }
 
-var file_backend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_backend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_backend_user_v1_user_proto_goTypes = []any{
 	(*GetUserListReq)(nil),      // 0: user.GetUserListReq
 	(*UserInfo)(nil),            // 1: user.UserInfo
@@ -1775,6 +2102,9 @@ var file_backend_user_v1_user_proto_goTypes = []any{
 	(*SaveUserGradesRes)(nil),   // 13: user.SaveUserGradesRes
 	(*DeleteUserGradesReq)(nil), // 14: user.DeleteUserGradesReq
 	(*DeleteUserGradesRes)(nil), // 15: user.DeleteUserGradesRes
+	(*GetUserLoginLogsReq)(nil), // 16: user.GetUserLoginLogsReq
+	(*UserLoginLogInfo)(nil),    // 17: user.UserLoginLogInfo
+	(*GetUserLoginLogsRes)(nil), // 18: user.GetUserLoginLogsRes
 }
 var file_backend_user_v1_user_proto_depIdxs = []int32{
 	1,  // 0: user.GetUserListRes.list:type_name -> user.UserInfo
@@ -1782,23 +2112,26 @@ var file_backend_user_v1_user_proto_depIdxs = []int32{
 	6,  // 2: user.GetUserBasicInfoRes.user:type_name -> user.UserBasicInfo
 	10, // 3: user.GetUserGradesRes.data:type_name -> user.UserGradeInfo
 	10, // 4: user.SaveUserGradesReq.data:type_name -> user.UserGradeInfo
-	0,  // 5: user.User.GetUserList:input_type -> user.GetUserListReq
-	3,  // 6: user.User.UpdateUser:input_type -> user.UpdateUserReq
-	5,  // 7: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
-	9,  // 8: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
-	12, // 9: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
-	14, // 10: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
-	2,  // 11: user.User.GetUserList:output_type -> user.GetUserListRes
-	4,  // 12: user.User.UpdateUser:output_type -> user.UpdateUserRes
-	8,  // 13: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
-	11, // 14: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
-	13, // 15: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
-	15, // 16: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
-	11, // [11:17] is the sub-list for method output_type
-	5,  // [5:11] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	17, // 5: user.GetUserLoginLogsRes.list:type_name -> user.UserLoginLogInfo
+	0,  // 6: user.User.GetUserList:input_type -> user.GetUserListReq
+	3,  // 7: user.User.UpdateUser:input_type -> user.UpdateUserReq
+	5,  // 8: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
+	9,  // 9: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
+	12, // 10: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
+	14, // 11: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
+	16, // 12: user.User.GetUserLoginLogs:input_type -> user.GetUserLoginLogsReq
+	2,  // 13: user.User.GetUserList:output_type -> user.GetUserListRes
+	4,  // 14: user.User.UpdateUser:output_type -> user.UpdateUserRes
+	8,  // 15: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
+	11, // 16: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
+	13, // 17: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
+	15, // 18: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
+	18, // 19: user.User.GetUserLoginLogs:output_type -> user.GetUserLoginLogsRes
+	13, // [13:20] is the sub-list for method output_type
+	6,  // [6:13] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_backend_user_v1_user_proto_init() }
@@ -1812,7 +2145,7 @@ func file_backend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_user_v1_user_proto_rawDesc), len(file_backend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
