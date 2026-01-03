@@ -2208,17 +2208,22 @@ func callBalanceGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	// 充值记录
 	case strings.HasSuffix(path, "/recharge-payment") && method == "GET":
 		return callGetRechargePayments(ctx, conn, r)
+	//手动充值记录
 	case strings.HasSuffix(path, "/recharge-manual") && method == "GET":
 		return callGetRechargeManuals(ctx, conn, r)
+	//确认充值
 	case strings.HasSuffix(path, "/confirm-payment-order") && method == "POST":
 		return callConfirmPaymentOrder(ctx, conn, r)
 	// 提现记录
 	case strings.HasSuffix(path, "/withdraws") && method == "GET":
 		return callGetWithdraws(ctx, conn, r)
+	// 手动提现记录
 	case strings.HasSuffix(path, "/withdraw-manual") && method == "GET":
 		return callGetWithdrawManuals(ctx, conn, r)
+	// 提现记录审核
 	case strings.HasSuffix(path, "/withdraw-review") && method == "GET":
 		return callGetWithdrawReview(ctx, conn, r)
+	// 确认提现
 	case strings.HasSuffix(path, "/deal-with-withdraw") && method == "POST":
 		return callDealWithWithdraw(ctx, conn, r)
 	}
