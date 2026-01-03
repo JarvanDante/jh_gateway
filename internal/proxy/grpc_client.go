@@ -1705,7 +1705,7 @@ func callGetUserList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 
 /**
  * showdoc
- * @catalog 后台/会员管理
+ * @catalog 后台/会员/会员列表
  * @title 编辑会员信息
  * @description 编辑会员信息的接口
  * @method post
@@ -1788,7 +1788,7 @@ func callUpdateUser(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 /**
  * showdoc
- * @catalog 后台/会员管理
+ * @catalog 后台/会员/会员列表
  * @title 获取会员基本信息
  * @description 获取会员基本信息的接口
  * @method get
@@ -2747,7 +2747,7 @@ func getInt64FromMap(data map[string]interface{}, key string) int64 {
 
 /**
  * showdoc
- * @catalog 后台/财务/余额管理
+ * @catalog 后台/财务/加扣款
  * @title 查询用户余额
  * @description 查询指定用户的账户余额信息
  * @method post
@@ -2801,7 +2801,7 @@ func callQueryUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 /**
  * showdoc
- * @catalog 后台/财务/余额管理
+ * @catalog 后台/财务/加扣款
  * @title 查询游戏余额
  * @description 查询指定用户在第三方游戏的余额信息
  * @method post
@@ -2862,9 +2862,9 @@ func callQueryGameBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 /**
  * showdoc
- * @catalog 后台/财务/余额管理
+ * @catalog 后台/财务/加扣款
  * @title 手动操作用户余额
- * @description 手动给用户加款或扣款
+ * @description 手动给用户加款或减款
  * @method post
  * @url /api/balance/manual-user-balance
  * @param user_id 必选 int 用户ID
