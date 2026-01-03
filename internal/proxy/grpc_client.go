@@ -2235,6 +2235,21 @@ func callBalanceGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	// 手动操作会员账户
 	case strings.HasSuffix(path, "/manual-user-balance") && method == "POST":
 		return callManualUserBalance(ctx, conn, r)
+		// 获取支付接口列表
+	case strings.HasSuffix(path, "/payment-accounts") && method == "GET":
+		return callGetPaymentAccounts(ctx, conn, r)
+		// 添加支付接口
+	case strings.HasSuffix(path, "/create-payment-account") && method == "POST":
+		return callCreatePaymentAccount(ctx, conn, r)
+		// 获取编辑支付接口的信息
+	case strings.HasSuffix(path, "/update-payment-account") && method == "GET":
+		return callGetPaymentAccountUpdate(ctx, conn, r)
+		// 编辑支付接口
+	case strings.HasSuffix(path, "/update-payment-account") && method == "POST":
+		return callUpdatePaymentAccount(ctx, conn, r)
+		// 删除支付接口
+	case strings.HasSuffix(path, "/delete-payment-account") && method == "POST":
+		return callDeletePaymentAccount(ctx, conn, r)
 	}
 
 	return fmt.Errorf("unsupported path: %s", path)
@@ -2927,6 +2942,371 @@ func callManualUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
 		util.WriteInternalError(r, "手动操作用户余额失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/支付接口
+ * @title 获取支付接口列表
+ * @description 获取支付接口账户列表
+ * @method get
+ * @url /api/balance/payment-accounts
+ * @param payment_id 可选 int 支付ID
+ * @param status 可选 int 状态
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"payment_id":1,"payment_name":"测试支付","account_name":"测试账户","merchant_id":"123456","merchant_key":"abcd****efgh","gateway_url":"https://api.test.com","min_money":10.0,"max_money":50000.0,"status":1,"status_name":"启用","sort":1,"remark":"测试","created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 支付接口列表
+ * @return_param data.count int 总数量
+ * @remark 获取支付接口账户列表，支持按支付ID、状态筛选
+ * @number 12
+ */
+func callGetPaymentAccounts(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetPaymentAccounts")
+
+	// 获取查询参数
+	paymentId := r.Get("payment_id", 0).Int32()
+	status := r.Get("status", 0).Int32()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetPaymentAccountsReq{
+		PaymentId: paymentId,
+		Status:    status,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - PaymentId: %d, Status: %d, Page: %d, Size: %d", req.PaymentId, req.Status, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetPaymentAccounts(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取支付接口列表失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/支付接口
+ * @title 创建支付接口
+ * @description 添加新的支付接口账户
+ * @method post
+ * @url /api/balance/create-payment-account
+ * @param payment_id 必选 int 支付ID
+ * @param account_name 必选 string 账户名称
+ * @param merchant_id 必选 string 商户ID
+ * @param merchant_key 必选 string 商户密钥
+ * @param gateway_url 可选 string 网关地址
+ * @param notify_url 可选 string 通知地址
+ * @param return_url 可选 string 返回地址
+ * @param min_money 可选 float 最小金额
+ * @param max_money 可选 float 最大金额
+ * @param status 可选 int 状态 0=禁用 1=启用
+ * @param sort 可选 int 排序
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"创建成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 添加新的支付接口账户配置
+ * @number 13
+ */
+func callCreatePaymentAccount(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance CreatePaymentAccount")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	paymentId := getInt32FromMap(reqData, "payment_id")
+	gateway := getInt32FromMap(reqData, "gateway")
+	name := getStringFromMap(reqData, "name")
+	domain := getStringFromMap(reqData, "domain")
+	merchantNo := getStringFromMap(reqData, "merchant_no")
+	md5Key := getStringFromMap(reqData, "md5_key")
+	eachMin := getFloat64FromMap(reqData, "each_min")
+	eachMax := getFloat64FromMap(reqData, "each_max")
+	dailyMax := getFloat64FromMap(reqData, "daily_max")
+	status := getInt32FromMapWithDefault(reqData, "status", 1)
+	sort := getInt32FromMap(reqData, "sort")
+	publicKey := getStringFromMap(reqData, "public_key")
+	privateKey := getStringFromMap(reqData, "private_key")
+	isDecimal := getInt32FromMap(reqData, "is_decimal")
+	isInt := getInt32FromMap(reqData, "is_int")
+	moneyList := getStringFromMap(reqData, "money_list")
+
+	if paymentId <= 0 {
+		util.WriteBadRequest(r, "支付ID不能为空")
+		return nil
+	}
+	if name == "" {
+		util.WriteBadRequest(r, "接口名称不能为空")
+		return nil
+	}
+	if merchantNo == "" {
+		util.WriteBadRequest(r, "商户号不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.CreatePaymentAccountReq{
+		PaymentId:  paymentId,
+		Gateway:    gateway,
+		Name:       name,
+		Domain:     domain,
+		MerchantNo: merchantNo,
+		Md5Key:     md5Key,
+		EachMin:    eachMin,
+		EachMax:    eachMax,
+		DailyMax:   dailyMax,
+		Status:     status,
+		Sort:       sort,
+		PublicKey:  publicKey,
+		PrivateKey: privateKey,
+		IsDecimal:  isDecimal,
+		IsInt:      isInt,
+		MoneyList:  moneyList,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - PaymentId: %d, Name: %s", req.PaymentId, req.Name)
+
+	// 调用 gRPC 服务
+	res, err := client.CreatePaymentAccount(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "创建支付接口失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/支付接口
+ * @title 获取支付接口编辑信息
+ * @description 获取支付接口的详细信息用于编辑
+ * @method get
+ * @url /api/balance/update-payment-account
+ * @param id 必选 int 支付接口ID
+ * @return {"code":0,"msg":"success","data":{"data":{"id":1,"payment_id":1,"payment_name":"测试支付","account_name":"测试账户","merchant_id":"123456","merchant_key":"abcdefgh","gateway_url":"https://api.test.com","min_money":10.0,"max_money":50000.0,"status":1,"status_name":"启用","sort":1,"remark":"测试","created_at":"2024-01-01 10:00:00"}}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.data object 支付接口详细信息
+ * @remark 获取支付接口的完整信息，包括敏感数据（用于编辑）
+ * @number 14
+ */
+func callGetPaymentAccountUpdate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetPaymentAccountUpdate")
+
+	// 获取查询参数
+	id := r.Get("id", 0).Int32()
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "支付接口ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetPaymentAccountUpdateReq{
+		Id: id,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Id: %d", req.Id)
+
+	// 调用 gRPC 服务
+	res, err := client.GetPaymentAccountUpdate(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取支付接口信息失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/支付接口
+ * @title 更新支付接口
+ * @description 更新支付接口账户信息
+ * @method post
+ * @url /api/balance/update-payment-account
+ * @param id 必选 int 支付接口ID
+ * @param payment_id 必选 int 支付ID
+ * @param account_name 必选 string 账户名称
+ * @param merchant_id 必选 string 商户ID
+ * @param merchant_key 必选 string 商户密钥
+ * @param gateway_url 可选 string 网关地址
+ * @param notify_url 可选 string 通知地址
+ * @param return_url 可选 string 返回地址
+ * @param min_money 可选 float 最小金额
+ * @param max_money 可选 float 最大金额
+ * @param status 可选 int 状态 0=禁用 1=启用
+ * @param sort 可选 int 排序
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 更新支付接口账户配置信息
+ * @number 15
+ */
+func callUpdatePaymentAccount(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance UpdatePaymentAccount")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt32FromMap(reqData, "id")
+	paymentId := getInt32FromMap(reqData, "payment_id")
+	gateway := getInt32FromMap(reqData, "gateway")
+	name := getStringFromMap(reqData, "name")
+	domain := getStringFromMap(reqData, "domain")
+	merchantNo := getStringFromMap(reqData, "merchant_no")
+	md5Key := getStringFromMap(reqData, "md5_key")
+	eachMin := getFloat64FromMap(reqData, "each_min")
+	eachMax := getFloat64FromMap(reqData, "each_max")
+	dailyMax := getFloat64FromMap(reqData, "daily_max")
+	status := getInt32FromMapWithDefault(reqData, "status", 1)
+	sort := getInt32FromMap(reqData, "sort")
+	publicKey := getStringFromMap(reqData, "public_key")
+	privateKey := getStringFromMap(reqData, "private_key")
+	isDecimal := getInt32FromMap(reqData, "is_decimal")
+	isInt := getInt32FromMap(reqData, "is_int")
+	moneyList := getStringFromMap(reqData, "money_list")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "支付接口ID不能为空")
+		return nil
+	}
+	if paymentId <= 0 {
+		util.WriteBadRequest(r, "支付ID不能为空")
+		return nil
+	}
+	if name == "" {
+		util.WriteBadRequest(r, "接口名称不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.UpdatePaymentAccountReq{
+		Id:         id,
+		PaymentId:  paymentId,
+		Gateway:    gateway,
+		Name:       name,
+		Domain:     domain,
+		MerchantNo: merchantNo,
+		Md5Key:     md5Key,
+		EachMin:    eachMin,
+		EachMax:    eachMax,
+		DailyMax:   dailyMax,
+		Status:     status,
+		Sort:       sort,
+		PublicKey:  publicKey,
+		PrivateKey: privateKey,
+		IsDecimal:  isDecimal,
+		IsInt:      isInt,
+		MoneyList:  moneyList,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Id: %d, PaymentId: %d, Name: %s", req.Id, req.PaymentId, req.Name)
+
+	// 调用 gRPC 服务
+	res, err := client.UpdatePaymentAccount(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "更新支付接口失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/支付接口
+ * @title 删除支付接口
+ * @description 删除支付接口账户
+ * @method post
+ * @url /api/balance/delete-payment-account
+ * @param id 必选 int 支付接口ID
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"删除成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 删除支付接口账户，会检查是否有关联的支付记录
+ * @number 16
+ */
+func callDeletePaymentAccount(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance DeletePaymentAccount")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt32FromMap(reqData, "id")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "支付接口ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.DeletePaymentAccountReq{
+		Id: id,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Id: %d", req.Id)
+
+	// 调用 gRPC 服务
+	res, err := client.DeletePaymentAccount(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "删除支付接口失败，请稍后重试")
 		return nil
 	}
 

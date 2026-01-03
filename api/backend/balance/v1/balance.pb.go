@@ -2566,6 +2566,981 @@ func (x *ManualUserBalanceRes) GetBalanceNew() float64 {
 	return 0
 }
 
+// 获取支付接口列表请求
+type GetPaymentAccountsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PaymentId     int32                  `protobuf:"varint,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID (可选)"` // 支付ID (可选)
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                          // 状态 (可选)
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page" dc:"页码"`                                   // 页码
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size" dc:"每页数量"`                                 // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPaymentAccountsReq) Reset() {
+	*x = GetPaymentAccountsReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPaymentAccountsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPaymentAccountsReq) ProtoMessage() {}
+
+func (x *GetPaymentAccountsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPaymentAccountsReq.ProtoReflect.Descriptor instead.
+func (*GetPaymentAccountsReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *GetPaymentAccountsReq) GetPaymentId() int32 {
+	if x != nil {
+		return x.PaymentId
+	}
+	return 0
+}
+
+func (x *GetPaymentAccountsReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *GetPaymentAccountsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetPaymentAccountsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 支付接口信息
+type PaymentAccountInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                           // ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                   // 站点ID
+	PaymentId     int32                  `protobuf:"varint,3,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID"`       // 第三方支付ID
+	Gateway       int32                  `protobuf:"varint,4,opt,name=gateway,proto3" json:"gateway" dc:"支付网关"`                               // 支付网关
+	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name" dc:"接口名称"`                                      // 接口名称
+	Domain        string                 `protobuf:"bytes,6,opt,name=domain,proto3" json:"domain" dc:"支付域名"`                                  // 支付域名
+	MerchantNo    string                 `protobuf:"bytes,7,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号"`         // 商户号
+	Md5Key        string                 `protobuf:"bytes,8,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥"`                   // MD5密钥
+	EachMin       float64                `protobuf:"fixed64,9,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低"`               // 单笔最低
+	EachMax       float64                `protobuf:"fixed64,10,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高"`              // 单笔最高
+	DailyMax      float64                `protobuf:"fixed64,11,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限"`         // 单日停用上限
+	TodayCount    int32                  `protobuf:"varint,12,opt,name=today_count,json=todayCount,proto3" json:"today_count" dc:"今日入款次数"`    // 今日入款次数
+	TodayAmount   float64                `protobuf:"fixed64,13,opt,name=today_amount,json=todayAmount,proto3" json:"today_amount" dc:"今日总转账"` // 今日总转账
+	Status        int32                  `protobuf:"varint,14,opt,name=status,proto3" json:"status" dc:"状态"`                                  // 状态
+	StatusName    string                 `protobuf:"bytes,15,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"`       // 状态名称
+	Sort          int32                  `protobuf:"varint,16,opt,name=sort,proto3" json:"sort" dc:"排序"`                                      // 排序
+	CreatedAt     string                 `protobuf:"bytes,17,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`          // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`          // 更新时间
+	PublicKey     string                 `protobuf:"bytes,19,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥"`            // 公钥
+	PrivateKey    string                 `protobuf:"bytes,20,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥"`         // 私钥
+	IsDecimal     int32                  `protobuf:"varint,21,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数"`       // 是否携带小数
+	IsInt         int32                  `protobuf:"varint,22,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组"`                // 是否为规定整数数组
+	MoneyList     string                 `protobuf:"bytes,23,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组"`       // 可选的金额数组
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PaymentAccountInfo) Reset() {
+	*x = PaymentAccountInfo{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PaymentAccountInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PaymentAccountInfo) ProtoMessage() {}
+
+func (x *PaymentAccountInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PaymentAccountInfo.ProtoReflect.Descriptor instead.
+func (*PaymentAccountInfo) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *PaymentAccountInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetPaymentId() int32 {
+	if x != nil {
+		return x.PaymentId
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetGateway() int32 {
+	if x != nil {
+		return x.Gateway
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetMerchantNo() string {
+	if x != nil {
+		return x.MerchantNo
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetMd5Key() string {
+	if x != nil {
+		return x.Md5Key
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetEachMin() float64 {
+	if x != nil {
+		return x.EachMin
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetEachMax() float64 {
+	if x != nil {
+		return x.EachMax
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetDailyMax() float64 {
+	if x != nil {
+		return x.DailyMax
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetTodayCount() int32 {
+	if x != nil {
+		return x.TodayCount
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetTodayAmount() float64 {
+	if x != nil {
+		return x.TodayAmount
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetStatusName() string {
+	if x != nil {
+		return x.StatusName
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetPublicKey() string {
+	if x != nil {
+		return x.PublicKey
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetPrivateKey() string {
+	if x != nil {
+		return x.PrivateKey
+	}
+	return ""
+}
+
+func (x *PaymentAccountInfo) GetIsDecimal() int32 {
+	if x != nil {
+		return x.IsDecimal
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetIsInt() int32 {
+	if x != nil {
+		return x.IsInt
+	}
+	return 0
+}
+
+func (x *PaymentAccountInfo) GetMoneyList() string {
+	if x != nil {
+		return x.MoneyList
+	}
+	return ""
+}
+
+// 获取支付接口列表响应
+type GetPaymentAccountsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*PaymentAccountInfo  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"支付接口列表"` // 支付接口列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPaymentAccountsRes) Reset() {
+	*x = GetPaymentAccountsRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPaymentAccountsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPaymentAccountsRes) ProtoMessage() {}
+
+func (x *GetPaymentAccountsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPaymentAccountsRes.ProtoReflect.Descriptor instead.
+func (*GetPaymentAccountsRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *GetPaymentAccountsRes) GetList() []*PaymentAccountInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetPaymentAccountsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 创建支付接口请求
+type CreatePaymentAccountReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PaymentId     int32                  `protobuf:"varint,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID"` // 第三方支付ID
+	Gateway       int32                  `protobuf:"varint,2,opt,name=gateway,proto3" json:"gateway" dc:"支付网关"`                         // 支付网关
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name" dc:"接口名称"`                                // 接口名称
+	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain" dc:"支付域名"`                            // 支付域名
+	MerchantNo    string                 `protobuf:"bytes,5,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号"`   // 商户号
+	Md5Key        string                 `protobuf:"bytes,6,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥"`             // MD5密钥
+	EachMin       float64                `protobuf:"fixed64,7,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低"`         // 单笔最低
+	EachMax       float64                `protobuf:"fixed64,8,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高"`         // 单笔最高
+	DailyMax      float64                `protobuf:"fixed64,9,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限"`    // 单日停用上限
+	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status" dc:"状态"`                            // 状态
+	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort" dc:"排序"`                                // 排序
+	PublicKey     string                 `protobuf:"bytes,12,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥"`      // 公钥
+	PrivateKey    string                 `protobuf:"bytes,13,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥"`   // 私钥
+	IsDecimal     int32                  `protobuf:"varint,14,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数"` // 是否携带小数
+	IsInt         int32                  `protobuf:"varint,15,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组"`          // 是否为规定整数数组
+	MoneyList     string                 `protobuf:"bytes,16,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组"` // 可选的金额数组
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreatePaymentAccountReq) Reset() {
+	*x = CreatePaymentAccountReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreatePaymentAccountReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreatePaymentAccountReq) ProtoMessage() {}
+
+func (x *CreatePaymentAccountReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreatePaymentAccountReq.ProtoReflect.Descriptor instead.
+func (*CreatePaymentAccountReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *CreatePaymentAccountReq) GetPaymentId() int32 {
+	if x != nil {
+		return x.PaymentId
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetGateway() int32 {
+	if x != nil {
+		return x.Gateway
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreatePaymentAccountReq) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *CreatePaymentAccountReq) GetMerchantNo() string {
+	if x != nil {
+		return x.MerchantNo
+	}
+	return ""
+}
+
+func (x *CreatePaymentAccountReq) GetMd5Key() string {
+	if x != nil {
+		return x.Md5Key
+	}
+	return ""
+}
+
+func (x *CreatePaymentAccountReq) GetEachMin() float64 {
+	if x != nil {
+		return x.EachMin
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetEachMax() float64 {
+	if x != nil {
+		return x.EachMax
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetDailyMax() float64 {
+	if x != nil {
+		return x.DailyMax
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetPublicKey() string {
+	if x != nil {
+		return x.PublicKey
+	}
+	return ""
+}
+
+func (x *CreatePaymentAccountReq) GetPrivateKey() string {
+	if x != nil {
+		return x.PrivateKey
+	}
+	return ""
+}
+
+func (x *CreatePaymentAccountReq) GetIsDecimal() int32 {
+	if x != nil {
+		return x.IsDecimal
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetIsInt() int32 {
+	if x != nil {
+		return x.IsInt
+	}
+	return 0
+}
+
+func (x *CreatePaymentAccountReq) GetMoneyList() string {
+	if x != nil {
+		return x.MoneyList
+	}
+	return ""
+}
+
+// 创建支付接口响应
+type CreatePaymentAccountRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreatePaymentAccountRes) Reset() {
+	*x = CreatePaymentAccountRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreatePaymentAccountRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreatePaymentAccountRes) ProtoMessage() {}
+
+func (x *CreatePaymentAccountRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreatePaymentAccountRes.ProtoReflect.Descriptor instead.
+func (*CreatePaymentAccountRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *CreatePaymentAccountRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CreatePaymentAccountRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 获取支付接口编辑信息请求
+type GetPaymentAccountUpdateReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"支付接口ID"` // 支付接口ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPaymentAccountUpdateReq) Reset() {
+	*x = GetPaymentAccountUpdateReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPaymentAccountUpdateReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPaymentAccountUpdateReq) ProtoMessage() {}
+
+func (x *GetPaymentAccountUpdateReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPaymentAccountUpdateReq.ProtoReflect.Descriptor instead.
+func (*GetPaymentAccountUpdateReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *GetPaymentAccountUpdateReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 获取支付接口编辑信息响应
+type GetPaymentAccountUpdateRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *PaymentAccountInfo    `protobuf:"bytes,1,opt,name=data,proto3" json:"data" dc:"支付接口信息"` // 支付接口信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPaymentAccountUpdateRes) Reset() {
+	*x = GetPaymentAccountUpdateRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPaymentAccountUpdateRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPaymentAccountUpdateRes) ProtoMessage() {}
+
+func (x *GetPaymentAccountUpdateRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPaymentAccountUpdateRes.ProtoReflect.Descriptor instead.
+func (*GetPaymentAccountUpdateRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *GetPaymentAccountUpdateRes) GetData() *PaymentAccountInfo {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 更新支付接口请求
+type UpdatePaymentAccountReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"支付接口ID"`                                 // 支付接口ID
+	PaymentId     int32                  `protobuf:"varint,2,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID"` // 第三方支付ID
+	Gateway       int32                  `protobuf:"varint,3,opt,name=gateway,proto3" json:"gateway" dc:"支付网关"`                         // 支付网关
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name" dc:"接口名称"`                                // 接口名称
+	Domain        string                 `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain" dc:"支付域名"`                            // 支付域名
+	MerchantNo    string                 `protobuf:"bytes,6,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号"`   // 商户号
+	Md5Key        string                 `protobuf:"bytes,7,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥"`             // MD5密钥
+	EachMin       float64                `protobuf:"fixed64,8,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低"`         // 单笔最低
+	EachMax       float64                `protobuf:"fixed64,9,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高"`         // 单笔最高
+	DailyMax      float64                `protobuf:"fixed64,10,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限"`   // 单日停用上限
+	Status        int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态"`                            // 状态
+	Sort          int32                  `protobuf:"varint,12,opt,name=sort,proto3" json:"sort" dc:"排序"`                                // 排序
+	PublicKey     string                 `protobuf:"bytes,13,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥"`      // 公钥
+	PrivateKey    string                 `protobuf:"bytes,14,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥"`   // 私钥
+	IsDecimal     int32                  `protobuf:"varint,15,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数"` // 是否携带小数
+	IsInt         int32                  `protobuf:"varint,16,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组"`          // 是否为规定整数数组
+	MoneyList     string                 `protobuf:"bytes,17,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组"` // 可选的金额数组
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdatePaymentAccountReq) Reset() {
+	*x = UpdatePaymentAccountReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdatePaymentAccountReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePaymentAccountReq) ProtoMessage() {}
+
+func (x *UpdatePaymentAccountReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePaymentAccountReq.ProtoReflect.Descriptor instead.
+func (*UpdatePaymentAccountReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *UpdatePaymentAccountReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetPaymentId() int32 {
+	if x != nil {
+		return x.PaymentId
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetGateway() int32 {
+	if x != nil {
+		return x.Gateway
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdatePaymentAccountReq) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *UpdatePaymentAccountReq) GetMerchantNo() string {
+	if x != nil {
+		return x.MerchantNo
+	}
+	return ""
+}
+
+func (x *UpdatePaymentAccountReq) GetMd5Key() string {
+	if x != nil {
+		return x.Md5Key
+	}
+	return ""
+}
+
+func (x *UpdatePaymentAccountReq) GetEachMin() float64 {
+	if x != nil {
+		return x.EachMin
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetEachMax() float64 {
+	if x != nil {
+		return x.EachMax
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetDailyMax() float64 {
+	if x != nil {
+		return x.DailyMax
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetPublicKey() string {
+	if x != nil {
+		return x.PublicKey
+	}
+	return ""
+}
+
+func (x *UpdatePaymentAccountReq) GetPrivateKey() string {
+	if x != nil {
+		return x.PrivateKey
+	}
+	return ""
+}
+
+func (x *UpdatePaymentAccountReq) GetIsDecimal() int32 {
+	if x != nil {
+		return x.IsDecimal
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetIsInt() int32 {
+	if x != nil {
+		return x.IsInt
+	}
+	return 0
+}
+
+func (x *UpdatePaymentAccountReq) GetMoneyList() string {
+	if x != nil {
+		return x.MoneyList
+	}
+	return ""
+}
+
+// 更新支付接口响应
+type UpdatePaymentAccountRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdatePaymentAccountRes) Reset() {
+	*x = UpdatePaymentAccountRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdatePaymentAccountRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePaymentAccountRes) ProtoMessage() {}
+
+func (x *UpdatePaymentAccountRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePaymentAccountRes.ProtoReflect.Descriptor instead.
+func (*UpdatePaymentAccountRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *UpdatePaymentAccountRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *UpdatePaymentAccountRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 删除支付接口请求
+type DeletePaymentAccountReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"支付接口ID"` // 支付接口ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeletePaymentAccountReq) Reset() {
+	*x = DeletePaymentAccountReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeletePaymentAccountReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeletePaymentAccountReq) ProtoMessage() {}
+
+func (x *DeletePaymentAccountReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeletePaymentAccountReq.ProtoReflect.Descriptor instead.
+func (*DeletePaymentAccountReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *DeletePaymentAccountReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 删除支付接口响应
+type DeletePaymentAccountRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeletePaymentAccountRes) Reset() {
+	*x = DeletePaymentAccountRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeletePaymentAccountRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeletePaymentAccountRes) ProtoMessage() {}
+
+func (x *DeletePaymentAccountRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeletePaymentAccountRes.ProtoReflect.Descriptor instead.
+func (*DeletePaymentAccountRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *DeletePaymentAccountRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeletePaymentAccountRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_backend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_backend_balance_v1_balance_proto_rawDesc = "" +
@@ -2820,7 +3795,115 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\vbalance_old\x18\x03 \x01(\x01R\n" +
 	"balanceOld\x12\x1f\n" +
 	"\vbalance_new\x18\x04 \x01(\x01R\n" +
-	"balanceNew2\xaa\a\n" +
+	"balanceNew\"v\n" +
+	"\x15GetPaymentAccountsReq\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x01 \x01(\x05R\tpaymentId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\x05R\x06status\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\x93\x05\n" +
+	"\x12PaymentAccountInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x03 \x01(\x05R\tpaymentId\x12\x18\n" +
+	"\agateway\x18\x04 \x01(\x05R\agateway\x12\x12\n" +
+	"\x04name\x18\x05 \x01(\tR\x04name\x12\x16\n" +
+	"\x06domain\x18\x06 \x01(\tR\x06domain\x12\x1f\n" +
+	"\vmerchant_no\x18\a \x01(\tR\n" +
+	"merchantNo\x12\x17\n" +
+	"\amd5_key\x18\b \x01(\tR\x06md5Key\x12\x19\n" +
+	"\beach_min\x18\t \x01(\x01R\aeachMin\x12\x19\n" +
+	"\beach_max\x18\n" +
+	" \x01(\x01R\aeachMax\x12\x1b\n" +
+	"\tdaily_max\x18\v \x01(\x01R\bdailyMax\x12\x1f\n" +
+	"\vtoday_count\x18\f \x01(\x05R\n" +
+	"todayCount\x12!\n" +
+	"\ftoday_amount\x18\r \x01(\x01R\vtodayAmount\x12\x16\n" +
+	"\x06status\x18\x0e \x01(\x05R\x06status\x12\x1f\n" +
+	"\vstatus_name\x18\x0f \x01(\tR\n" +
+	"statusName\x12\x12\n" +
+	"\x04sort\x18\x10 \x01(\x05R\x04sort\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x11 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x12 \x01(\tR\tupdatedAt\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x13 \x01(\tR\tpublicKey\x12\x1f\n" +
+	"\vprivate_key\x18\x14 \x01(\tR\n" +
+	"privateKey\x12\x1d\n" +
+	"\n" +
+	"is_decimal\x18\x15 \x01(\x05R\tisDecimal\x12\x15\n" +
+	"\x06is_int\x18\x16 \x01(\x05R\x05isInt\x12\x1d\n" +
+	"\n" +
+	"money_list\x18\x17 \x01(\tR\tmoneyList\"^\n" +
+	"\x15GetPaymentAccountsRes\x12/\n" +
+	"\x04list\x18\x01 \x03(\v2\x1b.balance.PaymentAccountInfoR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xcc\x03\n" +
+	"\x17CreatePaymentAccountReq\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x01 \x01(\x05R\tpaymentId\x12\x18\n" +
+	"\agateway\x18\x02 \x01(\x05R\agateway\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x16\n" +
+	"\x06domain\x18\x04 \x01(\tR\x06domain\x12\x1f\n" +
+	"\vmerchant_no\x18\x05 \x01(\tR\n" +
+	"merchantNo\x12\x17\n" +
+	"\amd5_key\x18\x06 \x01(\tR\x06md5Key\x12\x19\n" +
+	"\beach_min\x18\a \x01(\x01R\aeachMin\x12\x19\n" +
+	"\beach_max\x18\b \x01(\x01R\aeachMax\x12\x1b\n" +
+	"\tdaily_max\x18\t \x01(\x01R\bdailyMax\x12\x16\n" +
+	"\x06status\x18\n" +
+	" \x01(\x05R\x06status\x12\x12\n" +
+	"\x04sort\x18\v \x01(\x05R\x04sort\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\f \x01(\tR\tpublicKey\x12\x1f\n" +
+	"\vprivate_key\x18\r \x01(\tR\n" +
+	"privateKey\x12\x1d\n" +
+	"\n" +
+	"is_decimal\x18\x0e \x01(\x05R\tisDecimal\x12\x15\n" +
+	"\x06is_int\x18\x0f \x01(\x05R\x05isInt\x12\x1d\n" +
+	"\n" +
+	"money_list\x18\x10 \x01(\tR\tmoneyList\"M\n" +
+	"\x17CreatePaymentAccountRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\",\n" +
+	"\x1aGetPaymentAccountUpdateReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"M\n" +
+	"\x1aGetPaymentAccountUpdateRes\x12/\n" +
+	"\x04data\x18\x01 \x01(\v2\x1b.balance.PaymentAccountInfoR\x04data\"\xdc\x03\n" +
+	"\x17UpdatePaymentAccountReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x02 \x01(\x05R\tpaymentId\x12\x18\n" +
+	"\agateway\x18\x03 \x01(\x05R\agateway\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12\x16\n" +
+	"\x06domain\x18\x05 \x01(\tR\x06domain\x12\x1f\n" +
+	"\vmerchant_no\x18\x06 \x01(\tR\n" +
+	"merchantNo\x12\x17\n" +
+	"\amd5_key\x18\a \x01(\tR\x06md5Key\x12\x19\n" +
+	"\beach_min\x18\b \x01(\x01R\aeachMin\x12\x19\n" +
+	"\beach_max\x18\t \x01(\x01R\aeachMax\x12\x1b\n" +
+	"\tdaily_max\x18\n" +
+	" \x01(\x01R\bdailyMax\x12\x16\n" +
+	"\x06status\x18\v \x01(\x05R\x06status\x12\x12\n" +
+	"\x04sort\x18\f \x01(\x05R\x04sort\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\r \x01(\tR\tpublicKey\x12\x1f\n" +
+	"\vprivate_key\x18\x0e \x01(\tR\n" +
+	"privateKey\x12\x1d\n" +
+	"\n" +
+	"is_decimal\x18\x0f \x01(\x05R\tisDecimal\x12\x15\n" +
+	"\x06is_int\x18\x10 \x01(\x05R\x05isInt\x12\x1d\n" +
+	"\n" +
+	"money_list\x18\x11 \x01(\tR\tmoneyList\"M\n" +
+	"\x17UpdatePaymentAccountRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\")\n" +
+	"\x17DeletePaymentAccountReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"M\n" +
+	"\x17DeletePaymentAccountRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\x83\v\n" +
 	"\aBalance\x12S\n" +
 	"\x11GetBalanceChanges\x12\x1d.balance.GetBalanceChangesReq\x1a\x1d.balance.GetBalanceChangesRes\"\x00\x12Y\n" +
 	"\x13GetRechargePayments\x12\x1f.balance.GetRechargePaymentsReq\x1a\x1f.balance.GetRechargePaymentsRes\"\x00\x12V\n" +
@@ -2832,7 +3915,12 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x10DealWithWithdraw\x12\x1c.balance.DealWithWithdrawReq\x1a\x1c.balance.DealWithWithdrawRes\"\x00\x12P\n" +
 	"\x10QueryUserBalance\x12\x1c.balance.QueryUserBalanceReq\x1a\x1c.balance.QueryUserBalanceRes\"\x00\x12P\n" +
 	"\x10QueryGameBalance\x12\x1c.balance.QueryGameBalanceReq\x1a\x1c.balance.QueryGameBalanceRes\"\x00\x12S\n" +
-	"\x11ManualUserBalance\x12\x1d.balance.ManualUserBalanceReq\x1a\x1d.balance.ManualUserBalanceRes\"\x00B+Z)jh_balance_service/api/backend/balance/v1b\x06proto3"
+	"\x11ManualUserBalance\x12\x1d.balance.ManualUserBalanceReq\x1a\x1d.balance.ManualUserBalanceRes\"\x00\x12V\n" +
+	"\x12GetPaymentAccounts\x12\x1e.balance.GetPaymentAccountsReq\x1a\x1e.balance.GetPaymentAccountsRes\"\x00\x12\\\n" +
+	"\x14CreatePaymentAccount\x12 .balance.CreatePaymentAccountReq\x1a .balance.CreatePaymentAccountRes\"\x00\x12e\n" +
+	"\x17GetPaymentAccountUpdate\x12#.balance.GetPaymentAccountUpdateReq\x1a#.balance.GetPaymentAccountUpdateRes\"\x00\x12\\\n" +
+	"\x14UpdatePaymentAccount\x12 .balance.UpdatePaymentAccountReq\x1a .balance.UpdatePaymentAccountRes\"\x00\x12\\\n" +
+	"\x14DeletePaymentAccount\x12 .balance.DeletePaymentAccountReq\x1a .balance.DeletePaymentAccountRes\"\x00B+Z)jh_balance_service/api/backend/balance/v1b\x06proto3"
 
 var (
 	file_backend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -2846,38 +3934,49 @@ func file_backend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_backend_balance_v1_balance_proto_rawDescData
 }
 
-var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
 var file_backend_balance_v1_balance_proto_goTypes = []any{
-	(*GetBalanceChangesReq)(nil),   // 0: balance.GetBalanceChangesReq
-	(*BalanceChangeInfo)(nil),      // 1: balance.BalanceChangeInfo
-	(*GetBalanceChangesRes)(nil),   // 2: balance.GetBalanceChangesRes
-	(*GetRechargePaymentsReq)(nil), // 3: balance.GetRechargePaymentsReq
-	(*RechargePaymentInfo)(nil),    // 4: balance.RechargePaymentInfo
-	(*GetRechargePaymentsRes)(nil), // 5: balance.GetRechargePaymentsRes
-	(*GetRechargeManualsReq)(nil),  // 6: balance.GetRechargeManualsReq
-	(*RechargeManualInfo)(nil),     // 7: balance.RechargeManualInfo
-	(*GetRechargeManualsRes)(nil),  // 8: balance.GetRechargeManualsRes
-	(*ConfirmPaymentOrderReq)(nil), // 9: balance.ConfirmPaymentOrderReq
-	(*ConfirmPaymentOrderRes)(nil), // 10: balance.ConfirmPaymentOrderRes
-	(*GetWithdrawsReq)(nil),        // 11: balance.GetWithdrawsReq
-	(*WithdrawInfo)(nil),           // 12: balance.WithdrawInfo
-	(*GetWithdrawsRes)(nil),        // 13: balance.GetWithdrawsRes
-	(*GetWithdrawManualsReq)(nil),  // 14: balance.GetWithdrawManualsReq
-	(*WithdrawManualInfo)(nil),     // 15: balance.WithdrawManualInfo
-	(*GetWithdrawManualsRes)(nil),  // 16: balance.GetWithdrawManualsRes
-	(*GetWithdrawReviewReq)(nil),   // 17: balance.GetWithdrawReviewReq
-	(*WithdrawReviewInfo)(nil),     // 18: balance.WithdrawReviewInfo
-	(*GetWithdrawReviewRes)(nil),   // 19: balance.GetWithdrawReviewRes
-	(*DealWithWithdrawReq)(nil),    // 20: balance.DealWithWithdrawReq
-	(*DealWithWithdrawRes)(nil),    // 21: balance.DealWithWithdrawRes
-	(*QueryUserBalanceReq)(nil),    // 22: balance.QueryUserBalanceReq
-	(*UserBalanceInfo)(nil),        // 23: balance.UserBalanceInfo
-	(*QueryUserBalanceRes)(nil),    // 24: balance.QueryUserBalanceRes
-	(*QueryGameBalanceReq)(nil),    // 25: balance.QueryGameBalanceReq
-	(*GameBalanceInfo)(nil),        // 26: balance.GameBalanceInfo
-	(*QueryGameBalanceRes)(nil),    // 27: balance.QueryGameBalanceRes
-	(*ManualUserBalanceReq)(nil),   // 28: balance.ManualUserBalanceReq
-	(*ManualUserBalanceRes)(nil),   // 29: balance.ManualUserBalanceRes
+	(*GetBalanceChangesReq)(nil),       // 0: balance.GetBalanceChangesReq
+	(*BalanceChangeInfo)(nil),          // 1: balance.BalanceChangeInfo
+	(*GetBalanceChangesRes)(nil),       // 2: balance.GetBalanceChangesRes
+	(*GetRechargePaymentsReq)(nil),     // 3: balance.GetRechargePaymentsReq
+	(*RechargePaymentInfo)(nil),        // 4: balance.RechargePaymentInfo
+	(*GetRechargePaymentsRes)(nil),     // 5: balance.GetRechargePaymentsRes
+	(*GetRechargeManualsReq)(nil),      // 6: balance.GetRechargeManualsReq
+	(*RechargeManualInfo)(nil),         // 7: balance.RechargeManualInfo
+	(*GetRechargeManualsRes)(nil),      // 8: balance.GetRechargeManualsRes
+	(*ConfirmPaymentOrderReq)(nil),     // 9: balance.ConfirmPaymentOrderReq
+	(*ConfirmPaymentOrderRes)(nil),     // 10: balance.ConfirmPaymentOrderRes
+	(*GetWithdrawsReq)(nil),            // 11: balance.GetWithdrawsReq
+	(*WithdrawInfo)(nil),               // 12: balance.WithdrawInfo
+	(*GetWithdrawsRes)(nil),            // 13: balance.GetWithdrawsRes
+	(*GetWithdrawManualsReq)(nil),      // 14: balance.GetWithdrawManualsReq
+	(*WithdrawManualInfo)(nil),         // 15: balance.WithdrawManualInfo
+	(*GetWithdrawManualsRes)(nil),      // 16: balance.GetWithdrawManualsRes
+	(*GetWithdrawReviewReq)(nil),       // 17: balance.GetWithdrawReviewReq
+	(*WithdrawReviewInfo)(nil),         // 18: balance.WithdrawReviewInfo
+	(*GetWithdrawReviewRes)(nil),       // 19: balance.GetWithdrawReviewRes
+	(*DealWithWithdrawReq)(nil),        // 20: balance.DealWithWithdrawReq
+	(*DealWithWithdrawRes)(nil),        // 21: balance.DealWithWithdrawRes
+	(*QueryUserBalanceReq)(nil),        // 22: balance.QueryUserBalanceReq
+	(*UserBalanceInfo)(nil),            // 23: balance.UserBalanceInfo
+	(*QueryUserBalanceRes)(nil),        // 24: balance.QueryUserBalanceRes
+	(*QueryGameBalanceReq)(nil),        // 25: balance.QueryGameBalanceReq
+	(*GameBalanceInfo)(nil),            // 26: balance.GameBalanceInfo
+	(*QueryGameBalanceRes)(nil),        // 27: balance.QueryGameBalanceRes
+	(*ManualUserBalanceReq)(nil),       // 28: balance.ManualUserBalanceReq
+	(*ManualUserBalanceRes)(nil),       // 29: balance.ManualUserBalanceRes
+	(*GetPaymentAccountsReq)(nil),      // 30: balance.GetPaymentAccountsReq
+	(*PaymentAccountInfo)(nil),         // 31: balance.PaymentAccountInfo
+	(*GetPaymentAccountsRes)(nil),      // 32: balance.GetPaymentAccountsRes
+	(*CreatePaymentAccountReq)(nil),    // 33: balance.CreatePaymentAccountReq
+	(*CreatePaymentAccountRes)(nil),    // 34: balance.CreatePaymentAccountRes
+	(*GetPaymentAccountUpdateReq)(nil), // 35: balance.GetPaymentAccountUpdateReq
+	(*GetPaymentAccountUpdateRes)(nil), // 36: balance.GetPaymentAccountUpdateRes
+	(*UpdatePaymentAccountReq)(nil),    // 37: balance.UpdatePaymentAccountReq
+	(*UpdatePaymentAccountRes)(nil),    // 38: balance.UpdatePaymentAccountRes
+	(*DeletePaymentAccountReq)(nil),    // 39: balance.DeletePaymentAccountReq
+	(*DeletePaymentAccountRes)(nil),    // 40: balance.DeletePaymentAccountRes
 }
 var file_backend_balance_v1_balance_proto_depIdxs = []int32{
 	1,  // 0: balance.GetBalanceChangesRes.list:type_name -> balance.BalanceChangeInfo
@@ -2888,33 +3987,45 @@ var file_backend_balance_v1_balance_proto_depIdxs = []int32{
 	18, // 5: balance.GetWithdrawReviewRes.data:type_name -> balance.WithdrawReviewInfo
 	23, // 6: balance.QueryUserBalanceRes.data:type_name -> balance.UserBalanceInfo
 	26, // 7: balance.QueryGameBalanceRes.data:type_name -> balance.GameBalanceInfo
-	0,  // 8: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
-	3,  // 9: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
-	6,  // 10: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
-	9,  // 11: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
-	11, // 12: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
-	14, // 13: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
-	17, // 14: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
-	20, // 15: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
-	22, // 16: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
-	25, // 17: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
-	28, // 18: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
-	2,  // 19: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
-	5,  // 20: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
-	8,  // 21: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
-	10, // 22: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
-	13, // 23: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
-	16, // 24: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
-	19, // 25: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
-	21, // 26: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
-	24, // 27: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
-	27, // 28: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
-	29, // 29: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
-	19, // [19:30] is the sub-list for method output_type
-	8,  // [8:19] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	31, // 8: balance.GetPaymentAccountsRes.list:type_name -> balance.PaymentAccountInfo
+	31, // 9: balance.GetPaymentAccountUpdateRes.data:type_name -> balance.PaymentAccountInfo
+	0,  // 10: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
+	3,  // 11: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
+	6,  // 12: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
+	9,  // 13: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
+	11, // 14: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
+	14, // 15: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
+	17, // 16: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
+	20, // 17: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
+	22, // 18: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
+	25, // 19: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
+	28, // 20: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
+	30, // 21: balance.Balance.GetPaymentAccounts:input_type -> balance.GetPaymentAccountsReq
+	33, // 22: balance.Balance.CreatePaymentAccount:input_type -> balance.CreatePaymentAccountReq
+	35, // 23: balance.Balance.GetPaymentAccountUpdate:input_type -> balance.GetPaymentAccountUpdateReq
+	37, // 24: balance.Balance.UpdatePaymentAccount:input_type -> balance.UpdatePaymentAccountReq
+	39, // 25: balance.Balance.DeletePaymentAccount:input_type -> balance.DeletePaymentAccountReq
+	2,  // 26: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
+	5,  // 27: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
+	8,  // 28: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
+	10, // 29: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
+	13, // 30: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
+	16, // 31: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
+	19, // 32: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
+	21, // 33: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
+	24, // 34: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
+	27, // 35: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
+	29, // 36: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
+	32, // 37: balance.Balance.GetPaymentAccounts:output_type -> balance.GetPaymentAccountsRes
+	34, // 38: balance.Balance.CreatePaymentAccount:output_type -> balance.CreatePaymentAccountRes
+	36, // 39: balance.Balance.GetPaymentAccountUpdate:output_type -> balance.GetPaymentAccountUpdateRes
+	38, // 40: balance.Balance.UpdatePaymentAccount:output_type -> balance.UpdatePaymentAccountRes
+	40, // 41: balance.Balance.DeletePaymentAccount:output_type -> balance.DeletePaymentAccountRes
+	26, // [26:42] is the sub-list for method output_type
+	10, // [10:26] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_backend_balance_v1_balance_proto_init() }
@@ -2928,7 +4039,7 @@ func file_backend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_balance_v1_balance_proto_rawDesc), len(file_backend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   30,
+			NumMessages:   41,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

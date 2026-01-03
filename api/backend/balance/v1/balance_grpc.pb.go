@@ -20,17 +20,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Balance_GetBalanceChanges_FullMethodName   = "/balance.Balance/GetBalanceChanges"
-	Balance_GetRechargePayments_FullMethodName = "/balance.Balance/GetRechargePayments"
-	Balance_GetRechargeManuals_FullMethodName  = "/balance.Balance/GetRechargeManuals"
-	Balance_ConfirmPaymentOrder_FullMethodName = "/balance.Balance/ConfirmPaymentOrder"
-	Balance_GetWithdraws_FullMethodName        = "/balance.Balance/GetWithdraws"
-	Balance_GetWithdrawManuals_FullMethodName  = "/balance.Balance/GetWithdrawManuals"
-	Balance_GetWithdrawReview_FullMethodName   = "/balance.Balance/GetWithdrawReview"
-	Balance_DealWithWithdraw_FullMethodName    = "/balance.Balance/DealWithWithdraw"
-	Balance_QueryUserBalance_FullMethodName    = "/balance.Balance/QueryUserBalance"
-	Balance_QueryGameBalance_FullMethodName    = "/balance.Balance/QueryGameBalance"
-	Balance_ManualUserBalance_FullMethodName   = "/balance.Balance/ManualUserBalance"
+	Balance_GetBalanceChanges_FullMethodName       = "/balance.Balance/GetBalanceChanges"
+	Balance_GetRechargePayments_FullMethodName     = "/balance.Balance/GetRechargePayments"
+	Balance_GetRechargeManuals_FullMethodName      = "/balance.Balance/GetRechargeManuals"
+	Balance_ConfirmPaymentOrder_FullMethodName     = "/balance.Balance/ConfirmPaymentOrder"
+	Balance_GetWithdraws_FullMethodName            = "/balance.Balance/GetWithdraws"
+	Balance_GetWithdrawManuals_FullMethodName      = "/balance.Balance/GetWithdrawManuals"
+	Balance_GetWithdrawReview_FullMethodName       = "/balance.Balance/GetWithdrawReview"
+	Balance_DealWithWithdraw_FullMethodName        = "/balance.Balance/DealWithWithdraw"
+	Balance_QueryUserBalance_FullMethodName        = "/balance.Balance/QueryUserBalance"
+	Balance_QueryGameBalance_FullMethodName        = "/balance.Balance/QueryGameBalance"
+	Balance_ManualUserBalance_FullMethodName       = "/balance.Balance/ManualUserBalance"
+	Balance_GetPaymentAccounts_FullMethodName      = "/balance.Balance/GetPaymentAccounts"
+	Balance_CreatePaymentAccount_FullMethodName    = "/balance.Balance/CreatePaymentAccount"
+	Balance_GetPaymentAccountUpdate_FullMethodName = "/balance.Balance/GetPaymentAccountUpdate"
+	Balance_UpdatePaymentAccount_FullMethodName    = "/balance.Balance/UpdatePaymentAccount"
+	Balance_DeletePaymentAccount_FullMethodName    = "/balance.Balance/DeletePaymentAccount"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -52,6 +57,12 @@ type BalanceClient interface {
 	QueryUserBalance(ctx context.Context, in *QueryUserBalanceReq, opts ...grpc.CallOption) (*QueryUserBalanceRes, error)
 	QueryGameBalance(ctx context.Context, in *QueryGameBalanceReq, opts ...grpc.CallOption) (*QueryGameBalanceRes, error)
 	ManualUserBalance(ctx context.Context, in *ManualUserBalanceReq, opts ...grpc.CallOption) (*ManualUserBalanceRes, error)
+	// 支付接口管理相关
+	GetPaymentAccounts(ctx context.Context, in *GetPaymentAccountsReq, opts ...grpc.CallOption) (*GetPaymentAccountsRes, error)
+	CreatePaymentAccount(ctx context.Context, in *CreatePaymentAccountReq, opts ...grpc.CallOption) (*CreatePaymentAccountRes, error)
+	GetPaymentAccountUpdate(ctx context.Context, in *GetPaymentAccountUpdateReq, opts ...grpc.CallOption) (*GetPaymentAccountUpdateRes, error)
+	UpdatePaymentAccount(ctx context.Context, in *UpdatePaymentAccountReq, opts ...grpc.CallOption) (*UpdatePaymentAccountRes, error)
+	DeletePaymentAccount(ctx context.Context, in *DeletePaymentAccountReq, opts ...grpc.CallOption) (*DeletePaymentAccountRes, error)
 }
 
 type balanceClient struct {
@@ -172,6 +183,56 @@ func (c *balanceClient) ManualUserBalance(ctx context.Context, in *ManualUserBal
 	return out, nil
 }
 
+func (c *balanceClient) GetPaymentAccounts(ctx context.Context, in *GetPaymentAccountsReq, opts ...grpc.CallOption) (*GetPaymentAccountsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPaymentAccountsRes)
+	err := c.cc.Invoke(ctx, Balance_GetPaymentAccounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) CreatePaymentAccount(ctx context.Context, in *CreatePaymentAccountReq, opts ...grpc.CallOption) (*CreatePaymentAccountRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreatePaymentAccountRes)
+	err := c.cc.Invoke(ctx, Balance_CreatePaymentAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetPaymentAccountUpdate(ctx context.Context, in *GetPaymentAccountUpdateReq, opts ...grpc.CallOption) (*GetPaymentAccountUpdateRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPaymentAccountUpdateRes)
+	err := c.cc.Invoke(ctx, Balance_GetPaymentAccountUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) UpdatePaymentAccount(ctx context.Context, in *UpdatePaymentAccountReq, opts ...grpc.CallOption) (*UpdatePaymentAccountRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdatePaymentAccountRes)
+	err := c.cc.Invoke(ctx, Balance_UpdatePaymentAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) DeletePaymentAccount(ctx context.Context, in *DeletePaymentAccountReq, opts ...grpc.CallOption) (*DeletePaymentAccountRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeletePaymentAccountRes)
+	err := c.cc.Invoke(ctx, Balance_DeletePaymentAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -191,6 +252,12 @@ type BalanceServer interface {
 	QueryUserBalance(context.Context, *QueryUserBalanceReq) (*QueryUserBalanceRes, error)
 	QueryGameBalance(context.Context, *QueryGameBalanceReq) (*QueryGameBalanceRes, error)
 	ManualUserBalance(context.Context, *ManualUserBalanceReq) (*ManualUserBalanceRes, error)
+	// 支付接口管理相关
+	GetPaymentAccounts(context.Context, *GetPaymentAccountsReq) (*GetPaymentAccountsRes, error)
+	CreatePaymentAccount(context.Context, *CreatePaymentAccountReq) (*CreatePaymentAccountRes, error)
+	GetPaymentAccountUpdate(context.Context, *GetPaymentAccountUpdateReq) (*GetPaymentAccountUpdateRes, error)
+	UpdatePaymentAccount(context.Context, *UpdatePaymentAccountReq) (*UpdatePaymentAccountRes, error)
+	DeletePaymentAccount(context.Context, *DeletePaymentAccountReq) (*DeletePaymentAccountRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -233,6 +300,21 @@ func (UnimplementedBalanceServer) QueryGameBalance(context.Context, *QueryGameBa
 }
 func (UnimplementedBalanceServer) ManualUserBalance(context.Context, *ManualUserBalanceReq) (*ManualUserBalanceRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method ManualUserBalance not implemented")
+}
+func (UnimplementedBalanceServer) GetPaymentAccounts(context.Context, *GetPaymentAccountsReq) (*GetPaymentAccountsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetPaymentAccounts not implemented")
+}
+func (UnimplementedBalanceServer) CreatePaymentAccount(context.Context, *CreatePaymentAccountReq) (*CreatePaymentAccountRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreatePaymentAccount not implemented")
+}
+func (UnimplementedBalanceServer) GetPaymentAccountUpdate(context.Context, *GetPaymentAccountUpdateReq) (*GetPaymentAccountUpdateRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetPaymentAccountUpdate not implemented")
+}
+func (UnimplementedBalanceServer) UpdatePaymentAccount(context.Context, *UpdatePaymentAccountReq) (*UpdatePaymentAccountRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdatePaymentAccount not implemented")
+}
+func (UnimplementedBalanceServer) DeletePaymentAccount(context.Context, *DeletePaymentAccountReq) (*DeletePaymentAccountRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeletePaymentAccount not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -453,6 +535,96 @@ func _Balance_ManualUserBalance_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetPaymentAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPaymentAccountsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetPaymentAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetPaymentAccounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetPaymentAccounts(ctx, req.(*GetPaymentAccountsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_CreatePaymentAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePaymentAccountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).CreatePaymentAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_CreatePaymentAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).CreatePaymentAccount(ctx, req.(*CreatePaymentAccountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetPaymentAccountUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPaymentAccountUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetPaymentAccountUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetPaymentAccountUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetPaymentAccountUpdate(ctx, req.(*GetPaymentAccountUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_UpdatePaymentAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePaymentAccountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).UpdatePaymentAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_UpdatePaymentAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).UpdatePaymentAccount(ctx, req.(*UpdatePaymentAccountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_DeletePaymentAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePaymentAccountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).DeletePaymentAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_DeletePaymentAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).DeletePaymentAccount(ctx, req.(*DeletePaymentAccountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -503,6 +675,26 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ManualUserBalance",
 			Handler:    _Balance_ManualUserBalance_Handler,
+		},
+		{
+			MethodName: "GetPaymentAccounts",
+			Handler:    _Balance_GetPaymentAccounts_Handler,
+		},
+		{
+			MethodName: "CreatePaymentAccount",
+			Handler:    _Balance_CreatePaymentAccount_Handler,
+		},
+		{
+			MethodName: "GetPaymentAccountUpdate",
+			Handler:    _Balance_GetPaymentAccountUpdate_Handler,
+		},
+		{
+			MethodName: "UpdatePaymentAccount",
+			Handler:    _Balance_UpdatePaymentAccount_Handler,
+		},
+		{
+			MethodName: "DeletePaymentAccount",
+			Handler:    _Balance_DeletePaymentAccount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
