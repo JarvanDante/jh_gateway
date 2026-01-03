@@ -24,20 +24,20 @@ func Register(s *ghttp.Server) {
 			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
-		group.ALL("/*any", proxy.AdminGRPCToHTTP("admin_service"))
+		group.ALL("/*any", proxy.AdminGRPCToHTTP("jh_admin_service"))
 	})
 
-	// 支付相关：转发到 payment-service (HTTP)
-	s.Group("/api/pay", func(group *ghttp.RouterGroup) {
+	// 支付相关：转发到 balance-service (gRPC)
+	s.Group("/api/balance", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.JWTAuth,
+			middleware.RequestParser,          // 解析请求体数据
+			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
-			proxy.ToService("payment-service"),
 		)
-		group.ALL("/*any", proxy.Forward)
+		group.ALL("/*any", proxy.BalanceGRPCToHTTP("jh_balance_service"))
 	})
 
 	// 游戏相关：转发到 game-service (HTTP)

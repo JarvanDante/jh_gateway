@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"jh_gateway/api/backend/admin/v1"
+	v6 "jh_gateway/api/backend/balance/v1"
 	v2 "jh_gateway/api/backend/role/v1"
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
@@ -2102,4 +2103,630 @@ func callGetUserLoginLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 	// 使用统一的protobuf响应序列化
 	return writeProtobufResponse(ctx, r, res)
+}
+
+// BalanceGRPCToHTTP 将 HTTP 请求转换为 Balance gRPC 调用
+func BalanceGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
+	return func(r *ghttp.Request) {
+		ctx := r.Context()
+		path := r.URL.Path
+		method := r.Method
+
+		// 创建HTTP请求的Jaeger span
+		ctx, span := tracing.StartSpan(ctx, "http.request", trace.WithAttributes(
+			attribute.String("http.method", method),
+			attribute.String("http.path", path),
+			attribute.String("service.name", serviceName),
+		))
+		defer span.End()
+
+		// 先进行参数验证，避免无效请求浪费资源
+		var requestData map[string]interface{}
+		if shouldValidateEarly(path, method) {
+			ctx, validateSpan := tracing.StartSpan(ctx, "http.validate_request")
+			var err error
+			requestData, err = validateAndParseRequest(ctx, r)
+			validateSpan.End()
+
+			if err != nil {
+				tracing.SetSpanError(span, err)
+				tracing.SetSpanError(validateSpan, err)
+				// 验证失败，已经写入响应，直接返回
+				return
+			}
+			// 将解析后的数据存储到上下文中，供后续使用
+			ctx = context.WithValue(ctx, "requestData", requestData)
+		}
+
+		// 从 Consul 获取服务地址（支持负载均衡）
+		ctx, discoverySpan := tracing.StartSpan(ctx, "service.discovery", trace.WithAttributes(
+			attribute.String("service.name", serviceName),
+		))
+		addr, err := registry.GetServiceAddr(serviceName)
+		discoverySpan.End()
+
+		if err != nil {
+			tracing.SetSpanError(span, err)
+			tracing.SetSpanError(discoverySpan, err)
+			util.WriteServiceUnavailable(r, "["+serviceName+"]：service not available")
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.String("service.address", addr))
+		// 记录选择的服务实例
+		util.LogWithTrace(ctx, "info", "Selected service instance: %s -> %s", serviceName, addr)
+
+		// 连接到 gRPC 服务
+		ctx, connSpan := tracing.StartSpan(ctx, "grpc.connect", trace.WithAttributes(
+			attribute.String("grpc.target", addr),
+		))
+		conn, err := grpc.DialContext(
+			ctx,
+			addr,
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
+			grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()), // 添加OpenTelemetry gRPC拦截器
+		)
+		connSpan.End()
+
+		if err != nil {
+			tracing.SetSpanError(span, err)
+			tracing.SetSpanError(connSpan, err)
+			util.WriteServiceUnavailable(r, "failed to connect to service")
+			return
+		}
+		defer conn.Close()
+
+		// 根据路径调用不同的 gRPC 方法
+		if err := callBalanceGRPCMethod(ctx, conn, r); err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteInternalError(r, err.Error())
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
+	}
+}
+
+// callBalanceGRPCMethod 根据 HTTP 路径调用对应的 Balance gRPC 方法
+func callBalanceGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	path := r.URL.Path
+	method := r.Method
+
+	// 统一添加traceId到gRPC上下文
+	ctx = addTraceToContext(ctx, r)
+
+	// 添加用户信息到 gRPC metadata
+	ctx = addUserInfoToGRPCContext(ctx, r)
+
+	util.LogWithTrace(ctx, "info", "calling Balance gRPC method for path: %s, method: %s", path, method)
+
+	// 余额相关接口
+	switch {
+	// 账变记录
+	case strings.HasSuffix(path, "/balance-changes") && method == "GET":
+		return callGetBalanceChanges(ctx, conn, r)
+	// 充值记录
+	case strings.HasSuffix(path, "/recharge-payment") && method == "GET":
+		return callGetRechargePayments(ctx, conn, r)
+	case strings.HasSuffix(path, "/recharge-manual") && method == "GET":
+		return callGetRechargeManuals(ctx, conn, r)
+	case strings.HasSuffix(path, "/confirm-payment-order") && method == "POST":
+		return callConfirmPaymentOrder(ctx, conn, r)
+	// 提现记录
+	case strings.HasSuffix(path, "/withdraws") && method == "GET":
+		return callGetWithdraws(ctx, conn, r)
+	case strings.HasSuffix(path, "/withdraw-manual") && method == "GET":
+		return callGetWithdrawManuals(ctx, conn, r)
+	case strings.HasSuffix(path, "/withdraw-review") && method == "GET":
+		return callGetWithdrawReview(ctx, conn, r)
+	case strings.HasSuffix(path, "/deal-with-withdraw") && method == "POST":
+		return callDealWithWithdraw(ctx, conn, r)
+	}
+
+	return fmt.Errorf("unsupported path: %s", path)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/账变记录
+ * @title 获取账变记录
+ * @description 获取会员账变记录列表
+ * @method get
+ * @url /api/admin/balance-changes
+ * @param username 可选 string 用户名
+ * @param change_type 可选 int 账变类型 1=入款 2=出款
+ * @param trade_type 可选 int 交易类型
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"trade_type":2,"trade_type_name":"充值","user_id":123,"username":"testuser","trade_no":"T123456","balance_old":100.0,"money":50.0,"balance_new":150.0,"balance_frozen":0.0,"status":2,"status_name":"成功","remark":"","created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 账变记录列表
+ * @return_param data.count int 总数量
+ * @remark 获取会员账变记录，支持按用户名、账变类型、交易类型、时间范围筛选
+ * @number 1
+ */
+func callGetBalanceChanges(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetBalanceChanges")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	changeType := r.Get("change_type", 0).Int32()
+	tradeType := r.Get("trade_type", 0).Int32()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetBalanceChangesReq{
+		Username:   username,
+		ChangeType: changeType,
+		TradeType:  tradeType,
+		StartTime:  startTime,
+		EndTime:    endTime,
+		Page:       page,
+		Size:       size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, ChangeType: %d, Page: %d, Size: %d", req.Username, req.ChangeType, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetBalanceChanges(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取账变记录失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/充值记录
+ * @title 获取充值记录
+ * @description 获取在线支付充值记录列表
+ * @method get
+ * @url /api/admin/recharge-payment
+ * @param username 可选 string 用户名
+ * @param gateway 可选 int 网关类型
+ * @param payment_id 可选 int 支付ID
+ * @param account_id 可选 int 账号ID
+ * @param status 可选 int 状态
+ * @param trade_no 可选 string 流水号
+ * @param domain 可选 string 域名
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"user_id":123,"username":"testuser","gateway":1,"gateway_name":"在线支付","payment_id":1,"trade_no":"P123456","money":100.0,"fee":0.0,"status":2,"status_name":"成功","created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 充值记录列表
+ * @return_param data.count int 总数量
+ * @remark 获取在线支付充值记录，支持多条件筛选
+ * @number 2
+ */
+func callGetRechargePayments(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetRechargePayments")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	gateway := r.Get("gateway", 0).Int32()
+	paymentId := r.Get("payment_id", 0).Int32()
+	accountId := r.Get("account_id", 0).Int32()
+	status := r.Get("status", 0).Int32()
+	tradeNo := r.Get("trade_no", "").String()
+	domain := r.Get("domain", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetRechargePaymentsReq{
+		Username:  username,
+		Gateway:   gateway,
+		PaymentId: paymentId,
+		AccountId: accountId,
+		Status:    status,
+		TradeNo:   tradeNo,
+		Domain:    domain,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, Gateway: %d, Page: %d, Size: %d", req.Username, req.Gateway, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetRechargePayments(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取充值记录失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/充值记录
+ * @title 获取后台加款记录
+ * @description 获取后台手动加款记录列表
+ * @method get
+ * @url /api/admin/recharge-manual
+ * @param username 可选 string 用户名
+ * @param status 可选 int 状态
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"user_id":123,"username":"testuser","trade_no":"M123456","money":100.0,"status":2,"status_name":"成功","admin_id":1,"admin_name":"admin","remark":"手动加款","created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 后台加款记录列表
+ * @return_param data.count int 总数量
+ * @remark 获取后台手动加款记录，支持按用户名、状态、时间范围筛选
+ * @number 3
+ */
+func callGetRechargeManuals(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetRechargeManuals")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	status := r.Get("status", 0).Int32()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetRechargeManualsReq{
+		Username:  username,
+		Status:    status,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, Status: %d, Page: %d, Size: %d", req.Username, req.Status, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetRechargeManuals(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取后台加款记录失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/充值记录
+ * @title 确认支付订单
+ * @description 手动确认在线支付订单
+ * @method post
+ * @url /api/admin/confirm-payment-order
+ * @param id 必选 int 订单ID
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"订单确认成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 手动确认在线支付订单，更新订单状态并处理余额
+ * @number 4
+ */
+func callConfirmPaymentOrder(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance ConfirmPaymentOrder")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt64FromMap(reqData, "id")
+	remark := getStringFromMap(reqData, "remark")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "订单ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.ConfirmPaymentOrderReq{
+		Id:     id,
+		Remark: remark,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Id: %d, Remark: %s", req.Id, req.Remark)
+
+	// 调用 gRPC 服务
+	res, err := client.ConfirmPaymentOrder(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "确认支付订单失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/提现记录
+ * @title 获取提现记录
+ * @description 获取会员提现记录列表
+ * @method get
+ * @url /api/admin/withdraws
+ * @param username 可选 string 用户名
+ * @param status 可选 int 状态
+ * @param trade_no 可选 string 流水号
+ * @param domain 可选 string 域名
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"user_id":123,"username":"testuser","trade_no":"W123456","money":100.0,"fee":5.0,"bank_name":"工商银行","card_account":"张三","card_no":"6222****1234","status":1,"status_name":"待审核","created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 提现记录列表
+ * @return_param data.count int 总数量
+ * @remark 获取会员提现记录，支持多条件筛选
+ * @number 5
+ */
+func callGetWithdraws(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetWithdraws")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	status := r.Get("status", 0).Int32()
+	tradeNo := r.Get("trade_no", "").String()
+	domain := r.Get("domain", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetWithdrawsReq{
+		Username:  username,
+		Status:    status,
+		TradeNo:   tradeNo,
+		Domain:    domain,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, Status: %d, Page: %d, Size: %d", req.Username, req.Status, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetWithdraws(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取提现记录失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/提现记录
+ * @title 获取后台提现记录
+ * @description 获取后台手动提现记录列表
+ * @method get
+ * @url /api/admin/withdraw-manual
+ * @param username 可选 string 用户名
+ * @param status 可选 int 状态
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"user_id":123,"username":"testuser","trade_no":"WM123456","money":100.0,"status":2,"status_name":"成功","admin_id":1,"admin_name":"admin","remark":"手动提现","created_at":"2024-01-01 10:00:00"}],"count":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 后台提现记录列表
+ * @return_param data.count int 总数量
+ * @remark 获取后台手动提现记录，支持按用户名、状态、时间范围筛选
+ * @number 6
+ */
+func callGetWithdrawManuals(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetWithdrawManuals")
+
+	// 获取查询参数
+	username := r.Get("username", "").String()
+	status := r.Get("status", 0).Int32()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetWithdrawManualsReq{
+		Username:  username,
+		Status:    status,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s, Status: %d, Page: %d, Size: %d", req.Username, req.Status, req.Page, req.Size)
+
+	// 调用 gRPC 服务
+	res, err := client.GetWithdrawManuals(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取后台提现记录失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/提现记录
+ * @title 获取提现审核信息
+ * @description 获取提现记录的详细审核信息
+ * @method get
+ * @url /api/admin/withdraw-review
+ * @param id 必选 int 提现记录ID
+ * @return {"code":0,"msg":"success","data":{"data":{"id":1,"user_id":123,"username":"testuser","trade_no":"W123456","money":100.0,"fee":5.0,"bank_name":"工商银行","card_account":"张三","card_no":"6222021234567890","status":1,"remark":"","created_at":"2024-01-01 10:00:00","user_realname":"张三","user_mobile":"13800138000","user_balance":500.0,"user_balance_frozen":100.0,"total_recharge":1000.0,"total_withdraw":200.0,"withdraw_count":3}}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.data object 审核信息
+ * @remark 获取提现记录的详细审核信息，包含用户信息和统计数据
+ * @number 7
+ */
+func callGetWithdrawReview(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetWithdrawReview")
+
+	// 获取查询参数
+	id := r.Get("id", 0).Int64()
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "提现记录ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetWithdrawReviewReq{
+		Id: id,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Id: %d", req.Id)
+
+	// 调用 gRPC 服务
+	res, err := client.GetWithdrawReview(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取提现审核信息失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/提现记录
+ * @title 处理提现
+ * @description 处理提现申请（确认/拒绝/补单）
+ * @method post
+ * @url /api/admin/deal-with-withdraw
+ * @param id 必选 int 提现记录ID
+ * @param type 必选 int 处理类型 1=确认 0=拒绝 2=补单
+ * @param fee 可选 float 手续费
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"处理成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 处理提现申请，支持确认、拒绝、补单操作
+ * @number 8
+ */
+func callDealWithWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance DealWithWithdraw")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt64FromMap(reqData, "id")
+	dealType := getInt32FromMap(reqData, "type")
+	fee := getFloat64FromMap(reqData, "fee")
+	remark := getStringFromMap(reqData, "remark")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "提现记录ID不能为空")
+		return nil
+	}
+
+	if dealType < 0 || dealType > 2 {
+		util.WriteBadRequest(r, "处理类型无效")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.DealWithWithdrawReq{
+		Id:     id,
+		Type:   dealType,
+		Fee:    fee,
+		Remark: remark,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Id: %d, Type: %d, Fee: %f, Remark: %s", req.Id, req.Type, req.Fee, req.Remark)
+
+	// 调用 gRPC 服务
+	res, err := client.DealWithWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "处理提现失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// 辅助函数：从 map 中安全获取 int64 类型的值
+func getInt64FromMap(data map[string]interface{}, key string) int64 {
+	if val, ok := data[key]; ok {
+		switch v := val.(type) {
+		case int64:
+			return v
+		case int:
+			return int64(v)
+		case int32:
+			return int64(v)
+		case float64:
+			return int64(v)
+		}
+	}
+	return 0
 }

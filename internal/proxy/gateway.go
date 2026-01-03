@@ -40,6 +40,7 @@ func StartGRPCGateway(ctx context.Context, gatewayPort string) error {
 
 // grpcProxyHandler 处理所有未知的 gRPC 请求，转发到后端服务
 func grpcProxyHandler(srv interface{}, serverStream grpc.ServerStream) error {
+
 	// 从方法名中提取服务名
 	// 例如：/user.UserService/GetUser -> admin_service
 	serviceName := "admin_service" // 这里可以根据 fullMethod 动态确定
