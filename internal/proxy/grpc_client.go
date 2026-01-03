@@ -2226,6 +2226,15 @@ func callBalanceGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	// 确认提现
 	case strings.HasSuffix(path, "/deal-with-withdraw") && method == "POST":
 		return callDealWithWithdraw(ctx, conn, r)
+	// 查询会员账户余额
+	case strings.HasSuffix(path, "/query-user-balance") && method == "POST":
+		return callQueryUserBalance(ctx, conn, r)
+	// 查询第三方账户余额
+	case strings.HasSuffix(path, "/query-game-balance") && method == "POST":
+		return callQueryGameBalance(ctx, conn, r)
+	// 手动操作会员账户
+	case strings.HasSuffix(path, "/manual-user-balance") && method == "POST":
+		return callManualUserBalance(ctx, conn, r)
 	}
 
 	return fmt.Errorf("unsupported path: %s", path)
@@ -2734,4 +2743,193 @@ func getInt64FromMap(data map[string]interface{}, key string) int64 {
 		}
 	}
 	return 0
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/余额管理
+ * @title 查询用户余额
+ * @description 查询指定用户的账户余额信息
+ * @method post
+ * @url /api/balance/query-user-balance
+ * @param username 必选 string 用户名
+ * @return {"code":0,"msg":"success","data":{"data":{"user_id":123,"username":"testuser","balance":1000.0,"balance_frozen":0.0,"points":100.0,"last_update_time":"2024-01-01 10:00:00"}}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.data object 用户余额信息
+ * @remark 查询指定用户的账户余额、冻结余额和积分信息
+ * @number 9
+ */
+func callQueryUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance QueryUserBalance")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	username := getStringFromMap(reqData, "username")
+
+	if username == "" {
+		util.WriteBadRequest(r, "用户名不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.QueryUserBalanceReq{
+		Username: username,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s", req.Username)
+
+	// 调用 gRPC 服务
+	res, err := client.QueryUserBalance(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "查询用户余额失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/余额管理
+ * @title 查询游戏余额
+ * @description 查询指定用户在第三方游戏的余额信息
+ * @method post
+ * @url /api/balance/query-game-balance
+ * @param game_id 必选 int 游戏ID
+ * @param user_id 必选 int 用户ID
+ * @return {"code":0,"msg":"success","data":{"data":{"game_id":1,"game_name":"测试游戏","user_id":123,"username":"testuser","balance":1000.0,"last_update_time":"2024-01-01 10:00:00"}}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.data object 游戏余额信息
+ * @remark 查询指定用户在第三方游戏平台的余额信息
+ * @number 10
+ */
+func callQueryGameBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance QueryGameBalance")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	gameId := getInt32FromMap(reqData, "game_id")
+	userId := getInt32FromMap(reqData, "user_id")
+
+	if gameId <= 0 {
+		util.WriteBadRequest(r, "游戏ID不能为空")
+		return nil
+	}
+	if userId <= 0 {
+		util.WriteBadRequest(r, "用户ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.QueryGameBalanceReq{
+		GameId: gameId,
+		UserId: userId,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - GameId: %d, UserId: %d", req.GameId, req.UserId)
+
+	// 调用 gRPC 服务
+	res, err := client.QueryGameBalance(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "查询游戏余额失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/余额管理
+ * @title 手动操作用户余额
+ * @description 手动给用户加款或扣款
+ * @method post
+ * @url /api/balance/manual-user-balance
+ * @param user_id 必选 int 用户ID
+ * @param type 必选 int 操作类型 1=加款 2=扣款
+ * @param money 必选 float 操作金额
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"操作成功","balance_old":1000.0,"balance_new":1100.0}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @return_param data.balance_old float 操作前余额
+ * @return_param data.balance_new float 操作后余额
+ * @remark 手动给用户加款或扣款，会记录账变和操作日志
+ * @number 11
+ */
+func callManualUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance ManualUserBalance")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	userId := getInt32FromMap(reqData, "user_id")
+	operationType := getInt32FromMap(reqData, "type")
+	money := getFloat64FromMap(reqData, "money")
+	remark := getStringFromMap(reqData, "remark")
+
+	if userId <= 0 {
+		util.WriteBadRequest(r, "用户ID不能为空")
+		return nil
+	}
+	if operationType != 1 && operationType != 2 {
+		util.WriteBadRequest(r, "操作类型无效，1=加款 2=扣款")
+		return nil
+	}
+	if money <= 0 {
+		util.WriteBadRequest(r, "操作金额必须大于0")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.ManualUserBalanceReq{
+		UserId: userId,
+		Type:   operationType,
+		Money:  money,
+		Remark: remark,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - UserId: %d, Type: %d, Money: %f, Remark: %s", req.UserId, req.Type, req.Money, req.Remark)
+
+	// 调用 gRPC 服务
+	res, err := client.ManualUserBalance(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "手动操作用户余额失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
 }

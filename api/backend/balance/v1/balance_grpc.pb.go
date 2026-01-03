@@ -28,6 +28,9 @@ const (
 	Balance_GetWithdrawManuals_FullMethodName  = "/balance.Balance/GetWithdrawManuals"
 	Balance_GetWithdrawReview_FullMethodName   = "/balance.Balance/GetWithdrawReview"
 	Balance_DealWithWithdraw_FullMethodName    = "/balance.Balance/DealWithWithdraw"
+	Balance_QueryUserBalance_FullMethodName    = "/balance.Balance/QueryUserBalance"
+	Balance_QueryGameBalance_FullMethodName    = "/balance.Balance/QueryGameBalance"
+	Balance_ManualUserBalance_FullMethodName   = "/balance.Balance/ManualUserBalance"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -45,6 +48,10 @@ type BalanceClient interface {
 	GetWithdrawManuals(ctx context.Context, in *GetWithdrawManualsReq, opts ...grpc.CallOption) (*GetWithdrawManualsRes, error)
 	GetWithdrawReview(ctx context.Context, in *GetWithdrawReviewReq, opts ...grpc.CallOption) (*GetWithdrawReviewRes, error)
 	DealWithWithdraw(ctx context.Context, in *DealWithWithdrawReq, opts ...grpc.CallOption) (*DealWithWithdrawRes, error)
+	// 余额查询和操作相关
+	QueryUserBalance(ctx context.Context, in *QueryUserBalanceReq, opts ...grpc.CallOption) (*QueryUserBalanceRes, error)
+	QueryGameBalance(ctx context.Context, in *QueryGameBalanceReq, opts ...grpc.CallOption) (*QueryGameBalanceRes, error)
+	ManualUserBalance(ctx context.Context, in *ManualUserBalanceReq, opts ...grpc.CallOption) (*ManualUserBalanceRes, error)
 }
 
 type balanceClient struct {
@@ -135,6 +142,36 @@ func (c *balanceClient) DealWithWithdraw(ctx context.Context, in *DealWithWithdr
 	return out, nil
 }
 
+func (c *balanceClient) QueryUserBalance(ctx context.Context, in *QueryUserBalanceReq, opts ...grpc.CallOption) (*QueryUserBalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryUserBalanceRes)
+	err := c.cc.Invoke(ctx, Balance_QueryUserBalance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) QueryGameBalance(ctx context.Context, in *QueryGameBalanceReq, opts ...grpc.CallOption) (*QueryGameBalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryGameBalanceRes)
+	err := c.cc.Invoke(ctx, Balance_QueryGameBalance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) ManualUserBalance(ctx context.Context, in *ManualUserBalanceReq, opts ...grpc.CallOption) (*ManualUserBalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManualUserBalanceRes)
+	err := c.cc.Invoke(ctx, Balance_ManualUserBalance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -150,6 +187,10 @@ type BalanceServer interface {
 	GetWithdrawManuals(context.Context, *GetWithdrawManualsReq) (*GetWithdrawManualsRes, error)
 	GetWithdrawReview(context.Context, *GetWithdrawReviewReq) (*GetWithdrawReviewRes, error)
 	DealWithWithdraw(context.Context, *DealWithWithdrawReq) (*DealWithWithdrawRes, error)
+	// 余额查询和操作相关
+	QueryUserBalance(context.Context, *QueryUserBalanceReq) (*QueryUserBalanceRes, error)
+	QueryGameBalance(context.Context, *QueryGameBalanceReq) (*QueryGameBalanceRes, error)
+	ManualUserBalance(context.Context, *ManualUserBalanceReq) (*ManualUserBalanceRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -183,6 +224,15 @@ func (UnimplementedBalanceServer) GetWithdrawReview(context.Context, *GetWithdra
 }
 func (UnimplementedBalanceServer) DealWithWithdraw(context.Context, *DealWithWithdrawReq) (*DealWithWithdrawRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DealWithWithdraw not implemented")
+}
+func (UnimplementedBalanceServer) QueryUserBalance(context.Context, *QueryUserBalanceReq) (*QueryUserBalanceRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method QueryUserBalance not implemented")
+}
+func (UnimplementedBalanceServer) QueryGameBalance(context.Context, *QueryGameBalanceReq) (*QueryGameBalanceRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method QueryGameBalance not implemented")
+}
+func (UnimplementedBalanceServer) ManualUserBalance(context.Context, *ManualUserBalanceReq) (*ManualUserBalanceRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method ManualUserBalance not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -349,6 +399,60 @@ func _Balance_DealWithWithdraw_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_QueryUserBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUserBalanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).QueryUserBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_QueryUserBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).QueryUserBalance(ctx, req.(*QueryUserBalanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_QueryGameBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGameBalanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).QueryGameBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_QueryGameBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).QueryGameBalance(ctx, req.(*QueryGameBalanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_ManualUserBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManualUserBalanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).ManualUserBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_ManualUserBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).ManualUserBalance(ctx, req.(*ManualUserBalanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -387,6 +491,18 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DealWithWithdraw",
 			Handler:    _Balance_DealWithWithdraw_Handler,
+		},
+		{
+			MethodName: "QueryUserBalance",
+			Handler:    _Balance_QueryUserBalance_Handler,
+		},
+		{
+			MethodName: "QueryGameBalance",
+			Handler:    _Balance_QueryGameBalance_Handler,
+		},
+		{
+			MethodName: "ManualUserBalance",
+			Handler:    _Balance_ManualUserBalance_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

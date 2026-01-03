@@ -2070,6 +2070,502 @@ func (x *DealWithWithdrawRes) GetMessage() string {
 	return ""
 }
 
+// 查询用户余额请求
+type QueryUserBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名"` // 用户名
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryUserBalanceReq) Reset() {
+	*x = QueryUserBalanceReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryUserBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryUserBalanceReq) ProtoMessage() {}
+
+func (x *QueryUserBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryUserBalanceReq.ProtoReflect.Descriptor instead.
+func (*QueryUserBalanceReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *QueryUserBalanceReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+// 用户余额信息
+type UserBalanceInfo struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	UserId         int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                            // 用户ID
+	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                        // 用户名
+	Balance        float64                `protobuf:"fixed64,3,opt,name=balance,proto3" json:"balance" dc:"可用余额"`                                       // 可用余额
+	BalanceFrozen  float64                `protobuf:"fixed64,4,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"`      // 冻结余额
+	Points         float64                `protobuf:"fixed64,5,opt,name=points,proto3" json:"points" dc:"积分"`                                           // 积分
+	LastUpdateTime string                 `protobuf:"bytes,6,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time" dc:"最后更新时间"` // 最后更新时间
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *UserBalanceInfo) Reset() {
+	*x = UserBalanceInfo{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserBalanceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserBalanceInfo) ProtoMessage() {}
+
+func (x *UserBalanceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserBalanceInfo.ProtoReflect.Descriptor instead.
+func (*UserBalanceInfo) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *UserBalanceInfo) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *UserBalanceInfo) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *UserBalanceInfo) GetBalance() float64 {
+	if x != nil {
+		return x.Balance
+	}
+	return 0
+}
+
+func (x *UserBalanceInfo) GetBalanceFrozen() float64 {
+	if x != nil {
+		return x.BalanceFrozen
+	}
+	return 0
+}
+
+func (x *UserBalanceInfo) GetPoints() float64 {
+	if x != nil {
+		return x.Points
+	}
+	return 0
+}
+
+func (x *UserBalanceInfo) GetLastUpdateTime() string {
+	if x != nil {
+		return x.LastUpdateTime
+	}
+	return ""
+}
+
+// 查询用户余额响应
+type QueryUserBalanceRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *UserBalanceInfo       `protobuf:"bytes,1,opt,name=data,proto3" json:"data" dc:"用户余额信息"` // 用户余额信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryUserBalanceRes) Reset() {
+	*x = QueryUserBalanceRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryUserBalanceRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryUserBalanceRes) ProtoMessage() {}
+
+func (x *QueryUserBalanceRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryUserBalanceRes.ProtoReflect.Descriptor instead.
+func (*QueryUserBalanceRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *QueryUserBalanceRes) GetData() *UserBalanceInfo {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 查询游戏余额请求
+type QueryGameBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"` // 游戏ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"` // 用户ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryGameBalanceReq) Reset() {
+	*x = QueryGameBalanceReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryGameBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryGameBalanceReq) ProtoMessage() {}
+
+func (x *QueryGameBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryGameBalanceReq.ProtoReflect.Descriptor instead.
+func (*QueryGameBalanceReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *QueryGameBalanceReq) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
+func (x *QueryGameBalanceReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+// 游戏余额信息
+type GameBalanceInfo struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	GameId         int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"`                            // 游戏ID
+	GameName       string                 `protobuf:"bytes,2,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"游戏名称"`                       // 游戏名称
+	UserId         int32                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                            // 用户ID
+	Username       string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名"`                                        // 用户名
+	Balance        float64                `protobuf:"fixed64,5,opt,name=balance,proto3" json:"balance" dc:"游戏余额"`                                       // 游戏余额
+	LastUpdateTime string                 `protobuf:"bytes,6,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time" dc:"最后更新时间"` // 最后更新时间
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GameBalanceInfo) Reset() {
+	*x = GameBalanceInfo{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GameBalanceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GameBalanceInfo) ProtoMessage() {}
+
+func (x *GameBalanceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GameBalanceInfo.ProtoReflect.Descriptor instead.
+func (*GameBalanceInfo) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GameBalanceInfo) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
+func (x *GameBalanceInfo) GetGameName() string {
+	if x != nil {
+		return x.GameName
+	}
+	return ""
+}
+
+func (x *GameBalanceInfo) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GameBalanceInfo) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GameBalanceInfo) GetBalance() float64 {
+	if x != nil {
+		return x.Balance
+	}
+	return 0
+}
+
+func (x *GameBalanceInfo) GetLastUpdateTime() string {
+	if x != nil {
+		return x.LastUpdateTime
+	}
+	return ""
+}
+
+// 查询游戏余额响应
+type QueryGameBalanceRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *GameBalanceInfo       `protobuf:"bytes,1,opt,name=data,proto3" json:"data" dc:"游戏余额信息"` // 游戏余额信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryGameBalanceRes) Reset() {
+	*x = QueryGameBalanceRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryGameBalanceRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryGameBalanceRes) ProtoMessage() {}
+
+func (x *QueryGameBalanceRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryGameBalanceRes.ProtoReflect.Descriptor instead.
+func (*QueryGameBalanceRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *QueryGameBalanceRes) GetData() *GameBalanceInfo {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// 手动操作用户余额请求
+type ManualUserBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"` // 用户ID
+	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"操作类型 1=加款 2=扣款"`         // 操作类型 1=加款 2=扣款
+	Money         float64                `protobuf:"fixed64,3,opt,name=money,proto3" json:"money" dc:"操作金额"`                // 操作金额
+	Remark        string                 `protobuf:"bytes,4,opt,name=remark,proto3" json:"remark" dc:"备注"`                  // 备注
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManualUserBalanceReq) Reset() {
+	*x = ManualUserBalanceReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManualUserBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManualUserBalanceReq) ProtoMessage() {}
+
+func (x *ManualUserBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManualUserBalanceReq.ProtoReflect.Descriptor instead.
+func (*ManualUserBalanceReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ManualUserBalanceReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *ManualUserBalanceReq) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *ManualUserBalanceReq) GetMoney() float64 {
+	if x != nil {
+		return x.Money
+	}
+	return 0
+}
+
+func (x *ManualUserBalanceReq) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+// 手动操作用户余额响应
+type ManualUserBalanceRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                           // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`                            // 响应消息
+	BalanceOld    float64                `protobuf:"fixed64,3,opt,name=balance_old,json=balanceOld,proto3" json:"balance_old" dc:"操作前余额"` // 操作前余额
+	BalanceNew    float64                `protobuf:"fixed64,4,opt,name=balance_new,json=balanceNew,proto3" json:"balance_new" dc:"操作后余额"` // 操作后余额
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManualUserBalanceRes) Reset() {
+	*x = ManualUserBalanceRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManualUserBalanceRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManualUserBalanceRes) ProtoMessage() {}
+
+func (x *ManualUserBalanceRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManualUserBalanceRes.ProtoReflect.Descriptor instead.
+func (*ManualUserBalanceRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *ManualUserBalanceRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *ManualUserBalanceRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ManualUserBalanceRes) GetBalanceOld() float64 {
+	if x != nil {
+		return x.BalanceOld
+	}
+	return 0
+}
+
+func (x *ManualUserBalanceRes) GetBalanceNew() float64 {
+	if x != nil {
+		return x.BalanceNew
+	}
+	return 0
+}
+
 var File_backend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_backend_balance_v1_balance_proto_rawDesc = "" +
@@ -2289,7 +2785,42 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x06remark\x18\x04 \x01(\tR\x06remark\"I\n" +
 	"\x13DealWithWithdrawRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xb1\x05\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"1\n" +
+	"\x13QueryUserBalanceReq\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\"\xc9\x01\n" +
+	"\x0fUserBalanceInfo\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x18\n" +
+	"\abalance\x18\x03 \x01(\x01R\abalance\x12%\n" +
+	"\x0ebalance_frozen\x18\x04 \x01(\x01R\rbalanceFrozen\x12\x16\n" +
+	"\x06points\x18\x05 \x01(\x01R\x06points\x12(\n" +
+	"\x10last_update_time\x18\x06 \x01(\tR\x0elastUpdateTime\"C\n" +
+	"\x13QueryUserBalanceRes\x12,\n" +
+	"\x04data\x18\x01 \x01(\v2\x18.balance.UserBalanceInfoR\x04data\"G\n" +
+	"\x13QueryGameBalanceReq\x12\x17\n" +
+	"\agame_id\x18\x01 \x01(\x05R\x06gameId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\"\xc0\x01\n" +
+	"\x0fGameBalanceInfo\x12\x17\n" +
+	"\agame_id\x18\x01 \x01(\x05R\x06gameId\x12\x1b\n" +
+	"\tgame_name\x18\x02 \x01(\tR\bgameName\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x04 \x01(\tR\busername\x12\x18\n" +
+	"\abalance\x18\x05 \x01(\x01R\abalance\x12(\n" +
+	"\x10last_update_time\x18\x06 \x01(\tR\x0elastUpdateTime\"C\n" +
+	"\x13QueryGameBalanceRes\x12,\n" +
+	"\x04data\x18\x01 \x01(\v2\x18.balance.GameBalanceInfoR\x04data\"q\n" +
+	"\x14ManualUserBalanceReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\x05R\x04type\x12\x14\n" +
+	"\x05money\x18\x03 \x01(\x01R\x05money\x12\x16\n" +
+	"\x06remark\x18\x04 \x01(\tR\x06remark\"\x8c\x01\n" +
+	"\x14ManualUserBalanceRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x1f\n" +
+	"\vbalance_old\x18\x03 \x01(\x01R\n" +
+	"balanceOld\x12\x1f\n" +
+	"\vbalance_new\x18\x04 \x01(\x01R\n" +
+	"balanceNew2\xaa\a\n" +
 	"\aBalance\x12S\n" +
 	"\x11GetBalanceChanges\x12\x1d.balance.GetBalanceChangesReq\x1a\x1d.balance.GetBalanceChangesRes\"\x00\x12Y\n" +
 	"\x13GetRechargePayments\x12\x1f.balance.GetRechargePaymentsReq\x1a\x1f.balance.GetRechargePaymentsRes\"\x00\x12V\n" +
@@ -2298,7 +2829,10 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\fGetWithdraws\x12\x18.balance.GetWithdrawsReq\x1a\x18.balance.GetWithdrawsRes\"\x00\x12V\n" +
 	"\x12GetWithdrawManuals\x12\x1e.balance.GetWithdrawManualsReq\x1a\x1e.balance.GetWithdrawManualsRes\"\x00\x12S\n" +
 	"\x11GetWithdrawReview\x12\x1d.balance.GetWithdrawReviewReq\x1a\x1d.balance.GetWithdrawReviewRes\"\x00\x12P\n" +
-	"\x10DealWithWithdraw\x12\x1c.balance.DealWithWithdrawReq\x1a\x1c.balance.DealWithWithdrawRes\"\x00B+Z)jh_balance_service/api/backend/balance/v1b\x06proto3"
+	"\x10DealWithWithdraw\x12\x1c.balance.DealWithWithdrawReq\x1a\x1c.balance.DealWithWithdrawRes\"\x00\x12P\n" +
+	"\x10QueryUserBalance\x12\x1c.balance.QueryUserBalanceReq\x1a\x1c.balance.QueryUserBalanceRes\"\x00\x12P\n" +
+	"\x10QueryGameBalance\x12\x1c.balance.QueryGameBalanceReq\x1a\x1c.balance.QueryGameBalanceRes\"\x00\x12S\n" +
+	"\x11ManualUserBalance\x12\x1d.balance.ManualUserBalanceReq\x1a\x1d.balance.ManualUserBalanceRes\"\x00B+Z)jh_balance_service/api/backend/balance/v1b\x06proto3"
 
 var (
 	file_backend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -2312,7 +2846,7 @@ func file_backend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_backend_balance_v1_balance_proto_rawDescData
 }
 
-var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_backend_balance_v1_balance_proto_goTypes = []any{
 	(*GetBalanceChangesReq)(nil),   // 0: balance.GetBalanceChangesReq
 	(*BalanceChangeInfo)(nil),      // 1: balance.BalanceChangeInfo
@@ -2336,6 +2870,14 @@ var file_backend_balance_v1_balance_proto_goTypes = []any{
 	(*GetWithdrawReviewRes)(nil),   // 19: balance.GetWithdrawReviewRes
 	(*DealWithWithdrawReq)(nil),    // 20: balance.DealWithWithdrawReq
 	(*DealWithWithdrawRes)(nil),    // 21: balance.DealWithWithdrawRes
+	(*QueryUserBalanceReq)(nil),    // 22: balance.QueryUserBalanceReq
+	(*UserBalanceInfo)(nil),        // 23: balance.UserBalanceInfo
+	(*QueryUserBalanceRes)(nil),    // 24: balance.QueryUserBalanceRes
+	(*QueryGameBalanceReq)(nil),    // 25: balance.QueryGameBalanceReq
+	(*GameBalanceInfo)(nil),        // 26: balance.GameBalanceInfo
+	(*QueryGameBalanceRes)(nil),    // 27: balance.QueryGameBalanceRes
+	(*ManualUserBalanceReq)(nil),   // 28: balance.ManualUserBalanceReq
+	(*ManualUserBalanceRes)(nil),   // 29: balance.ManualUserBalanceRes
 }
 var file_backend_balance_v1_balance_proto_depIdxs = []int32{
 	1,  // 0: balance.GetBalanceChangesRes.list:type_name -> balance.BalanceChangeInfo
@@ -2344,27 +2886,35 @@ var file_backend_balance_v1_balance_proto_depIdxs = []int32{
 	12, // 3: balance.GetWithdrawsRes.list:type_name -> balance.WithdrawInfo
 	15, // 4: balance.GetWithdrawManualsRes.list:type_name -> balance.WithdrawManualInfo
 	18, // 5: balance.GetWithdrawReviewRes.data:type_name -> balance.WithdrawReviewInfo
-	0,  // 6: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
-	3,  // 7: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
-	6,  // 8: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
-	9,  // 9: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
-	11, // 10: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
-	14, // 11: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
-	17, // 12: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
-	20, // 13: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
-	2,  // 14: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
-	5,  // 15: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
-	8,  // 16: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
-	10, // 17: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
-	13, // 18: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
-	16, // 19: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
-	19, // 20: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
-	21, // 21: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
-	14, // [14:22] is the sub-list for method output_type
-	6,  // [6:14] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	23, // 6: balance.QueryUserBalanceRes.data:type_name -> balance.UserBalanceInfo
+	26, // 7: balance.QueryGameBalanceRes.data:type_name -> balance.GameBalanceInfo
+	0,  // 8: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
+	3,  // 9: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
+	6,  // 10: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
+	9,  // 11: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
+	11, // 12: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
+	14, // 13: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
+	17, // 14: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
+	20, // 15: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
+	22, // 16: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
+	25, // 17: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
+	28, // 18: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
+	2,  // 19: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
+	5,  // 20: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
+	8,  // 21: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
+	10, // 22: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
+	13, // 23: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
+	16, // 24: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
+	19, // 25: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
+	21, // 26: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
+	24, // 27: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
+	27, // 28: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
+	29, // 29: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
+	19, // [19:30] is the sub-list for method output_type
+	8,  // [8:19] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_backend_balance_v1_balance_proto_init() }
@@ -2378,7 +2928,7 @@ func file_backend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_balance_v1_balance_proto_rawDesc), len(file_backend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
