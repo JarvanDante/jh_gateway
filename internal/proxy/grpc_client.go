@@ -7,6 +7,7 @@ import (
 	"io"
 	"jh_gateway/api/backend/admin/v1"
 	v6 "jh_gateway/api/backend/balance/v1"
+	v7 "jh_gateway/api/backend/game/v1"
 	v2 "jh_gateway/api/backend/role/v1"
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
@@ -3311,5 +3312,242 @@ func callDeletePaymentAccount(ctx context.Context, conn *grpc.ClientConn, r *ght
 	}
 
 	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// GameGRPCToHTTP 将 HTTP 请求转换为 Game gRPC 调用
+func GameGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
+	return func(r *ghttp.Request) {
+		ctx := r.Context()
+		path := r.URL.Path
+		method := r.Method
+
+		// 创建HTTP请求的Jaeger span
+		ctx, span := tracing.StartSpan(ctx, "http.request", trace.WithAttributes(
+			attribute.String("http.method", method),
+			attribute.String("http.path", path),
+			attribute.String("service.name", serviceName),
+		))
+		defer span.End()
+
+		// 先进行参数验证，避免无效请求浪费资源
+		var requestData map[string]interface{}
+		if shouldValidateEarly(path, method) {
+			ctx, validateSpan := tracing.StartSpan(ctx, "http.validate_request")
+			var err error
+			requestData, err = validateAndParseRequest(ctx, r)
+			validateSpan.End()
+
+			if err != nil {
+				tracing.SetSpanError(span, err)
+				tracing.SetSpanError(validateSpan, err)
+				// 验证失败，已经写入响应，直接返回
+				return
+			}
+			// 将解析后的数据存储到上下文中，供后续使用
+			ctx = context.WithValue(ctx, "requestData", requestData)
+		}
+
+		// 从 Consul 获取服务地址（支持负载均衡）
+		ctx, discoverySpan := tracing.StartSpan(ctx, "service.discovery", trace.WithAttributes(
+			attribute.String("service.name", serviceName),
+		))
+		addr, err := registry.GetServiceAddr(serviceName)
+		discoverySpan.End()
+
+		if err != nil {
+			tracing.SetSpanError(span, err)
+			tracing.SetSpanError(discoverySpan, err)
+			util.WriteServiceUnavailable(r, "["+serviceName+"]：service not available")
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.String("service.address", addr))
+		// 记录选择的服务实例
+		util.LogWithTrace(ctx, "info", "Selected service instance: %s -> %s", serviceName, addr)
+
+		// 连接到 gRPC 服务
+		ctx, connSpan := tracing.StartSpan(ctx, "grpc.connect", trace.WithAttributes(
+			attribute.String("grpc.target", addr),
+		))
+		conn, err := grpc.DialContext(
+			ctx,
+			addr,
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
+			grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()), // 添加OpenTelemetry gRPC拦截器
+		)
+		connSpan.End()
+
+		if err != nil {
+			tracing.SetSpanError(span, err)
+			tracing.SetSpanError(connSpan, err)
+			util.WriteServiceUnavailable(r, "failed to connect to service")
+			return
+		}
+		defer conn.Close()
+
+		// 根据路径调用不同的 gRPC 方法
+		if err := callGameGRPCMethod(ctx, conn, r); err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteInternalError(r, err.Error())
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
+	}
+}
+
+// callGameGRPCMethod 根据 HTTP 路径调用对应的 Game gRPC 方法
+func callGameGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	path := r.URL.Path
+	method := r.Method
+
+	// 统一添加traceId到gRPC上下文
+	ctx = addTraceToContext(ctx, r)
+
+	// 添加用户信息到 gRPC metadata
+	ctx = addUserInfoToGRPCContext(ctx, r)
+
+	util.LogWithTrace(ctx, "info", "calling Game gRPC method for path: %s, method: %s", path, method)
+
+	// 游戏相关接口
+	switch {
+	// 获取游戏列表
+	case strings.HasSuffix(path, "/games") && method == "GET":
+		return callGetGames(ctx, conn, r)
+	// 修改站点游戏开关
+	case strings.HasSuffix(path, "/update-games") && method == "POST":
+		return callUpdateGames(ctx, conn, r)
+	}
+
+	return fmt.Errorf("unsupported game path: %s", path)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/游戏/游戏管理
+ * @title 获取游戏列表
+ * @description 获取游戏列表的接口
+ * @method get
+ * @url /api/game/games
+ * @param seachBlance 可选 bool 是否查询余额
+ * @return {"code":0,"msg":"success","data":{"count":4,"data":{"4":{"games":[{"code":"GFG_GAME","db_name":"gfg_game","id":15,"image_code":"nx46","name":"GFG电游","platform":"GFG","sort":1,"status":1,"type":4},{"code":"IG_JILI_GAME","db_name":"ig_jili_game","id":16,"image_code":"nx46","name":"IG_JILI电游","platform":"IG_JILI","sort":4,"status":1,"type":4},{"code":"ONE_GAME","db_name":"one_api_game","id":17,"image_code":"nx46","name":"ONE电游","platform":"ONE","sort":4,"status":1,"type":4},{"code":"IG_PP_GAME","db_name":"ig_pp_game","id":18,"image_code":"nx46","name":"IG_PP电游","platform":"IG_PP","sort":4,"status":1,"type":4}]}}}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func callGetGames(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetGames")
+
+	// 获取站点ID（从用户信息中获取）
+	siteId := int32(1) // 暂时写死，后续从用户信息中获取
+
+	// 获取查询参数
+	searchBalance := r.Get("seachBlance").Bool()
+
+	// 构建请求
+	req := &v7.GetGamesReq{
+		SiteId:        siteId,
+		SearchBalance: searchBalance,
+	}
+
+	// 调用gRPC服务
+	client := v7.NewGameClient(conn)
+	res, err := client.GetGames(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGames failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/游戏/游戏管理
+ * @title 修改站点游戏开关
+ * @description 修改站点游戏开关的接口
+ * @method post
+ * @url /api/game/update-games
+ * @param data 必选 array 游戏数据数组
+ * @return {"code":0,"msg":"success","data":{"message":"设置游戏开关成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func callUpdateGames(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game UpdateGames")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "failed to get request data: %v", err)
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 获取站点ID（从用户信息中获取）
+	siteId := int32(1) // 暂时写死，后续从用户信息中获取
+
+	// 解析游戏数据
+	dataInterface, exists := reqData["data"]
+	if !exists {
+		util.WriteBadRequest(r, "缺少data参数")
+		return fmt.Errorf("missing data parameter")
+	}
+
+	// 转换为游戏更新信息数组
+	var gameUpdates []*v7.GameUpdateInfo
+
+	switch dataValue := dataInterface.(type) {
+	case []interface{}:
+		for _, item := range dataValue {
+			if gameMap, ok := item.(map[string]interface{}); ok {
+				gameUpdate := &v7.GameUpdateInfo{}
+
+				if id, exists := gameMap["id"]; exists {
+					if idFloat, ok := id.(float64); ok {
+						gameUpdate.Id = int32(idFloat)
+					}
+				}
+
+				if status, exists := gameMap["status"]; exists {
+					if statusFloat, ok := status.(float64); ok {
+						gameUpdate.Status = int32(statusFloat)
+					}
+				}
+
+				if sort, exists := gameMap["sort"]; exists {
+					if sortFloat, ok := sort.(float64); ok {
+						gameUpdate.Sort = int32(sortFloat)
+					}
+				}
+
+				gameUpdates = append(gameUpdates, gameUpdate)
+			}
+		}
+	default:
+		util.WriteBadRequest(r, "data参数格式错误")
+		return fmt.Errorf("invalid data parameter format")
+	}
+
+	// 构建请求
+	req := &v7.UpdateGamesReq{
+		SiteId: siteId,
+		Data:   gameUpdates,
+	}
+
+	// 调用gRPC服务
+	client := v7.NewGameClient(conn)
+	res, err := client.UpdateGames(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game UpdateGames failed: %v", err)
+		return err
+	}
+
+	// 返回响应
 	return writeProtobufResponse(ctx, r, res)
 }

@@ -24,6 +24,12 @@ func Register(s *ghttp.Server) {
 			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
+
+		//// 游戏相关接口：转发到 game-service (gRPC)
+		//group.GET("/games", proxy.GameGRPCToHTTP("jh_game_service"))
+		//group.POST("/update-games", proxy.GameGRPCToHTTP("jh_game_service"))
+
+		// 其他管理员接口：转发到 app-service (gRPC)
 		group.ALL("/*any", proxy.AppGRPCToHTTP("jh_app_service"))
 	})
 
@@ -40,17 +46,16 @@ func Register(s *ghttp.Server) {
 		group.ALL("/*any", proxy.BalanceGRPCToHTTP("jh_balance_service"))
 	})
 
-	// 游戏相关：转发到 game-service (HTTP)
+	// 支付相关：转发到 game-service (gRPC)
 	s.Group("/api/game", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.JWTAuth,
+			middleware.RequestParser,          // 解析请求体数据
+			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
-			proxy.ToService("game-service"),
 		)
-		group.ALL("/*any", proxy.Forward)
+		group.ALL("/*any", proxy.GameGRPCToHTTP("jh_game_service"))
 	})
-
 }

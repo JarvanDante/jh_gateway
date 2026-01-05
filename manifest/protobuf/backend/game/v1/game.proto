@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "jh_game_service/api/backend/game/v1";
+
+service Game {
+    rpc GetGames(GetGamesReq) returns (GetGamesRes) {}
+    rpc UpdateGames(UpdateGamesReq) returns (UpdateGamesRes) {}
+}
+
+message GetGamesReq {
+    int32 site_id = 1;                      // 站点ID
+    bool search_balance = 2;                // 是否查询余额
+}
+
+message GetGamesRes {
+    map<int32, GameTypeList> data = 1;      // 按游戏类型分组的游戏列表
+    int32 count = 2;                        // 总数量
+}
+
+message GameTypeList {
+    repeated GameInfo games = 1;            // 游戏列表
+}
+
+message GameInfo {
+    int32 id = 1;                          // 游戏ID
+    string name = 2;                       // 游戏名称
+    int32 status = 3;                      // 状态 1=启用 0=禁用
+    int32 sort = 4;                        // 排序
+    int32 type = 5;                        // 游戏类型 1=体育 2=彩票 3=真人 4=电子游戏 5=棋牌
+    string platform = 6;                   // 平台标识
+    string code = 7;                       // 游戏标识
+    string image_code = 8;                 // 图片标识
+    string db_name = 9;                    // 数据表名称
+}
+
+message UpdateGamesReq {
+    int32 site_id = 1;                     // 站点ID
+    repeated GameUpdateInfo data = 2;       // 游戏更新数据
+}
+
+message GameUpdateInfo {
+    int32 id = 1;                          // 游戏ID
+    int32 status = 2;                      // 状态 1=启用 0=禁用
+    int32 sort = 3;                        // 排序
+}
+
+message UpdateGamesRes {
+    bool success = 1;                      // 是否成功
+    string message = 2;                    // 响应消息
+}
