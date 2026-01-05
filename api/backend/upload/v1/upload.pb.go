@@ -175,7 +175,7 @@ const file_backend_upload_v1_upload_proto_rawDesc = "" +
 	"\tfile_path\x18\x02 \x01(\tR\bfilePath\x12\x1b\n" +
 	"\tfile_size\x18\x03 \x01(\x03R\bfileSize2I\n" +
 	"\x06Upload\x12?\n" +
-	"\vUploadImage\x12\x16.upload.UploadImageReq\x1a\x16.upload.UploadImageRes\"\x00B(Z&jh_admin_service/api/backend/upload/v1b\x06proto3"
+	"\vUploadImage\x12\x16.upload.UploadImageReq\x1a\x16.upload.UploadImageRes\"\x00B&Z$jh_app_service/api/backend/upload/v1b\x06proto3"
 
 var (
 	file_backend_upload_v1_upload_proto_rawDescOnce sync.Once

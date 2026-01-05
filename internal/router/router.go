@@ -24,7 +24,7 @@ func Register(s *ghttp.Server) {
 			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
-		group.ALL("/*any", proxy.AdminGRPCToHTTP("jh_admin_service"))
+		group.ALL("/*any", proxy.AppGRPCToHTTP("jh_app_service"))
 	})
 
 	// 支付相关：转发到 balance-service (gRPC)

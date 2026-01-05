@@ -1258,7 +1258,7 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\vDeleteAdmin\x12\x15.admin.DeleteAdminReq\x1a\x15.admin.DeleteAdminRes\"\x00\x12.\n" +
 	"\x06Logout\x12\x10.admin.LogoutReq\x1a\x10.admin.LogoutRes\"\x00\x12F\n" +
 	"\x0eChangePassword\x12\x18.admin.ChangePasswordReq\x1a\x18.admin.ChangePasswordRes\"\x00\x12@\n" +
-	"\fGetAdminLogs\x12\x16.admin.GetAdminLogsReq\x1a\x16.admin.GetAdminLogsRes\"\x00B'Z%jh_admin_service/api/backend/admin/v1b\x06proto3"
+	"\fGetAdminLogs\x12\x16.admin.GetAdminLogsReq\x1a\x16.admin.GetAdminLogsRes\"\x00B%Z#jh_app_service/api/backend/admin/v1b\x06proto3"
 
 var (
 	file_backend_admin_v1_admin_proto_rawDescOnce sync.Once

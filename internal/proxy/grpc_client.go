@@ -57,8 +57,8 @@ func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage prot
 	return nil
 }
 
-// AdminGRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
-func AdminGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
+// AppGRPCToHTTP 将 HTTP 请求转换为 gRPC 调用
+func AppGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
 		ctx := r.Context()
 		path := r.URL.Path
@@ -129,7 +129,7 @@ func AdminGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 		defer conn.Close()
 
 		// 根据路径调用不同的 gRPC 方法
-		if err := callAdminGRPCMethod(ctx, conn, r); err != nil {
+		if err := callAppGRPCMethod(ctx, conn, r); err != nil {
 			tracing.SetSpanError(span, err)
 			util.WriteInternalError(r, err.Error())
 			return
@@ -139,8 +139,8 @@ func AdminGRPCToHTTP(serviceName string) ghttp.HandlerFunc {
 	}
 }
 
-// callAdminGRPCMethod 根据 HTTP 路径调用对应的 gRPC 方法
-func callAdminGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+// callAppGRPCMethod 根据 HTTP 路径调用对应的 gRPC 方法
+func callAppGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	path := r.URL.Path
 	method := r.Method
 

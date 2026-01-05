@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "jh_admin_service/api/backend/user/v1";
+option go_package = "jh_app_service/api/backend/user/v1";
 
 service User {
     rpc GetUserList(GetUserListReq) returns (GetUserListRes) {}
@@ -13,6 +13,9 @@ service User {
     rpc GetUserGrades(GetUserGradesReq) returns (GetUserGradesRes) {}
     rpc SaveUserGrades(SaveUserGradesReq) returns (SaveUserGradesRes) {}
     rpc DeleteUserGrades(DeleteUserGradesReq) returns (DeleteUserGradesRes) {}
+    
+    // 用户登录日志接口
+    rpc GetUserLoginLogs(GetUserLoginLogsReq) returns (GetUserLoginLogsRes) {}
 }
 
 // 获取用户列表请求
@@ -199,4 +202,39 @@ message DeleteUserGradesReq {
 message DeleteUserGradesRes {
     int32 code = 1;                         // 响应码
     string message = 2;                     // 响应消息
+}
+
+// 获取用户登录日志请求
+message GetUserLoginLogsReq {
+    string username = 1;        // 用户名 (可选)
+    string ip = 2;              // 登录IP (可选)
+    string start_time = 3;      // 开始时间 (可选)
+    string end_time = 4;        // 结束时间 (可选)
+    int32 page = 5;             // 页码
+    int32 size = 6;             // 每页数量
+}
+
+// 用户登录日志信息
+message UserLoginLogInfo {
+    int32 id = 1;                       // 日志ID
+    int32 user_id = 2;                  // 用户ID
+    string username = 3;                // 用户名
+    string referer_url = 4;             // 来源网址
+    string login_url = 5;               // 登录网址
+    string login_time = 6;              // 登录时间
+    string login_ip = 7;                // 登录IP
+    string login_address = 8;           // 登录地址
+    string os = 9;                      // 操作系统
+    string network = 10;                // 网络
+    string screen = 11;                 // 分辨率
+    string browser = 12;                // 浏览器
+    string device = 13;                 // 设备类型
+    int32 is_robot = 14;                // 是否机器人
+    string created_at = 15;             // 创建时间
+}
+
+// 获取用户登录日志响应
+message GetUserLoginLogsRes {
+    repeated UserLoginLogInfo list = 1; // 登录日志列表
+    int32 count = 2;                    // 总数量
 }

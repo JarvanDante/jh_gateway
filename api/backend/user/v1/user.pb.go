@@ -2070,7 +2070,7 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\rGetUserGrades\x12\x16.user.GetUserGradesReq\x1a\x16.user.GetUserGradesRes\"\x00\x12D\n" +
 	"\x0eSaveUserGrades\x12\x17.user.SaveUserGradesReq\x1a\x17.user.SaveUserGradesRes\"\x00\x12J\n" +
 	"\x10DeleteUserGrades\x12\x19.user.DeleteUserGradesReq\x1a\x19.user.DeleteUserGradesRes\"\x00\x12J\n" +
-	"\x10GetUserLoginLogs\x12\x19.user.GetUserLoginLogsReq\x1a\x19.user.GetUserLoginLogsRes\"\x00B&Z$jh_admin_service/api/backend/user/v1b\x06proto3"
+	"\x10GetUserLoginLogs\x12\x19.user.GetUserLoginLogsReq\x1a\x19.user.GetUserLoginLogsRes\"\x00B$Z\"jh_app_service/api/backend/user/v1b\x06proto3"
 
 var (
 	file_backend_user_v1_user_proto_rawDescOnce sync.Once

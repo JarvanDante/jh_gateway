@@ -469,7 +469,7 @@ const file_backend_site_v1_site_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xa1\x01\n" +
 	"\x04Site\x12G\n" +
 	"\x0fGetBasicSetting\x12\x18.site.GetBasicSettingReq\x1a\x18.site.GetBasicSettingRes\"\x00\x12P\n" +
-	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B&Z$jh_admin_service/api/backend/site/v1b\x06proto3"
+	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00B$Z\"jh_app_service/api/backend/site/v1b\x06proto3"
 
 var (
 	file_backend_site_v1_site_proto_rawDescOnce sync.Once

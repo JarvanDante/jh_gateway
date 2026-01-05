@@ -984,7 +984,7 @@ const file_backend_role_v1_role_proto_rawDesc = "" +
 	"\n" +
 	"DeleteRole\x12\x13.role.DeleteRoleReq\x1a\x13.role.DeleteRoleRes\"\x00\x12D\n" +
 	"\x0eGetPermissions\x12\x17.role.GetPermissionsReq\x1a\x17.role.GetPermissionsRes\"\x00\x12D\n" +
-	"\x0eSavePermission\x12\x17.role.SavePermissionReq\x1a\x17.role.SavePermissionRes\"\x00B&Z$jh_admin_service/api/backend/role/v1b\x06proto3"
+	"\x0eSavePermission\x12\x17.role.SavePermissionReq\x1a\x17.role.SavePermissionRes\"\x00B$Z\"jh_app_service/api/backend/role/v1b\x06proto3"
 
 var (
 	file_backend_role_v1_role_proto_rawDescOnce sync.Once
