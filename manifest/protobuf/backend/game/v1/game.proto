@@ -7,6 +7,7 @@ option go_package = "jh_game_service/api/backend/game/v1";
 service Game {
     rpc GetGames(GetGamesReq) returns (GetGamesRes) {}
     rpc UpdateGames(UpdateGamesReq) returns (UpdateGamesRes) {}
+    rpc GetGameRecords(GetGameRecordsReq) returns (GetGameRecordsRes) {}
 }
 
 message GetGamesReq {
@@ -49,4 +50,50 @@ message GameUpdateInfo {
 message UpdateGamesRes {
     bool success = 1;                      // 是否成功
     string message = 2;                    // 响应消息
+}
+
+// 游戏记录相关消息
+message GetGameRecordsReq {
+    int32 site_id = 1;                     // 站点ID
+    string platform = 2;                   // 游戏平台
+    string start_date = 3;                 // 开始时间 格式: Y-m-d H:i:s
+    string end_date = 4;                   // 结束时间 格式: Y-m-d H:i:s
+    int32 page = 5;                        // 页码
+    int32 size = 6;                        // 每页数量
+    string username = 7;                   // 用户名（可选）
+    int32 type = 8;                        // 记录类型 1=投注记录 2=中奖记录（可选）
+    string keywords = 9;                   // 关键词搜索（可选）
+}
+
+message GetGameRecordsRes {
+    repeated GameRecord data = 1;          // 游戏记录列表
+    int32 total = 2;                       // 总记录数
+    int32 current_page = 3;                // 当前页码
+    int32 per_page = 4;                    // 每页数量
+    int32 last_page = 5;                   // 最后一页
+    string total_amount = 6;               // 当前平台总金额
+    string all_game_total_amount = 7;      // 所有游戏总金额
+}
+
+message GameRecord {
+    uint64 id = 1;                         // 自增主键
+    int32 site_id = 2;                     // 站点ID
+    int64 user_id = 3;                     // 用户ID
+    string username = 4;                   // 用户名快照
+    string platform_code = 5;              // 游戏平台代码 egame/jili/pg
+    string game_code = 6;                  // 游戏代码
+    string game_name = 7;                  // 游戏名称
+    string game_type = 8;                  // 游戏类型
+    string order_id = 9;                   // 厂商注单号
+    string round_id = 10;                  // 局号
+    string bet_amount = 11;                // 投注金额
+    string win_amount = 12;                // 中奖金额
+    string currency = 13;                  // 币种
+    string bet_time = 14;                  // 投注时间
+    string settle_time = 15;               // 结算时间
+    int32 status = 16;                     // 状态 0=未结算 1=已结算 2=取消 3=回滚
+    string raw_data = 17;                  // 厂商原始注单数据
+    string remark = 18;                    // 备注
+    string created_at = 19;                // 创建时间
+    string updated_at = 20;                // 更新时间
 }

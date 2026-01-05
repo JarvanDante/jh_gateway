@@ -442,6 +442,403 @@ func (x *UpdateGamesRes) GetMessage() string {
 	return ""
 }
 
+// 游戏记录相关消息
+type GetGameRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                         // 站点ID
+	Platform      string                 `protobuf:"bytes,2,opt,name=platform,proto3" json:"platform" dc:"游戏平台"`                                    // 游戏平台
+	StartDate     string                 `protobuf:"bytes,3,opt,name=start_date,json=startDate,proto3" json:"start_date" dc:"开始时间 格式: Y-m-d H:i:s"` // 开始时间 格式: Y-m-d H:i:s
+	EndDate       string                 `protobuf:"bytes,4,opt,name=end_date,json=endDate,proto3" json:"end_date" dc:"结束时间 格式: Y-m-d H:i:s"`       // 结束时间 格式: Y-m-d H:i:s
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                                             // 页码
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                                           // 每页数量
+	Username      string                 `protobuf:"bytes,7,opt,name=username,proto3" json:"username" dc:"用户名（可选）"`                                 // 用户名（可选）
+	Type          int32                  `protobuf:"varint,8,opt,name=type,proto3" json:"type" dc:"记录类型 1=投注记录 2=中奖记录（可选）"`                         // 记录类型 1=投注记录 2=中奖记录（可选）
+	Keywords      string                 `protobuf:"bytes,9,opt,name=keywords,proto3" json:"keywords" dc:"关键词搜索（可选）"`                               // 关键词搜索（可选）
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGameRecordsReq) Reset() {
+	*x = GetGameRecordsReq{}
+	mi := &file_backend_game_v1_game_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGameRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGameRecordsReq) ProtoMessage() {}
+
+func (x *GetGameRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_game_v1_game_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGameRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetGameRecordsReq) Descriptor() ([]byte, []int) {
+	return file_backend_game_v1_game_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetGameRecordsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GetGameRecordsReq) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *GetGameRecordsReq) GetStartDate() string {
+	if x != nil {
+		return x.StartDate
+	}
+	return ""
+}
+
+func (x *GetGameRecordsReq) GetEndDate() string {
+	if x != nil {
+		return x.EndDate
+	}
+	return ""
+}
+
+func (x *GetGameRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetGameRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetGameRecordsReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetGameRecordsReq) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *GetGameRecordsReq) GetKeywords() string {
+	if x != nil {
+		return x.Keywords
+	}
+	return ""
+}
+
+type GetGameRecordsRes struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Data               []*GameRecord          `protobuf:"bytes,1,rep,name=data,proto3" json:"data" dc:"游戏记录列表"`                                                            // 游戏记录列表
+	Total              int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total" dc:"总记录数"`                                                           // 总记录数
+	CurrentPage        int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page" dc:"当前页码"`                            // 当前页码
+	PerPage            int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page" dc:"每页数量"`                                        // 每页数量
+	LastPage           int32                  `protobuf:"varint,5,opt,name=last_page,json=lastPage,proto3" json:"last_page" dc:"最后一页"`                                     // 最后一页
+	TotalAmount        string                 `protobuf:"bytes,6,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount" dc:"当前平台总金额"`                          // 当前平台总金额
+	AllGameTotalAmount string                 `protobuf:"bytes,7,opt,name=all_game_total_amount,json=allGameTotalAmount,proto3" json:"all_game_total_amount" dc:"所有游戏总金额"` // 所有游戏总金额
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *GetGameRecordsRes) Reset() {
+	*x = GetGameRecordsRes{}
+	mi := &file_backend_game_v1_game_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGameRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGameRecordsRes) ProtoMessage() {}
+
+func (x *GetGameRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_game_v1_game_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGameRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetGameRecordsRes) Descriptor() ([]byte, []int) {
+	return file_backend_game_v1_game_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetGameRecordsRes) GetData() []*GameRecord {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *GetGameRecordsRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *GetGameRecordsRes) GetCurrentPage() int32 {
+	if x != nil {
+		return x.CurrentPage
+	}
+	return 0
+}
+
+func (x *GetGameRecordsRes) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
+}
+
+func (x *GetGameRecordsRes) GetLastPage() int32 {
+	if x != nil {
+		return x.LastPage
+	}
+	return 0
+}
+
+func (x *GetGameRecordsRes) GetTotalAmount() string {
+	if x != nil {
+		return x.TotalAmount
+	}
+	return ""
+}
+
+func (x *GetGameRecordsRes) GetAllGameTotalAmount() string {
+	if x != nil {
+		return x.AllGameTotalAmount
+	}
+	return ""
+}
+
+type GameRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"自增主键"`                                                        // 自增主键
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                                  // 站点ID
+	UserId        int64                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                                  // 用户ID
+	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名快照"`                                            // 用户名快照
+	PlatformCode  string                 `protobuf:"bytes,5,opt,name=platform_code,json=platformCode,proto3" json:"platform_code" dc:"游戏平台代码 egame/jili/pg"` // 游戏平台代码 egame/jili/pg
+	GameCode      string                 `protobuf:"bytes,6,opt,name=game_code,json=gameCode,proto3" json:"game_code" dc:"游戏代码"`                             // 游戏代码
+	GameName      string                 `protobuf:"bytes,7,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"游戏名称"`                             // 游戏名称
+	GameType      string                 `protobuf:"bytes,8,opt,name=game_type,json=gameType,proto3" json:"game_type" dc:"游戏类型"`                             // 游戏类型
+	OrderId       string                 `protobuf:"bytes,9,opt,name=order_id,json=orderId,proto3" json:"order_id" dc:"厂商注单号"`                               // 厂商注单号
+	RoundId       string                 `protobuf:"bytes,10,opt,name=round_id,json=roundId,proto3" json:"round_id" dc:"局号"`                                 // 局号
+	BetAmount     string                 `protobuf:"bytes,11,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount" dc:"投注金额"`                         // 投注金额
+	WinAmount     string                 `protobuf:"bytes,12,opt,name=win_amount,json=winAmount,proto3" json:"win_amount" dc:"中奖金额"`                         // 中奖金额
+	Currency      string                 `protobuf:"bytes,13,opt,name=currency,proto3" json:"currency" dc:"币种"`                                              // 币种
+	BetTime       string                 `protobuf:"bytes,14,opt,name=bet_time,json=betTime,proto3" json:"bet_time" dc:"投注时间"`                               // 投注时间
+	SettleTime    string                 `protobuf:"bytes,15,opt,name=settle_time,json=settleTime,proto3" json:"settle_time" dc:"结算时间"`                      // 结算时间
+	Status        int32                  `protobuf:"varint,16,opt,name=status,proto3" json:"status" dc:"状态 0=未结算 1=已结算 2=取消 3=回滚"`                           // 状态 0=未结算 1=已结算 2=取消 3=回滚
+	RawData       string                 `protobuf:"bytes,17,opt,name=raw_data,json=rawData,proto3" json:"raw_data" dc:"厂商原始注单数据"`                           // 厂商原始注单数据
+	Remark        string                 `protobuf:"bytes,18,opt,name=remark,proto3" json:"remark" dc:"备注"`                                                  // 备注
+	CreatedAt     string                 `protobuf:"bytes,19,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                         // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,20,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`                         // 更新时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GameRecord) Reset() {
+	*x = GameRecord{}
+	mi := &file_backend_game_v1_game_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GameRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GameRecord) ProtoMessage() {}
+
+func (x *GameRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_game_v1_game_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GameRecord.ProtoReflect.Descriptor instead.
+func (*GameRecord) Descriptor() ([]byte, []int) {
+	return file_backend_game_v1_game_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GameRecord) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *GameRecord) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GameRecord) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GameRecord) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GameRecord) GetPlatformCode() string {
+	if x != nil {
+		return x.PlatformCode
+	}
+	return ""
+}
+
+func (x *GameRecord) GetGameCode() string {
+	if x != nil {
+		return x.GameCode
+	}
+	return ""
+}
+
+func (x *GameRecord) GetGameName() string {
+	if x != nil {
+		return x.GameName
+	}
+	return ""
+}
+
+func (x *GameRecord) GetGameType() string {
+	if x != nil {
+		return x.GameType
+	}
+	return ""
+}
+
+func (x *GameRecord) GetOrderId() string {
+	if x != nil {
+		return x.OrderId
+	}
+	return ""
+}
+
+func (x *GameRecord) GetRoundId() string {
+	if x != nil {
+		return x.RoundId
+	}
+	return ""
+}
+
+func (x *GameRecord) GetBetAmount() string {
+	if x != nil {
+		return x.BetAmount
+	}
+	return ""
+}
+
+func (x *GameRecord) GetWinAmount() string {
+	if x != nil {
+		return x.WinAmount
+	}
+	return ""
+}
+
+func (x *GameRecord) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *GameRecord) GetBetTime() string {
+	if x != nil {
+		return x.BetTime
+	}
+	return ""
+}
+
+func (x *GameRecord) GetSettleTime() string {
+	if x != nil {
+		return x.SettleTime
+	}
+	return ""
+}
+
+func (x *GameRecord) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *GameRecord) GetRawData() string {
+	if x != nil {
+		return x.RawData
+	}
+	return ""
+}
+
+func (x *GameRecord) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+func (x *GameRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *GameRecord) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
 var File_backend_game_v1_game_proto protoreflect.FileDescriptor
 
 const file_backend_game_v1_game_proto_rawDesc = "" +
@@ -478,10 +875,58 @@ const file_backend_game_v1_game_proto_rawDesc = "" +
 	"\x04sort\x18\x03 \x01(\x05R\x04sort\"D\n" +
 	"\x0eUpdateGamesRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2w\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xf6\x01\n" +
+	"\x11GetGameRecordsReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x1a\n" +
+	"\bplatform\x18\x02 \x01(\tR\bplatform\x12\x1d\n" +
+	"\n" +
+	"start_date\x18\x03 \x01(\tR\tstartDate\x12\x19\n" +
+	"\bend_date\x18\x04 \x01(\tR\aendDate\x12\x12\n" +
+	"\x04page\x18\x05 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x06 \x01(\x05R\x04size\x12\x1a\n" +
+	"\busername\x18\a \x01(\tR\busername\x12\x12\n" +
+	"\x04type\x18\b \x01(\x05R\x04type\x12\x1a\n" +
+	"\bkeywords\x18\t \x01(\tR\bkeywords\"\x80\x02\n" +
+	"\x11GetGameRecordsRes\x12$\n" +
+	"\x04data\x18\x01 \x03(\v2\x10.game.GameRecordR\x04data\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12!\n" +
+	"\fcurrent_page\x18\x03 \x01(\x05R\vcurrentPage\x12\x19\n" +
+	"\bper_page\x18\x04 \x01(\x05R\aperPage\x12\x1b\n" +
+	"\tlast_page\x18\x05 \x01(\x05R\blastPage\x12!\n" +
+	"\ftotal_amount\x18\x06 \x01(\tR\vtotalAmount\x121\n" +
+	"\x15all_game_total_amount\x18\a \x01(\tR\x12allGameTotalAmount\"\xbb\x04\n" +
+	"\n" +
+	"GameRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x17\n" +
+	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12\x1a\n" +
+	"\busername\x18\x04 \x01(\tR\busername\x12#\n" +
+	"\rplatform_code\x18\x05 \x01(\tR\fplatformCode\x12\x1b\n" +
+	"\tgame_code\x18\x06 \x01(\tR\bgameCode\x12\x1b\n" +
+	"\tgame_name\x18\a \x01(\tR\bgameName\x12\x1b\n" +
+	"\tgame_type\x18\b \x01(\tR\bgameType\x12\x19\n" +
+	"\border_id\x18\t \x01(\tR\aorderId\x12\x19\n" +
+	"\bround_id\x18\n" +
+	" \x01(\tR\aroundId\x12\x1d\n" +
+	"\n" +
+	"bet_amount\x18\v \x01(\tR\tbetAmount\x12\x1d\n" +
+	"\n" +
+	"win_amount\x18\f \x01(\tR\twinAmount\x12\x1a\n" +
+	"\bcurrency\x18\r \x01(\tR\bcurrency\x12\x19\n" +
+	"\bbet_time\x18\x0e \x01(\tR\abetTime\x12\x1f\n" +
+	"\vsettle_time\x18\x0f \x01(\tR\n" +
+	"settleTime\x12\x16\n" +
+	"\x06status\x18\x10 \x01(\x05R\x06status\x12\x19\n" +
+	"\braw_data\x18\x11 \x01(\tR\arawData\x12\x16\n" +
+	"\x06remark\x18\x12 \x01(\tR\x06remark\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x13 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x14 \x01(\tR\tupdatedAt2\xbd\x01\n" +
 	"\x04Game\x122\n" +
 	"\bGetGames\x12\x11.game.GetGamesReq\x1a\x11.game.GetGamesRes\"\x00\x12;\n" +
-	"\vUpdateGames\x12\x14.game.UpdateGamesReq\x1a\x14.game.UpdateGamesRes\"\x00B%Z#jh_game_service/api/backend/game/v1b\x06proto3"
+	"\vUpdateGames\x12\x14.game.UpdateGamesReq\x1a\x14.game.UpdateGamesRes\"\x00\x12D\n" +
+	"\x0eGetGameRecords\x12\x17.game.GetGameRecordsReq\x1a\x17.game.GetGameRecordsRes\"\x00B%Z#jh_game_service/api/backend/game/v1b\x06proto3"
 
 var (
 	file_backend_game_v1_game_proto_rawDescOnce sync.Once
@@ -495,31 +940,37 @@ func file_backend_game_v1_game_proto_rawDescGZIP() []byte {
 	return file_backend_game_v1_game_proto_rawDescData
 }
 
-var file_backend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_backend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_backend_game_v1_game_proto_goTypes = []any{
-	(*GetGamesReq)(nil),    // 0: game.GetGamesReq
-	(*GetGamesRes)(nil),    // 1: game.GetGamesRes
-	(*GameTypeList)(nil),   // 2: game.GameTypeList
-	(*GameInfo)(nil),       // 3: game.GameInfo
-	(*UpdateGamesReq)(nil), // 4: game.UpdateGamesReq
-	(*GameUpdateInfo)(nil), // 5: game.GameUpdateInfo
-	(*UpdateGamesRes)(nil), // 6: game.UpdateGamesRes
-	nil,                    // 7: game.GetGamesRes.DataEntry
+	(*GetGamesReq)(nil),       // 0: game.GetGamesReq
+	(*GetGamesRes)(nil),       // 1: game.GetGamesRes
+	(*GameTypeList)(nil),      // 2: game.GameTypeList
+	(*GameInfo)(nil),          // 3: game.GameInfo
+	(*UpdateGamesReq)(nil),    // 4: game.UpdateGamesReq
+	(*GameUpdateInfo)(nil),    // 5: game.GameUpdateInfo
+	(*UpdateGamesRes)(nil),    // 6: game.UpdateGamesRes
+	(*GetGameRecordsReq)(nil), // 7: game.GetGameRecordsReq
+	(*GetGameRecordsRes)(nil), // 8: game.GetGameRecordsRes
+	(*GameRecord)(nil),        // 9: game.GameRecord
+	nil,                       // 10: game.GetGamesRes.DataEntry
 }
 var file_backend_game_v1_game_proto_depIdxs = []int32{
-	7, // 0: game.GetGamesRes.data:type_name -> game.GetGamesRes.DataEntry
-	3, // 1: game.GameTypeList.games:type_name -> game.GameInfo
-	5, // 2: game.UpdateGamesReq.data:type_name -> game.GameUpdateInfo
-	2, // 3: game.GetGamesRes.DataEntry.value:type_name -> game.GameTypeList
-	0, // 4: game.Game.GetGames:input_type -> game.GetGamesReq
-	4, // 5: game.Game.UpdateGames:input_type -> game.UpdateGamesReq
-	1, // 6: game.Game.GetGames:output_type -> game.GetGamesRes
-	6, // 7: game.Game.UpdateGames:output_type -> game.UpdateGamesRes
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	10, // 0: game.GetGamesRes.data:type_name -> game.GetGamesRes.DataEntry
+	3,  // 1: game.GameTypeList.games:type_name -> game.GameInfo
+	5,  // 2: game.UpdateGamesReq.data:type_name -> game.GameUpdateInfo
+	9,  // 3: game.GetGameRecordsRes.data:type_name -> game.GameRecord
+	2,  // 4: game.GetGamesRes.DataEntry.value:type_name -> game.GameTypeList
+	0,  // 5: game.Game.GetGames:input_type -> game.GetGamesReq
+	4,  // 6: game.Game.UpdateGames:input_type -> game.UpdateGamesReq
+	7,  // 7: game.Game.GetGameRecords:input_type -> game.GetGameRecordsReq
+	1,  // 8: game.Game.GetGames:output_type -> game.GetGamesRes
+	6,  // 9: game.Game.UpdateGames:output_type -> game.UpdateGamesRes
+	8,  // 10: game.Game.GetGameRecords:output_type -> game.GetGameRecordsRes
+	8,  // [8:11] is the sub-list for method output_type
+	5,  // [5:8] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_backend_game_v1_game_proto_init() }
@@ -533,7 +984,7 @@ func file_backend_game_v1_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_game_v1_game_proto_rawDesc), len(file_backend_game_v1_game_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

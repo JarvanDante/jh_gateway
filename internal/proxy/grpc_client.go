@@ -3418,6 +3418,9 @@ func callGameGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	// 修改站点游戏开关
 	case strings.HasSuffix(path, "/update-games") && method == "POST":
 		return callUpdateGames(ctx, conn, r)
+	// 获取游戏记录
+	case strings.HasSuffix(path, "/game-record") && method == "POST":
+		return callGetGameRecords(ctx, conn, r)
 	}
 
 	return fmt.Errorf("unsupported game path: %s", path)
@@ -3545,6 +3548,127 @@ func callUpdateGames(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	res, err := client.UpdateGames(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Game UpdateGames failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/游戏/游戏记录
+ * @title 获取游戏记录
+ * @description 获取游戏记录的接口
+ * @method post
+ * @url /api/game/game-record
+ * @param platform 必选 string 游戏平台代码 egame/jili/pg
+ * @param start_date 可选 string 开始时间 格式: Y-m-d H:i:s
+ * @param end_date 可选 string 结束时间 格式: Y-m-d H:i:s
+ * @param page 可选 int 页码 默认1
+ * @param size 可选 int 每页数量 默认20
+ * @param username 可选 string 用户名
+ * @param type 可选 int 记录类型 1=投注记录 2=中奖记录
+ * @param keywords 可选 string 关键词搜索
+ * @return {"code":0,"msg":"success","data":{"data":[{"id":1,"site_id":1,"user_id":123,"username":"test","platform_code":"egame","game_code":"GAME001","game_name":"测试游戏","game_type":"电子游戏","order_id":"ORDER123","round_id":"ROUND123","bet_amount":"100.000000","win_amount":"200.000000","currency":"CNY","bet_time":"2024-01-01 12:00:00","settle_time":"2024-01-01 12:01:00","status":1,"raw_data":"{}","remark":"","created_at":"2024-01-01 12:00:00","updated_at":"2024-01-01 12:01:00"}],"total":1,"current_page":1,"per_page":20,"last_page":1,"total_amount":"100.00","all_game_total_amount":"120.00"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func callGetGameRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetGameRecords")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "failed to get request data: %v", err)
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 获取站点ID（从用户信息中获取）
+	siteId := int32(1) // 暂时写死，后续从用户信息中获取
+
+	// 解析请求参数
+	platform := ""
+	if p, exists := reqData["platform"]; exists {
+		if pStr, ok := p.(string); ok {
+			platform = pStr
+		}
+	}
+	if platform == "" {
+		util.WriteBadRequest(r, "缺少platform参数")
+		return fmt.Errorf("missing platform parameter")
+	}
+
+	startDate := ""
+	if sd, exists := reqData["start_date"]; exists {
+		if sdStr, ok := sd.(string); ok {
+			startDate = sdStr
+		}
+	}
+
+	endDate := ""
+	if ed, exists := reqData["end_date"]; exists {
+		if edStr, ok := ed.(string); ok {
+			endDate = edStr
+		}
+	}
+
+	page := int32(1)
+	if p, exists := reqData["page"]; exists {
+		if pFloat, ok := p.(float64); ok {
+			page = int32(pFloat)
+		}
+	}
+
+	size := int32(20)
+	if s, exists := reqData["size"]; exists {
+		if sFloat, ok := s.(float64); ok {
+			size = int32(sFloat)
+		}
+	}
+
+	username := ""
+	if u, exists := reqData["username"]; exists {
+		if uStr, ok := u.(string); ok {
+			username = uStr
+		}
+	}
+
+	recordType := int32(0)
+	if t, exists := reqData["type"]; exists {
+		if tFloat, ok := t.(float64); ok {
+			recordType = int32(tFloat)
+		}
+	}
+
+	keywords := ""
+	if k, exists := reqData["keywords"]; exists {
+		if kStr, ok := k.(string); ok {
+			keywords = kStr
+		}
+	}
+
+	// 构建请求
+	req := &v7.GetGameRecordsReq{
+		SiteId:    siteId,
+		Platform:  platform,
+		StartDate: startDate,
+		EndDate:   endDate,
+		Page:      page,
+		Size:      size,
+		Username:  username,
+		Type:      recordType,
+		Keywords:  keywords,
+	}
+
+	// 调用gRPC服务
+	client := v7.NewGameClient(conn)
+	res, err := client.GetGameRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGameRecords failed: %v", err)
 		return err
 	}
 

@@ -25,10 +25,6 @@ func Register(s *ghttp.Server) {
 			middleware.CircuitBreaker,
 		)
 
-		//// 游戏相关接口：转发到 game-service (gRPC)
-		//group.GET("/games", proxy.GameGRPCToHTTP("jh_game_service"))
-		//group.POST("/update-games", proxy.GameGRPCToHTTP("jh_game_service"))
-
 		// 其他管理员接口：转发到 app-service (gRPC)
 		group.ALL("/*any", proxy.AppGRPCToHTTP("jh_app_service"))
 	})
