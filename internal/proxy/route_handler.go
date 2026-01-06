@@ -72,60 +72,89 @@ func init() {
 func initAppRoutes() {
 	appRoutes = NewRouteRegistry()
 
-	// 管理员相关接口
+	// 管理员登录
 	appRoutes.Register("/login", "POST", callAdminLogin)
+	// 刷新token
 	appRoutes.Register("/refresh-token", "GET", callAdminRefreshToken)
+	// 员工列表
 	appRoutes.Register("/admins", "GET", callGetAdminList)
+	// 添加员工
 	appRoutes.Register("/create-admin", "POST", callAdminCreate)
+	// 更新员工
 	appRoutes.Register("/update-admin", "POST", callUpdateAdmin)
+	// 删除员工
 	appRoutes.Register("/delete-admin", "POST", callDeleteAdmin)
+	// 退出
 	appRoutes.Register("/logout", "POST", callAdminLogout)
+	// 修改密码
 	appRoutes.Register("/change-password", "POST", callAdminChangePassword)
 
-	// 站点配置相关
+	// 站点配置信息
 	appRoutes.Register("/basic-setting", "GET", callGetBasicSetting)
+	// 设置站点配置信息
 	appRoutes.Register("/update-basic-setting", "POST", callUpdateBasicSetting)
 
-	// 角色权限相关
+	// 角色列表
 	appRoutes.Register("/roles", "GET", callGetRoleList)
+	// 创建角色
 	appRoutes.Register("/create-role", "POST", callCreateRole)
+	// 更新角色
 	appRoutes.Register("/update-role", "POST", callUpdateRole)
+	// 删除角色
 	appRoutes.Register("/delete-role", "POST", callDeleteRole)
+	// 角色权限列表
 	appRoutes.Register("/permissions", "GET", callGetPermissions)
+	// 保存角色权限
 	appRoutes.Register("/save-permission", "POST", callSavePermission)
 
-	// 日志相关
+	// 后台操作日志
 	appRoutes.Register("/admin-logs", "GET", callGetAdminLogs)
 
-	// 用户相关
+	// 会员列表
 	appRoutes.Register("/users", "GET", callGetUserList)
+	// 更新会员
 	appRoutes.Register("/update-user", "POST", callUpdateUser)
+	// 会员基本信息
 	appRoutes.Register("/user-basic-info", "GET", callGetUserBasicInfo)
+	// 会员等级列表
 	appRoutes.Register("/user-grades", "GET", callGetUserGrades)
+	// 保存会员等级
 	appRoutes.Register("/save-user-grades", "POST", callSaveUserGrades)
+	// 删除会员等级
 	appRoutes.Register("/delete-user-grades", "POST", callDeleteUserGrades)
+	//会员登录日志
 	appRoutes.Register("/user-login-logs", "GET", callGetUserLoginLogs)
 
-	// 文件上传
+	// 图片上传
 	appRoutes.Register("/upload-image", "POST", callUploadImage)
 
-	// 消息相关
+	// 消息列表
 	appRoutes.Register("/messages", "GET", callGetMessageList)
+	// 新增消息
 	appRoutes.Register("/create-message", "POST", callCreateMessage)
+	// 用户-消息列表(预留前台)
 	appRoutes.Register("/user-messages", "GET", callGetUserMessages)
+	// 用户-已读消息(预留前台)
 	appRoutes.Register("/unread-count", "GET", callGetUnreadCount)
+	// 用户-未读消息(预留前台)
 	appRoutes.Register("/read-message", "POST", callReadMessage)
 
-	// 广告相关
+	// 广告列表
 	appRoutes.Register("/ads", "GET", callGetAdList)
+	// 新增广告
 	appRoutes.Register("/create-ad", "POST", callCreateAd)
+	// 更新广告
 	appRoutes.Register("/update-ad", "POST", callUpdateAd)
+	// 删除广告
 	appRoutes.Register("/delete-ad", "POST", callDeleteAd)
 
-	// 公告相关
+	// 公告列表
 	appRoutes.Register("/notices", "GET", callGetNoticeList)
+	// 新增公告
 	appRoutes.Register("/create-notice", "POST", callCreateNotice)
+	// 更新公告
 	appRoutes.Register("/update-notice", "POST", callUpdateNotice)
+	// 删除公告
 	appRoutes.Register("/delete-notice", "POST", callDeleteNotice)
 }
 
@@ -136,27 +165,38 @@ func initBalanceRoutes() {
 	// 账变记录
 	balanceRoutes.Register("/balance-changes", "GET", callGetBalanceChanges)
 
-	// 充值相关
+	// 充值记录
 	balanceRoutes.Register("/recharge-payment", "GET", callGetRechargePayments)
+	// 手动充值记录
 	balanceRoutes.Register("/recharge-manual", "GET", callGetRechargeManuals)
+	// 确认充值
 	balanceRoutes.Register("/confirm-payment-order", "POST", callConfirmPaymentOrder)
 
-	// 提现相关
+	// 提现记录
 	balanceRoutes.Register("/withdraws", "GET", callGetWithdraws)
+	// 手动提现记录
 	balanceRoutes.Register("/withdraw-manual", "GET", callGetWithdrawManuals)
+	// 提现查看审核
 	balanceRoutes.Register("/withdraw-review", "GET", callGetWithdrawReview)
+	// 确认提现
 	balanceRoutes.Register("/deal-with-withdraw", "POST", callDealWithWithdraw)
 
-	// 余额查询和操作
+	// 用户余额查询
 	balanceRoutes.Register("/query-user-balance", "POST", callQueryUserBalance)
+	// 用户三方余额查询
 	balanceRoutes.Register("/query-game-balance", "POST", callQueryGameBalance)
+	// 手动操作用户账户
 	balanceRoutes.Register("/manual-user-balance", "POST", callManualUserBalance)
 
-	// 支付接口管理
+	// 支付接口列表
 	balanceRoutes.Register("/payment-accounts", "GET", callGetPaymentAccounts)
+	// 添加支付接口
 	balanceRoutes.Register("/create-payment-account", "POST", callCreatePaymentAccount)
+	// 更新获取支付接口信息
 	balanceRoutes.Register("/update-payment-account", "GET", callGetPaymentAccountUpdate)
+	// 更新支付接口
 	balanceRoutes.Register("/update-payment-account", "POST", callUpdatePaymentAccount)
+	// 删除支付接口
 	balanceRoutes.Register("/delete-payment-account", "POST", callDeletePaymentAccount)
 }
 
@@ -164,8 +204,10 @@ func initBalanceRoutes() {
 func initGameRoutes() {
 	gameRoutes = NewRouteRegistry()
 
-	// 游戏管理
+	// 获取游戏列表
 	gameRoutes.Register("/games", "GET", callGetGames)
+	// 修改站点游戏开关
 	gameRoutes.Register("/update-games", "POST", callUpdateGames)
+	// 获取游戏记录
 	gameRoutes.Register("/game-record", "POST", callGetGameRecords)
 }
