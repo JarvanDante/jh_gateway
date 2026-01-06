@@ -3369,7 +3369,7 @@ func callCreateMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
  * @title 获取用户消息
  * @description 获取用户消息的接口
  * @method get
- * @url /api/backend/app/user-messages
+ * @url /api/frontend/app/user-messages
  * @param user_id 必选 int 用户ID
  * @param page 可选 int 页码
  * @param size 可选 int 每页数量
@@ -3408,7 +3408,7 @@ func callGetUserMessages(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
  * @title 获取未读数量
  * @description 获取未读消息数量的接口
  * @method get
- * @url /api/backend/app/unread-count
+ * @url /api/frontend/app/unread-count
  * @param user_id 必选 int 用户ID
  * @return {"code":0,"msg":"success","data":{"count":0}}
  * @number 14
@@ -3441,7 +3441,7 @@ func callGetUnreadCount(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
  * @title 读取消息
  * @description 标记消息为已读的接口
  * @method post
- * @url /api/backend/app/read-message
+ * @url /api/frontend/app/read-message
  * @param user_id 必选 int 用户ID
  * @param message_id 必选 int 消息ID
  * @return {"code":0,"msg":"success","data":{}}
