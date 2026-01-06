@@ -8,6 +8,7 @@ service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRes) {}
     rpc GetInfo(GetInfoReq) returns (GetInfoRes) {}
+    rpc Menus(MenusReq) returns (MenusRes) {}
     rpc GetAdminList(GetAdminListReq) returns (GetAdminListRes) {}
     rpc CreateAdmin(CreateAdminReq) returns (CreateAdminRes) {}
     rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminRes) {}
@@ -41,10 +42,14 @@ message GetInfoReq {}
 message MenuInfo {
     int32 id = 1;
     string name = 2;
-    string path = 3;
+    string path = 3;                    // 保留原有字段
     int32 type = 4;
     int32 sort = 5;
     repeated MenuInfo children = 6;
+    string backend_url = 7;             // 新增：后端URL
+    string frontend_url = 8;            // 新增：前端URL  
+    bool open = 9;                      // 新增：是否展开
+    bool checked = 10;                  // 新增：是否选中
 }
 
 // 获取管理员信息响应
@@ -54,6 +59,14 @@ message GetInfoRes {
     string avatar = 3;                // 头像
     string introduction = 4;          // 介绍
     repeated MenuInfo menus = 5;      // 菜单权限
+}
+
+// 获取菜单列表请求
+message MenusReq {}
+
+// 获取菜单列表响应
+message MenusRes {
+    repeated MenuInfo menus = 1;      // 菜单列表
 }
 
 message CreateAdminReq {

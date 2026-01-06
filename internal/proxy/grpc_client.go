@@ -230,6 +230,48 @@ func callGetInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) e
 
 /**
  * showdoc
+ * @catalog 后台
+ * @title 获取菜单列表
+ * @description 获取当前登录用户的菜单列表
+ * @method get
+ * @url /api/backend/app/menus
+ * @param Authorization 必选 string Bearer token
+ * @return {"code":0,"msg":"success","data":{"menus":[{"id":1,"name":"系统","path":"","type":1,"sort":0,"children":[{"id":2,"name":"全局设置","path":"basic-setting","type":1,"sort":0,"children":[{"id":3,"name":"基本信息","path":"user-basic-info","type":1,"sort":0}]}]}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.menus array 菜单列表
+ * @remark 需要在Header中提供有效的JWT token
+ * @number 4
+ */
+func callMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin Menus")
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.MenusReq{}
+
+	// 调用 gRPC 服务
+	res, err := client.Menus(ctx, req)
+	if err != nil {
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "未登录或登录已过期") ||
+			strings.Contains(err.Error(), "管理员不存在") ||
+			strings.Contains(err.Error(), "账号已被禁用") {
+			util.WriteUnauthorized(r, "登录已过期，请重新登录")
+		} else {
+			util.WriteInternalError(r, "获取菜单列表失败，请稍后重试")
+		}
+		return nil
+	}
+
+	// 直接返回菜单数组，而不是包装在menus字段中
+	util.WriteSuccess(r, res.Menus)
+	return nil
+}
+
+/**
+ * showdoc
  * @catalog 后台/系统/员工账号
  * @title 添加员工
  * @description 添加员工

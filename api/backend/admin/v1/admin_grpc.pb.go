@@ -23,6 +23,7 @@ const (
 	Admin_Login_FullMethodName          = "/admin.Admin/Login"
 	Admin_RefreshToken_FullMethodName   = "/admin.Admin/RefreshToken"
 	Admin_GetInfo_FullMethodName        = "/admin.Admin/GetInfo"
+	Admin_Menus_FullMethodName          = "/admin.Admin/Menus"
 	Admin_GetAdminList_FullMethodName   = "/admin.Admin/GetAdminList"
 	Admin_CreateAdmin_FullMethodName    = "/admin.Admin/CreateAdmin"
 	Admin_UpdateAdmin_FullMethodName    = "/admin.Admin/UpdateAdmin"
@@ -39,6 +40,7 @@ type AdminClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRes, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenRes, error)
 	GetInfo(ctx context.Context, in *GetInfoReq, opts ...grpc.CallOption) (*GetInfoRes, error)
+	Menus(ctx context.Context, in *MenusReq, opts ...grpc.CallOption) (*MenusRes, error)
 	GetAdminList(ctx context.Context, in *GetAdminListReq, opts ...grpc.CallOption) (*GetAdminListRes, error)
 	CreateAdmin(ctx context.Context, in *CreateAdminReq, opts ...grpc.CallOption) (*CreateAdminRes, error)
 	UpdateAdmin(ctx context.Context, in *UpdateAdminReq, opts ...grpc.CallOption) (*UpdateAdminRes, error)
@@ -80,6 +82,16 @@ func (c *adminClient) GetInfo(ctx context.Context, in *GetInfoReq, opts ...grpc.
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetInfoRes)
 	err := c.cc.Invoke(ctx, Admin_GetInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) Menus(ctx context.Context, in *MenusReq, opts ...grpc.CallOption) (*MenusRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MenusRes)
+	err := c.cc.Invoke(ctx, Admin_Menus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,6 +175,7 @@ type AdminServer interface {
 	Login(context.Context, *LoginReq) (*LoginRes, error)
 	RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenRes, error)
 	GetInfo(context.Context, *GetInfoReq) (*GetInfoRes, error)
+	Menus(context.Context, *MenusReq) (*MenusRes, error)
 	GetAdminList(context.Context, *GetAdminListReq) (*GetAdminListRes, error)
 	CreateAdmin(context.Context, *CreateAdminReq) (*CreateAdminRes, error)
 	UpdateAdmin(context.Context, *UpdateAdminReq) (*UpdateAdminRes, error)
@@ -188,6 +201,9 @@ func (UnimplementedAdminServer) RefreshToken(context.Context, *RefreshTokenReq) 
 }
 func (UnimplementedAdminServer) GetInfo(context.Context, *GetInfoReq) (*GetInfoRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetInfo not implemented")
+}
+func (UnimplementedAdminServer) Menus(context.Context, *MenusReq) (*MenusRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method Menus not implemented")
 }
 func (UnimplementedAdminServer) GetAdminList(context.Context, *GetAdminListReq) (*GetAdminListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAdminList not implemented")
@@ -281,6 +297,24 @@ func _Admin_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminServer).GetInfo(ctx, req.(*GetInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_Menus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MenusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).Menus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_Menus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).Menus(ctx, req.(*MenusReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -429,6 +463,10 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInfo",
 			Handler:    _Admin_GetInfo_Handler,
+		},
+		{
+			MethodName: "Menus",
+			Handler:    _Admin_Menus_Handler,
 		},
 		{
 			MethodName: "GetAdminList",

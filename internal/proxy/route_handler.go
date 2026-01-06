@@ -78,6 +78,8 @@ func initAppRoutes() {
 	appRoutes.Register("/refresh-token", "GET", callAdminRefreshToken)
 	// 获取管理员信息
 	appRoutes.Register("/get-info", "GET", callGetInfo)
+	// 获取菜单列表
+	appRoutes.Register("/menus", "GET", callMenus)
 	// 员工列表
 	appRoutes.Register("/admins", "GET", callGetAdminList)
 	// 添加员工
