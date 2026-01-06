@@ -185,6 +185,51 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 /**
  * showdoc
+ * @catalog 后台
+ * @title 获取管理员信息
+ * @description 获取当前登录管理员的基本信息、角色和权限菜单
+ * @method get
+ * @url /api/backend/app/get-info
+ * @param Authorization 必选 string Bearer token (Header中)
+ * @return {"code":0,"msg":"success","data":{"roles":["管理员"],"name":"michael","avatar":"https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191","introduction":"管理员 michael","menus":[{"id":1,"name":"系统管理","path":"system","type":1,"sort":0,"children":[{"id":2,"name":"管理员管理","path":"system/admin","type":1,"sort":0,"children":[{"id":3,"name":"管理员列表","path":"system/admin/list","type":1,"sort":0}]}]}]}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.roles array 角色列表
+ * @return_param data.name string 管理员名称
+ * @return_param data.avatar string 头像URL
+ * @return_param data.introduction string 介绍
+ * @return_param data.menus array 菜单权限列表
+ * @return_param msg string 提示说明
+ * @remark 需要在Header中提供有效的JWT token
+ * @number 3
+ */
+func callGetInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin GetInfo")
+
+	// 创建 gRPC 客户端
+	client := v1.NewAdminClient(conn)
+	req := &v1.GetInfoReq{}
+
+	// 调用 gRPC 服务
+	res, err := client.GetInfo(ctx, req)
+	if err != nil {
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "未登录或登录已过期") ||
+			strings.Contains(err.Error(), "管理员不存在") ||
+			strings.Contains(err.Error(), "账号已被禁用") {
+			util.WriteUnauthorized(r, "登录已过期，请重新登录")
+		} else {
+			util.WriteInternalError(r, "获取管理员信息失败，请稍后重试")
+		}
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 后台/系统/员工账号
  * @title 添加员工
  * @description 添加员工

@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Admin_Login_FullMethodName          = "/admin.Admin/Login"
 	Admin_RefreshToken_FullMethodName   = "/admin.Admin/RefreshToken"
+	Admin_GetInfo_FullMethodName        = "/admin.Admin/GetInfo"
 	Admin_GetAdminList_FullMethodName   = "/admin.Admin/GetAdminList"
 	Admin_CreateAdmin_FullMethodName    = "/admin.Admin/CreateAdmin"
 	Admin_UpdateAdmin_FullMethodName    = "/admin.Admin/UpdateAdmin"
@@ -37,6 +38,7 @@ const (
 type AdminClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRes, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenRes, error)
+	GetInfo(ctx context.Context, in *GetInfoReq, opts ...grpc.CallOption) (*GetInfoRes, error)
 	GetAdminList(ctx context.Context, in *GetAdminListReq, opts ...grpc.CallOption) (*GetAdminListRes, error)
 	CreateAdmin(ctx context.Context, in *CreateAdminReq, opts ...grpc.CallOption) (*CreateAdminRes, error)
 	UpdateAdmin(ctx context.Context, in *UpdateAdminReq, opts ...grpc.CallOption) (*UpdateAdminRes, error)
@@ -68,6 +70,16 @@ func (c *adminClient) RefreshToken(ctx context.Context, in *RefreshTokenReq, opt
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RefreshTokenRes)
 	err := c.cc.Invoke(ctx, Admin_RefreshToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetInfo(ctx context.Context, in *GetInfoReq, opts ...grpc.CallOption) (*GetInfoRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetInfoRes)
+	err := c.cc.Invoke(ctx, Admin_GetInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -150,6 +162,7 @@ func (c *adminClient) GetAdminLogs(ctx context.Context, in *GetAdminLogsReq, opt
 type AdminServer interface {
 	Login(context.Context, *LoginReq) (*LoginRes, error)
 	RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenRes, error)
+	GetInfo(context.Context, *GetInfoReq) (*GetInfoRes, error)
 	GetAdminList(context.Context, *GetAdminListReq) (*GetAdminListRes, error)
 	CreateAdmin(context.Context, *CreateAdminReq) (*CreateAdminRes, error)
 	UpdateAdmin(context.Context, *UpdateAdminReq) (*UpdateAdminRes, error)
@@ -172,6 +185,9 @@ func (UnimplementedAdminServer) Login(context.Context, *LoginReq) (*LoginRes, er
 }
 func (UnimplementedAdminServer) RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method RefreshToken not implemented")
+}
+func (UnimplementedAdminServer) GetInfo(context.Context, *GetInfoReq) (*GetInfoRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetInfo not implemented")
 }
 func (UnimplementedAdminServer) GetAdminList(context.Context, *GetAdminListReq) (*GetAdminListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAdminList not implemented")
@@ -247,6 +263,24 @@ func _Admin_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminServer).RefreshToken(ctx, req.(*RefreshTokenReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetInfo(ctx, req.(*GetInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -391,6 +425,10 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshToken",
 			Handler:    _Admin_RefreshToken_Handler,
+		},
+		{
+			MethodName: "GetInfo",
+			Handler:    _Admin_GetInfo_Handler,
 		},
 		{
 			MethodName: "GetAdminList",

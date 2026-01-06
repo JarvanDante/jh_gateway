@@ -17,6 +17,7 @@ func Register(s *ghttp.Server) {
 	// 后台管理接口统一入口
 	s.Group("/api/backend", func(group *ghttp.RouterGroup) {
 		group.Middleware(
+			middleware.CORS, // CORS 跨域中间件
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
@@ -32,6 +33,7 @@ func Register(s *ghttp.Server) {
 	// 前台用户接口（预留）
 	s.Group("/api/frontend", func(group *ghttp.RouterGroup) {
 		group.Middleware(
+			middleware.CORS, // CORS 跨域中间件
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,

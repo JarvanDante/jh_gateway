@@ -2,11 +2,12 @@ syntax = "proto3";
 
 package admin;
 
-option go_package = "jh_app_service/api/backend/admin/v1";
+option go_package = "jh_gateway/api/backend/admin/v1";
 
 service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRes) {}
+    rpc GetInfo(GetInfoReq) returns (GetInfoRes) {}
     rpc GetAdminList(GetAdminListReq) returns (GetAdminListRes) {}
     rpc CreateAdmin(CreateAdminReq) returns (CreateAdminRes) {}
     rpc UpdateAdmin(UpdateAdminReq) returns (UpdateAdminRes) {}
@@ -31,6 +32,28 @@ message RefreshTokenReq {}
 
 message RefreshTokenRes {
     string token = 1;
+}
+
+// 获取管理员信息请求
+message GetInfoReq {}
+
+// 菜单信息
+message MenuInfo {
+    int32 id = 1;
+    string name = 2;
+    string path = 3;
+    int32 type = 4;
+    int32 sort = 5;
+    repeated MenuInfo children = 6;
+}
+
+// 获取管理员信息响应
+message GetInfoRes {
+    repeated string roles = 1;        // 角色列表
+    string name = 2;                  // 管理员名称
+    string avatar = 3;                // 头像
+    string introduction = 4;          // 介绍
+    repeated MenuInfo menus = 5;      // 菜单权限
 }
 
 message CreateAdminReq {
