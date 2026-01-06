@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package notice;
+
+option go_package = "jh_app_service/api/backend/notice/v1";
+
+service Notice {
+    rpc GetNoticeList(GetNoticeListReq) returns (GetNoticeListRes) {}
+    rpc CreateNotice(CreateNoticeReq) returns (CreateNoticeRes) {}
+    rpc UpdateNotice(UpdateNoticeReq) returns (UpdateNoticeRes) {}
+    rpc DeleteNotice(DeleteNoticeReq) returns (DeleteNoticeRes) {}
+}
+
+// 获取公告列表请求
+message GetNoticeListReq {
+    int32 page = 1;
+    int32 size = 2;
+    int32 status = 3;
+    int32 type = 4;
+}
+
+// 获取公告列表响应
+message GetNoticeListRes {
+    repeated NoticeItem list = 1;
+    int32 total = 2;
+    int32 current_page = 3;
+    int32 per_page = 4;
+    repeated TypeItem type_list = 5;
+    repeated StatusItem status_list = 6;
+}
+
+// 公告项
+message NoticeItem {
+    int32 id = 1;
+    string title = 2;
+    string content = 3;
+    int32 type = 4;
+    string type_name = 5;
+    int32 status = 6;
+    string status_name = 7;
+    int32 sort = 8;
+    int32 is_top = 9;
+    string created_at = 10;
+    string updated_at = 11;
+}
+
+// 类型项
+message TypeItem {
+    int32 value = 1;
+    string name = 2;
+}
+
+// 状态项
+message StatusItem {
+    int32 value = 1;
+    string name = 2;
+}
+
+// 创建公告请求
+message CreateNoticeReq {
+    string title = 1;       // v: required|length:2,200
+    string content = 2;     // v: required|length:2,5000
+    int32 type = 3;         // v: required|in:1,2,3
+    int32 status = 4;       // v: required|in:0,1
+    int32 sort = 5;         // v: required|min:0
+    int32 is_top = 6;       // v: required|in:0,1
+}
+
+// 创建公告响应
+message CreateNoticeRes {}
+
+// 更新公告请求
+message UpdateNoticeReq {
+    int32 id = 1;           // v: required|min:1
+    string title = 2;       // v: required|length:2,200
+    string content = 3;     // v: required|length:2,5000
+    int32 type = 4;         // v: required|in:1,2,3
+    int32 status = 5;       // v: required|in:0,1
+    int32 sort = 6;         // v: required|min:0
+    int32 is_top = 7;       // v: required|in:0,1
+}
+
+// 更新公告响应
+message UpdateNoticeRes {}
+
+// 删除公告请求
+message DeleteNoticeReq {
+    int32 id = 1;           // v: required|min:1
+}
+
+// 删除公告响应
+message DeleteNoticeRes {}

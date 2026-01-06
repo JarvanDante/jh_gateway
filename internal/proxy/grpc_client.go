@@ -5,9 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	v9 "jh_gateway/api/backend/ad/v1"
 	"jh_gateway/api/backend/admin/v1"
 	v6 "jh_gateway/api/backend/balance/v1"
 	v7 "jh_gateway/api/backend/game/v1"
+	v8 "jh_gateway/api/backend/message/v1"
+	v10 "jh_gateway/api/backend/notice/v1"
 	v2 "jh_gateway/api/backend/role/v1"
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
@@ -20,6 +23,7 @@ import (
 	"strings"
 
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/util/gconv"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
@@ -230,6 +234,45 @@ func callAppGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 		//上传图片
 	case strings.HasSuffix(path, "/upload-image") && method == "POST":
 		return callUploadImage(ctx, conn, r)
+		//获取消息列表
+	case strings.HasSuffix(path, "/messages") && method == "GET":
+		return callGetMessageList(ctx, conn, r)
+		//创建消息
+	case strings.HasSuffix(path, "/create-message") && method == "POST":
+		return callCreateMessage(ctx, conn, r)
+		//获取用户消息
+	case strings.HasSuffix(path, "/user-messages") && method == "GET":
+		return callGetUserMessages(ctx, conn, r)
+		//获取未读数量
+	case strings.HasSuffix(path, "/unread-count") && method == "GET":
+		return callGetUnreadCount(ctx, conn, r)
+		//读取消息
+	case strings.HasSuffix(path, "/read-message") && method == "POST":
+		return callReadMessage(ctx, conn, r)
+		//获取广告列表
+	case strings.HasSuffix(path, "/ads") && method == "GET":
+		return callGetAdList(ctx, conn, r)
+		//创建广告
+	case strings.HasSuffix(path, "/create-ad") && method == "POST":
+		return callCreateAd(ctx, conn, r)
+		//更新广告
+	case strings.HasSuffix(path, "/update-ad") && method == "POST":
+		return callUpdateAd(ctx, conn, r)
+		//删除广告
+	case strings.HasSuffix(path, "/delete-ad") && method == "POST":
+		return callDeleteAd(ctx, conn, r)
+		//获取公告列表
+	case strings.HasSuffix(path, "/notices") && method == "GET":
+		return callGetNoticeList(ctx, conn, r)
+		//创建公告
+	case strings.HasSuffix(path, "/create-notice") && method == "POST":
+		return callCreateNotice(ctx, conn, r)
+		//更新公告
+	case strings.HasSuffix(path, "/update-notice") && method == "POST":
+		return callUpdateNotice(ctx, conn, r)
+		//删除公告
+	case strings.HasSuffix(path, "/delete-notice") && method == "POST":
+		return callDeleteNotice(ctx, conn, r)
 	}
 
 	// 用户相关接口已删除
@@ -3669,6 +3712,524 @@ func callGetGameRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	res, err := client.GetGameRecords(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Game GetGameRecords failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/消息管理
+ * @title 获取消息列表
+ * @description 获取消息列表的接口
+ * @method get
+ * @url /api/admin/messages
+ * @param page 可选 int 页码
+ * @param size 可选 int 每页数量
+ * @return {"code":0,"msg":"success","data":{"message_list":[],"grade_list":[],"level_list":[],"status_list":[],"total":0,"current_page":1,"per_page":50}}
+ * @number 11
+ */
+func callGetMessageList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message GetMessageList")
+
+	// 解析请求参数
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "50"))
+
+	req := &v8.GetMessageListReq{
+		Page: page,
+		Size: size,
+	}
+
+	// 调用gRPC服务
+	client := v8.NewMessageClient(conn)
+	res, err := client.GetMessageList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message GetMessageList failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/消息管理
+ * @title 创建消息
+ * @description 创建消息的接口
+ * @method post
+ * @url /api/admin/create-message
+ * @param title 必选 string 消息标题
+ * @param content 必选 string 消息内容
+ * @param type 必选 int 消息类型 1:指定用户 2:等级 3:层级 4:状态
+ * @param receiver 可选 string 接收者
+ * @param grade_id 可选 int 等级ID
+ * @param level_id 可选 int 层级ID
+ * @param status 可选 int 状态
+ * @param position 可选 int 弹框位置
+ * @param alert_times 可选 int 弹框次数
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 12
+ */
+func callCreateMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message CreateMessage")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v8.CreateMessageReq{
+		Title:      gconv.String(requestData["title"]),
+		Content:    gconv.String(requestData["content"]),
+		Type:       gconv.Int32(requestData["type"]),
+		Receiver:   gconv.String(requestData["receiver"]),
+		GradeId:    gconv.Int32(requestData["grade_id"]),
+		LevelId:    gconv.Int32(requestData["level_id"]),
+		Status:     gconv.Int32(requestData["status"]),
+		Position:   gconv.Int32(requestData["position"]),
+		AlertTimes: gconv.Int32(requestData["alert_times"]),
+	}
+
+	// 调用gRPC服务
+	client := v8.NewMessageClient(conn)
+	res, err := client.CreateMessage(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message CreateMessage failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台
+ * @title 获取用户消息
+ * @description 获取用户消息的接口
+ * @method get
+ * @url /api/admin/user-messages
+ * @param user_id 必选 int 用户ID
+ * @param page 可选 int 页码
+ * @param size 可选 int 每页数量
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0,"current_page":1,"per_page":20,"unread_message_count":0}}
+ * @number 13
+ */
+func callGetUserMessages(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message GetUserMessages")
+
+	// 解析请求参数
+	userId := gconv.Int32(r.GetQuery("user_id"))
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "20"))
+
+	req := &v8.GetUserMessagesReq{
+		UserId: userId,
+		Page:   page,
+		Size:   size,
+	}
+
+	// 调用gRPC服务
+	client := v8.NewMessageClient(conn)
+	res, err := client.GetUserMessages(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message GetUserMessages failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台
+ * @title 获取未读数量
+ * @description 获取未读消息数量的接口
+ * @method get
+ * @url /api/admin/unread-count
+ * @param user_id 必选 int 用户ID
+ * @return {"code":0,"msg":"success","data":{"count":0}}
+ * @number 14
+ */
+func callGetUnreadCount(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message GetUnreadCount")
+
+	// 解析请求参数
+	userId := gconv.Int32(r.GetQuery("user_id"))
+
+	req := &v8.GetUnreadCountReq{
+		UserId: userId,
+	}
+
+	// 调用gRPC服务
+	client := v8.NewMessageClient(conn)
+	res, err := client.GetUnreadCount(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message GetUnreadCount failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台
+ * @title 读取消息
+ * @description 标记消息为已读的接口
+ * @method post
+ * @url /api/admin/read-message
+ * @param user_id 必选 int 用户ID
+ * @param message_id 必选 int 消息ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 15
+ */
+func callReadMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message ReadMessage")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v8.ReadMessageReq{
+		UserId:    gconv.Int32(requestData["user_id"]),
+		MessageId: gconv.Int32(requestData["message_id"]),
+	}
+
+	// 调用gRPC服务
+	client := v8.NewMessageClient(conn)
+	res, err := client.ReadMessage(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message ReadMessage failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/广告管理
+ * @title 获取广告列表
+ * @description 获取广告列表的接口
+ * @method get
+ * @url /api/admin/ads
+ * @param page 可选 int 页码
+ * @param size 可选 int 每页数量
+ * @param status 可选 int 状态筛选
+ * @param position 可选 int 位置筛选
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0,"current_page":1,"per_page":50,"position_list":[],"status_list":[]}}
+ * @number 16
+ */
+func callGetAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Ad GetAdList")
+
+	// 解析请求参数
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "50"))
+	status := gconv.Int32(r.GetQuery("status", "-1"))
+	position := gconv.Int32(r.GetQuery("position", "0"))
+
+	req := &v9.GetAdListReq{
+		Page:     page,
+		Size:     size,
+		Status:   status,
+		Position: position,
+	}
+
+	// 调用gRPC服务
+	client := v9.NewAdClient(conn)
+	res, err := client.GetAdList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Ad GetAdList failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/广告管理
+ * @title 创建广告
+ * @description 创建广告的接口
+ * @method post
+ * @url /api/admin/create-ad
+ * @param title 必选 string 广告标题
+ * @param image 必选 string 广告图片
+ * @param link 必选 string 广告链接
+ * @param position 必选 int 广告位置
+ * @param status 必选 int 广告状态
+ * @param sort 必选 int 排序
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 17
+ */
+func callCreateAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Ad CreateAd")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v9.CreateAdReq{
+		Title:    gconv.String(requestData["title"]),
+		Image:    gconv.String(requestData["image"]),
+		Link:     gconv.String(requestData["link"]),
+		Position: gconv.Int32(requestData["position"]),
+		Status:   gconv.Int32(requestData["status"]),
+		Sort:     gconv.Int32(requestData["sort"]),
+	}
+
+	// 调用gRPC服务
+	client := v9.NewAdClient(conn)
+	res, err := client.CreateAd(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Ad CreateAd failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/广告管理
+ * @title 更新广告
+ * @description 更新广告的接口
+ * @method post
+ * @url /api/admin/update-ad
+ * @param id 必选 int 广告ID
+ * @param title 必选 string 广告标题
+ * @param image 必选 string 广告图片
+ * @param link 必选 string 广告链接
+ * @param position 必选 int 广告位置
+ * @param status 必选 int 广告状态
+ * @param sort 必选 int 排序
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 18
+ */
+func callUpdateAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Ad UpdateAd")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v9.UpdateAdReq{
+		Id:       gconv.Int32(requestData["id"]),
+		Title:    gconv.String(requestData["title"]),
+		Image:    gconv.String(requestData["image"]),
+		Link:     gconv.String(requestData["link"]),
+		Position: gconv.Int32(requestData["position"]),
+		Status:   gconv.Int32(requestData["status"]),
+		Sort:     gconv.Int32(requestData["sort"]),
+	}
+
+	// 调用gRPC服务
+	client := v9.NewAdClient(conn)
+	res, err := client.UpdateAd(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Ad UpdateAd failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/广告管理
+ * @title 删除广告
+ * @description 删除广告的接口
+ * @method post
+ * @url /api/admin/delete-ad
+ * @param id 必选 int 广告ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 19
+ */
+func callDeleteAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Ad DeleteAd")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v9.DeleteAdReq{
+		Id: gconv.Int32(requestData["id"]),
+	}
+
+	// 调用gRPC服务
+	client := v9.NewAdClient(conn)
+	res, err := client.DeleteAd(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Ad DeleteAd failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/公告管理
+ * @title 获取公告列表
+ * @description 获取公告列表的接口
+ * @method get
+ * @url /api/admin/notices
+ * @param page 可选 int 页码
+ * @param size 可选 int 每页数量
+ * @param status 可选 int 状态筛选
+ * @param type 可选 int 类型筛选
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0,"current_page":1,"per_page":50,"type_list":[],"status_list":[]}}
+ * @number 20
+ */
+func callGetNoticeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Notice GetNoticeList")
+
+	// 解析请求参数
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "50"))
+	status := gconv.Int32(r.GetQuery("status", "-1"))
+	noticeType := gconv.Int32(r.GetQuery("type", "0"))
+
+	req := &v10.GetNoticeListReq{
+		Page:   page,
+		Size:   size,
+		Status: status,
+		Type:   noticeType,
+	}
+
+	// 调用gRPC服务
+	client := v10.NewNoticeClient(conn)
+	res, err := client.GetNoticeList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Notice GetNoticeList failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/公告管理
+ * @title 创建公告
+ * @description 创建公告的接口
+ * @method post
+ * @url /api/admin/create-notice
+ * @param title 必选 string 公告标题
+ * @param content 必选 string 公告内容
+ * @param type 必选 int 公告类型
+ * @param status 必选 int 公告状态
+ * @param sort 必选 int 排序
+ * @param is_top 必选 int 是否置顶
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 21
+ */
+func callCreateNotice(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Notice CreateNotice")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v10.CreateNoticeReq{
+		Title:   gconv.String(requestData["title"]),
+		Content: gconv.String(requestData["content"]),
+		Type:    gconv.Int32(requestData["type"]),
+		Status:  gconv.Int32(requestData["status"]),
+		Sort:    gconv.Int32(requestData["sort"]),
+		IsTop:   gconv.Int32(requestData["is_top"]),
+	}
+
+	// 调用gRPC服务
+	client := v10.NewNoticeClient(conn)
+	res, err := client.CreateNotice(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Notice CreateNotice failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/公告管理
+ * @title 更新公告
+ * @description 更新公告的接口
+ * @method post
+ * @url /api/admin/update-notice
+ * @param id 必选 int 公告ID
+ * @param title 必选 string 公告标题
+ * @param content 必选 string 公告内容
+ * @param type 必选 int 公告类型
+ * @param status 必选 int 公告状态
+ * @param sort 必选 int 排序
+ * @param is_top 必选 int 是否置顶
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 22
+ */
+func callUpdateNotice(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Notice UpdateNotice")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v10.UpdateNoticeReq{
+		Id:      gconv.Int32(requestData["id"]),
+		Title:   gconv.String(requestData["title"]),
+		Content: gconv.String(requestData["content"]),
+		Type:    gconv.Int32(requestData["type"]),
+		Status:  gconv.Int32(requestData["status"]),
+		Sort:    gconv.Int32(requestData["sort"]),
+		IsTop:   gconv.Int32(requestData["is_top"]),
+	}
+
+	// 调用gRPC服务
+	client := v10.NewNoticeClient(conn)
+	res, err := client.UpdateNotice(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Notice UpdateNotice failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/公告管理
+ * @title 删除公告
+ * @description 删除公告的接口
+ * @method post
+ * @url /api/admin/delete-notice
+ * @param id 必选 int 公告ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 23
+ */
+func callDeleteNotice(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Notice DeleteNotice")
+
+	// 解析请求参数
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+
+	req := &v10.DeleteNoticeReq{
+		Id: gconv.Int32(requestData["id"]),
+	}
+
+	// 调用gRPC服务
+	client := v10.NewNoticeClient(conn)
+	res, err := client.DeleteNotice(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Notice DeleteNotice failed: %v", err)
 		return err
 	}
 

@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package message;
+
+option go_package = "jh_app_service/api/backend/message/v1";
+
+service Message {
+    rpc GetMessageList(GetMessageListReq) returns (GetMessageListRes) {}
+    rpc CreateMessage(CreateMessageReq) returns (CreateMessageRes) {}
+    rpc GetUserMessages(GetUserMessagesReq) returns (GetUserMessagesRes) {}
+    rpc GetUnreadCount(GetUnreadCountReq) returns (GetUnreadCountRes) {}
+    rpc ReadMessage(ReadMessageReq) returns (ReadMessageRes) {}
+}
+
+// 获取消息列表请求
+message GetMessageListReq {
+    int32 page = 1;
+    int32 size = 2;
+}
+
+// 获取消息列表响应
+message GetMessageListRes {
+    repeated MessageItem message_list = 1;
+    repeated GradeItem grade_list = 2;
+    repeated LevelItem level_list = 3;
+    repeated StatusItem status_list = 4;
+    int32 total = 5;
+    int32 current_page = 6;
+    int32 per_page = 7;
+}
+
+// 消息项
+message MessageItem {
+    int32 id = 1;
+    string title = 2;
+    string content = 3;
+    string receiver = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+
+// 等级项
+message GradeItem {
+    int32 id = 1;
+    string name = 2;
+}
+
+// 层级项
+message LevelItem {
+    int32 id = 1;
+    string name = 2;
+}
+
+// 状态项
+message StatusItem {
+    int32 value = 1;
+    string name = 2;
+}
+
+// 创建消息请求
+message CreateMessageReq {
+    string title = 1;       // v: required|length:2,255
+    string content = 2;     // v: required|length:2,255
+    int32 type = 3;         // 1:指定用户 2:等级 3:层级 4:状态
+    string receiver = 4;    // 接收者（用户名或ID列表）
+    int32 grade_id = 5;     // 等级ID
+    int32 level_id = 6;     // 层级ID
+    int32 status = 7;       // 状态
+    int32 position = 8;     // 弹框位置
+    int32 alert_times = 9;  // 弹框次数
+}
+
+// 创建消息响应
+message CreateMessageRes {}
+
+// 获取用户消息请求
+message GetUserMessagesReq {
+    int32 user_id = 1;
+    int32 page = 2;
+    int32 size = 3;
+}
+
+// 获取用户消息响应
+message GetUserMessagesRes {
+    repeated UserMessageItem list = 1;
+    int32 total = 2;
+    int32 current_page = 3;
+    int32 per_page = 4;
+    int32 unread_message_count = 5;
+}
+
+// 用户消息项
+message UserMessageItem {
+    int32 id = 1;
+    string title = 2;
+    string content = 3;
+    int32 is_read = 4;
+    string created_at = 5;
+}
+
+// 获取未读数量请求
+message GetUnreadCountReq {
+    int32 user_id = 1;
+}
+
+// 获取未读数量响应
+message GetUnreadCountRes {
+    int32 count = 1;
+}
+
+// 读取消息请求
+message ReadMessageReq {
+    int32 user_id = 1;
+    int32 message_id = 2;
+}
+
+// 读取消息响应
+message ReadMessageRes {}
