@@ -40,11 +40,11 @@ func AuthWithSkip(skipPaths ...string) ghttp.HandlerFunc {
 		}
 
 		// 如果是管理员相关接口，也设置管理员ID
-		if strings.HasPrefix(path, "/api/admin") {
+		if strings.HasPrefix(path, "/api/backend/app") {
 			r.SetCtxVar("admin_id", claims.AdminID)
 			r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
 			util.LogWithTrace(ctx, "info", "admin_service:管理员信息admin_id放入上下文: %d", claims.AdminID)
-		} else if strings.HasPrefix(path, "/api/balance") {
+		} else if strings.HasPrefix(path, "/api/backend/balance") {
 			r.SetCtxVar("admin_id", claims.AdminID)
 			r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
 			util.LogWithTrace(ctx, "info", "balance_service:管理员信息admin_id放入上下文: %d", claims.AdminID)

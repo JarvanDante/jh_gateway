@@ -9,7 +9,7 @@ import (
 )
 
 // AdminAuth 管理员认证中间件
-// 除了 /api/admin/login 接口外，其他接口都需要 token 验证
+// 除了 /api/backend/app/login 接口外，其他接口都需要 token 验证
 func AdminAuth(r *ghttp.Request) {
 	ctx := r.Context()
 	path := r.URL.Path

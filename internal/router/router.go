@@ -14,44 +14,82 @@ func Register(s *ghttp.Server) {
 		util.WriteSuccess(r, nil)
 	})
 
-	// 管理员相关：通过 gRPC 调用 admin_service (包含管理员功能和站点设置)
-	s.Group("/api/admin", func(group *ghttp.RouterGroup) {
+	// 后台管理接口统一入口
+	s.Group("/api/backend", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.RequestParser,          // 解析请求体数据
-			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
+			middleware.RequestParser,                     // 解析请求体数据
+			middleware.AuthWithSkip("/login", "/logout"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
 
-		// 其他管理员接口：转发到 app-service (gRPC)
-		group.ALL("/*any", proxy.AppGRPCToHTTP("jh_app_service"))
+		// 后台接口路由分发
+		group.ALL("/*any", proxy.BackendRouteDispatcher())
 	})
 
-	// 支付相关：转发到 balance-service (gRPC)
-	s.Group("/api/balance", func(group *ghttp.RouterGroup) {
+	// 前台用户接口（预留）
+	s.Group("/api/frontend", func(group *ghttp.RouterGroup) {
 		group.Middleware(
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.RequestParser,          // 解析请求体数据
-			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
+			middleware.RequestParser,
 			middleware.CircuitBreaker,
 		)
-		group.ALL("/*any", proxy.BalanceGRPCToHTTP("jh_balance_service"))
+
+		// 前台接口路由分发（暂时返回未实现）
+		group.ALL("/*any", proxy.FrontendRouteDispatcher())
 	})
 
-	// 支付相关：转发到 game-service (gRPC)
-	s.Group("/api/game", func(group *ghttp.RouterGroup) {
-		group.Middleware(
-			middleware.Logging,
-			middleware.Trace,
-			middleware.RateLimit,
-			middleware.RequestParser,          // 解析请求体数据
-			middleware.AuthWithSkip("/login"), // 认证中间件（跳过 /login 接口）
-			middleware.CircuitBreaker,
-		)
-		group.ALL("/*any", proxy.GameGRPCToHTTP("jh_game_service"))
-	})
+	// 兼容性路由（可选，用于渐进式迁移）
+	registerLegacyRoutes(s)
+}
+
+// registerLegacyRoutes 注册兼容性路由，便于渐进式迁移
+func registerLegacyRoutes(s *ghttp.Server) {
+	// 如果需要保持向后兼容，可以保留原有路由并重定向到新路由
+	// 这里暂时注释掉，如果需要可以启用
+
+	/*
+		// 管理员相关：重定向到后台统一入口
+		s.Group("/api/backend/app", func(group *ghttp.RouterGroup) {
+			group.Middleware(
+				middleware.Logging,
+				middleware.Trace,
+				middleware.RateLimit,
+				middleware.RequestParser,
+				middleware.AuthWithSkip("/login"),
+				middleware.CircuitBreaker,
+			)
+			group.ALL("/*any", proxy.AppGRPCToHTTP("jh_app_service"))
+		})
+
+		// 支付相关：重定向到后台统一入口
+		s.Group("/api/backend/balance", func(group *ghttp.RouterGroup) {
+			group.Middleware(
+				middleware.Logging,
+				middleware.Trace,
+				middleware.RateLimit,
+				middleware.RequestParser,
+				middleware.AuthWithSkip("/login"),
+				middleware.CircuitBreaker,
+			)
+			group.ALL("/*any", proxy.BalanceGRPCToHTTP("jh_balance_service"))
+		})
+
+		// 游戏相关：重定向到后台统一入口
+		s.Group("/api/backend/game", func(group *ghttp.RouterGroup) {
+			group.Middleware(
+				middleware.Logging,
+				middleware.Trace,
+				middleware.RateLimit,
+				middleware.RequestParser,
+				middleware.AuthWithSkip("/login"),
+				middleware.CircuitBreaker,
+			)
+			group.ALL("/*any", proxy.GameGRPCToHTTP("jh_game_service"))
+		})
+	*/
 }

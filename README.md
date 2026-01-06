@@ -93,7 +93,7 @@ dlv debug --headless --listen=:2345 --api-version=2
 - **健康检查**: `GET /gateway/health`
 - **用户服务**: `GET|POST|PUT|DELETE /api/user/*`
 - **支付服务**: `GET|POST|PUT|DELETE /api/pay/*`
-- **游戏服务**: `GET|POST|PUT|DELETE /api/game/*`
+- **游戏服务**: `GET|POST|PUT|DELETE /api/backend/game/*`
 
 ### gRPC 接口
 
