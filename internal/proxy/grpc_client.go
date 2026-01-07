@@ -642,6 +642,9 @@ func getInt32FromMap(data map[string]interface{}, key string) int32 {
 			return int32(v)
 		case float64:
 			return int32(v)
+		case string:
+			// 处理字符串类型的数字（来自 GET 查询参数或 form-data）
+			return gconv.Int32(v)
 		}
 	}
 	return 0
@@ -656,6 +659,9 @@ func getInt32FromMapWithDefault(data map[string]interface{}, key string, default
 			return int32(v)
 		case float64:
 			return int32(v)
+		case string:
+			// 处理字符串类型的数字（来自 GET 查询参数或 form-data）
+			return gconv.Int32(v)
 		}
 	}
 	return defaultValue
@@ -663,8 +669,12 @@ func getInt32FromMapWithDefault(data map[string]interface{}, key string, default
 
 func getBoolFromMap(data map[string]interface{}, key string) bool {
 	if val, ok := data[key]; ok {
-		if b, ok := val.(bool); ok {
-			return b
+		switch v := val.(type) {
+		case bool:
+			return v
+		case string:
+			// 处理字符串类型的布尔值（来自 GET 查询参数或 form-data）
+			return gconv.Bool(v)
 		}
 	}
 	return false
@@ -679,6 +689,9 @@ func getFloat64FromMap(data map[string]interface{}, key string) float64 {
 			return float64(v)
 		case int32:
 			return float64(v)
+		case string:
+			// 处理字符串类型的数字（来自 GET 查询参数或 form-data）
+			return gconv.Float64(v)
 		}
 	}
 	return 0.0
@@ -1512,14 +1525,17 @@ func callUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
  * @number 11
  */
 func callGetAdminLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	util.LogWithTrace(ctx, "info", "calling gRPC Admin GetAdminLogs")
+	util.LogWithTrace(ctx, "info", "calling gRPC Admin GetAdminLogs - Method: %s", r.Method)
 
 	// 使用中间件解析的请求数据
 	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
 	if err != nil {
+		util.LogWithTrace(ctx, "error", "请求参数解析失败: %v", err)
 		util.WriteBadRequest(r, "请求参数解析失败")
 		return nil
 	}
+
+	util.LogWithTrace(ctx, "info", "解析到的请求数据: %+v", reqData)
 
 	// 创建 gRPC 客户端
 	client := v1.NewAdminClient(conn)
@@ -1541,6 +1557,8 @@ func callGetAdminLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		util.WriteInternalError(r, "获取管理员日志失败，请稍后重试")
 		return nil
 	}
+
+	util.LogWithTrace(ctx, "info", "gRPC响应成功，数据条数: %d", len(res.List))
 
 	// 使用统一的protobuf响应序列化
 	return writeProtobufResponse(ctx, r, res)
