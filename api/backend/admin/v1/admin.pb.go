@@ -264,6 +264,7 @@ type MenuInfo struct {
 	FrontendUrl   string                 `protobuf:"bytes,8,opt,name=frontend_url,json=frontendUrl,proto3" json:"frontend_url" dc:"新增：前端URL"` // 新增：前端URL
 	Open          bool                   `protobuf:"varint,9,opt,name=open,proto3" json:"open" dc:"新增：是否展开"`                                  // 新增：是否展开
 	Checked       bool                   `protobuf:"varint,10,opt,name=checked,proto3" json:"checked" dc:"新增：是否选中"`                           // 新增：是否选中
+	Icon          string                 `protobuf:"bytes,11,opt,name=icon,proto3" json:"icon" dc:"菜单图标"`                                     // 菜单图标
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -366,6 +367,13 @@ func (x *MenuInfo) GetChecked() bool {
 		return x.Checked
 	}
 	return false
+}
+
+func (x *MenuInfo) GetIcon() string {
+	if x != nil {
+		return x.Icon
+	}
+	return ""
 }
 
 // 获取管理员信息响应
@@ -1499,7 +1507,7 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\x0fRefreshTokenRes\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"\f\n" +
 	"\n" +
-	"GetInfoReq\"\x89\x02\n" +
+	"GetInfoReq\"\x9d\x02\n" +
 	"\bMenuInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -1512,7 +1520,8 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\ffrontend_url\x18\b \x01(\tR\vfrontendUrl\x12\x12\n" +
 	"\x04open\x18\t \x01(\bR\x04open\x12\x18\n" +
 	"\achecked\x18\n" +
-	" \x01(\bR\achecked\"\x99\x01\n" +
+	" \x01(\bR\achecked\x12\x12\n" +
+	"\x04icon\x18\v \x01(\tR\x04icon\"\x99\x01\n" +
 	"\n" +
 	"GetInfoRes\x12\x14\n" +
 	"\x05roles\x18\x01 \x03(\tR\x05roles\x12\x12\n" +
