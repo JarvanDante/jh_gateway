@@ -769,28 +769,29 @@ type UserBasicInfo struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Id               int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"用户ID"`                                                         // 用户ID
 	Username         string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                               // 用户名
-	GradeName        string                 `protobuf:"bytes,3,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"等级名称"`                           // 等级名称
-	LevelName        string                 `protobuf:"bytes,4,opt,name=level_name,json=levelName,proto3" json:"level_name" dc:"层级名称"`                           // 层级名称
-	Balance          string                 `protobuf:"bytes,5,opt,name=balance,proto3" json:"balance" dc:"余额"`                                                  // 余额
-	RegisterTime     string                 `protobuf:"bytes,6,opt,name=register_time,json=registerTime,proto3" json:"register_time" dc:"注册时间"`                  // 注册时间
-	RegisterIp       string                 `protobuf:"bytes,7,opt,name=register_ip,json=registerIp,proto3" json:"register_ip" dc:"注册IP"`                        // 注册IP
-	LastLoginIp      string                 `protobuf:"bytes,8,opt,name=last_login_ip,json=lastLoginIp,proto3" json:"last_login_ip" dc:"最后登录IP"`                 // 最后登录IP
-	LastLoginTime    string                 `protobuf:"bytes,9,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`           // 最后登录时间
-	LastLoginAddress string                 `protobuf:"bytes,10,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"` // 最后登录地址
-	AgentName        string                 `protobuf:"bytes,11,opt,name=agent_name,json=agentName,proto3" json:"agent_name" dc:"代理名称"`                          // 代理名称
-	Realname         string                 `protobuf:"bytes,12,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                             // 真实姓名
-	Mobile           string                 `protobuf:"bytes,13,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                  // 手机号
-	Email            string                 `protobuf:"bytes,14,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                     // 邮箱
-	Sex              int32                  `protobuf:"varint,15,opt,name=sex,proto3" json:"sex" dc:"性别"`                                                        // 性别
-	Birthday         string                 `protobuf:"bytes,16,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                               // 生日
-	Qq               string                 `protobuf:"bytes,17,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                          // QQ号
-	BalanceStatus    int32                  `protobuf:"varint,18,opt,name=balance_status,json=balanceStatus,proto3" json:"balance_status" dc:"资金状态"`             // 资金状态
-	FocusLevel       int32                  `protobuf:"varint,19,opt,name=focus_level,json=focusLevel,proto3" json:"focus_level" dc:"关注级别"`                      // 关注级别
-	Remark           string                 `protobuf:"bytes,20,opt,name=remark,proto3" json:"remark" dc:"备注"`                                                   // 备注
-	Status           int32                  `protobuf:"varint,21,opt,name=status,proto3" json:"status" dc:"状态"`                                                  // 状态
-	Device           string                 `protobuf:"bytes,22,opt,name=device,proto3" json:"device" dc:"最后登录设备"`                                               // 最后登录设备
-	IsOnline         int32                  `protobuf:"varint,23,opt,name=is_online,json=isOnline,proto3" json:"is_online" dc:"是否在线"`                            // 是否在线
-	Banks            []*BankInfo            `protobuf:"bytes,24,rep,name=banks,proto3" json:"banks" dc:"银行卡列表"`                                                  // 银行卡列表
+	GradeId          int32                  `protobuf:"varint,3,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID"`                                // 等级ID
+	GradeName        string                 `protobuf:"bytes,4,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"等级名称"`                           // 等级名称
+	LevelName        string                 `protobuf:"bytes,5,opt,name=level_name,json=levelName,proto3" json:"level_name" dc:"层级名称"`                           // 层级名称
+	Balance          string                 `protobuf:"bytes,6,opt,name=balance,proto3" json:"balance" dc:"余额"`                                                  // 余额
+	RegisterTime     string                 `protobuf:"bytes,7,opt,name=register_time,json=registerTime,proto3" json:"register_time" dc:"注册时间"`                  // 注册时间
+	RegisterIp       string                 `protobuf:"bytes,8,opt,name=register_ip,json=registerIp,proto3" json:"register_ip" dc:"注册IP"`                        // 注册IP
+	LastLoginIp      string                 `protobuf:"bytes,9,opt,name=last_login_ip,json=lastLoginIp,proto3" json:"last_login_ip" dc:"最后登录IP"`                 // 最后登录IP
+	LastLoginTime    string                 `protobuf:"bytes,10,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`          // 最后登录时间
+	LastLoginAddress string                 `protobuf:"bytes,11,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"` // 最后登录地址
+	AgentName        string                 `protobuf:"bytes,12,opt,name=agent_name,json=agentName,proto3" json:"agent_name" dc:"代理名称"`                          // 代理名称
+	Realname         string                 `protobuf:"bytes,13,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                             // 真实姓名
+	Mobile           string                 `protobuf:"bytes,14,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                  // 手机号
+	Email            string                 `protobuf:"bytes,15,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                     // 邮箱
+	Sex              int32                  `protobuf:"varint,16,opt,name=sex,proto3" json:"sex" dc:"性别"`                                                        // 性别
+	Birthday         string                 `protobuf:"bytes,17,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                               // 生日
+	Qq               string                 `protobuf:"bytes,18,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                          // QQ号
+	BalanceStatus    int32                  `protobuf:"varint,19,opt,name=balance_status,json=balanceStatus,proto3" json:"balance_status" dc:"资金状态"`             // 资金状态
+	FocusLevel       int32                  `protobuf:"varint,20,opt,name=focus_level,json=focusLevel,proto3" json:"focus_level" dc:"关注级别"`                      // 关注级别
+	Remark           string                 `protobuf:"bytes,21,opt,name=remark,proto3" json:"remark" dc:"备注"`                                                   // 备注
+	Status           int32                  `protobuf:"varint,22,opt,name=status,proto3" json:"status" dc:"状态"`                                                  // 状态
+	Device           string                 `protobuf:"bytes,23,opt,name=device,proto3" json:"device" dc:"最后登录设备"`                                               // 最后登录设备
+	IsOnline         int32                  `protobuf:"varint,24,opt,name=is_online,json=isOnline,proto3" json:"is_online" dc:"是否在线"`                            // 是否在线
+	Banks            []*BankInfo            `protobuf:"bytes,25,rep,name=banks,proto3" json:"banks" dc:"银行卡列表"`                                                  // 银行卡列表
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -837,6 +838,13 @@ func (x *UserBasicInfo) GetUsername() string {
 		return x.Username
 	}
 	return ""
+}
+
+func (x *UserBasicInfo) GetGradeId() int32 {
+	if x != nil {
+		return x.GradeId
+	}
+	return 0
 }
 
 func (x *UserBasicInfo) GetGradeName() string {
@@ -1955,38 +1963,39 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"%\n" +
 	"\x13GetUserBasicInfoReq\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\"\xcd\x05\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xe8\x05\n" +
 	"\rUserBasicInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\x12\x1d\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
+	"\bgrade_id\x18\x03 \x01(\x05R\agradeId\x12\x1d\n" +
 	"\n" +
-	"grade_name\x18\x03 \x01(\tR\tgradeName\x12\x1d\n" +
+	"grade_name\x18\x04 \x01(\tR\tgradeName\x12\x1d\n" +
 	"\n" +
-	"level_name\x18\x04 \x01(\tR\tlevelName\x12\x18\n" +
-	"\abalance\x18\x05 \x01(\tR\abalance\x12#\n" +
-	"\rregister_time\x18\x06 \x01(\tR\fregisterTime\x12\x1f\n" +
-	"\vregister_ip\x18\a \x01(\tR\n" +
+	"level_name\x18\x05 \x01(\tR\tlevelName\x12\x18\n" +
+	"\abalance\x18\x06 \x01(\tR\abalance\x12#\n" +
+	"\rregister_time\x18\a \x01(\tR\fregisterTime\x12\x1f\n" +
+	"\vregister_ip\x18\b \x01(\tR\n" +
 	"registerIp\x12\"\n" +
-	"\rlast_login_ip\x18\b \x01(\tR\vlastLoginIp\x12&\n" +
-	"\x0flast_login_time\x18\t \x01(\tR\rlastLoginTime\x12,\n" +
-	"\x12last_login_address\x18\n" +
-	" \x01(\tR\x10lastLoginAddress\x12\x1d\n" +
+	"\rlast_login_ip\x18\t \x01(\tR\vlastLoginIp\x12&\n" +
+	"\x0flast_login_time\x18\n" +
+	" \x01(\tR\rlastLoginTime\x12,\n" +
+	"\x12last_login_address\x18\v \x01(\tR\x10lastLoginAddress\x12\x1d\n" +
 	"\n" +
-	"agent_name\x18\v \x01(\tR\tagentName\x12\x1a\n" +
-	"\brealname\x18\f \x01(\tR\brealname\x12\x16\n" +
-	"\x06mobile\x18\r \x01(\tR\x06mobile\x12\x14\n" +
-	"\x05email\x18\x0e \x01(\tR\x05email\x12\x10\n" +
-	"\x03sex\x18\x0f \x01(\x05R\x03sex\x12\x1a\n" +
-	"\bbirthday\x18\x10 \x01(\tR\bbirthday\x12\x0e\n" +
-	"\x02qq\x18\x11 \x01(\tR\x02qq\x12%\n" +
-	"\x0ebalance_status\x18\x12 \x01(\x05R\rbalanceStatus\x12\x1f\n" +
-	"\vfocus_level\x18\x13 \x01(\x05R\n" +
+	"agent_name\x18\f \x01(\tR\tagentName\x12\x1a\n" +
+	"\brealname\x18\r \x01(\tR\brealname\x12\x16\n" +
+	"\x06mobile\x18\x0e \x01(\tR\x06mobile\x12\x14\n" +
+	"\x05email\x18\x0f \x01(\tR\x05email\x12\x10\n" +
+	"\x03sex\x18\x10 \x01(\x05R\x03sex\x12\x1a\n" +
+	"\bbirthday\x18\x11 \x01(\tR\bbirthday\x12\x0e\n" +
+	"\x02qq\x18\x12 \x01(\tR\x02qq\x12%\n" +
+	"\x0ebalance_status\x18\x13 \x01(\x05R\rbalanceStatus\x12\x1f\n" +
+	"\vfocus_level\x18\x14 \x01(\x05R\n" +
 	"focusLevel\x12\x16\n" +
-	"\x06remark\x18\x14 \x01(\tR\x06remark\x12\x16\n" +
-	"\x06status\x18\x15 \x01(\x05R\x06status\x12\x16\n" +
-	"\x06device\x18\x16 \x01(\tR\x06device\x12\x1b\n" +
-	"\tis_online\x18\x17 \x01(\x05R\bisOnline\x12$\n" +
-	"\x05banks\x18\x18 \x03(\v2\x0e.user.BankInfoR\x05banks\"@\n" +
+	"\x06remark\x18\x15 \x01(\tR\x06remark\x12\x16\n" +
+	"\x06status\x18\x16 \x01(\x05R\x06status\x12\x16\n" +
+	"\x06device\x18\x17 \x01(\tR\x06device\x12\x1b\n" +
+	"\tis_online\x18\x18 \x01(\x05R\bisOnline\x12$\n" +
+	"\x05banks\x18\x19 \x03(\v2\x0e.user.BankInfoR\x05banks\"@\n" +
 	"\bBankInfo\x12\x1b\n" +
 	"\tbank_name\x18\x01 \x01(\tR\bbankName\x12\x17\n" +
 	"\acard_no\x18\x02 \x01(\tR\x06cardNo\">\n" +

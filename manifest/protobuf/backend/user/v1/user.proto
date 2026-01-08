@@ -111,28 +111,29 @@ message GetUserBasicInfoReq {
 message UserBasicInfo {
     int32 id = 1;                       // 用户ID
     string username = 2;                // 用户名
-    string grade_name = 3;              // 等级名称
-    string level_name = 4;              // 层级名称
-    string balance = 5;                 // 余额
-    string register_time = 6;           // 注册时间
-    string register_ip = 7;             // 注册IP
-    string last_login_ip = 8;           // 最后登录IP
-    string last_login_time = 9;         // 最后登录时间
-    string last_login_address = 10;     // 最后登录地址
-    string agent_name = 11;             // 代理名称
-    string realname = 12;               // 真实姓名
-    string mobile = 13;                 // 手机号
-    string email = 14;                  // 邮箱
-    int32 sex = 15;                     // 性别
-    string birthday = 16;               // 生日
-    string qq = 17;                     // QQ号
-    int32 balance_status = 18;          // 资金状态
-    int32 focus_level = 19;             // 关注级别
-    string remark = 20;                 // 备注
-    int32 status = 21;                  // 状态
-    string device = 22;                 // 最后登录设备
-    int32 is_online = 23;               // 是否在线
-    repeated BankInfo banks = 24;       // 银行卡列表
+    int32 grade_id = 3;                 // 等级ID
+    string grade_name = 4;              // 等级名称
+    string level_name = 5;              // 层级名称
+    string balance = 6;                 // 余额
+    string register_time = 7;           // 注册时间
+    string register_ip = 8;             // 注册IP
+    string last_login_ip = 9;           // 最后登录IP
+    string last_login_time = 10;        // 最后登录时间
+    string last_login_address = 11;     // 最后登录地址
+    string agent_name = 12;             // 代理名称
+    string realname = 13;               // 真实姓名
+    string mobile = 14;                 // 手机号
+    string email = 15;                  // 邮箱
+    int32 sex = 16;                     // 性别
+    string birthday = 17;               // 生日
+    string qq = 18;                     // QQ号
+    int32 balance_status = 19;          // 资金状态
+    int32 focus_level = 20;             // 关注级别
+    string remark = 21;                 // 备注
+    int32 status = 22;                  // 状态
+    string device = 23;                 // 最后登录设备
+    int32 is_online = 24;               // 是否在线
+    repeated BankInfo banks = 25;       // 银行卡列表
 }
 
 // 银行卡信息
