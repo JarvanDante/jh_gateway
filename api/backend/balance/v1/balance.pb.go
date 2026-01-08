@@ -214,6 +214,7 @@ type BalanceChangeInfo struct {
 	StatusName    string                 `protobuf:"bytes,12,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"`             // 状态名称
 	Remark        string                 `protobuf:"bytes,13,opt,name=remark,proto3" json:"remark" dc:"备注"`                                         // 备注
 	CreatedAt     string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                // 创建时间
+	ChangeType    int32                  `protobuf:"varint,15,opt,name=change_type,json=changeType,proto3" json:"change_type" dc:"账变类型 1=入款 2=出款"`  // 账变类型 1=入款 2=出款
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -344,6 +345,13 @@ func (x *BalanceChangeInfo) GetCreatedAt() string {
 		return x.CreatedAt
 	}
 	return ""
+}
+
+func (x *BalanceChangeInfo) GetChangeType() int32 {
+	if x != nil {
+		return x.ChangeType
+	}
+	return 0
 }
 
 // 获取账变记录响应
@@ -3644,7 +3652,7 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"start_time\x18\x04 \x01(\tR\tstartTime\x12\x19\n" +
 	"\bend_time\x18\x05 \x01(\tR\aendTime\x12\x12\n" +
 	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\a \x01(\x05R\x04size\"\xa9\x03\n" +
+	"\x04size\x18\a \x01(\x05R\x04size\"\xca\x03\n" +
 	"\x11BalanceChangeInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1d\n" +
 	"\n" +
@@ -3665,7 +3673,9 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"statusName\x12\x16\n" +
 	"\x06remark\x18\r \x01(\tR\x06remark\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x0e \x01(\tR\tcreatedAt\"\\\n" +
+	"created_at\x18\x0e \x01(\tR\tcreatedAt\x12\x1f\n" +
+	"\vchange_type\x18\x0f \x01(\x05R\n" +
+	"changeType\"\\\n" +
 	"\x14GetBalanceChangesRes\x12.\n" +
 	"\x04list\x18\x01 \x03(\v2\x1a.balance.BalanceChangeInfoR\x04list\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x05R\x05count\"\xb9\x02\n" +

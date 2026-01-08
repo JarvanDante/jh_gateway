@@ -71,6 +71,7 @@ message BalanceChangeInfo {
     string status_name = 12;            // 状态名称
     string remark = 13;                 // 备注
     string created_at = 14;             // 创建时间
+    int32 change_type = 15;             // 账变类型 1=入款 2=出款
 }
 
 // 获取账变记录响应
