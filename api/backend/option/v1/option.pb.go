@@ -197,10 +197,10 @@ func (*UserGradeListRequest) Descriptor() ([]byte, []int) {
 	return file_backend_option_v1_option_proto_rawDescGZIP(), []int{2}
 }
 
-// 会员等级列表响应
+// 会员等级列表响应 - 直接返回数组
 type UserGradeListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          []*UserGrade           `protobuf:"bytes,1,rep,name=data,proto3" json:"data"`
+	Grades        []*UserGrade           `protobuf:"bytes,1,rep,name=grades,proto3" json:"grades"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -235,9 +235,9 @@ func (*UserGradeListResponse) Descriptor() ([]byte, []int) {
 	return file_backend_option_v1_option_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *UserGradeListResponse) GetData() []*UserGrade {
+func (x *UserGradeListResponse) GetGrades() []*UserGrade {
 	if x != nil {
-		return x.Data
+		return x.Grades
 	}
 	return nil
 }
@@ -279,10 +279,10 @@ func (*AdminRoleListRequest) Descriptor() ([]byte, []int) {
 	return file_backend_option_v1_option_proto_rawDescGZIP(), []int{4}
 }
 
-// 后台角色列表响应
+// 后台角色列表响应 - 直接返回数组
 type AdminRoleListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          []*AdminRole           `protobuf:"bytes,1,rep,name=data,proto3" json:"data"`
+	Roles         []*AdminRole           `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -317,9 +317,9 @@ func (*AdminRoleListResponse) Descriptor() ([]byte, []int) {
 	return file_backend_option_v1_option_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *AdminRoleListResponse) GetData() []*AdminRole {
+func (x *AdminRoleListResponse) GetRoles() []*AdminRole {
 	if x != nil {
-		return x.Data
+		return x.Roles
 	}
 	return nil
 }
@@ -339,12 +339,12 @@ const file_backend_option_v1_option_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\x05R\x06status\"\x16\n" +
-	"\x14UserGradeListRequest\">\n" +
-	"\x15UserGradeListResponse\x12%\n" +
-	"\x04data\x18\x01 \x03(\v2\x11.option.UserGradeR\x04data\"\x16\n" +
-	"\x14AdminRoleListRequest\">\n" +
-	"\x15AdminRoleListResponse\x12%\n" +
-	"\x04data\x18\x01 \x03(\v2\x11.option.AdminRoleR\x04data2\xaa\x01\n" +
+	"\x14UserGradeListRequest\"B\n" +
+	"\x15UserGradeListResponse\x12)\n" +
+	"\x06grades\x18\x01 \x03(\v2\x11.option.UserGradeR\x06grades\"\x16\n" +
+	"\x14AdminRoleListRequest\"@\n" +
+	"\x15AdminRoleListResponse\x12'\n" +
+	"\x05roles\x18\x01 \x03(\v2\x11.option.AdminRoleR\x05roles2\xaa\x01\n" +
 	"\x06Option\x12O\n" +
 	"\x10GetUserGradeList\x12\x1c.option.UserGradeListRequest\x1a\x1d.option.UserGradeListResponse\x12O\n" +
 	"\x10GetAdminRoleList\x12\x1c.option.AdminRoleListRequest\x1a\x1d.option.AdminRoleListResponseB)Z'jh_app_service/api/backend/option/v1;v1b\x06proto3"
@@ -371,8 +371,8 @@ var file_backend_option_v1_option_proto_goTypes = []any{
 	(*AdminRoleListResponse)(nil), // 5: option.AdminRoleListResponse
 }
 var file_backend_option_v1_option_proto_depIdxs = []int32{
-	0, // 0: option.UserGradeListResponse.data:type_name -> option.UserGrade
-	1, // 1: option.AdminRoleListResponse.data:type_name -> option.AdminRole
+	0, // 0: option.UserGradeListResponse.grades:type_name -> option.UserGrade
+	1, // 1: option.AdminRoleListResponse.roles:type_name -> option.AdminRole
 	2, // 2: option.Option.GetUserGradeList:input_type -> option.UserGradeListRequest
 	4, // 3: option.Option.GetAdminRoleList:input_type -> option.AdminRoleListRequest
 	3, // 4: option.Option.GetUserGradeList:output_type -> option.UserGradeListResponse

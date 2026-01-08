@@ -33,17 +33,17 @@ message AdminRole {
 message UserGradeListRequest {
 }
 
-// 会员等级列表响应
+// 会员等级列表响应 - 直接返回数组
 message UserGradeListResponse {
-  repeated UserGrade data = 1;
+  repeated UserGrade grades = 1;
 }
 
 // 后台角色列表请求
 message AdminRoleListRequest {
 }
 
-// 后台角色列表响应
+// 后台角色列表响应 - 直接返回数组
 message AdminRoleListResponse {
-  repeated AdminRole data = 1;
+  repeated AdminRole roles = 1;
 }
 
