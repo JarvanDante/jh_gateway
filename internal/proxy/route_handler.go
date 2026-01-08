@@ -160,6 +160,12 @@ func initAppRoutes() {
 	appRoutes.Register("/update-notice", "POST", callUpdateNotice)
 	// 删除公告
 	appRoutes.Register("/delete-notice", "POST", callDeleteNotice)
+
+	// 选项接口
+	// 会员等级列表
+	appRoutes.Register("/options-user-grade", "GET", callGetUserGradeOptions)
+	// 后台角色列表
+	appRoutes.Register("/options-admin-role", "GET", callGetAdminRoleOptions)
 }
 
 // initBalanceRoutes 初始化余额路由

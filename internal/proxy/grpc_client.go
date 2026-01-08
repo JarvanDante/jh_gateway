@@ -11,6 +11,7 @@ import (
 	v7 "jh_gateway/api/backend/game/v1"
 	v8 "jh_gateway/api/backend/message/v1"
 	v10 "jh_gateway/api/backend/notice/v1"
+	v11 "jh_gateway/api/backend/option/v1"
 	v2 "jh_gateway/api/backend/role/v1"
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
@@ -185,7 +186,7 @@ func callAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 /**
  * showdoc
- * @catalog 后台
+ * @catalog 后台/公共
  * @title 获取管理员信息
  * @description 获取当前登录管理员的基本信息、角色和权限菜单
  * @method get
@@ -230,7 +231,7 @@ func callGetInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) e
 
 /**
  * showdoc
- * @catalog 后台
+ * @catalog 后台/公共
  * @title 获取菜单列表
  * @description 获取当前登录用户的菜单列表
  * @method get
@@ -3895,6 +3896,70 @@ func callDeleteNotice(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Notice DeleteNotice failed: %v", err)
 		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/公共
+ * @title 获取会员等级列表
+ * @description 获取会员等级选项列表的接口
+ * @method get
+ * @url /api/backend/app/options-user-grade
+ * @return {"code":0,"msg":"success","data":[{"id":1,"name":"VIP1","sort":1,"status":1},{"id":2,"name":"VIP2","sort":2,"status":1}]}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data array 会员等级列表
+ * @number 24
+ */
+func callGetUserGradeOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Option GetUserGradeList")
+
+	// 创建 gRPC 客户端
+	client := v11.NewOptionClient(conn)
+	req := &v11.UserGradeListRequest{}
+
+	// 调用 gRPC 服务
+	res, err := client.GetUserGradeList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Option GetUserGradeList failed: %v", err)
+		util.WriteInternalError(r, "获取会员等级列表失败，请稍后重试")
+		return nil
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/公共
+ * @title 获取后台角色列表
+ * @description 获取后台角色选项列表的接口
+ * @method get
+ * @url /api/backend/app/options-admin-role
+ * @return {"code":0,"msg":"success","data":[{"id":1,"name":"超级管理员","description":"拥有所有权限","status":1},{"id":2,"name":"管理员","description":"拥有部分管理权限","status":1}]}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data array 后台角色列表
+ * @number 25
+ */
+func callGetAdminRoleOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Option GetAdminRoleList")
+
+	// 创建 gRPC 客户端
+	client := v11.NewOptionClient(conn)
+	req := &v11.AdminRoleListRequest{}
+
+	// 调用 gRPC 服务
+	res, err := client.GetAdminRoleList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Option GetAdminRoleList failed: %v", err)
+		util.WriteInternalError(r, "获取后台角色列表失败，请稍后重试")
+		return nil
 	}
 
 	// 返回响应

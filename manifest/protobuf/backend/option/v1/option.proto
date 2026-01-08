@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package option;
+
+option go_package = "jh_app_service/api/backend/option/v1;v1";
+
+// 选项服务
+service Option {
+  // 获取会员等级列表
+  rpc GetUserGradeList(UserGradeListRequest) returns (UserGradeListResponse);
+
+  // 获取后台角色列表
+  rpc GetAdminRoleList(AdminRoleListRequest) returns (AdminRoleListResponse);
+}
+
+// 会员等级信息
+message UserGrade {
+  int32 id = 1;
+  string name = 2;
+  int32 sort = 3;
+  int32 status = 4;
+}
+
+// 后台角色信息
+message AdminRole {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  int32 status = 4;
+}
+
+// 会员等级列表请求
+message UserGradeListRequest {
+}
+
+// 会员等级列表响应
+message UserGradeListResponse {
+  repeated UserGrade data = 1;
+}
+
+// 后台角色列表请求
+message AdminRoleListRequest {
+}
+
+// 后台角色列表响应
+message AdminRoleListResponse {
+  repeated AdminRole data = 1;
+}
+

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package admin;
 
-option go_package = "jh_gateway/api/backend/admin/v1";
+option go_package = "jh_app_service/api/backend/admin/v1";
 
 service Admin {
     rpc Login(LoginReq) returns (LoginRes) {}
@@ -50,6 +50,7 @@ message MenuInfo {
     string frontend_url = 8;            // 新增：前端URL  
     bool open = 9;                      // 新增：是否展开
     bool checked = 10;                  // 新增：是否选中
+    string icon = 11;                   // 菜单图标
 }
 
 // 获取管理员信息响应
