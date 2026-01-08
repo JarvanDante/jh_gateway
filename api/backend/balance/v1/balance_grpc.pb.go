@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Balance_GetBalanceChanges_FullMethodName       = "/balance.Balance/GetBalanceChanges"
+	Balance_GetChangeList_FullMethodName           = "/balance.Balance/GetChangeList"
 	Balance_GetRechargePayments_FullMethodName     = "/balance.Balance/GetRechargePayments"
 	Balance_GetRechargeManuals_FullMethodName      = "/balance.Balance/GetRechargeManuals"
 	Balance_ConfirmPaymentOrder_FullMethodName     = "/balance.Balance/ConfirmPaymentOrder"
@@ -44,6 +45,8 @@ const (
 type BalanceClient interface {
 	// 账变记录相关
 	GetBalanceChanges(ctx context.Context, in *GetBalanceChangesReq, opts ...grpc.CallOption) (*GetBalanceChangesRes, error)
+	// 交易类型选项
+	GetChangeList(ctx context.Context, in *GetChangeListReq, opts ...grpc.CallOption) (*GetChangeListRes, error)
 	// 充值记录相关
 	GetRechargePayments(ctx context.Context, in *GetRechargePaymentsReq, opts ...grpc.CallOption) (*GetRechargePaymentsRes, error)
 	GetRechargeManuals(ctx context.Context, in *GetRechargeManualsReq, opts ...grpc.CallOption) (*GetRechargeManualsRes, error)
@@ -77,6 +80,16 @@ func (c *balanceClient) GetBalanceChanges(ctx context.Context, in *GetBalanceCha
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetBalanceChangesRes)
 	err := c.cc.Invoke(ctx, Balance_GetBalanceChanges_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetChangeList(ctx context.Context, in *GetChangeListReq, opts ...grpc.CallOption) (*GetChangeListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetChangeListRes)
+	err := c.cc.Invoke(ctx, Balance_GetChangeList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -239,6 +252,8 @@ func (c *balanceClient) DeletePaymentAccount(ctx context.Context, in *DeletePaym
 type BalanceServer interface {
 	// 账变记录相关
 	GetBalanceChanges(context.Context, *GetBalanceChangesReq) (*GetBalanceChangesRes, error)
+	// 交易类型选项
+	GetChangeList(context.Context, *GetChangeListReq) (*GetChangeListRes, error)
 	// 充值记录相关
 	GetRechargePayments(context.Context, *GetRechargePaymentsReq) (*GetRechargePaymentsRes, error)
 	GetRechargeManuals(context.Context, *GetRechargeManualsReq) (*GetRechargeManualsRes, error)
@@ -270,6 +285,9 @@ type UnimplementedBalanceServer struct{}
 
 func (UnimplementedBalanceServer) GetBalanceChanges(context.Context, *GetBalanceChangesReq) (*GetBalanceChangesRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBalanceChanges not implemented")
+}
+func (UnimplementedBalanceServer) GetChangeList(context.Context, *GetChangeListReq) (*GetChangeListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetChangeList not implemented")
 }
 func (UnimplementedBalanceServer) GetRechargePayments(context.Context, *GetRechargePaymentsReq) (*GetRechargePaymentsRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetRechargePayments not implemented")
@@ -351,6 +369,24 @@ func _Balance_GetBalanceChanges_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BalanceServer).GetBalanceChanges(ctx, req.(*GetBalanceChangesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetChangeList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChangeListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetChangeList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetChangeList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetChangeList(ctx, req.(*GetChangeListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -635,6 +671,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBalanceChanges",
 			Handler:    _Balance_GetBalanceChanges_Handler,
+		},
+		{
+			MethodName: "GetChangeList",
+			Handler:    _Balance_GetChangeList_Handler,
 		},
 		{
 			MethodName: "GetRechargePayments",

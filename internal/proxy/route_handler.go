@@ -174,6 +174,8 @@ func initBalanceRoutes() {
 
 	// 账变记录
 	balanceRoutes.Register("/balance-changes", "GET", callGetBalanceChanges)
+	// 交易类型列表
+	balanceRoutes.Register("/options-change", "GET", callGetChangeOptions)
 
 	// 充值记录
 	balanceRoutes.Register("/recharge-payment", "GET", callGetRechargePayments)

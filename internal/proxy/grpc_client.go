@@ -3965,3 +3965,35 @@ func callGetAdminRoleOptions(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 	// 返回响应
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 后台/公共
+ * @title 获取交易类型列表
+ * @description 获取交易类型选项列表的接口
+ * @method get
+ * @url /api/backend/balance/options-change
+ * @return {"code":0,"msg":"success","data":{"1":"转入","2":"充值","3":"红利","4":"返水","5":"转出","6":"提现成功","7":"提现返回","8":"提现冻结","9":"丢失补款","10":"多出扣款"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 交易类型列表
+ * @number 26
+ */
+func callGetChangeOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetChangeList")
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetChangeListReq{}
+
+	// 调用 gRPC 服务
+	res, err := client.GetChangeList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetChangeList failed: %v", err)
+		util.WriteInternalError(r, "获取交易类型列表失败，请稍后重试")
+		return nil
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}

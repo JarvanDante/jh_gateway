@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package option;
 
-option go_package = "jh_app_service/api/backend/option/v1;v1";
+option go_package = "jh_gateway/api/backend/option/v1;v1";
 
 // 选项服务
 service Option {
@@ -46,4 +46,3 @@ message AdminRoleListRequest {
 message AdminRoleListResponse {
   repeated AdminRole roles = 1;
 }
-
