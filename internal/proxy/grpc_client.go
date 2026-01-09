@@ -2592,10 +2592,10 @@ func callQueryUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 		return nil
 	}
 
-	// 获取参数
-	userId := getStringFromMap(reqData, "user_id")
+	// 获取参数 - 支持数字和字符串类型
+	userId := getInt32FromMap(reqData, "user_id")
 
-	if userId == "" {
+	if userId <= 0 {
 		util.WriteBadRequest(r, "用户ID不能为空")
 		return nil
 	}
@@ -2603,10 +2603,10 @@ func callQueryUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	// 创建 gRPC 客户端
 	client := v6.NewBalanceClient(conn)
 	req := &v6.QueryUserBalanceReq{
-		UserId: gconv.Int32(userId),
+		UserId: userId,
 	}
 
-	util.LogWithTrace(ctx, "info", "gRPC请求参数 - user_id: %s", req.UserId)
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - user_id: %d", req.UserId)
 
 	// 调用 gRPC 服务
 	res, err := client.QueryUserBalance(ctx, req)
@@ -2723,10 +2723,7 @@ func callManualUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 		util.WriteBadRequest(r, "用户ID不能为空")
 		return nil
 	}
-	if operationType != 1 && operationType != 2 {
-		util.WriteBadRequest(r, "操作类型无效，1=加款 2=扣款")
-		return nil
-	}
+
 	if money <= 0 {
 		util.WriteBadRequest(r, "操作金额必须大于0")
 		return nil
@@ -3113,6 +3110,37 @@ func callDeletePaymentAccount(ctx context.Context, conn *grpc.ClientConn, r *ght
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
 		util.WriteInternalError(r, "删除支付接口失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/公共
+ * @title 获取操作类型列表
+ * @description 获取手动操作的操作类型列表
+ * @method GET
+ * @url /api/backend/balance/options-manual
+ * @return_param data object 操作类型列表
+ * @return_param data.list map 操作类型映射 {typeCode: typeName}
+ * @remark 返回所有可用的操作类型
+ * @number 17
+ */
+func callGetManualList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetManualList")
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetManualListReq{}
+
+	// 调用 gRPC 服务
+	res, err := client.GetManualList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取操作类型列表失败，请稍后重试")
 		return nil
 	}
 

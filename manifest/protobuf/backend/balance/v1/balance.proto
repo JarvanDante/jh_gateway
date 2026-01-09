@@ -33,6 +33,9 @@ service Balance {
     rpc GetPaymentAccountUpdate(GetPaymentAccountUpdateReq) returns (GetPaymentAccountUpdateRes) {}
     rpc UpdatePaymentAccount(UpdatePaymentAccountReq) returns (UpdatePaymentAccountRes) {}
     rpc DeletePaymentAccount(DeletePaymentAccountReq) returns (DeletePaymentAccountRes) {}
+    
+    // 操作类型选项
+    rpc GetManualList(GetManualListReq) returns (GetManualListRes) {}
 }
 
 // 获取交易类型列表请求
@@ -457,4 +460,13 @@ message DeletePaymentAccountReq {
 message DeletePaymentAccountRes {
     bool success = 1;           // 是否成功
     string message = 2;         // 响应消息
+}
+
+// 获取操作类型列表请求
+message GetManualListReq {
+}
+
+// 获取操作类型列表响应
+message GetManualListRes {
+    map<int32, string> list = 1;  // 操作类型列表
 }

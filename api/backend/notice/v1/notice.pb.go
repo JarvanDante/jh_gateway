@@ -25,10 +25,10 @@ const (
 // 获取公告列表请求
 type GetNoticeListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
-	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -94,12 +94,12 @@ func (x *GetNoticeListReq) GetType() int32 {
 // 获取公告列表响应
 type GetNoticeListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*NoticeItem          `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
-	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
-	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
-	TypeList      []*TypeItem            `protobuf:"bytes,5,rep,name=type_list,json=typeList,proto3" json:"type_list"`
-	StatusList    []*StatusItem          `protobuf:"bytes,6,rep,name=status_list,json=statusList,proto3" json:"status_list"`
+	List          []*NoticeItem          `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	TypeList      []*TypeItem            `protobuf:"bytes,5,rep,name=type_list,json=typeList,proto3" json:"type_list,omitempty"`
+	StatusList    []*StatusItem          `protobuf:"bytes,6,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -179,17 +179,17 @@ func (x *GetNoticeListRes) GetStatusList() []*StatusItem {
 // 公告项
 type NoticeItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type"`
-	TypeName      string                 `protobuf:"bytes,5,opt,name=type_name,json=typeName,proto3" json:"type_name"`
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
-	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name"`
-	Sort          int32                  `protobuf:"varint,8,opt,name=sort,proto3" json:"sort"`
-	IsTop         int32                  `protobuf:"varint,9,opt,name=is_top,json=isTop,proto3" json:"is_top"`
-	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
-	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`
+	TypeName      string                 `protobuf:"bytes,5,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
+	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name,omitempty"`
+	Sort          int32                  `protobuf:"varint,8,opt,name=sort,proto3" json:"sort,omitempty"`
+	IsTop         int32                  `protobuf:"varint,9,opt,name=is_top,json=isTop,proto3" json:"is_top,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -304,8 +304,8 @@ func (x *NoticeItem) GetUpdatedAt() string {
 // 类型项
 type TypeItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -357,8 +357,8 @@ func (x *TypeItem) GetName() string {
 // 状态项
 type StatusItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -410,12 +410,12 @@ func (x *StatusItem) GetName() string {
 // 创建公告请求
 type CreateNoticeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" v:"required|length:2,200"`         // v: required|length:2,200
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content" v:"required|length:2,5000"`    // v: required|length:2,5000
-	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type" v:"required|in:1,2,3"`              // v: required|in:1,2,3
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" v:"required|in:0,1"`            // v: required|in:0,1
-	Sort          int32                  `protobuf:"varint,5,opt,name=sort,proto3" json:"sort" v:"required|min:0"`                 // v: required|min:0
-	IsTop         int32                  `protobuf:"varint,6,opt,name=is_top,json=isTop,proto3" json:"is_top" v:"required|in:0,1"` // v: required|in:0,1
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,200"`         // v: required|length:2,200
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty" v:"required|length:2,5000"`    // v: required|length:2,5000
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty" v:"required|in:1,2,3"`              // v: required|in:1,2,3
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty" v:"required|in:0,1"`            // v: required|in:0,1
+	Sort          int32                  `protobuf:"varint,5,opt,name=sort,proto3" json:"sort,omitempty" v:"required|min:0"`                 // v: required|min:0
+	IsTop         int32                  `protobuf:"varint,6,opt,name=is_top,json=isTop,proto3" json:"is_top,omitempty" v:"required|in:0,1"` // v: required|in:0,1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -532,13 +532,13 @@ func (*CreateNoticeRes) Descriptor() ([]byte, []int) {
 // 更新公告请求
 type UpdateNoticeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                     // v: required|min:1
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title" v:"required|length:2,200"`         // v: required|length:2,200
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content" v:"required|length:2,5000"`    // v: required|length:2,5000
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type" v:"required|in:1,2,3"`              // v: required|in:1,2,3
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" v:"required|in:0,1"`            // v: required|in:0,1
-	Sort          int32                  `protobuf:"varint,6,opt,name=sort,proto3" json:"sort" v:"required|min:0"`                 // v: required|min:0
-	IsTop         int32                  `protobuf:"varint,7,opt,name=is_top,json=isTop,proto3" json:"is_top" v:"required|in:0,1"` // v: required|in:0,1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"`                     // v: required|min:1
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,200"`         // v: required|length:2,200
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty" v:"required|length:2,5000"`    // v: required|length:2,5000
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty" v:"required|in:1,2,3"`              // v: required|in:1,2,3
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"required|in:0,1"`            // v: required|in:0,1
+	Sort          int32                  `protobuf:"varint,6,opt,name=sort,proto3" json:"sort,omitempty" v:"required|min:0"`                 // v: required|min:0
+	IsTop         int32                  `protobuf:"varint,7,opt,name=is_top,json=isTop,proto3" json:"is_top,omitempty" v:"required|in:0,1"` // v: required|in:0,1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -662,7 +662,7 @@ func (*UpdateNoticeRes) Descriptor() ([]byte, []int) {
 // 删除公告请求
 type DeleteNoticeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"` // v: required|min:1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"` // v: required|min:1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

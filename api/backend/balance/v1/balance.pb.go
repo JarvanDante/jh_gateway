@@ -3631,6 +3631,88 @@ func (x *DeletePaymentAccountRes) GetMessage() string {
 	return ""
 }
 
+// 获取操作类型列表请求
+type GetManualListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManualListReq) Reset() {
+	*x = GetManualListReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManualListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManualListReq) ProtoMessage() {}
+
+func (x *GetManualListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManualListReq.ProtoReflect.Descriptor instead.
+func (*GetManualListReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{43}
+}
+
+// 获取操作类型列表响应
+type GetManualListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          map[int32]string       `protobuf:"bytes,1,rep,name=list,proto3" json:"list" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" dc:"操作类型列表"` // 操作类型列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManualListRes) Reset() {
+	*x = GetManualListRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManualListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManualListRes) ProtoMessage() {}
+
+func (x *GetManualListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManualListRes.ProtoReflect.Descriptor instead.
+func (*GetManualListRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *GetManualListRes) GetList() map[int32]string {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
 var File_backend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_backend_balance_v1_balance_proto_rawDesc = "" +
@@ -4001,7 +4083,13 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"M\n" +
 	"\x17DeletePaymentAccountRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xcc\v\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x12\n" +
+	"\x10GetManualListReq\"\x84\x01\n" +
+	"\x10GetManualListRes\x127\n" +
+	"\x04list\x18\x01 \x03(\v2#.balance.GetManualListRes.ListEntryR\x04list\x1a7\n" +
+	"\tListEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x05R\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x012\x95\f\n" +
 	"\aBalance\x12S\n" +
 	"\x11GetBalanceChanges\x12\x1d.balance.GetBalanceChangesReq\x1a\x1d.balance.GetBalanceChangesRes\"\x00\x12G\n" +
 	"\rGetChangeList\x12\x19.balance.GetChangeListReq\x1a\x19.balance.GetChangeListRes\"\x00\x12Y\n" +
@@ -4019,7 +4107,8 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x14CreatePaymentAccount\x12 .balance.CreatePaymentAccountReq\x1a .balance.CreatePaymentAccountRes\"\x00\x12e\n" +
 	"\x17GetPaymentAccountUpdate\x12#.balance.GetPaymentAccountUpdateReq\x1a#.balance.GetPaymentAccountUpdateRes\"\x00\x12\\\n" +
 	"\x14UpdatePaymentAccount\x12 .balance.UpdatePaymentAccountReq\x1a .balance.UpdatePaymentAccountRes\"\x00\x12\\\n" +
-	"\x14DeletePaymentAccount\x12 .balance.DeletePaymentAccountReq\x1a .balance.DeletePaymentAccountRes\"\x00B+Z)jh_balance_service/api/backend/balance/v1b\x06proto3"
+	"\x14DeletePaymentAccount\x12 .balance.DeletePaymentAccountReq\x1a .balance.DeletePaymentAccountRes\"\x00\x12G\n" +
+	"\rGetManualList\x12\x19.balance.GetManualListReq\x1a\x19.balance.GetManualListRes\"\x00B+Z)jh_balance_service/api/backend/balance/v1b\x06proto3"
 
 var (
 	file_backend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -4033,7 +4122,7 @@ func file_backend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_backend_balance_v1_balance_proto_rawDescData
 }
 
-var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
+var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
 var file_backend_balance_v1_balance_proto_goTypes = []any{
 	(*GetChangeListReq)(nil),           // 0: balance.GetChangeListReq
 	(*GetChangeListRes)(nil),           // 1: balance.GetChangeListRes
@@ -4078,10 +4167,13 @@ var file_backend_balance_v1_balance_proto_goTypes = []any{
 	(*UpdatePaymentAccountRes)(nil),    // 40: balance.UpdatePaymentAccountRes
 	(*DeletePaymentAccountReq)(nil),    // 41: balance.DeletePaymentAccountReq
 	(*DeletePaymentAccountRes)(nil),    // 42: balance.DeletePaymentAccountRes
-	nil,                                // 43: balance.GetChangeListRes.ListEntry
+	(*GetManualListReq)(nil),           // 43: balance.GetManualListReq
+	(*GetManualListRes)(nil),           // 44: balance.GetManualListRes
+	nil,                                // 45: balance.GetChangeListRes.ListEntry
+	nil,                                // 46: balance.GetManualListRes.ListEntry
 }
 var file_backend_balance_v1_balance_proto_depIdxs = []int32{
-	43, // 0: balance.GetChangeListRes.list:type_name -> balance.GetChangeListRes.ListEntry
+	45, // 0: balance.GetChangeListRes.list:type_name -> balance.GetChangeListRes.ListEntry
 	3,  // 1: balance.GetBalanceChangesRes.list:type_name -> balance.BalanceChangeInfo
 	6,  // 2: balance.GetRechargePaymentsRes.list:type_name -> balance.RechargePaymentInfo
 	9,  // 3: balance.GetRechargeManualsRes.list:type_name -> balance.RechargeManualInfo
@@ -4092,45 +4184,48 @@ var file_backend_balance_v1_balance_proto_depIdxs = []int32{
 	28, // 8: balance.QueryGameBalanceRes.data:type_name -> balance.GameBalanceInfo
 	33, // 9: balance.GetPaymentAccountsRes.list:type_name -> balance.PaymentAccountInfo
 	33, // 10: balance.GetPaymentAccountUpdateRes.data:type_name -> balance.PaymentAccountInfo
-	2,  // 11: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
-	0,  // 12: balance.Balance.GetChangeList:input_type -> balance.GetChangeListReq
-	5,  // 13: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
-	8,  // 14: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
-	11, // 15: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
-	13, // 16: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
-	16, // 17: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
-	19, // 18: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
-	22, // 19: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
-	24, // 20: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
-	27, // 21: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
-	30, // 22: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
-	32, // 23: balance.Balance.GetPaymentAccounts:input_type -> balance.GetPaymentAccountsReq
-	35, // 24: balance.Balance.CreatePaymentAccount:input_type -> balance.CreatePaymentAccountReq
-	37, // 25: balance.Balance.GetPaymentAccountUpdate:input_type -> balance.GetPaymentAccountUpdateReq
-	39, // 26: balance.Balance.UpdatePaymentAccount:input_type -> balance.UpdatePaymentAccountReq
-	41, // 27: balance.Balance.DeletePaymentAccount:input_type -> balance.DeletePaymentAccountReq
-	4,  // 28: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
-	1,  // 29: balance.Balance.GetChangeList:output_type -> balance.GetChangeListRes
-	7,  // 30: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
-	10, // 31: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
-	12, // 32: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
-	15, // 33: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
-	18, // 34: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
-	21, // 35: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
-	23, // 36: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
-	26, // 37: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
-	29, // 38: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
-	31, // 39: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
-	34, // 40: balance.Balance.GetPaymentAccounts:output_type -> balance.GetPaymentAccountsRes
-	36, // 41: balance.Balance.CreatePaymentAccount:output_type -> balance.CreatePaymentAccountRes
-	38, // 42: balance.Balance.GetPaymentAccountUpdate:output_type -> balance.GetPaymentAccountUpdateRes
-	40, // 43: balance.Balance.UpdatePaymentAccount:output_type -> balance.UpdatePaymentAccountRes
-	42, // 44: balance.Balance.DeletePaymentAccount:output_type -> balance.DeletePaymentAccountRes
-	28, // [28:45] is the sub-list for method output_type
-	11, // [11:28] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	46, // 11: balance.GetManualListRes.list:type_name -> balance.GetManualListRes.ListEntry
+	2,  // 12: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
+	0,  // 13: balance.Balance.GetChangeList:input_type -> balance.GetChangeListReq
+	5,  // 14: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
+	8,  // 15: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
+	11, // 16: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
+	13, // 17: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
+	16, // 18: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
+	19, // 19: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
+	22, // 20: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
+	24, // 21: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
+	27, // 22: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
+	30, // 23: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
+	32, // 24: balance.Balance.GetPaymentAccounts:input_type -> balance.GetPaymentAccountsReq
+	35, // 25: balance.Balance.CreatePaymentAccount:input_type -> balance.CreatePaymentAccountReq
+	37, // 26: balance.Balance.GetPaymentAccountUpdate:input_type -> balance.GetPaymentAccountUpdateReq
+	39, // 27: balance.Balance.UpdatePaymentAccount:input_type -> balance.UpdatePaymentAccountReq
+	41, // 28: balance.Balance.DeletePaymentAccount:input_type -> balance.DeletePaymentAccountReq
+	43, // 29: balance.Balance.GetManualList:input_type -> balance.GetManualListReq
+	4,  // 30: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
+	1,  // 31: balance.Balance.GetChangeList:output_type -> balance.GetChangeListRes
+	7,  // 32: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
+	10, // 33: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
+	12, // 34: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
+	15, // 35: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
+	18, // 36: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
+	21, // 37: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
+	23, // 38: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
+	26, // 39: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
+	29, // 40: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
+	31, // 41: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
+	34, // 42: balance.Balance.GetPaymentAccounts:output_type -> balance.GetPaymentAccountsRes
+	36, // 43: balance.Balance.CreatePaymentAccount:output_type -> balance.CreatePaymentAccountRes
+	38, // 44: balance.Balance.GetPaymentAccountUpdate:output_type -> balance.GetPaymentAccountUpdateRes
+	40, // 45: balance.Balance.UpdatePaymentAccount:output_type -> balance.UpdatePaymentAccountRes
+	42, // 46: balance.Balance.DeletePaymentAccount:output_type -> balance.DeletePaymentAccountRes
+	44, // 47: balance.Balance.GetManualList:output_type -> balance.GetManualListRes
+	30, // [30:48] is the sub-list for method output_type
+	12, // [12:30] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_backend_balance_v1_balance_proto_init() }
@@ -4144,7 +4239,7 @@ func file_backend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_balance_v1_balance_proto_rawDesc), len(file_backend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   44,
+			NumMessages:   47,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

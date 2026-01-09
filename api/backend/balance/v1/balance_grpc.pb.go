@@ -37,6 +37,7 @@ const (
 	Balance_GetPaymentAccountUpdate_FullMethodName = "/balance.Balance/GetPaymentAccountUpdate"
 	Balance_UpdatePaymentAccount_FullMethodName    = "/balance.Balance/UpdatePaymentAccount"
 	Balance_DeletePaymentAccount_FullMethodName    = "/balance.Balance/DeletePaymentAccount"
+	Balance_GetManualList_FullMethodName           = "/balance.Balance/GetManualList"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -66,6 +67,8 @@ type BalanceClient interface {
 	GetPaymentAccountUpdate(ctx context.Context, in *GetPaymentAccountUpdateReq, opts ...grpc.CallOption) (*GetPaymentAccountUpdateRes, error)
 	UpdatePaymentAccount(ctx context.Context, in *UpdatePaymentAccountReq, opts ...grpc.CallOption) (*UpdatePaymentAccountRes, error)
 	DeletePaymentAccount(ctx context.Context, in *DeletePaymentAccountReq, opts ...grpc.CallOption) (*DeletePaymentAccountRes, error)
+	// 操作类型选项
+	GetManualList(ctx context.Context, in *GetManualListReq, opts ...grpc.CallOption) (*GetManualListRes, error)
 }
 
 type balanceClient struct {
@@ -246,6 +249,16 @@ func (c *balanceClient) DeletePaymentAccount(ctx context.Context, in *DeletePaym
 	return out, nil
 }
 
+func (c *balanceClient) GetManualList(ctx context.Context, in *GetManualListReq, opts ...grpc.CallOption) (*GetManualListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetManualListRes)
+	err := c.cc.Invoke(ctx, Balance_GetManualList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -273,6 +286,8 @@ type BalanceServer interface {
 	GetPaymentAccountUpdate(context.Context, *GetPaymentAccountUpdateReq) (*GetPaymentAccountUpdateRes, error)
 	UpdatePaymentAccount(context.Context, *UpdatePaymentAccountReq) (*UpdatePaymentAccountRes, error)
 	DeletePaymentAccount(context.Context, *DeletePaymentAccountReq) (*DeletePaymentAccountRes, error)
+	// 操作类型选项
+	GetManualList(context.Context, *GetManualListReq) (*GetManualListRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -333,6 +348,9 @@ func (UnimplementedBalanceServer) UpdatePaymentAccount(context.Context, *UpdateP
 }
 func (UnimplementedBalanceServer) DeletePaymentAccount(context.Context, *DeletePaymentAccountReq) (*DeletePaymentAccountRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeletePaymentAccount not implemented")
+}
+func (UnimplementedBalanceServer) GetManualList(context.Context, *GetManualListReq) (*GetManualListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetManualList not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -661,6 +679,24 @@ func _Balance_DeletePaymentAccount_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetManualList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetManualListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetManualList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetManualList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetManualList(ctx, req.(*GetManualListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -735,6 +771,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePaymentAccount",
 			Handler:    _Balance_DeletePaymentAccount_Handler,
+		},
+		{
+			MethodName: "GetManualList",
+			Handler:    _Balance_GetManualList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

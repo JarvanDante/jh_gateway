@@ -210,6 +210,9 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/update-payment-account", "POST", callUpdatePaymentAccount)
 	// 删除支付接口
 	balanceRoutes.Register("/delete-payment-account", "POST", callDeletePaymentAccount)
+
+	// 操作类型列表
+	balanceRoutes.Register("/options-manual", "GET", callGetManualList)
 }
 
 // initGameRoutes 初始化游戏路由

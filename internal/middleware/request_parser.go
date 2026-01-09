@@ -20,11 +20,31 @@ func RequestParser(r *ghttp.Request) {
 
 	var reqData map[string]interface{}
 
-	// 处理 GET 请求的查询参数
+	// 处理 GET 请求的查询参数或 JSON 请求体
 	if method == "GET" {
 		reqData = make(map[string]interface{})
+		contentType := r.Header.Get("Content-Type")
 
-		// 获取所有查询参数 - GoFrame 会自动解析 URL 查询参数
+		// 首先尝试解析 JSON 请求体（如果有的话）
+		bodyBytes := r.GetBody()
+		if len(bodyBytes) > 0 && strings.HasPrefix(contentType, "application/json") {
+			if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
+				util.LogWithTrace(ctx, "warn", "解析GET请求的JSON体失败: %v", err)
+				// 如果JSON解析失败，回退到查询参数
+				reqData = make(map[string]interface{})
+				for key, value := range r.GetQueryMap() {
+					reqData[key] = value
+				}
+			} else {
+				util.LogWithTrace(ctx, "debug", "解析GET请求的JSON体: %+v", reqData)
+				ctx = context.WithValue(ctx, "requestData", reqData)
+				r.SetCtx(ctx)
+				r.Middleware.Next()
+				return
+			}
+		}
+
+		// 如果没有JSON体或解析失败，使用查询参数
 		for key, value := range r.GetQueryMap() {
 			reqData[key] = value
 		}
@@ -187,9 +207,28 @@ func GetRequestDataWithOptions(ctx context.Context, r *ghttp.Request, allowEmpty
 	method := r.Method
 	contentType := r.Header.Get("Content-Type")
 
-	// 处理 GET 请求的查询参数
+	// 处理 GET 请求的查询参数或 JSON 请求体
 	if method == "GET" {
 		reqData := make(map[string]interface{})
+
+		// 首先尝试解析 JSON 请求体（如果有的话）
+		bodyBytes := r.GetBody()
+		if len(bodyBytes) > 0 && strings.HasPrefix(contentType, "application/json") {
+			if err := json.Unmarshal(bodyBytes, &reqData); err != nil {
+				// 如果JSON解析失败，回退到查询参数
+				reqData = make(map[string]interface{})
+				for key, value := range r.GetQueryMap() {
+					reqData[key] = value
+				}
+			} else {
+				if !allowEmpty && len(reqData) == 0 {
+					return nil, fmt.Errorf("请求体不能为空")
+				}
+				return reqData, nil
+			}
+		}
+
+		// 如果没有JSON体或解析失败，使用查询参数
 		for key, value := range r.GetQueryMap() {
 			reqData[key] = value
 		}

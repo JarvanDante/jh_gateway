@@ -25,10 +25,10 @@ const (
 // 会员等级信息
 type UserGrade struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-	Sort          int32                  `protobuf:"varint,3,opt,name=sort,proto3" json:"sort"`
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Sort          int32                  `protobuf:"varint,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -94,10 +94,10 @@ func (x *UserGrade) GetStatus() int32 {
 // 后台角色信息
 type AdminRole struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description"`
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -200,7 +200,7 @@ func (*UserGradeListRequest) Descriptor() ([]byte, []int) {
 // 会员等级列表响应 - 直接返回数组
 type UserGradeListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Grades        []*UserGrade           `protobuf:"bytes,1,rep,name=grades,proto3" json:"grades"`
+	Grades        []*UserGrade           `protobuf:"bytes,1,rep,name=grades,proto3" json:"grades,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -282,7 +282,7 @@ func (*AdminRoleListRequest) Descriptor() ([]byte, []int) {
 // 后台角色列表响应 - 直接返回数组
 type AdminRoleListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []*AdminRole           `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles"`
+	Roles         []*AdminRole           `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -347,7 +347,7 @@ const file_backend_option_v1_option_proto_rawDesc = "" +
 	"\x05roles\x18\x01 \x03(\v2\x11.option.AdminRoleR\x05roles2\xaa\x01\n" +
 	"\x06Option\x12O\n" +
 	"\x10GetUserGradeList\x12\x1c.option.UserGradeListRequest\x1a\x1d.option.UserGradeListResponse\x12O\n" +
-	"\x10GetAdminRoleList\x12\x1c.option.AdminRoleListRequest\x1a\x1d.option.AdminRoleListResponseB)Z'jh_app_service/api/backend/option/v1;v1b\x06proto3"
+	"\x10GetAdminRoleList\x12\x1c.option.AdminRoleListRequest\x1a\x1d.option.AdminRoleListResponseB%Z#jh_gateway/api/backend/option/v1;v1b\x06proto3"
 
 var (
 	file_backend_option_v1_option_proto_rawDescOnce sync.Once
