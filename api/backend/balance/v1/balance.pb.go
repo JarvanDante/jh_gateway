@@ -2163,7 +2163,7 @@ func (x *DealWithWithdrawRes) GetMessage() string {
 // 查询用户余额请求
 type QueryUserBalanceReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名"` // 用户名
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户名"` // 用户名
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2198,11 +2198,11 @@ func (*QueryUserBalanceReq) Descriptor() ([]byte, []int) {
 	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *QueryUserBalanceReq) GetUsername() string {
+func (x *QueryUserBalanceReq) GetUserId() int32 {
 	if x != nil {
-		return x.Username
+		return x.UserId
 	}
-	return ""
+	return 0
 }
 
 // 用户余额信息
@@ -3858,9 +3858,9 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x06remark\x18\x04 \x01(\tR\x06remark\"I\n" +
 	"\x13DealWithWithdrawRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"1\n" +
-	"\x13QueryUserBalanceReq\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\"\xc9\x01\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\".\n" +
+	"\x13QueryUserBalanceReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\"\xc9\x01\n" +
 	"\x0fUserBalanceInfo\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x18\n" +

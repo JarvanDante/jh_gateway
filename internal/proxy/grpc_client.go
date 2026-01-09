@@ -2593,20 +2593,20 @@ func callQueryUserBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	}
 
 	// 获取参数
-	username := getStringFromMap(reqData, "username")
+	userId := getStringFromMap(reqData, "user_id")
 
-	if username == "" {
-		util.WriteBadRequest(r, "用户名不能为空")
+	if userId == "" {
+		util.WriteBadRequest(r, "用户ID不能为空")
 		return nil
 	}
 
 	// 创建 gRPC 客户端
 	client := v6.NewBalanceClient(conn)
 	req := &v6.QueryUserBalanceReq{
-		Username: username,
+		UserId: gconv.Int32(userId),
 	}
 
-	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Username: %s", req.Username)
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - user_id: %s", req.UserId)
 
 	// 调用 gRPC 服务
 	res, err := client.QueryUserBalance(ctx, req)

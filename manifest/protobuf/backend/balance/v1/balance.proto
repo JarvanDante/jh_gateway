@@ -290,7 +290,7 @@ message DealWithWithdrawRes {
 }
 // 查询用户余额请求
 message QueryUserBalanceReq {
-    string username = 1;        // 用户名
+    int32 user_id = 1;        // 用户名
 }
 
 // 用户余额信息
