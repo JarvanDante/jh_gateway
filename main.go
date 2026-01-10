@@ -15,7 +15,21 @@ import (
 )
 
 func main() {
+	// 在最早的时刻设置时区（在创建context之前）
 	ctx := context.Background()
+
+	// 需要先创建context来读取配置，所以在这里设置
+	timezone := g.Cfg().MustGet(ctx, "timezone").String()
+	if timezone == "" {
+		timezone = "Asia/Shanghai"
+	}
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		fmt.Printf("加载时区失败: %v，使用默认时区\n", err)
+		loc, _ = time.LoadLocation("Asia/Shanghai")
+	}
+	time.Local = loc
+	fmt.Printf("时区设置: %s\n", timezone)
 
 	// 强制输出到stdout确保能看到
 	fmt.Println("=== jh_gateway 启动 ===")

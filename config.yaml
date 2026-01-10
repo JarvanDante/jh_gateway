@@ -30,3 +30,6 @@ logger:
   format: "json"
   # 时间格式
   timeFormat: "2006-01-02T15:04:05.000Z07:00"
+
+# 时区配置
+timezone: "Asia/Shanghai" # 北京时间
