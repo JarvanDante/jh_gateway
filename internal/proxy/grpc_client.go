@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"io"
 	v9 "jh_gateway/api/backend/ad/v1"
 	"jh_gateway/api/backend/admin/v1"
@@ -435,6 +436,12 @@ func validateAndParseRequest(ctx context.Context, r *ghttp.Request) (map[string]
 
 	if strings.HasSuffix(path, "/create-admin") && method == "POST" {
 		if err := validateCreateAdminRequest(r, reqData); err != nil {
+			return nil, err
+		}
+	}
+
+	if strings.HasSuffix(path, "/create-ad") && method == "POST" {
+		if err := validateCreateAdRequestInHandler(r, reqData); err != nil {
 			return nil, err
 		}
 	}
@@ -3668,13 +3675,20 @@ func callCreateAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 	// 解析请求参数
 	requestData := r.Context().Value("requestData").(map[string]interface{})
 
+	// 验证必填参数
+	if err := validateCreateAdRequest(requestData); err != nil {
+		return err
+	}
+
 	req := &v9.CreateAdReq{
-		Title:    gconv.String(requestData["title"]),
-		Image:    gconv.String(requestData["image"]),
-		Link:     gconv.String(requestData["link"]),
-		Position: gconv.Int32(requestData["position"]),
-		Status:   gconv.Int32(requestData["status"]),
-		Sort:     gconv.Int32(requestData["sort"]),
+		Title:       gconv.String(requestData["title"]),
+		Image:       gconv.String(requestData["image"]),
+		Link:        gconv.String(requestData["link"]),
+		Position:    gconv.Int32(requestData["position"]),
+		Status:      gconv.Int32(requestData["status"]),
+		Sort:        gconv.Int32(requestData["sort"]),
+		StartTime:   gconv.String(requestData["start_time"]),
+		ExpiredTime: gconv.String(requestData["expired_time"]),
 	}
 
 	// 调用gRPC服务
@@ -3687,6 +3701,108 @@ func callCreateAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 
 	// 返回响应
 	return writeProtobufResponse(ctx, r, res)
+}
+
+// validateCreateAdRequest 验证创建广告请求参数
+func validateCreateAdRequest(reqData map[string]interface{}) error {
+	// 验证标题
+	title, ok := reqData["title"].(string)
+	if !ok || title == "" {
+		return gerror.New("请输入广告标题")
+	}
+	if len(title) < 2 || len(title) > 100 {
+		return gerror.New("广告标题长度必须在2-100个字符之间")
+	}
+
+	// 验证图片
+	image, ok := reqData["image"].(string)
+	if !ok || image == "" {
+		return gerror.New("请上传广告图片")
+	}
+
+	// 验证位置
+	position, ok := reqData["position"]
+	if !ok {
+		return gerror.New("请选择广告位置")
+	}
+	posInt := gconv.Int(position)
+	if posInt < 1 || posInt > 5 {
+		return gerror.New("广告位置必须在1-5之间")
+	}
+
+	// 验证状态
+	status, ok := reqData["status"]
+	if !ok {
+		return gerror.New("请选择广告状态")
+	}
+	statusInt := gconv.Int(status)
+	if statusInt != 0 && statusInt != 1 {
+		return gerror.New("广告状态必须为0或1")
+	}
+
+	// 验证排序
+	sort, ok := reqData["sort"]
+	if !ok {
+		return fmt.Errorf("请输入排序值")
+	}
+	sortInt := gconv.Int(sort)
+	if sortInt < 0 {
+		return gerror.New("排序值不能小于0")
+	}
+
+	// 验证开始时间
+	startTime, ok := reqData["start_time"].(string)
+	if !ok || startTime == "" {
+		return gerror.New("请选择开始时间")
+	}
+
+	// 验证过期时间
+	expiredTime, ok := reqData["expired_time"].(string)
+	if !ok || expiredTime == "" {
+		return gerror.New("请选择过期时间")
+	}
+
+	return nil
+}
+
+// validateCreateAdRequestInHandler 在 handler 中验证创建广告请求参数
+func validateCreateAdRequestInHandler(r *ghttp.Request, reqData map[string]interface{}) error {
+	// 验证标题
+	title, ok := reqData["title"].(string)
+	if !ok || title == "" {
+		util.WriteBadRequest(r, "请输入广告标题")
+		return fmt.Errorf("missing title")
+	}
+
+	// 验证图片
+	image, ok := reqData["image"].(string)
+	if !ok || image == "" {
+		util.WriteBadRequest(r, "请上传广告图片")
+		return fmt.Errorf("missing image")
+	}
+
+	// 验证位置
+	position, ok := reqData["position"]
+	if !ok || position == "" {
+		util.WriteBadRequest(r, "请选择广告位置")
+		return fmt.Errorf("missing position")
+	}
+
+	// 验证开始时间
+	startTime, ok := reqData["start_time"].(string)
+	if !ok || startTime == "" {
+		util.WriteBadRequest(r, "请选择开始时间")
+		return fmt.Errorf("missing start_time")
+	}
+
+	// 验证过期时间
+	expiredTime, ok := reqData["expired_time"].(string)
+	if !ok || expiredTime == "" {
+		util.WriteBadRequest(r, "请选择过期时间")
+		return fmt.Errorf("missing expired_time")
+	}
+
+	return nil
 }
 
 /**
@@ -3713,13 +3829,15 @@ func callUpdateAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 	requestData := r.Context().Value("requestData").(map[string]interface{})
 
 	req := &v9.UpdateAdReq{
-		Id:       gconv.Int32(requestData["id"]),
-		Title:    gconv.String(requestData["title"]),
-		Image:    gconv.String(requestData["image"]),
-		Link:     gconv.String(requestData["link"]),
-		Position: gconv.Int32(requestData["position"]),
-		Status:   gconv.Int32(requestData["status"]),
-		Sort:     gconv.Int32(requestData["sort"]),
+		Id:          gconv.Int32(requestData["id"]),
+		Title:       gconv.String(requestData["title"]),
+		Image:       gconv.String(requestData["image"]),
+		Link:        gconv.String(requestData["link"]),
+		Position:    gconv.Int32(requestData["position"]),
+		Status:      gconv.Int32(requestData["status"]),
+		Sort:        gconv.Int32(requestData["sort"]),
+		StartTime:   gconv.String(requestData["start_time"]),
+		ExpiredTime: gconv.String(requestData["expired_time"]),
 	}
 
 	// 调用gRPC服务
@@ -3832,12 +3950,15 @@ func callCreateNotice(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	requestData := r.Context().Value("requestData").(map[string]interface{})
 
 	req := &v10.CreateNoticeReq{
-		Title:   gconv.String(requestData["title"]),
-		Content: gconv.String(requestData["content"]),
-		Type:    gconv.Int32(requestData["type"]),
-		Status:  gconv.Int32(requestData["status"]),
-		Sort:    gconv.Int32(requestData["sort"]),
-		IsTop:   gconv.Int32(requestData["is_top"]),
+		Title:       gconv.String(requestData["title"]),
+		Content:     gconv.String(requestData["content"]),
+		Type:        gconv.Int32(requestData["type"]),
+		Status:      gconv.Int32(requestData["status"]),
+		Sort:        gconv.Int32(requestData["sort"]),
+		IsTop:       gconv.Int32(requestData["is_top"]),
+		StartTime:   gconv.String(requestData["start_time"]),
+		ExpiredTime: gconv.String(requestData["expired_time"]),
+		Url:         gconv.String(requestData["url"]),
 	}
 
 	// 调用gRPC服务
@@ -3876,13 +3997,16 @@ func callUpdateNotice(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	requestData := r.Context().Value("requestData").(map[string]interface{})
 
 	req := &v10.UpdateNoticeReq{
-		Id:      gconv.Int32(requestData["id"]),
-		Title:   gconv.String(requestData["title"]),
-		Content: gconv.String(requestData["content"]),
-		Type:    gconv.Int32(requestData["type"]),
-		Status:  gconv.Int32(requestData["status"]),
-		Sort:    gconv.Int32(requestData["sort"]),
-		IsTop:   gconv.Int32(requestData["is_top"]),
+		Id:          gconv.Int32(requestData["id"]),
+		Title:       gconv.String(requestData["title"]),
+		Content:     gconv.String(requestData["content"]),
+		Type:        gconv.Int32(requestData["type"]),
+		Status:      gconv.Int32(requestData["status"]),
+		Sort:        gconv.Int32(requestData["sort"]),
+		IsTop:       gconv.Int32(requestData["is_top"]),
+		StartTime:   gconv.String(requestData["start_time"]),
+		ExpiredTime: gconv.String(requestData["expired_time"]),
+		Url:         gconv.String(requestData["url"]),
 	}
 
 	// 调用gRPC服务

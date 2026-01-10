@@ -107,13 +107,13 @@ func (x *GetChangeListRes) GetList() map[int32]string {
 // 获取账变记录请求
 type GetBalanceChangesReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                                   // 用户名 (可选)
-	ChangeType    int32                  `protobuf:"varint,2,opt,name=change_type,json=changeType,proto3" json:"change_type" dc:"账变类型 1=入款 2=出款 (可选)"` // 账变类型 1=入款 2=出款 (可选)
-	TradeType     int32                  `protobuf:"varint,3,opt,name=trade_type,json=tradeType,proto3" json:"trade_type" dc:"交易类型 (可选)"`              // 交易类型 (可选)
-	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"`               // 开始时间 (可选)
-	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`                     // 结束时间 (可选)
-	Page          int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page" dc:"页码"`                                                // 页码
-	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size" dc:"每页数量"`                                              // 每页数量
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)"`  // 用户名 (可选)
+	ChangeType    int32                  `protobuf:"varint,2,opt,name=change_type,json=changeType,proto3" json:"change_type" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)" dc:"账变类型 1=入款 2=出款 (可选)"`      // 账变类型 1=入款 2=出款 (可选)
+	TradeType     int32                  `protobuf:"varint,3,opt,name=trade_type,json=tradeType,proto3" json:"trade_type" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)" dc:"交易类型 (可选)"`         // 交易类型 (可选)
+	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)"`          // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)"` // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码"`                                                                                                                     // 页码
+	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量"`                                                                                 // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -200,21 +200,21 @@ func (x *GetBalanceChangesReq) GetSize() int32 {
 // 账变记录信息
 type BalanceChangeInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                                 // ID
-	TradeType     int32                  `protobuf:"varint,2,opt,name=trade_type,json=tradeType,proto3" json:"trade_type" dc:"交易类型"`                // 交易类型
-	TradeTypeName string                 `protobuf:"bytes,3,opt,name=trade_type_name,json=tradeTypeName,proto3" json:"trade_type_name" dc:"交易类型名称"` // 交易类型名称
-	UserId        int32                  `protobuf:"varint,4,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                         // 用户ID
-	Username      string                 `protobuf:"bytes,5,opt,name=username,proto3" json:"username" dc:"用户名"`                                     // 用户名
-	TradeNo       string                 `protobuf:"bytes,6,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                        // 流水号
-	BalanceOld    float64                `protobuf:"fixed64,7,opt,name=balance_old,json=balanceOld,proto3" json:"balance_old" dc:"旧余额"`             // 旧余额
-	Money         float64                `protobuf:"fixed64,8,opt,name=money,proto3" json:"money" dc:"变动金额"`                                        // 变动金额
-	BalanceNew    float64                `protobuf:"fixed64,9,opt,name=balance_new,json=balanceNew,proto3" json:"balance_new" dc:"新余额"`             // 新余额
-	BalanceFrozen float64                `protobuf:"fixed64,10,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"`  // 冻结余额
-	Status        int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态"`                                        // 状态
-	StatusName    string                 `protobuf:"bytes,12,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"`             // 状态名称
-	Remark        string                 `protobuf:"bytes,13,opt,name=remark,proto3" json:"remark" dc:"备注"`                                         // 备注
-	CreatedAt     string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                // 创建时间
-	ChangeType    int32                  `protobuf:"varint,15,opt,name=change_type,json=changeType,proto3" json:"change_type" dc:"账变类型 1=入款 2=出款"`  // 账变类型 1=入款 2=出款
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                                          // ID
+	TradeType     int32                  `protobuf:"varint,2,opt,name=trade_type,json=tradeType,proto3" json:"trade_type" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型" dc:"交易类型"` // 交易类型
+	TradeTypeName string                 `protobuf:"bytes,3,opt,name=trade_type_name,json=tradeTypeName,proto3" json:"trade_type_name" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称" dc:"交易类型名称"`  // 交易类型名称
+	UserId        int32                  `protobuf:"varint,4,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`          // 用户ID
+	Username      string                 `protobuf:"bytes,5,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`                             // 用户名
+	TradeNo       string                 `protobuf:"bytes,6,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号"`                // 流水号
+	BalanceOld    float64                `protobuf:"fixed64,7,opt,name=balance_old,json=balanceOld,proto3" json:"balance_old" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额" dc:"旧余额"`     // 旧余额
+	Money         float64                `protobuf:"fixed64,8,opt,name=money,proto3" json:"money" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额" dc:"变动金额"`               // 变动金额
+	BalanceNew    float64                `protobuf:"fixed64,9,opt,name=balance_new,json=balanceNew,proto3" json:"balance_new" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额" dc:"新余额"`     // 新余额
+	BalanceFrozen float64                `protobuf:"fixed64,10,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额"`       // 冻结余额
+	Status        int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                                 // 状态
+	StatusName    string                 `protobuf:"bytes,12,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称"`        // 状态名称
+	Remark        string                 `protobuf:"bytes,13,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`                                                  // 备注
+	CreatedAt     string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"` // 创建时间
+	ChangeType    int32                  `protobuf:"varint,15,opt,name=change_type,json=changeType,proto3" json:"change_type" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款" dc:"账变类型 1=入款 2=出款"`       // 账变类型 1=入款 2=出款
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -410,17 +410,17 @@ func (x *GetBalanceChangesRes) GetCount() int32 {
 // 获取充值记录请求
 type GetRechargePaymentsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                      // 用户名 (可选)
-	Gateway       int32                  `protobuf:"varint,2,opt,name=gateway,proto3" json:"gateway" dc:"网关类型 (可选)"`                      // 网关类型 (可选)
-	PaymentId     int32                  `protobuf:"varint,3,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID (可选)"` // 支付ID (可选)
-	AccountId     int32                  `protobuf:"varint,4,opt,name=account_id,json=accountId,proto3" json:"account_id" dc:"账号ID (可选)"` // 账号ID (可选)
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                          // 状态 (可选)
-	TradeNo       string                 `protobuf:"bytes,6,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`         // 流水号 (可选)
-	Domain        string                 `protobuf:"bytes,7,opt,name=domain,proto3" json:"domain" dc:"域名 (可选)"`                           // 域名 (可选)
-	StartTime     string                 `protobuf:"bytes,8,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"`  // 开始时间 (可选)
-	EndTime       string                 `protobuf:"bytes,9,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`        // 结束时间 (可选)
-	Page          int32                  `protobuf:"varint,10,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
-	Size          int32                  `protobuf:"varint,11,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)"`               // 用户名 (可选)
+	Gateway       int32                  `protobuf:"varint,2,opt,name=gateway,proto3" json:"gateway" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)" dc:"网关类型 (可选)"`               // 网关类型 (可选)
+	PaymentId     int32                  `protobuf:"varint,3,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)"`         // 支付ID (可选)
+	AccountId     int32                  `protobuf:"varint,4,opt,name=account_id,json=accountId,proto3" json:"account_id" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)" dc:"账号ID (可选)"`         // 账号ID (可选)
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)"`        // 状态 (可选)
+	TradeNo       string                 `protobuf:"bytes,6,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)"`  // 流水号 (可选)
+	Domain        string                 `protobuf:"bytes,7,opt,name=domain,proto3" json:"domain" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)"`         // 域名 (可选)
+	StartTime     string                 `protobuf:"bytes,8,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)"`          // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,9,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)"` // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,10,opt,name=page,proto3" json:"page" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码"`                                                                                                     // 页码
+	Size          int32                  `protobuf:"varint,11,opt,name=size,proto3" json:"size" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量"`                                                                 // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -535,26 +535,26 @@ func (x *GetRechargePaymentsReq) GetSize() int32 {
 // 充值记录信息
 type RechargePaymentInfo struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	Id                 int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                                                 // ID
-	UserId             int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                                         // 用户ID
-	Username           string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                                                     // 用户名
-	ActivityRechargeId int32                  `protobuf:"varint,4,opt,name=activity_recharge_id,json=activityRechargeId,proto3" json:"activity_recharge_id" dc:"充值活动ID"` // 充值活动ID
-	Gateway            int32                  `protobuf:"varint,5,opt,name=gateway,proto3" json:"gateway" dc:"网关类型"`                                                     // 网关类型
-	GatewayName        string                 `protobuf:"bytes,6,opt,name=gateway_name,json=gatewayName,proto3" json:"gateway_name" dc:"网关名称"`                           // 网关名称
-	PaymentId          int32                  `protobuf:"varint,7,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID"`                                // 支付ID
-	PaymentName        string                 `protobuf:"bytes,8,opt,name=payment_name,json=paymentName,proto3" json:"payment_name" dc:"支付名称"`                           // 支付名称
-	PaymentAccountId   int32                  `protobuf:"varint,9,opt,name=payment_account_id,json=paymentAccountId,proto3" json:"payment_account_id" dc:"支付账号ID"`       // 支付账号ID
-	BankValue          string                 `protobuf:"bytes,10,opt,name=bank_value,json=bankValue,proto3" json:"bank_value" dc:"银行代码"`                                // 银行代码
-	TradeNo            string                 `protobuf:"bytes,11,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                                       // 流水号
-	Money              float64                `protobuf:"fixed64,12,opt,name=money,proto3" json:"money" dc:"充值金额"`                                                       // 充值金额
-	Fee                float64                `protobuf:"fixed64,13,opt,name=fee,proto3" json:"fee" dc:"手续费"`                                                            // 手续费
-	Status             int32                  `protobuf:"varint,14,opt,name=status,proto3" json:"status" dc:"状态"`                                                        // 状态
-	StatusName         string                 `protobuf:"bytes,15,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"`                             // 状态名称
-	AdminId            int32                  `protobuf:"varint,16,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID"`                                    // 管理员ID
-	AdminName          string                 `protobuf:"bytes,17,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称"`                               // 管理员名称
-	Remark             string                 `protobuf:"bytes,18,opt,name=remark,proto3" json:"remark" dc:"备注"`                                                         // 备注
-	CreatedAt          string                 `protobuf:"bytes,19,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                                // 创建时间
-	UpdatedAt          string                 `protobuf:"bytes,20,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`                                // 更新时间
+	Id                 int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                                             // ID
+	UserId             int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`   // 用户ID
+	Username           string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`                                // 用户名
+	ActivityRechargeId int32                  `protobuf:"varint,4,opt,name=activity_recharge_id,json=activityRechargeId,proto3" json:"activity_recharge_id" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID" dc:"充值活动ID"` // 充值活动ID
+	Gateway            int32                  `protobuf:"varint,5,opt,name=gateway,proto3" json:"gateway" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型" dc:"网关类型"`               // 网关类型
+	GatewayName        string                 `protobuf:"bytes,6,opt,name=gateway_name,json=gatewayName,proto3" json:"gateway_name" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称" dc:"网关名称"`         // 网关名称
+	PaymentId          int32                  `protobuf:"varint,7,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID" dc:"支付ID"`    // 支付ID
+	PaymentName        string                 `protobuf:"bytes,8,opt,name=payment_name,json=paymentName,proto3" json:"payment_name" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称" dc:"支付名称"`         // 支付名称
+	PaymentAccountId   int32                  `protobuf:"varint,9,opt,name=payment_account_id,json=paymentAccountId,proto3" json:"payment_account_id" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID" dc:"支付账号ID"`       // 支付账号ID
+	BankValue          string                 `protobuf:"bytes,10,opt,name=bank_value,json=bankValue,proto3" json:"bank_value" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码" dc:"银行代码"`    // 银行代码
+	TradeNo            string                 `protobuf:"bytes,11,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号"`                  // 流水号
+	Money              float64                `protobuf:"fixed64,12,opt,name=money,proto3" json:"money" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额" dc:"充值金额"`                 // 充值金额
+	Fee                float64                `protobuf:"fixed64,13,opt,name=fee,proto3" json:"fee" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费"`                                       // 手续费
+	Status             int32                  `protobuf:"varint,14,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                                    // 状态
+	StatusName         string                 `protobuf:"bytes,15,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称"` // 状态名称
+	AdminId            int32                  `protobuf:"varint,16,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID"`   // 管理员ID
+	AdminName          string                 `protobuf:"bytes,17,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称"`         // 管理员名称
+	Remark             string                 `protobuf:"bytes,18,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`                                                     // 备注
+	CreatedAt          string                 `protobuf:"bytes,19,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"`    // 创建时间
+	UpdatedAt          string                 `protobuf:"bytes,20,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间"`    // 更新时间
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -785,12 +785,12 @@ func (x *GetRechargePaymentsRes) GetCount() int32 {
 // 获取后台加款记录请求
 type GetRechargeManualsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
-	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                         // 状态 (可选)
-	StartTime     string                 `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
-	EndTime       string                 `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
-	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
-	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)"`          // 用户名 (可选)
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)"` // 状态 (可选)
+	StartTime     string                 `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)"`       // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)"`             // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码"`                                                                     // 页码
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量"`                                 // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -870,17 +870,17 @@ func (x *GetRechargeManualsReq) GetSize() int32 {
 // 后台加款记录信息
 type RechargeManualInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                    // ID
-	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`            // 用户ID
-	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                        // 用户名
-	TradeNo       string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`           // 流水号
-	Money         float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"加款金额"`                           // 加款金额
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态"`                            // 状态
-	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"` // 状态名称
-	AdminId       int32                  `protobuf:"varint,8,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID"`        // 管理员ID
-	AdminName     string                 `protobuf:"bytes,9,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称"`   // 管理员名称
-	Remark        string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark" dc:"备注"`                            // 备注
-	CreatedAt     string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`   // 创建时间
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                         // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`   // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`            // 用户名
+	TradeNo       string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号"`        // 流水号
+	Money         float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额" dc:"加款金额"`        // 加款金额
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                 // 状态
+	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称"`  // 状态名称
+	AdminId       int32                  `protobuf:"varint,8,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID"`      // 管理员ID
+	AdminName     string                 `protobuf:"bytes,9,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称"` // 管理员名称
+	Remark        string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`                                 // 备注
+	CreatedAt     string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"`    // 创建时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -995,8 +995,8 @@ func (x *RechargeManualInfo) GetCreatedAt() string {
 // 获取后台加款记录响应
 type GetRechargeManualsRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*RechargeManualInfo  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"后台加款记录列表"` // 后台加款记录列表
-	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"`   // 总数量
+	List          []*RechargeManualInfo  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"后台加款记录列表" dc:"后台加款记录列表" dc:"后台加款记录列表" dc:"后台加款记录列表" dc:"后台加款记录列表" dc:"后台加款记录列表"` // 后台加款记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量"` // 总数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1048,7 +1048,7 @@ func (x *GetRechargeManualsRes) GetCount() int32 {
 // 确认支付订单请求
 type ConfirmPaymentOrderReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"订单ID"`           // 订单ID
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"订单ID" dc:"订单ID"` // 订单ID
 	Remark        string                 `protobuf:"bytes,2,opt,name=remark,proto3" json:"remark" dc:"备注 (可选)"` // 备注 (可选)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1101,8 +1101,8 @@ func (x *ConfirmPaymentOrderReq) GetRemark() string {
 // 确认支付订单响应
 type ConfirmPaymentOrderRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功"`          // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1154,14 +1154,14 @@ func (x *ConfirmPaymentOrderRes) GetMessage() string {
 // 获取提现记录请求
 type GetWithdrawsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
-	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                         // 状态 (可选)
-	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`        // 流水号 (可选)
-	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain" dc:"域名 (可选)"`                          // 域名 (可选)
-	StartTime     string                 `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
-	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
-	Page          int32                  `protobuf:"varint,7,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
-	Size          int32                  `protobuf:"varint,8,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)"`              // 用户名 (可选)
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)"`      // 状态 (可选)
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)" dc:"流水号 (可选)"`               // 流水号 (可选)
+	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)" dc:"域名 (可选)"`       // 域名 (可选)
+	StartTime     string                 `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)"`          // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)"` // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,7,opt,name=page,proto3" json:"page" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码"`                                                                                       // 页码
+	Size          int32                  `protobuf:"varint,8,opt,name=size,proto3" json:"size" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量"`                                                   // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1255,24 +1255,24 @@ func (x *GetWithdrawsReq) GetSize() int32 {
 // 提现记录信息
 type WithdrawInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                            // ID
-	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                    // 用户ID
-	UserLevelId   int32                  `protobuf:"varint,3,opt,name=user_level_id,json=userLevelId,proto3" json:"user_level_id" dc:"用户层级ID"` // 用户层级ID
-	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名"`                                // 用户名
-	TradeNo       string                 `protobuf:"bytes,5,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                   // 流水号
-	Money         float64                `protobuf:"fixed64,6,opt,name=money,proto3" json:"money" dc:"提现金额"`                                   // 提现金额
-	Fee           float64                `protobuf:"fixed64,7,opt,name=fee,proto3" json:"fee" dc:"手续费"`                                        // 手续费
-	BankName      string                 `protobuf:"bytes,8,opt,name=bank_name,json=bankName,proto3" json:"bank_name" dc:"银行名称"`               // 银行名称
-	CardAccount   string                 `protobuf:"bytes,9,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"银行户名"`      // 银行户名
-	CardNo        string                 `protobuf:"bytes,10,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号"`                      // 卡号
-	DepositBank   string                 `protobuf:"bytes,11,opt,name=deposit_bank,json=depositBank,proto3" json:"deposit_bank" dc:"开户行"`      // 开户行
-	Status        int32                  `protobuf:"varint,12,opt,name=status,proto3" json:"status" dc:"状态"`                                   // 状态
-	StatusName    string                 `protobuf:"bytes,13,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"`        // 状态名称
-	AdminId       int32                  `protobuf:"varint,14,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID"`               // 管理员ID
-	AdminName     string                 `protobuf:"bytes,15,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称"`          // 管理员名称
-	Remark        string                 `protobuf:"bytes,16,opt,name=remark,proto3" json:"remark" dc:"备注"`                                    // 备注
-	CreatedAt     string                 `protobuf:"bytes,17,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`           // 创建时间
-	UpdatedAt     string                 `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`           // 更新时间
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                                 // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"` // 用户ID
+	UserLevelId   int32                  `protobuf:"varint,3,opt,name=user_level_id,json=userLevelId,proto3" json:"user_level_id" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID" dc:"用户层级ID"`          // 用户层级ID
+	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`                    // 用户名
+	TradeNo       string                 `protobuf:"bytes,5,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号"`       // 流水号
+	Money         float64                `protobuf:"fixed64,6,opt,name=money,proto3" json:"money" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额"`      // 提现金额
+	Fee           float64                `protobuf:"fixed64,7,opt,name=fee,proto3" json:"fee" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费"`                            // 手续费
+	BankName      string                 `protobuf:"bytes,8,opt,name=bank_name,json=bankName,proto3" json:"bank_name" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称"`      // 银行名称
+	CardAccount   string                 `protobuf:"bytes,9,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名"`       // 银行户名
+	CardNo        string                 `protobuf:"bytes,10,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号"`                           // 卡号
+	DepositBank   string                 `protobuf:"bytes,11,opt,name=deposit_bank,json=depositBank,proto3" json:"deposit_bank" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行"`   // 开户行
+	Status        int32                  `protobuf:"varint,12,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                        // 状态
+	StatusName    string                 `protobuf:"bytes,13,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称"`         // 状态名称
+	AdminId       int32                  `protobuf:"varint,14,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID"`  // 管理员ID
+	AdminName     string                 `protobuf:"bytes,15,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称"`        // 管理员名称
+	Remark        string                 `protobuf:"bytes,16,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`                                         // 备注
+	CreatedAt     string                 `protobuf:"bytes,17,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"`  // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间"`  // 更新时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1489,12 +1489,12 @@ func (x *GetWithdrawsRes) GetCount() int32 {
 // 获取后台提现记录请求
 type GetWithdrawManualsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
-	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                         // 状态 (可选)
-	StartTime     string                 `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
-	EndTime       string                 `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
-	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
-	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)" dc:"用户名 (可选)"`          // 用户名 (可选)
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)"` // 状态 (可选)
+	StartTime     string                 `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)" dc:"开始时间 (可选)"`       // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)" dc:"结束时间 (可选)"`             // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码"`                                                                     // 页码
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量"`                                 // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1574,17 +1574,17 @@ func (x *GetWithdrawManualsReq) GetSize() int32 {
 // 后台提现记录信息
 type WithdrawManualInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                    // ID
-	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`            // 用户ID
-	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                        // 用户名
-	TradeNo       string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`           // 流水号
-	Money         float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"提现金额"`                           // 提现金额
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态"`                            // 状态
-	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"` // 状态名称
-	AdminId       int32                  `protobuf:"varint,8,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID"`        // 管理员ID
-	AdminName     string                 `protobuf:"bytes,9,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称"`   // 管理员名称
-	Remark        string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark" dc:"备注"`                            // 备注
-	CreatedAt     string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`   // 创建时间
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                         // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`   // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`            // 用户名
+	TradeNo       string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号"`        // 流水号
+	Money         float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额"`        // 提现金额
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                 // 状态
+	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称"`  // 状态名称
+	AdminId       int32                  `protobuf:"varint,8,opt,name=admin_id,json=adminId,proto3" json:"admin_id" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID" dc:"管理员ID"`      // 管理员ID
+	AdminName     string                 `protobuf:"bytes,9,opt,name=admin_name,json=adminName,proto3" json:"admin_name" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称" dc:"管理员名称"` // 管理员名称
+	Remark        string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`                                 // 备注
+	CreatedAt     string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"`    // 创建时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1699,8 +1699,8 @@ func (x *WithdrawManualInfo) GetCreatedAt() string {
 // 获取后台提现记录响应
 type GetWithdrawManualsRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*WithdrawManualInfo  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"后台提现记录列表"` // 后台提现记录列表
-	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"`   // 总数量
+	List          []*WithdrawManualInfo  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"后台提现记录列表" dc:"后台提现记录列表" dc:"后台提现记录列表" dc:"后台提现记录列表" dc:"后台提现记录列表" dc:"后台提现记录列表"` // 后台提现记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量" dc:"总数量"` // 总数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1797,28 +1797,28 @@ func (x *GetWithdrawReviewReq) GetId() int64 {
 // 提现审核信息
 type WithdrawReviewInfo struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
-	Id          int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                       // ID
-	UserId      int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`               // 用户ID
-	Username    string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                           // 用户名
-	TradeNo     string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`              // 流水号
-	Money       float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"提现金额"`                              // 提现金额
-	Fee         float64                `protobuf:"fixed64,6,opt,name=fee,proto3" json:"fee" dc:"手续费"`                                   // 手续费
-	BankName    string                 `protobuf:"bytes,7,opt,name=bank_name,json=bankName,proto3" json:"bank_name" dc:"银行名称"`          // 银行名称
-	CardAccount string                 `protobuf:"bytes,8,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"银行户名"` // 银行户名
-	CardNo      string                 `protobuf:"bytes,9,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号"`                  // 卡号
-	DepositBank string                 `protobuf:"bytes,10,opt,name=deposit_bank,json=depositBank,proto3" json:"deposit_bank" dc:"开户行"` // 开户行
-	Status      int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态"`                              // 状态
-	Remark      string                 `protobuf:"bytes,12,opt,name=remark,proto3" json:"remark" dc:"备注"`                               // 备注
-	CreatedAt   string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`      // 创建时间
+	Id          int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                  // ID
+	UserId      int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`      // 用户ID
+	Username    string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`     // 用户名
+	TradeNo     string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号" dc:"流水号"` // 流水号
+	Money       float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额" dc:"提现金额"` // 提现金额
+	Fee         float64                `protobuf:"fixed64,6,opt,name=fee,proto3" json:"fee" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费" dc:"手续费"`             // 手续费
+	BankName    string                 `protobuf:"bytes,7,opt,name=bank_name,json=bankName,proto3" json:"bank_name" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称" dc:"银行名称"` // 银行名称
+	CardAccount string                 `protobuf:"bytes,8,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名" dc:"银行户名"`  // 银行户名
+	CardNo      string                 `protobuf:"bytes,9,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号" dc:"卡号"`             // 卡号
+	DepositBank string                 `protobuf:"bytes,10,opt,name=deposit_bank,json=depositBank,proto3" json:"deposit_bank" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行" dc:"开户行"`      // 开户行
+	Status      int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                         // 状态
+	Remark      string                 `protobuf:"bytes,12,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`                          // 备注
+	CreatedAt   string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"`       // 创建时间
 	// 用户信息
-	UserRealname      string  `protobuf:"bytes,14,opt,name=user_realname,json=userRealname,proto3" json:"user_realname" dc:"用户信息用户真实姓名"`                // 用户真实姓名
-	UserMobile        string  `protobuf:"bytes,15,opt,name=user_mobile,json=userMobile,proto3" json:"user_mobile" dc:"用户手机号"`                           // 用户手机号
-	UserBalance       float64 `protobuf:"fixed64,16,opt,name=user_balance,json=userBalance,proto3" json:"user_balance" dc:"用户余额"`                       // 用户余额
-	UserBalanceFrozen float64 `protobuf:"fixed64,17,opt,name=user_balance_frozen,json=userBalanceFrozen,proto3" json:"user_balance_frozen" dc:"用户冻结余额"` // 用户冻结余额
+	UserRealname      string  `protobuf:"bytes,14,opt,name=user_realname,json=userRealname,proto3" json:"user_realname" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名" dc:"用户信息用户真实姓名"`           // 用户真实姓名
+	UserMobile        string  `protobuf:"bytes,15,opt,name=user_mobile,json=userMobile,proto3" json:"user_mobile" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号" dc:"用户手机号"` // 用户手机号
+	UserBalance       float64 `protobuf:"fixed64,16,opt,name=user_balance,json=userBalance,proto3" json:"user_balance" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额" dc:"用户余额"`            // 用户余额
+	UserBalanceFrozen float64 `protobuf:"fixed64,17,opt,name=user_balance_frozen,json=userBalanceFrozen,proto3" json:"user_balance_frozen" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额" dc:"用户冻结余额"`        // 用户冻结余额
 	// 统计信息
-	TotalRecharge float64 `protobuf:"fixed64,18,opt,name=total_recharge,json=totalRecharge,proto3" json:"total_recharge" dc:"统计信息总充值"` // 总充值
-	TotalWithdraw float64 `protobuf:"fixed64,19,opt,name=total_withdraw,json=totalWithdraw,proto3" json:"total_withdraw" dc:"总提现"`     // 总提现
-	WithdrawCount int32   `protobuf:"varint,20,opt,name=withdraw_count,json=withdrawCount,proto3" json:"withdraw_count" dc:"提现次数"`     // 提现次数
+	TotalRecharge float64 `protobuf:"fixed64,18,opt,name=total_recharge,json=totalRecharge,proto3" json:"total_recharge" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值" dc:"统计信息总充值"`   // 总充值
+	TotalWithdraw float64 `protobuf:"fixed64,19,opt,name=total_withdraw,json=totalWithdraw,proto3" json:"total_withdraw" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现" dc:"总提现"`   // 总提现
+	WithdrawCount int32   `protobuf:"varint,20,opt,name=withdraw_count,json=withdrawCount,proto3" json:"withdraw_count" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数" dc:"提现次数"` // 提现次数
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2041,10 +2041,10 @@ func (x *GetWithdrawReviewRes) GetData() *WithdrawReviewInfo {
 // 处理提现请求
 type DealWithWithdrawReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"提现记录ID"`                  // 提现记录ID
-	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"处理类型 1=确认 0=拒绝 2=补单"` // 处理类型 1=确认 0=拒绝 2=补单
-	Fee           float64                `protobuf:"fixed64,3,opt,name=fee,proto3" json:"fee" dc:"手续费 (可选)"`             // 手续费 (可选)
-	Remark        string                 `protobuf:"bytes,4,opt,name=remark,proto3" json:"remark" dc:"备注 (可选)"`          // 备注 (可选)
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID" dc:"提现记录ID"`          // 提现记录ID
+	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单" dc:"处理类型 1=确认 0=拒绝 2=补单"`          // 处理类型 1=确认 0=拒绝 2=补单
+	Fee           float64                `protobuf:"fixed64,3,opt,name=fee,proto3" json:"fee" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)" dc:"手续费 (可选)"` // 手续费 (可选)
+	Remark        string                 `protobuf:"bytes,4,opt,name=remark,proto3" json:"remark" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)" dc:"备注 (可选)"`            // 备注 (可选)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2110,8 +2110,8 @@ func (x *DealWithWithdrawReq) GetRemark() string {
 // 处理提现响应
 type DealWithWithdrawRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功"`          // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2208,12 +2208,12 @@ func (x *QueryUserBalanceReq) GetUserId() int32 {
 // 用户余额信息
 type UserBalanceInfo struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	UserId         int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                            // 用户ID
-	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                        // 用户名
-	Balance        float64                `protobuf:"fixed64,3,opt,name=balance,proto3" json:"balance" dc:"可用余额"`                                       // 可用余额
-	BalanceFrozen  float64                `protobuf:"fixed64,4,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"`      // 冻结余额
-	Points         float64                `protobuf:"fixed64,5,opt,name=points,proto3" json:"points" dc:"积分"`                                           // 积分
-	LastUpdateTime string                 `protobuf:"bytes,6,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time" dc:"最后更新时间"` // 最后更新时间
+	UserId         int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`   // 用户ID
+	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"`  // 用户名
+	Balance        float64                `protobuf:"fixed64,3,opt,name=balance,proto3" json:"balance" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额" dc:"可用余额"`    // 可用余额
+	BalanceFrozen  float64                `protobuf:"fixed64,4,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额" dc:"冻结余额"` // 冻结余额
+	Points         float64                `protobuf:"fixed64,5,opt,name=points,proto3" json:"points" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分" dc:"积分"`                      // 积分
+	LastUpdateTime string                 `protobuf:"bytes,6,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间"`        // 最后更新时间
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2391,12 +2391,12 @@ func (x *QueryGameBalanceReq) GetUserId() int32 {
 // 游戏余额信息
 type GameBalanceInfo struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	GameId         int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"`                            // 游戏ID
-	GameName       string                 `protobuf:"bytes,2,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"游戏名称"`                       // 游戏名称
-	UserId         int32                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                            // 用户ID
-	Username       string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名"`                                        // 用户名
-	Balance        float64                `protobuf:"fixed64,5,opt,name=balance,proto3" json:"balance" dc:"游戏余额"`                                       // 游戏余额
-	LastUpdateTime string                 `protobuf:"bytes,6,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time" dc:"最后更新时间"` // 最后更新时间
+	GameId         int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID" dc:"游戏ID"`  // 游戏ID
+	GameName       string                 `protobuf:"bytes,2,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称" dc:"游戏名称"`       // 游戏名称
+	UserId         int32                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`  // 用户ID
+	Username       string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名" dc:"用户名"` // 用户名
+	Balance        float64                `protobuf:"fixed64,5,opt,name=balance,proto3" json:"balance" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额" dc:"游戏余额"`   // 游戏余额
+	LastUpdateTime string                 `protobuf:"bytes,6,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间" dc:"最后更新时间"`       // 最后更新时间
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2521,10 +2521,10 @@ func (x *QueryGameBalanceRes) GetData() *GameBalanceInfo {
 // 手动操作用户余额请求
 type ManualUserBalanceReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"` // 用户ID
-	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"操作类型 1=加款 2=扣款"`         // 操作类型 1=加款 2=扣款
-	Money         float64                `protobuf:"fixed64,3,opt,name=money,proto3" json:"money" dc:"操作金额"`                // 操作金额
-	Remark        string                 `protobuf:"bytes,4,opt,name=remark,proto3" json:"remark" dc:"备注"`                  // 备注
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID" dc:"用户ID"`   // 用户ID
+	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款" dc:"操作类型 1=加款 2=扣款"` // 操作类型 1=加款 2=扣款
+	Money         float64                `protobuf:"fixed64,3,opt,name=money,proto3" json:"money" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额" dc:"操作金额"`        // 操作金额
+	Remark        string                 `protobuf:"bytes,4,opt,name=remark,proto3" json:"remark" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注" dc:"备注"`              // 备注
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2590,10 +2590,10 @@ func (x *ManualUserBalanceReq) GetRemark() string {
 // 手动操作用户余额响应
 type ManualUserBalanceRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                           // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`                            // 响应消息
-	BalanceOld    float64                `protobuf:"fixed64,3,opt,name=balance_old,json=balanceOld,proto3" json:"balance_old" dc:"操作前余额"` // 操作前余额
-	BalanceNew    float64                `protobuf:"fixed64,4,opt,name=balance_new,json=balanceNew,proto3" json:"balance_new" dc:"操作后余额"` // 操作后余额
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功"`      // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息"`       // 响应消息
+	BalanceOld    float64                `protobuf:"fixed64,3,opt,name=balance_old,json=balanceOld,proto3" json:"balance_old" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额" dc:"操作前余额"` // 操作前余额
+	BalanceNew    float64                `protobuf:"fixed64,4,opt,name=balance_new,json=balanceNew,proto3" json:"balance_new" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额" dc:"操作后余额"` // 操作后余额
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2659,10 +2659,10 @@ func (x *ManualUserBalanceRes) GetBalanceNew() float64 {
 // 获取支付接口列表请求
 type GetPaymentAccountsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PaymentId     int32                  `protobuf:"varint,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID (可选)"` // 支付ID (可选)
-	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                          // 状态 (可选)
-	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page" dc:"页码"`                                   // 页码
-	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size" dc:"每页数量"`                                 // 每页数量
+	PaymentId     int32                  `protobuf:"varint,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)" dc:"支付ID (可选)"` // 支付ID (可选)
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)" dc:"状态 (可选)"`   // 状态 (可选)
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码" dc:"页码"`                   // 页码
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量" dc:"每页数量"`             // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2728,29 +2728,29 @@ func (x *GetPaymentAccountsReq) GetSize() int32 {
 // 支付接口信息
 type PaymentAccountInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                           // ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                   // 站点ID
-	PaymentId     int32                  `protobuf:"varint,3,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID"`       // 第三方支付ID
-	Gateway       int32                  `protobuf:"varint,4,opt,name=gateway,proto3" json:"gateway" dc:"支付网关"`                               // 支付网关
-	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name" dc:"接口名称"`                                      // 接口名称
-	Domain        string                 `protobuf:"bytes,6,opt,name=domain,proto3" json:"domain" dc:"支付域名"`                                  // 支付域名
-	MerchantNo    string                 `protobuf:"bytes,7,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号"`         // 商户号
-	Md5Key        string                 `protobuf:"bytes,8,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥"`                   // MD5密钥
-	EachMin       float64                `protobuf:"fixed64,9,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低"`               // 单笔最低
-	EachMax       float64                `protobuf:"fixed64,10,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高"`              // 单笔最高
-	DailyMax      float64                `protobuf:"fixed64,11,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限"`         // 单日停用上限
-	TodayCount    int32                  `protobuf:"varint,12,opt,name=today_count,json=todayCount,proto3" json:"today_count" dc:"今日入款次数"`    // 今日入款次数
-	TodayAmount   float64                `protobuf:"fixed64,13,opt,name=today_amount,json=todayAmount,proto3" json:"today_amount" dc:"今日总转账"` // 今日总转账
-	Status        int32                  `protobuf:"varint,14,opt,name=status,proto3" json:"status" dc:"状态"`                                  // 状态
-	StatusName    string                 `protobuf:"bytes,15,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称"`       // 状态名称
-	Sort          int32                  `protobuf:"varint,16,opt,name=sort,proto3" json:"sort" dc:"排序"`                                      // 排序
-	CreatedAt     string                 `protobuf:"bytes,17,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`          // 创建时间
-	UpdatedAt     string                 `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`          // 更新时间
-	PublicKey     string                 `protobuf:"bytes,19,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥"`            // 公钥
-	PrivateKey    string                 `protobuf:"bytes,20,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥"`         // 私钥
-	IsDecimal     int32                  `protobuf:"varint,21,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数"`       // 是否携带小数
-	IsInt         int32                  `protobuf:"varint,22,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组"`                // 是否为规定整数数组
-	MoneyList     string                 `protobuf:"bytes,23,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组"`       // 可选的金额数组
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID" dc:"ID"`                                                                            // ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID" dc:"站点ID"`                  // 站点ID
+	PaymentId     int32                  `protobuf:"varint,3,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID"`       // 第三方支付ID
+	Gateway       int32                  `protobuf:"varint,4,opt,name=gateway,proto3" json:"gateway" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关"`                              // 支付网关
+	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称"`                                     // 接口名称
+	Domain        string                 `protobuf:"bytes,6,opt,name=domain,proto3" json:"domain" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名"`                                 // 支付域名
+	MerchantNo    string                 `protobuf:"bytes,7,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号"`                         // 商户号
+	Md5Key        string                 `protobuf:"bytes,8,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥"` // MD5密钥
+	EachMin       float64                `protobuf:"fixed64,9,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低"`              // 单笔最低
+	EachMax       float64                `protobuf:"fixed64,10,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高"`             // 单笔最高
+	DailyMax      float64                `protobuf:"fixed64,11,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限"`          // 单日停用上限
+	TodayCount    int32                  `protobuf:"varint,12,opt,name=today_count,json=todayCount,proto3" json:"today_count" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数" dc:"今日入款次数"`     // 今日入款次数
+	TodayAmount   float64                `protobuf:"fixed64,13,opt,name=today_amount,json=todayAmount,proto3" json:"today_amount" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账" dc:"今日总转账"`     // 今日总转账
+	Status        int32                  `protobuf:"varint,14,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                                                   // 状态
+	StatusName    string                 `protobuf:"bytes,15,opt,name=status_name,json=statusName,proto3" json:"status_name" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称" dc:"状态名称"`      // 状态名称
+	Sort          int32                  `protobuf:"varint,16,opt,name=sort,proto3" json:"sort" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序"`                                                                       // 排序
+	CreatedAt     string                 `protobuf:"bytes,17,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间" dc:"创建时间"`         // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间" dc:"更新时间"`         // 更新时间
+	PublicKey     string                 `protobuf:"bytes,19,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥"`                                             // 公钥
+	PrivateKey    string                 `protobuf:"bytes,20,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥"`                                          // 私钥
+	IsDecimal     int32                  `protobuf:"varint,21,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数"`        // 是否携带小数
+	IsInt         int32                  `protobuf:"varint,22,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组"`     // 是否为规定整数数组
+	MoneyList     string                 `protobuf:"bytes,23,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组"`       // 可选的金额数组
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3002,22 +3002,22 @@ func (x *GetPaymentAccountsRes) GetCount() int32 {
 // 创建支付接口请求
 type CreatePaymentAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PaymentId     int32                  `protobuf:"varint,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID"` // 第三方支付ID
-	Gateway       int32                  `protobuf:"varint,2,opt,name=gateway,proto3" json:"gateway" dc:"支付网关"`                         // 支付网关
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name" dc:"接口名称"`                                // 接口名称
-	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain" dc:"支付域名"`                            // 支付域名
-	MerchantNo    string                 `protobuf:"bytes,5,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号"`   // 商户号
-	Md5Key        string                 `protobuf:"bytes,6,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥"`             // MD5密钥
-	EachMin       float64                `protobuf:"fixed64,7,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低"`         // 单笔最低
-	EachMax       float64                `protobuf:"fixed64,8,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高"`         // 单笔最高
-	DailyMax      float64                `protobuf:"fixed64,9,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限"`    // 单日停用上限
-	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status" dc:"状态"`                            // 状态
-	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort" dc:"排序"`                                // 排序
-	PublicKey     string                 `protobuf:"bytes,12,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥"`      // 公钥
-	PrivateKey    string                 `protobuf:"bytes,13,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥"`   // 私钥
-	IsDecimal     int32                  `protobuf:"varint,14,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数"` // 是否携带小数
-	IsInt         int32                  `protobuf:"varint,15,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组"`          // 是否为规定整数数组
-	MoneyList     string                 `protobuf:"bytes,16,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组"` // 可选的金额数组
+	PaymentId     int32                  `protobuf:"varint,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID"`          // 第三方支付ID
+	Gateway       int32                  `protobuf:"varint,2,opt,name=gateway,proto3" json:"gateway" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关"`                    // 支付网关
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称"`                           // 接口名称
+	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名"`                       // 支付域名
+	MerchantNo    string                 `protobuf:"bytes,5,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号"`               // 商户号
+	Md5Key        string                 `protobuf:"bytes,6,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥"`  // MD5密钥
+	EachMin       float64                `protobuf:"fixed64,7,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低"`              // 单笔最低
+	EachMax       float64                `protobuf:"fixed64,8,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高"`              // 单笔最高
+	DailyMax      float64                `protobuf:"fixed64,9,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限"` // 单日停用上限
+	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                                         // 状态
+	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序"`                                                             // 排序
+	PublicKey     string                 `protobuf:"bytes,12,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥"`                                   // 公钥
+	PrivateKey    string                 `protobuf:"bytes,13,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥"`                                // 私钥
+	IsDecimal     int32                  `protobuf:"varint,14,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数"`          // 是否携带小数
+	IsInt         int32                  `protobuf:"varint,15,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组"`          // 是否为规定整数数组
+	MoneyList     string                 `protobuf:"bytes,16,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组"`          // 可选的金额数组
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3167,8 +3167,8 @@ func (x *CreatePaymentAccountReq) GetMoneyList() string {
 // 创建支付接口响应
 type CreatePaymentAccountRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功"`          // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3310,23 +3310,23 @@ func (x *GetPaymentAccountUpdateRes) GetData() *PaymentAccountInfo {
 // 更新支付接口请求
 type UpdatePaymentAccountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"支付接口ID"`                                 // 支付接口ID
-	PaymentId     int32                  `protobuf:"varint,2,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID"` // 第三方支付ID
-	Gateway       int32                  `protobuf:"varint,3,opt,name=gateway,proto3" json:"gateway" dc:"支付网关"`                         // 支付网关
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name" dc:"接口名称"`                                // 接口名称
-	Domain        string                 `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain" dc:"支付域名"`                            // 支付域名
-	MerchantNo    string                 `protobuf:"bytes,6,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号"`   // 商户号
-	Md5Key        string                 `protobuf:"bytes,7,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥"`             // MD5密钥
-	EachMin       float64                `protobuf:"fixed64,8,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低"`         // 单笔最低
-	EachMax       float64                `protobuf:"fixed64,9,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高"`         // 单笔最高
-	DailyMax      float64                `protobuf:"fixed64,10,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限"`   // 单日停用上限
-	Status        int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态"`                            // 状态
-	Sort          int32                  `protobuf:"varint,12,opt,name=sort,proto3" json:"sort" dc:"排序"`                                // 排序
-	PublicKey     string                 `protobuf:"bytes,13,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥"`      // 公钥
-	PrivateKey    string                 `protobuf:"bytes,14,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥"`   // 私钥
-	IsDecimal     int32                  `protobuf:"varint,15,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数"` // 是否携带小数
-	IsInt         int32                  `protobuf:"varint,16,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组"`          // 是否为规定整数数组
-	MoneyList     string                 `protobuf:"bytes,17,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组"` // 可选的金额数组
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID" dc:"支付接口ID"`       // 支付接口ID
+	PaymentId     int32                  `protobuf:"varint,2,opt,name=payment_id,json=paymentId,proto3" json:"payment_id" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID" dc:"第三方支付ID"`           // 第三方支付ID
+	Gateway       int32                  `protobuf:"varint,3,opt,name=gateway,proto3" json:"gateway" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关" dc:"支付网关"`                     // 支付网关
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称" dc:"接口名称"`                            // 接口名称
+	Domain        string                 `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名" dc:"支付域名"`                        // 支付域名
+	MerchantNo    string                 `protobuf:"bytes,6,opt,name=merchant_no,json=merchantNo,proto3" json:"merchant_no" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号" dc:"商户号"`                // 商户号
+	Md5Key        string                 `protobuf:"bytes,7,opt,name=md5_key,json=md5Key,proto3" json:"md5_key" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥" dc:"MD5密钥"`   // MD5密钥
+	EachMin       float64                `protobuf:"fixed64,8,opt,name=each_min,json=eachMin,proto3" json:"each_min" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低" dc:"单笔最低"`     // 单笔最低
+	EachMax       float64                `protobuf:"fixed64,9,opt,name=each_max,json=eachMax,proto3" json:"each_max" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高" dc:"单笔最高"`     // 单笔最高
+	DailyMax      float64                `protobuf:"fixed64,10,opt,name=daily_max,json=dailyMax,proto3" json:"daily_max" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限" dc:"单日停用上限"` // 单日停用上限
+	Status        int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态" dc:"状态"`                                                          // 状态
+	Sort          int32                  `protobuf:"varint,12,opt,name=sort,proto3" json:"sort" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序" dc:"排序"`                                                              // 排序
+	PublicKey     string                 `protobuf:"bytes,13,opt,name=public_key,json=publicKey,proto3" json:"public_key" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥" dc:"公钥"`                                    // 公钥
+	PrivateKey    string                 `protobuf:"bytes,14,opt,name=private_key,json=privateKey,proto3" json:"private_key" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥" dc:"私钥"`                                 // 私钥
+	IsDecimal     int32                  `protobuf:"varint,15,opt,name=is_decimal,json=isDecimal,proto3" json:"is_decimal" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数" dc:"是否携带小数"`           // 是否携带小数
+	IsInt         int32                  `protobuf:"varint,16,opt,name=is_int,json=isInt,proto3" json:"is_int" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组" dc:"是否为规定整数数组"`           // 是否为规定整数数组
+	MoneyList     string                 `protobuf:"bytes,17,opt,name=money_list,json=moneyList,proto3" json:"money_list" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组" dc:"可选的金额数组"`           // 可选的金额数组
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3483,8 +3483,8 @@ func (x *UpdatePaymentAccountReq) GetMoneyList() string {
 // 更新支付接口响应
 type UpdatePaymentAccountRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功"`          // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3581,8 +3581,8 @@ func (x *DeletePaymentAccountReq) GetId() int32 {
 // 删除支付接口响应
 type DeletePaymentAccountRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息"`  // 响应消息
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功" dc:"是否成功"`          // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

@@ -25,10 +25,10 @@ const (
 // 获取广告列表请求
 type GetAdListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
-	Position      int32                  `protobuf:"varint,4,opt,name=position,proto3" json:"position,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
+	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
+	Position      int32                  `protobuf:"varint,4,opt,name=position,proto3" json:"position"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -94,12 +94,12 @@ func (x *GetAdListReq) GetPosition() int32 {
 // 获取广告列表响应
 type GetAdListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*AdItem              `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
-	PositionList  []*PositionItem        `protobuf:"bytes,5,rep,name=position_list,json=positionList,proto3" json:"position_list,omitempty"`
-	StatusList    []*StatusItem          `protobuf:"bytes,6,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
+	List          []*AdItem              `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	PositionList  []*PositionItem        `protobuf:"bytes,5,rep,name=position_list,json=positionList,proto3" json:"position_list"`
+	StatusList    []*StatusItem          `protobuf:"bytes,6,rep,name=status_list,json=statusList,proto3" json:"status_list"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -179,17 +179,19 @@ func (x *GetAdListRes) GetStatusList() []*StatusItem {
 // 广告项
 type AdItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Image         string                 `protobuf:"bytes,3,opt,name=image,proto3" json:"image,omitempty"`
-	Link          string                 `protobuf:"bytes,4,opt,name=link,proto3" json:"link,omitempty"`
-	Position      int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position,omitempty"`
-	PositionName  string                 `protobuf:"bytes,6,opt,name=position_name,json=positionName,proto3" json:"position_name,omitempty"`
-	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`
-	StatusName    string                 `protobuf:"bytes,8,opt,name=status_name,json=statusName,proto3" json:"status_name,omitempty"`
-	Sort          int32                  `protobuf:"varint,9,opt,name=sort,proto3" json:"sort,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Image         string                 `protobuf:"bytes,3,opt,name=image,proto3" json:"image"`
+	Link          string                 `protobuf:"bytes,4,opt,name=link,proto3" json:"link"`
+	Position      int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position"`
+	PositionName  string                 `protobuf:"bytes,6,opt,name=position_name,json=positionName,proto3" json:"position_name"`
+	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status"`
+	StatusName    string                 `protobuf:"bytes,8,opt,name=status_name,json=statusName,proto3" json:"status_name"`
+	Sort          int32                  `protobuf:"varint,9,opt,name=sort,proto3" json:"sort"`
+	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	StartTime     string                 `protobuf:"bytes,12,opt,name=start_time,json=startTime,proto3" json:"start_time"`
+	ExpiredTime   string                 `protobuf:"bytes,13,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -301,11 +303,25 @@ func (x *AdItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *AdItem) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *AdItem) GetExpiredTime() string {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return ""
+}
+
 // 位置项
 type PositionItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -357,8 +373,8 @@ func (x *PositionItem) GetName() string {
 // 状态项
 type StatusItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -410,12 +426,14 @@ func (x *StatusItem) GetName() string {
 // 创建广告请求
 type CreateAdReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,100"`        // v: required|length:2,100
-	Image         string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image,omitempty" v:"required"`                     // v: required
-	Link          string                 `protobuf:"bytes,3,opt,name=link,proto3" json:"link,omitempty" v:"required"`                       // v: required
-	Position      int32                  `protobuf:"varint,4,opt,name=position,proto3" json:"position,omitempty" v:"required|in:1,2,3,4,5"` // v: required|in:1,2,3,4,5
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"required|in:0,1"`           // v: required|in:0,1
-	Sort          int32                  `protobuf:"varint,6,opt,name=sort,proto3" json:"sort,omitempty" v:"required|min:0"`                // v: required|min:0
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" v:"required|length:2,100"`                   // v: required|length:2,100
+	Image         string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image" v:"required"`                                // v: required
+	Link          string                 `protobuf:"bytes,3,opt,name=link,proto3" json:"link" dc:"可选"`                                       // 可选
+	Position      int32                  `protobuf:"varint,4,opt,name=position,proto3" json:"position" v:"required|in:1,2,3,4,5"`            // v: required|in:1,2,3,4,5
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" v:"required|in:0,1"`                      // v: required|in:0,1
+	Sort          int32                  `protobuf:"varint,6,opt,name=sort,proto3" json:"sort" v:"required|min:0"`                           // v: required|min:0
+	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time" v:"required"`       // v: required
+	ExpiredTime   string                 `protobuf:"bytes,8,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time" v:"required"` // v: required
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -492,6 +510,20 @@ func (x *CreateAdReq) GetSort() int32 {
 	return 0
 }
 
+func (x *CreateAdReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *CreateAdReq) GetExpiredTime() string {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return ""
+}
+
 // 创建广告响应
 type CreateAdRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -532,13 +564,15 @@ func (*CreateAdRes) Descriptor() ([]byte, []int) {
 // 更新广告请求
 type UpdateAdReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"`                    // v: required|min:1
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,100"`        // v: required|length:2,100
-	Image         string                 `protobuf:"bytes,3,opt,name=image,proto3" json:"image,omitempty" v:"required"`                     // v: required
-	Link          string                 `protobuf:"bytes,4,opt,name=link,proto3" json:"link,omitempty" v:"required"`                       // v: required
-	Position      int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position,omitempty" v:"required|in:1,2,3,4,5"` // v: required|in:1,2,3,4,5
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty" v:"required|in:0,1"`           // v: required|in:0,1
-	Sort          int32                  `protobuf:"varint,7,opt,name=sort,proto3" json:"sort,omitempty" v:"required|min:0"`                // v: required|min:0
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                               // v: required|min:1
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title" v:"required|length:2,100"`                   // v: required|length:2,100
+	Image         string                 `protobuf:"bytes,3,opt,name=image,proto3" json:"image" v:"required"`                                // v: required
+	Link          string                 `protobuf:"bytes,4,opt,name=link,proto3" json:"link" dc:"可选"`                                       // 可选
+	Position      int32                  `protobuf:"varint,5,opt,name=position,proto3" json:"position" v:"required|in:1,2,3,4,5"`            // v: required|in:1,2,3,4,5
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" v:"required|in:0,1"`                      // v: required|in:0,1
+	Sort          int32                  `protobuf:"varint,7,opt,name=sort,proto3" json:"sort" v:"required|min:0"`                           // v: required|min:0
+	StartTime     string                 `protobuf:"bytes,8,opt,name=start_time,json=startTime,proto3" json:"start_time" v:"required"`       // v: required
+	ExpiredTime   string                 `protobuf:"bytes,9,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time" v:"required"` // v: required
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -622,6 +656,20 @@ func (x *UpdateAdReq) GetSort() int32 {
 	return 0
 }
 
+func (x *UpdateAdReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *UpdateAdReq) GetExpiredTime() string {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return ""
+}
+
 // 更新广告响应
 type UpdateAdRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -662,7 +710,7 @@ func (*UpdateAdRes) Descriptor() ([]byte, []int) {
 // 删除广告请求
 type DeleteAdReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"` // v: required|min:1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"` // v: required|min:1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -759,7 +807,7 @@ const file_backend_ad_v1_ad_proto_rawDesc = "" +
 	"\bper_page\x18\x04 \x01(\x05R\aperPage\x125\n" +
 	"\rposition_list\x18\x05 \x03(\v2\x10.ad.PositionItemR\fpositionList\x12/\n" +
 	"\vstatus_list\x18\x06 \x03(\v2\x0e.ad.StatusItemR\n" +
-	"statusList\"\xa4\x02\n" +
+	"statusList\"\xe6\x02\n" +
 	"\x06AdItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x14\n" +
@@ -775,22 +823,28 @@ const file_backend_ad_v1_ad_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAt\"8\n" +
+	"updated_at\x18\v \x01(\tR\tupdatedAt\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\f \x01(\tR\tstartTime\x12!\n" +
+	"\fexpired_time\x18\r \x01(\tR\vexpiredTime\"8\n" +
 	"\fPositionItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"6\n" +
 	"\n" +
 	"StatusItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\x95\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xd7\x01\n" +
 	"\vCreateAdReq\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12\x12\n" +
 	"\x04link\x18\x03 \x01(\tR\x04link\x12\x1a\n" +
 	"\bposition\x18\x04 \x01(\x05R\bposition\x12\x16\n" +
 	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x12\n" +
-	"\x04sort\x18\x06 \x01(\x05R\x04sort\"\r\n" +
-	"\vCreateAdRes\"\xa5\x01\n" +
+	"\x04sort\x18\x06 \x01(\x05R\x04sort\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\a \x01(\tR\tstartTime\x12!\n" +
+	"\fexpired_time\x18\b \x01(\tR\vexpiredTime\"\r\n" +
+	"\vCreateAdRes\"\xe7\x01\n" +
 	"\vUpdateAdReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x14\n" +
@@ -798,7 +852,10 @@ const file_backend_ad_v1_ad_proto_rawDesc = "" +
 	"\x04link\x18\x04 \x01(\tR\x04link\x12\x1a\n" +
 	"\bposition\x18\x05 \x01(\x05R\bposition\x12\x16\n" +
 	"\x06status\x18\x06 \x01(\x05R\x06status\x12\x12\n" +
-	"\x04sort\x18\a \x01(\x05R\x04sort\"\r\n" +
+	"\x04sort\x18\a \x01(\x05R\x04sort\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\b \x01(\tR\tstartTime\x12!\n" +
+	"\fexpired_time\x18\t \x01(\tR\vexpiredTime\"\r\n" +
 	"\vUpdateAdRes\"\x1d\n" +
 	"\vDeleteAdReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\r\n" +

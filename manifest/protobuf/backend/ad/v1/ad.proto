@@ -42,6 +42,8 @@ message AdItem {
     int32 sort = 9;
     string created_at = 10;
     string updated_at = 11;
+    string start_time = 12;
+    string expired_time = 13;
 }
 
 // 位置项
@@ -60,10 +62,12 @@ message StatusItem {
 message CreateAdReq {
     string title = 1;       // v: required|length:2,100
     string image = 2;       // v: required
-    string link = 3;        // v: required
+    string link = 3;        // 可选
     int32 position = 4;     // v: required|in:1,2,3,4,5
     int32 status = 5;       // v: required|in:0,1
     int32 sort = 6;         // v: required|min:0
+    string start_time = 7;  // v: required
+    string expired_time = 8; // v: required
 }
 
 // 创建广告响应
@@ -74,10 +78,12 @@ message UpdateAdReq {
     int32 id = 1;           // v: required|min:1
     string title = 2;       // v: required|length:2,100
     string image = 3;       // v: required
-    string link = 4;        // v: required
+    string link = 4;        // 可选
     int32 position = 5;     // v: required|in:1,2,3,4,5
     int32 status = 6;       // v: required|in:0,1
     int32 sort = 7;         // v: required|min:0
+    string start_time = 8;  // v: required
+    string expired_time = 9; // v: required
 }
 
 // 更新广告响应

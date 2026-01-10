@@ -25,10 +25,10 @@ const (
 // 获取公告列表请求
 type GetNoticeListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
+	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -94,12 +94,12 @@ func (x *GetNoticeListReq) GetType() int32 {
 // 获取公告列表响应
 type GetNoticeListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*NoticeItem          `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
-	TypeList      []*TypeItem            `protobuf:"bytes,5,rep,name=type_list,json=typeList,proto3" json:"type_list,omitempty"`
-	StatusList    []*StatusItem          `protobuf:"bytes,6,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
+	List          []*NoticeItem          `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	TypeList      []*TypeItem            `protobuf:"bytes,5,rep,name=type_list,json=typeList,proto3" json:"type_list"`
+	StatusList    []*StatusItem          `protobuf:"bytes,6,rep,name=status_list,json=statusList,proto3" json:"status_list"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -179,17 +179,20 @@ func (x *GetNoticeListRes) GetStatusList() []*StatusItem {
 // 公告项
 type NoticeItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`
-	TypeName      string                 `protobuf:"bytes,5,opt,name=type_name,json=typeName,proto3" json:"type_name,omitempty"`
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
-	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name,omitempty"`
-	Sort          int32                  `protobuf:"varint,8,opt,name=sort,proto3" json:"sort,omitempty"`
-	IsTop         int32                  `protobuf:"varint,9,opt,name=is_top,json=isTop,proto3" json:"is_top,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type"`
+	TypeName      string                 `protobuf:"bytes,5,opt,name=type_name,json=typeName,proto3" json:"type_name"`
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
+	StatusName    string                 `protobuf:"bytes,7,opt,name=status_name,json=statusName,proto3" json:"status_name"`
+	Sort          int32                  `protobuf:"varint,8,opt,name=sort,proto3" json:"sort"`
+	IsTop         int32                  `protobuf:"varint,9,opt,name=is_top,json=isTop,proto3" json:"is_top"`
+	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Url           string                 `protobuf:"bytes,12,opt,name=url,proto3" json:"url"`
+	StartTime     string                 `protobuf:"bytes,13,opt,name=start_time,json=startTime,proto3" json:"start_time"`
+	ExpiredTime   string                 `protobuf:"bytes,14,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -301,11 +304,32 @@ func (x *NoticeItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *NoticeItem) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *NoticeItem) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *NoticeItem) GetExpiredTime() string {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return ""
+}
+
 // 类型项
 type TypeItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -357,8 +381,8 @@ func (x *TypeItem) GetName() string {
 // 状态项
 type StatusItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -410,12 +434,15 @@ func (x *StatusItem) GetName() string {
 // 创建公告请求
 type CreateNoticeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,200"`         // v: required|length:2,200
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty" v:"required|length:2,5000"`    // v: required|length:2,5000
-	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty" v:"required|in:1,2,3"`              // v: required|in:1,2,3
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty" v:"required|in:0,1"`            // v: required|in:0,1
-	Sort          int32                  `protobuf:"varint,5,opt,name=sort,proto3" json:"sort,omitempty" v:"required|min:0"`                 // v: required|min:0
-	IsTop         int32                  `protobuf:"varint,6,opt,name=is_top,json=isTop,proto3" json:"is_top,omitempty" v:"required|in:0,1"` // v: required|in:0,1
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" v:"required|length:2,200"`                   // v: required|length:2,200
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content" v:"required|length:2,5000"`              // v: required|length:2,5000
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type" v:"required|in:1,2,3"`                        // v: required|in:1,2,3
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" v:"required|in:0,1"`                      // v: required|in:0,1
+	Sort          int32                  `protobuf:"varint,5,opt,name=sort,proto3" json:"sort" v:"required|min:0"`                           // v: required|min:0
+	IsTop         int32                  `protobuf:"varint,6,opt,name=is_top,json=isTop,proto3" json:"is_top" v:"required|in:0,1"`           // v: required|in:0,1
+	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time" v:"required"`       // v: required
+	ExpiredTime   string                 `protobuf:"bytes,8,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time" v:"required"` // v: required
+	Url           string                 `protobuf:"bytes,9,opt,name=url,proto3" json:"url"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -492,6 +519,27 @@ func (x *CreateNoticeReq) GetIsTop() int32 {
 	return 0
 }
 
+func (x *CreateNoticeReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *CreateNoticeReq) GetExpiredTime() string {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return ""
+}
+
+func (x *CreateNoticeReq) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
 // 创建公告响应
 type CreateNoticeRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -532,13 +580,16 @@ func (*CreateNoticeRes) Descriptor() ([]byte, []int) {
 // 更新公告请求
 type UpdateNoticeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"`                     // v: required|min:1
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,200"`         // v: required|length:2,200
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty" v:"required|length:2,5000"`    // v: required|length:2,5000
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty" v:"required|in:1,2,3"`              // v: required|in:1,2,3
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"required|in:0,1"`            // v: required|in:0,1
-	Sort          int32                  `protobuf:"varint,6,opt,name=sort,proto3" json:"sort,omitempty" v:"required|min:0"`                 // v: required|min:0
-	IsTop         int32                  `protobuf:"varint,7,opt,name=is_top,json=isTop,proto3" json:"is_top,omitempty" v:"required|in:0,1"` // v: required|in:0,1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                               // v: required|min:1
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title" v:"required|length:2,200"`                   // v: required|length:2,200
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content" v:"required|length:2,5000"`              // v: required|length:2,5000
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type" v:"required|in:1,2,3"`                        // v: required|in:1,2,3
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" v:"required|in:0,1"`                      // v: required|in:0,1
+	Sort          int32                  `protobuf:"varint,6,opt,name=sort,proto3" json:"sort" v:"required|min:0"`                           // v: required|min:0
+	IsTop         int32                  `protobuf:"varint,7,opt,name=is_top,json=isTop,proto3" json:"is_top" v:"required|in:0,1"`           // v: required|in:0,1
+	StartTime     string                 `protobuf:"bytes,8,opt,name=start_time,json=startTime,proto3" json:"start_time" v:"required"`       // v: required
+	ExpiredTime   string                 `protobuf:"bytes,9,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time" v:"required"` // v: required
+	Url           string                 `protobuf:"bytes,10,opt,name=url,proto3" json:"url"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -622,6 +673,27 @@ func (x *UpdateNoticeReq) GetIsTop() int32 {
 	return 0
 }
 
+func (x *UpdateNoticeReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *UpdateNoticeReq) GetExpiredTime() string {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return ""
+}
+
+func (x *UpdateNoticeReq) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
 // 更新公告响应
 type UpdateNoticeRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -662,7 +734,7 @@ func (*UpdateNoticeRes) Descriptor() ([]byte, []int) {
 // 删除公告请求
 type DeleteNoticeReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"` // v: required|min:1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"` // v: required|min:1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -758,7 +830,7 @@ const file_backend_notice_v1_notice_proto_rawDesc = "" +
 	"\bper_page\x18\x04 \x01(\x05R\aperPage\x12-\n" +
 	"\ttype_list\x18\x05 \x03(\v2\x10.notice.TypeItemR\btypeList\x123\n" +
 	"\vstatus_list\x18\x06 \x03(\v2\x12.notice.StatusItemR\n" +
-	"statusList\"\x9f\x02\n" +
+	"statusList\"\xf3\x02\n" +
 	"\n" +
 	"NoticeItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
@@ -775,22 +847,30 @@ const file_backend_notice_v1_notice_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAt\"4\n" +
+	"updated_at\x18\v \x01(\tR\tupdatedAt\x12\x10\n" +
+	"\x03url\x18\f \x01(\tR\x03url\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\r \x01(\tR\tstartTime\x12!\n" +
+	"\fexpired_time\x18\x0e \x01(\tR\vexpiredTime\"4\n" +
 	"\bTypeItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"6\n" +
 	"\n" +
 	"StatusItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\x98\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xec\x01\n" +
 	"\x0fCreateNoticeReq\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x12\n" +
 	"\x04type\x18\x03 \x01(\x05R\x04type\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\x05R\x06status\x12\x12\n" +
 	"\x04sort\x18\x05 \x01(\x05R\x04sort\x12\x15\n" +
-	"\x06is_top\x18\x06 \x01(\x05R\x05isTop\"\x11\n" +
-	"\x0fCreateNoticeRes\"\xa8\x01\n" +
+	"\x06is_top\x18\x06 \x01(\x05R\x05isTop\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\a \x01(\tR\tstartTime\x12!\n" +
+	"\fexpired_time\x18\b \x01(\tR\vexpiredTime\x12\x10\n" +
+	"\x03url\x18\t \x01(\tR\x03url\"\x11\n" +
+	"\x0fCreateNoticeRes\"\xfc\x01\n" +
 	"\x0fUpdateNoticeReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
@@ -798,7 +878,12 @@ const file_backend_notice_v1_notice_proto_rawDesc = "" +
 	"\x04type\x18\x04 \x01(\x05R\x04type\x12\x16\n" +
 	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x12\n" +
 	"\x04sort\x18\x06 \x01(\x05R\x04sort\x12\x15\n" +
-	"\x06is_top\x18\a \x01(\x05R\x05isTop\"\x11\n" +
+	"\x06is_top\x18\a \x01(\x05R\x05isTop\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\b \x01(\tR\tstartTime\x12!\n" +
+	"\fexpired_time\x18\t \x01(\tR\vexpiredTime\x12\x10\n" +
+	"\x03url\x18\n" +
+	" \x01(\tR\x03url\"\x11\n" +
 	"\x0fUpdateNoticeRes\"!\n" +
 	"\x0fDeleteNoticeReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x11\n" +
