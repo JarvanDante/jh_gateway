@@ -1,4 +1,4 @@
-# JH Gateway - API 网关
+# JH Gateway - API 网关 (private)
 
 基于 GoFrame 框架的微服务 API 网关，支持 HTTP 和 gRPC 协议转发。
 
