@@ -4521,13 +4521,39 @@ func callManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 		})
 	}
 
-	// 构建菜单响应
+	// 使用protobuf序列化处理菜单数据，确保children正确序列化
+	marshaler := protojson.MarshalOptions{
+		UseProtoNames:   true, // 使用proto字段名
+		EmitUnpopulated: true, // 输出零值字段，确保空数组显示为[]而不是null
+	}
+
+	// 序列化菜单数据
+	menusJSON, err := marshaler.Marshal(res)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "protobuf JSON marshal failed: %v", err)
+		return writeJSONResponse(ctx, r, map[string]interface{}{
+			"code": 500,
+			"msg":  "菜单数据序列化失败",
+			"data": nil,
+		})
+	}
+
+	// 解析为map以便包装
+	var menusData map[string]interface{}
+	if err := json.Unmarshal(menusJSON, &menusData); err != nil {
+		util.LogWithTrace(ctx, "error", "JSON parse failed: %v", err)
+		return writeJSONResponse(ctx, r, map[string]interface{}{
+			"code": 500,
+			"msg":  "菜单数据解析失败",
+			"data": nil,
+		})
+	}
+
+	// 构建最终响应
 	menuData := map[string]interface{}{
 		"code": 200,
 		"msg":  "success",
-		"data": map[string]interface{}{
-			"menus": res.Menus,
-		},
+		"data": menusData, // 直接使用protobuf序列化的结果
 	}
 
 	return writeJSONResponse(ctx, r, menuData)

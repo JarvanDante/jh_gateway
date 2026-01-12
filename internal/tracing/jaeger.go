@@ -26,7 +26,7 @@ func InitJaeger() (func(), error) {
 	// 从配置文件读取Jaeger配置
 	enabled := g.Cfg().MustGet(ctx, "jaeger.enabled", true).Bool()
 	if !enabled {
-		fmt.Println("Jaeger追踪已禁用")
+		g.Log().Info(ctx, "Jaeger追踪已禁用")
 		return func() {}, nil
 	}
 
@@ -42,7 +42,7 @@ func InitJaeger() (func(), error) {
 		return nil, fmt.Errorf("jaeger.serviceName 配置不能为空")
 	}
 
-	fmt.Printf("正在初始化Jaeger追踪: 服务名=%s, 端点=%s, 版本=%s, 环境=%s\n",
+	g.Log().Infof(ctx, "正在初始化Jaeger追踪: 服务名=%s, 端点=%s, 版本=%s, 环境=%s",
 		serviceName, endpoint, serviceVersion, environment)
 
 	// 创建OTLP gRPC导出器
@@ -55,7 +55,7 @@ func InitJaeger() (func(), error) {
 		return nil, fmt.Errorf("failed to create OTLP gRPC exporter: %w", err)
 	}
 
-	fmt.Println("OTLP gRPC导出器创建成功")
+	g.Log().Info(ctx, "OTLP gRPC导出器创建成功")
 
 	// 创建资源
 	res, err := resource.New(
@@ -92,14 +92,14 @@ func InitJaeger() (func(), error) {
 	// 获取追踪器
 	tracer = tp.Tracer(serviceName)
 
-	fmt.Printf("Jaeger追踪初始化完成: 服务名=%s\n", serviceName)
+	g.Log().Infof(ctx, "Jaeger追踪初始化完成: 服务名=%s", serviceName)
 
 	// 返回清理函数
 	cleanup := func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 		if err := tp.Shutdown(ctx); err != nil {
-			fmt.Printf("Error shutting down tracer provider: %v\n", err)
+			g.Log().Errorf(ctx, "Error shutting down tracer provider: %v", err)
 		}
 	}
 
@@ -108,7 +108,8 @@ func InitJaeger() (func(), error) {
 
 // InitJaegerWithParams 使用参数初始化Jaeger追踪（保持向后兼容）
 func InitJaegerWithParams(serviceName, jaegerEndpoint string) (func(), error) {
-	fmt.Printf("正在初始化Jaeger追踪: 服务名=%s, 端点=%s\n", serviceName, jaegerEndpoint)
+	ctx := context.Background()
+	g.Log().Infof(ctx, "正在初始化Jaeger追踪: 服务名=%s, 端点=%s", serviceName, jaegerEndpoint)
 
 	// 创建OTLP gRPC导出器
 	exporter, err := otlptracegrpc.New(
@@ -120,7 +121,7 @@ func InitJaegerWithParams(serviceName, jaegerEndpoint string) (func(), error) {
 		return nil, fmt.Errorf("failed to create OTLP gRPC exporter: %w", err)
 	}
 
-	fmt.Println("OTLP gRPC导出器创建成功")
+	g.Log().Info(ctx, "OTLP gRPC导出器创建成功")
 
 	// 创建资源
 	res, err := resource.New(
@@ -157,14 +158,14 @@ func InitJaegerWithParams(serviceName, jaegerEndpoint string) (func(), error) {
 	// 获取追踪器
 	tracer = tp.Tracer(serviceName)
 
-	fmt.Printf("Jaeger追踪初始化完成: 服务名=%s\n", serviceName)
+	g.Log().Infof(ctx, "Jaeger追踪初始化完成: 服务名=%s", serviceName)
 
 	// 返回清理函数
 	cleanup := func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 		if err := tp.Shutdown(ctx); err != nil {
-			fmt.Printf("Error shutting down tracer provider: %v\n", err)
+			g.Log().Errorf(ctx, "Error shutting down tracer provider: %v", err)
 		}
 	}
 
