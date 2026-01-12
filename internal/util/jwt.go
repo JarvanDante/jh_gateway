@@ -38,6 +38,30 @@ func ParseToken(ctx context.Context, authHeader string) (*Claims, error) {
 	return claims, nil
 }
 
+func ParseManageToken(ctx context.Context, authHeader string) (*Claims, error) {
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") {
+		return nil, fmt.Errorf("invalid Authorization header format")
+	}
+
+	tokenStr := parts[1]
+	secret := g.Cfg().MustGet(ctx, "jwt.manageSecret").String()
+
+	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(secret), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	claims, ok := token.Claims.(*Claims)
+	if !ok || !token.Valid {
+		return nil, fmt.Errorf("invalid token")
+	}
+
+	return claims, nil
+}
+
 //func GenerateToken(userID int, secret string) (string, error) {
 //	claims := Claims{
 //		UserID: userID,

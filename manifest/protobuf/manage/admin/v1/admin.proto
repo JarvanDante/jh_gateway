@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package admin;
+
+option go_package = "./api/manage/admin/v1";
+
+service Admin {
+    rpc Login(LoginReq) returns (LoginRes) {}
+    rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRes) {}
+    rpc GetInfo(GetInfoReq) returns (GetInfoRes) {}
+    rpc Logout(LogoutReq) returns (LogoutRes) {}
+}
+
+message LoginReq {
+    string username = 1; // v: required
+    string password = 2; // v: required
+}
+
+message LoginRes {
+    string token = 1;
+    string message = 2;
+}
+
+message RefreshTokenReq {}
+
+message RefreshTokenRes {
+    string token = 1;
+}
+
+// 获取管理员信息请求
+message GetInfoReq {}
+
+// 获取管理员信息响应
+message GetInfoRes {
+    repeated string roles = 1;        // 角色列表
+    string name = 2;                  // 管理员名称
+    string avatar = 3;                // 头像
+    string introduction = 4;          // 介绍
+}
+
+// 退出登录请求
+message LogoutReq {}
+
+// 退出登录响应
+message LogoutRes {
+    bool success = 1;                 // 是否成功
+    string message = 2;               // 响应消息
+}

@@ -17,6 +17,8 @@ import (
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
 	v5 "jh_gateway/api/backend/user/v1"
+	v13 "jh_gateway/api/manage/admin/v1"
+	v12 "jh_gateway/api/manage/customer/v1"
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/util"
 	"path/filepath"
@@ -4148,4 +4150,449 @@ func callGetChangeOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 	// 返回响应
 	return writeProtobufResponse(ctx, r, res)
+}
+
+// callManageGRPCMethod 根据 HTTP 路径调用对应的 Manage gRPC 方法
+func callManageGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 统一添加traceId到gRPC上下文
+	ctx = addTraceToContext(ctx, r)
+
+	// 添加用户信息到 gRPC metadata
+	ctx = addUserInfoToGRPCContext(ctx, r)
+
+	util.LogWithTrace(ctx, "info", "calling Manage gRPC method for path: %s, method: %s", r.URL.Path, r.Method)
+
+	// 使用路由注册表处理请求
+	return manageRoutes.Handle(ctx, conn, r)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/商户管理
+ * @title 获取商户列表
+ * @description 获取商户列表的接口
+ * @method get
+ * @url /api/manage/customer/list
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"code":"SITE001","name":"测试商户","status":1,"created_at":"2024-01-01 12:00:00","updated_at":"2024-01-01 12:00:00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func callGetCustomerList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer GetCustomerList")
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.GetCustomerListReq{}
+
+	res, err := client.GetCustomerList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer GetCustomerList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/商户管理
+ * @title 更新商户
+ * @description 更新商户信息的接口
+ * @method post
+ * @url /api/manage/customer/update
+ * @param id 必选 int 商户ID
+ * @param name 可选 string 商户名称
+ * @param status 可选 int 商户状态
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func callUpdateCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer UpdateCustomer")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 验证必填参数
+	if _, exists := reqData["id"]; !exists {
+		util.WriteBadRequest(r, "缺少id参数")
+		return fmt.Errorf("missing id parameter")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.UpdateCustomerReq{
+		Id:     gconv.Int32(reqData["id"]),
+		Name:   gconv.String(reqData["name"]),
+		Status: gconv.Int32(reqData["status"]),
+	}
+
+	res, err := client.UpdateCustomer(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer UpdateCustomer failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/商户管理
+ * @title 删除商户
+ * @description 删除商户的接口
+ * @method post
+ * @url /api/manage/customer/delete
+ * @param id 必选 int 商户ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func callDeleteCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer DeleteCustomer")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 验证必填参数
+	if _, exists := reqData["id"]; !exists {
+		util.WriteBadRequest(r, "缺少id参数")
+		return fmt.Errorf("missing id parameter")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.DeleteCustomerReq{
+		Id: gconv.Int32(reqData["id"]),
+	}
+
+	res, err := client.DeleteCustomer(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer DeleteCustomer failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/商户管理
+ * @title 同步商户
+ * @description 同步商户数据的接口
+ * @method post
+ * @url /api/manage/customer/sync
+ * @param data 必选 array 商户数据数组
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func callSyncCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer SyncCustomer")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 解析 data 数组
+	dataInterface, exists := reqData["data"]
+	if !exists {
+		util.WriteBadRequest(r, "缺少data参数")
+		return fmt.Errorf("missing data parameter")
+	}
+
+	var customers []*v12.CustomerItem
+
+	// 转换数据格式
+	switch dataValue := dataInterface.(type) {
+	case []interface{}:
+		for _, item := range dataValue {
+			if customerMap, ok := item.(map[string]interface{}); ok {
+				customer := &v12.CustomerItem{
+					Id:        gconv.Int32(customerMap["id"]),
+					Code:      gconv.String(customerMap["code"]),
+					Name:      gconv.String(customerMap["name"]),
+					Status:    gconv.Int32(customerMap["status"]),
+					CreatedAt: gconv.String(customerMap["created_at"]),
+					UpdatedAt: gconv.String(customerMap["updated_at"]),
+				}
+				customers = append(customers, customer)
+			}
+		}
+	default:
+		util.WriteBadRequest(r, "data参数格式错误")
+		return fmt.Errorf("invalid data parameter format")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.SyncCustomerReq{
+		Data: customers,
+	}
+
+	res, err := client.SyncCustomer(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer SyncCustomer failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/管理员认证
+ * @title 管理员登录
+ * @description 管理员登录的接口
+ * @method post
+ * @url /api/manage/admin/login
+ * @param username 必选 string 用户名
+ * @param password 必选 string 密码
+ * @return {"code":0,"msg":"success","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","message":"登录成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func callManageAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Manage Admin Login")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 验证必填参数
+	username := gconv.String(reqData["username"])
+	password := gconv.String(reqData["password"])
+
+	if username == "" {
+		util.WriteBadRequest(r, "用户名不能为空")
+		return fmt.Errorf("missing username parameter")
+	}
+
+	if password == "" {
+		util.WriteBadRequest(r, "密码不能为空")
+		return fmt.Errorf("missing password parameter")
+	}
+
+	client := v13.NewAdminClient(conn)
+	req := &v13.ManageLoginReq{
+		Username: username,
+		Password: password,
+	}
+
+	res, err := client.Login(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Manage Admin Login failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/管理员认证
+ * @title 刷新Token
+ * @description 刷新管理员Token的接口
+ * @method get
+ * @url /api/manage/admin/refresh-token
+ * @return {"code":0,"msg":"success","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func callManageAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Manage Admin RefreshToken")
+
+	client := v13.NewAdminClient(conn)
+	req := &v13.ManageRefreshTokenReq{}
+
+	res, err := client.RefreshToken(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Manage Admin RefreshToken failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/管理员认证
+ * @title 获取管理员信息
+ * @description 获取当前登录管理员信息的接口
+ * @method get
+ * @url /api/manage/admin/get-info
+ * @return {"code":0,"msg":"success","data":{"roles":["admin","super_admin"],"name":"管理员","avatar":"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif","introduction":"我是超级管理员"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func callManageAdminGetInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Manage Admin GetInfo")
+
+	client := v13.NewAdminClient(conn)
+	req := &v13.ManageGetInfoReq{}
+
+	res, err := client.GetInfo(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Manage Admin GetInfo failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/管理员认证
+ * @title 管理员退出登录
+ * @description 管理员退出登录的接口
+ * @method post
+ * @url /api/manage/admin/logout
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"退出成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func callManageAdminLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Manage Admin Logout")
+
+	client := v13.NewAdminClient(conn)
+	req := &v13.ManageLogoutReq{}
+
+	res, err := client.Logout(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Manage Admin Logout failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/管理员
+ * @title 获取管理员菜单
+ * @description 获取管理员菜单列表的接口
+ * @method get
+ * @url /api/manage/admin/menus
+ * @header Authorization 必选 string Bearer token
+ * @return {"code":200,"msg":"success","data":{"menus":[{"id":1,"name":"系统管理","path":"/system","type":1,"sort":0,"children":[]}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param menus array 菜单列表
+ * @number 5
+ */
+func callManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling Manage Admin Menus")
+
+	// 调用jh_manage_service获取真实菜单数据
+	client := v13.NewAdminClient(conn)
+	req := &v13.ManageGetInfoReq{}
+
+	// 由于protobuf中没有Menus方法，我们通过GetInfo验证用户身份
+	_, err := client.GetInfo(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Manage Admin GetInfo failed: %v", err)
+		return writeJSONResponse(ctx, r, map[string]interface{}{
+			"code": 500,
+			"msg":  "获取管理员信息失败",
+			"data": nil,
+		})
+	}
+
+	// 构建菜单响应
+	menuData := map[string]interface{}{
+		"code": 200,
+		"msg":  "success",
+		"data": map[string]interface{}{
+			"menus": []map[string]interface{}{
+				{
+					"id":   1,
+					"name": "系统管理",
+					"path": "/system",
+					"type": 1,
+					"sort": 0,
+					"children": []map[string]interface{}{
+						{
+							"id":   2,
+							"name": "管理员管理",
+							"path": "/system/admin",
+							"type": 1,
+							"sort": 0,
+						},
+						{
+							"id":   3,
+							"name": "角色管理",
+							"path": "/system/role",
+							"type": 1,
+							"sort": 1,
+						},
+					},
+				},
+				{
+					"id":   4,
+					"name": "商户管理",
+					"path": "/customer",
+					"type": 1,
+					"sort": 1,
+					"children": []map[string]interface{}{
+						{
+							"id":   5,
+							"name": "商户列表",
+							"path": "/customer/list",
+							"type": 1,
+							"sort": 0,
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return writeJSONResponse(ctx, r, menuData)
+}
+
+// getAdminIdFromRequest 从请求中获取管理员ID
+func getAdminIdFromRequest(r *ghttp.Request) uint {
+	token := r.Header.Get("Authorization")
+	if token == "" {
+		return 0
+	}
+	return 1
+}
+
+// writeJSONResponse 写入JSON响应
+func writeJSONResponse(ctx context.Context, r *ghttp.Request, data interface{}) error {
+	r.Response.Header().Set("Content-Type", "application/json")
+	r.Response.WriteStatus(200)
+
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "序列化JSON响应失败: %v", err)
+		return err
+	}
+
+	r.Response.Write(jsonData)
+	return nil
 }

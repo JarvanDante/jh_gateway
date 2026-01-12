@@ -59,6 +59,7 @@ var (
 	appRoutes     *RouteRegistry
 	balanceRoutes *RouteRegistry
 	gameRoutes    *RouteRegistry
+	manageRoutes  *RouteRegistry
 )
 
 // 初始化路由注册表
@@ -66,6 +67,7 @@ func init() {
 	initAppRoutes()
 	initBalanceRoutes()
 	initGameRoutes()
+	initManageRoutes()
 }
 
 // initAppRoutes 初始化应用路由
@@ -225,4 +227,22 @@ func initGameRoutes() {
 	gameRoutes.Register("/update-games", "POST", callUpdateGames)
 	// 获取游戏记录
 	gameRoutes.Register("/game-record", "POST", callGetGameRecords)
+}
+
+// initManageRoutes 初始化总后台管理路由
+func initManageRoutes() {
+	manageRoutes = NewRouteRegistry()
+
+	// 管理员认证接口
+	manageRoutes.Register("/admin/login", "POST", callManageAdminLogin)
+	manageRoutes.Register("/admin/refresh-token", "GET", callManageAdminRefreshToken)
+	manageRoutes.Register("/admin/get-info", "GET", callManageAdminGetInfo)
+	manageRoutes.Register("/admin/logout", "POST", callManageAdminLogout)
+	manageRoutes.Register("/admin/menus", "GET", callManageAdminMenus)
+
+	// 商户管理接口
+	manageRoutes.Register("/customer/list", "GET", callGetCustomerList)
+	manageRoutes.Register("/customer/update", "POST", callUpdateCustomer)
+	manageRoutes.Register("/customer/delete", "POST", callDeleteCustomer)
+	manageRoutes.Register("/customer/sync", "POST", callSyncCustomer)
 }

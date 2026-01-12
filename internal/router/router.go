@@ -14,6 +14,22 @@ func Register(s *ghttp.Server) {
 		util.WriteSuccess(r, nil)
 	})
 
+	// 总后台管理接口统一入口
+	s.Group("/api/manage", func(group *ghttp.RouterGroup) {
+		group.Middleware(
+			middleware.CORS, // CORS 跨域中间件
+			middleware.Logging,
+			middleware.Trace,
+			middleware.RateLimit,
+			middleware.RequestParser, // 解析请求体数据
+			middleware.AuthManageWithSkip("/login", "/logout"), // 认证中间件（跳过 /login 接口）
+			middleware.CircuitBreaker,
+		)
+
+		// 后台接口路由分发
+		group.ALL("/*any", proxy.ManageRouteDispatcher())
+	})
+
 	// 后台管理接口统一入口
 	s.Group("/api/backend", func(group *ghttp.RouterGroup) {
 		group.Middleware(

@@ -24,6 +24,15 @@ type ServiceRoute struct {
 	Description string // 描述
 }
 
+// 总后台服务路由配置
+var manageServiceRoutes = []ServiceRoute{
+	{
+		PathPrefix:  "/",
+		ServiceName: "jh_manage_service",
+		Description: "总后台相关接口",
+	},
+}
+
 // 后台服务路由配置
 var backendServiceRoutes = []ServiceRoute{
 	{
@@ -60,6 +69,44 @@ var frontendServiceRoutes = []ServiceRoute{
 		ServiceName: "jh_balance_service",
 		Description: "支付相关接口",
 	},
+}
+
+// ManageRouteDispatcher 总后台路由分发器
+func ManageRouteDispatcher() ghttp.HandlerFunc {
+	return func(r *ghttp.Request) {
+		ctx := r.Context()
+		path := r.URL.Path
+		method := r.Method
+
+		// 创建HTTP请求的Jaeger span
+		ctx, span := tracing.StartSpan(ctx, "manage.request", trace.WithAttributes(
+			attribute.String("http.method", method),
+			attribute.String("http.path", path),
+			attribute.String("route.type", "backend"),
+		))
+		defer span.End()
+
+		util.LogWithTrace(ctx, "info", "Manage route dispatcher processing: %s %s", method, path)
+
+		// 解析路径，确定目标服务
+		serviceName, err := determineManageService(path)
+		if err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteBadRequest(r, err.Error())
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.String("target.service", serviceName))
+
+		// 调用对应的服务处理器
+		if err := callServiceWithRouting(ctx, serviceName, r); err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteInternalError(r, err.Error())
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
+	}
 }
 
 // BackendRouteDispatcher 后台路由分发器
@@ -140,6 +187,21 @@ func FrontendRouteDispatcher() ghttp.HandlerFunc {
 	}
 }
 
+// determineManageService 根据路径确定总后台目标服务
+func determineManageService(path string) (string, error) {
+	// 移除 /api/manage 前缀
+	path = strings.TrimPrefix(path, "/api/manage")
+
+	// 查找匹配的服务路由
+	for _, route := range manageServiceRoutes {
+		if strings.HasPrefix(path, route.PathPrefix) {
+			return route.ServiceName, nil
+		}
+	}
+
+	return "", fmt.Errorf("no manage service found for path: %s", path)
+}
+
 // determineBackendService 根据路径确定后台目标服务
 func determineBackendService(path string) (string, error) {
 	// 移除 /api/backend 前缀
@@ -213,6 +275,8 @@ func callServiceWithRouting(ctx context.Context, serviceName string, r *ghttp.Re
 		return callBalanceGRPCMethod(ctx, conn, r)
 	case "jh_game_service":
 		return callGameGRPCMethod(ctx, conn, r)
+	case "jh_manage_service":
+		return callManageGRPCMethod(ctx, conn, r)
 	default:
 		return fmt.Errorf("unsupported service: %s", serviceName)
 	}
