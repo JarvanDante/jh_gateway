@@ -110,9 +110,12 @@ type CustomerItem struct {
 	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
 	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code"`
 	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
-	UpdatedAt     string                 `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	KvConfig      string                 `protobuf:"bytes,4,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`        // KV配置详情
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                     // 状态。1=正常；0=禁用
+	IsSync        int32                  `protobuf:"varint,6,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否暂停同步。1=正常；0=暂停同步"` // 是否暂停同步。1=正常；0=暂停同步
+	IsConfig      int32                  `protobuf:"varint,7,opt,name=is_config,json=isConfig,proto3" json:"is_config" dc:"是否配置KV"`       // 是否配置KV
+	CreatedAt     string                 `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`       // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`       // 更新时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -168,9 +171,30 @@ func (x *CustomerItem) GetName() string {
 	return ""
 }
 
+func (x *CustomerItem) GetKvConfig() string {
+	if x != nil {
+		return x.KvConfig
+	}
+	return ""
+}
+
 func (x *CustomerItem) GetStatus() int32 {
 	if x != nil {
 		return x.Status
+	}
+	return 0
+}
+
+func (x *CustomerItem) GetIsSync() int32 {
+	if x != nil {
+		return x.IsSync
+	}
+	return 0
+}
+
+func (x *CustomerItem) GetIsConfig() int32 {
+	if x != nil {
+		return x.IsConfig
 	}
 	return 0
 }
@@ -192,9 +216,12 @@ func (x *CustomerItem) GetUpdatedAt() string {
 // 更新商户请求
 type UpdateCustomerReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"` // v: required|min:1
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                            // v: required|min:1
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                  // 商户名称
+	KvConfig      string                 `protobuf:"bytes,3,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`        // KV配置详情
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                     // 状态。1=正常；0=禁用
+	IsSync        int32                  `protobuf:"varint,5,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否暂停同步。1=正常；0=暂停同步"` // 是否暂停同步。1=正常；0=暂停同步
+	IsConfig      int32                  `protobuf:"varint,6,opt,name=is_config,json=isConfig,proto3" json:"is_config" dc:"是否配置KV"`       // 是否配置KV
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -243,9 +270,30 @@ func (x *UpdateCustomerReq) GetName() string {
 	return ""
 }
 
+func (x *UpdateCustomerReq) GetKvConfig() string {
+	if x != nil {
+		return x.KvConfig
+	}
+	return ""
+}
+
 func (x *UpdateCustomerReq) GetStatus() int32 {
 	if x != nil {
 		return x.Status
+	}
+	return 0
+}
+
+func (x *UpdateCustomerReq) GetIsSync() int32 {
+	if x != nil {
+		return x.IsSync
+	}
+	return 0
+}
+
+func (x *UpdateCustomerReq) GetIsConfig() int32 {
+	if x != nil {
+		return x.IsConfig
 	}
 	return 0
 }
@@ -458,20 +506,26 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"!manage/customer/v1/customer.proto\x12\bcustomer\"\x14\n" +
 	"\x12GetCustomerListReq\"@\n" +
 	"\x12GetCustomerListRes\x12*\n" +
-	"\x04list\x18\x01 \x03(\v2\x16.customer.CustomerItemR\x04list\"\x9c\x01\n" +
+	"\x04list\x18\x01 \x03(\v2\x16.customer.CustomerItemR\x04list\"\xef\x01\n" +
 	"\fCustomerItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\x05R\x06status\x12\x1d\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x1b\n" +
+	"\tkv_config\x18\x04 \x01(\tR\bkvConfig\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x17\n" +
+	"\ais_sync\x18\x06 \x01(\x05R\x06isSync\x12\x1b\n" +
+	"\tis_config\x18\a \x01(\x05R\bisConfig\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\b \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\tR\tupdatedAt\"O\n" +
+	"updated_at\x18\t \x01(\tR\tupdatedAt\"\xa2\x01\n" +
 	"\x11UpdateCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\x05R\x06status\"\x13\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
+	"\tkv_config\x18\x03 \x01(\tR\bkvConfig\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\x05R\x06status\x12\x17\n" +
+	"\ais_sync\x18\x05 \x01(\x05R\x06isSync\x12\x1b\n" +
+	"\tis_config\x18\x06 \x01(\x05R\bisConfig\"\x13\n" +
 	"\x11UpdateCustomerRes\"#\n" +
 	"\x11DeleteCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x13\n" +

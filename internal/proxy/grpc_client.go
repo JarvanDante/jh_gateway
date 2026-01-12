@@ -4528,55 +4528,6 @@ func callManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	return writeProtobufResponse(ctx, r, res)
 }
 
-// getAdminIdFromRequest 从请求中获取管理员ID
-func getAdminIdFromRequest(r *ghttp.Request) uint {
-	token := r.Header.Get("Authorization")
-	if token == "" {
-		return 0
-	}
-	return 1
-}
-
-// writeJSONResponse 写入JSON响应
-func writeJSONResponse(ctx context.Context, r *ghttp.Request, data interface{}) error {
-	util.LogWithTrace(ctx, "info", "=== writeJSONResponse 开始 ===")
-
-	// 确保响应头正确设置
-	r.Response.Header().Set("Content-Type", "application/json; charset=utf-8")
-	r.Response.Header().Set("Cache-Control", "no-cache")
-
-	util.LogWithTrace(ctx, "info", "=== 响应头设置完成，开始序列化 ===")
-	// 序列化数据
-	jsonData, err := json.Marshal(data)
-	if err != nil {
-		util.LogWithTrace(ctx, "error", "序列化JSON响应失败: %v", err)
-		return err
-	}
-
-	util.LogWithTrace(ctx, "info", "=== 序列化完成，准备写入响应，数据长度: %d ===", len(jsonData))
-	util.LogWithTrace(ctx, "info", "=== 响应数据前100字符: %s ===", string(jsonData[:min(100, len(jsonData))]))
-
-	// 设置状态码
-	r.Response.WriteStatus(200)
-	util.LogWithTrace(ctx, "info", "=== 状态码设置完成，开始写入数据 ===")
-
-	// 写入响应数据
-	r.Response.Write(jsonData)
-	util.LogWithTrace(ctx, "info", "=== 数据写入完成 ===")
-
-	// 不调用ExitAll，让请求正常完成
-	util.LogWithTrace(ctx, "info", "=== writeJSONResponse 完成 ===")
-	return nil
-}
-
-// min 辅助函数
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 // AdminController 管理员控制器 - 用于直接调用jh_manage_service的方法
 type AdminController struct{}
 
