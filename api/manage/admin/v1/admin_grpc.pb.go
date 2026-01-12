@@ -24,6 +24,7 @@ const (
 	Admin_RefreshToken_FullMethodName = "/manage_admin.Admin/RefreshToken"
 	Admin_GetInfo_FullMethodName      = "/manage_admin.Admin/GetInfo"
 	Admin_Logout_FullMethodName       = "/manage_admin.Admin/Logout"
+	Admin_Menus_FullMethodName        = "/manage_admin.Admin/Menus"
 )
 
 // AdminClient is the client API for Admin service.
@@ -34,6 +35,7 @@ type AdminClient interface {
 	RefreshToken(ctx context.Context, in *ManageRefreshTokenReq, opts ...grpc.CallOption) (*ManageRefreshTokenRes, error)
 	GetInfo(ctx context.Context, in *ManageGetInfoReq, opts ...grpc.CallOption) (*ManageGetInfoRes, error)
 	Logout(ctx context.Context, in *ManageLogoutReq, opts ...grpc.CallOption) (*ManageLogoutRes, error)
+	Menus(ctx context.Context, in *ManageMenusReq, opts ...grpc.CallOption) (*ManageMenusRes, error)
 }
 
 type adminClient struct {
@@ -84,6 +86,16 @@ func (c *adminClient) Logout(ctx context.Context, in *ManageLogoutReq, opts ...g
 	return out, nil
 }
 
+func (c *adminClient) Menus(ctx context.Context, in *ManageMenusReq, opts ...grpc.CallOption) (*ManageMenusRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManageMenusRes)
+	err := c.cc.Invoke(ctx, Admin_Menus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility.
@@ -92,6 +104,7 @@ type AdminServer interface {
 	RefreshToken(context.Context, *ManageRefreshTokenReq) (*ManageRefreshTokenRes, error)
 	GetInfo(context.Context, *ManageGetInfoReq) (*ManageGetInfoRes, error)
 	Logout(context.Context, *ManageLogoutReq) (*ManageLogoutRes, error)
+	Menus(context.Context, *ManageMenusReq) (*ManageMenusRes, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -113,6 +126,9 @@ func (UnimplementedAdminServer) GetInfo(context.Context, *ManageGetInfoReq) (*Ma
 }
 func (UnimplementedAdminServer) Logout(context.Context, *ManageLogoutReq) (*ManageLogoutRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedAdminServer) Menus(context.Context, *ManageMenusReq) (*ManageMenusRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method Menus not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 func (UnimplementedAdminServer) testEmbeddedByValue()               {}
@@ -207,6 +223,24 @@ func _Admin_Logout_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_Menus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManageMenusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).Menus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_Menus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).Menus(ctx, req.(*ManageMenusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +263,10 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Logout",
 			Handler:    _Admin_Logout_Handler,
+		},
+		{
+			MethodName: "Menus",
+			Handler:    _Admin_Menus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

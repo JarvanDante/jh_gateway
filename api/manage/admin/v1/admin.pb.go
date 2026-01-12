@@ -402,6 +402,205 @@ func (x *ManageLogoutRes) GetMessage() string {
 	return ""
 }
 
+// 获取菜单列表请求
+type ManageMenusReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageMenusReq) Reset() {
+	*x = ManageMenusReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageMenusReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageMenusReq) ProtoMessage() {}
+
+func (x *ManageMenusReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageMenusReq.ProtoReflect.Descriptor instead.
+func (*ManageMenusReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{8}
+}
+
+// 菜单信息
+type MenuInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"菜单ID"`                             // 菜单ID
+	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"菜单类型"`                         // 菜单类型
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name" dc:"菜单名称"`                          // 菜单名称
+	Path          string                 `protobuf:"bytes,4,opt,name=path,proto3" json:"path" dc:"菜单路径"`                          // 菜单路径
+	Sort          int32                  `protobuf:"varint,5,opt,name=sort,proto3" json:"sort" dc:"排序"`                           // 排序
+	Children      []*MenuInfo            `protobuf:"bytes,6,rep,name=children,proto3" json:"children" dc:"子菜单"`                   // 子菜单
+	RouteUrl      string                 `protobuf:"bytes,7,opt,name=route_url,json=routeUrl,proto3" json:"route_url" dc:"前端URL"` // 前端URL
+	Open          bool                   `protobuf:"varint,8,opt,name=open,proto3" json:"open" dc:"是否展开"`                         // 是否展开
+	Checked       bool                   `protobuf:"varint,9,opt,name=checked,proto3" json:"checked" dc:"是否选中"`                   // 是否选中
+	Icon          string                 `protobuf:"bytes,10,opt,name=icon,proto3" json:"icon" dc:"图标"`                           // 图标
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MenuInfo) Reset() {
+	*x = MenuInfo{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MenuInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuInfo) ProtoMessage() {}
+
+func (x *MenuInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuInfo.ProtoReflect.Descriptor instead.
+func (*MenuInfo) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *MenuInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *MenuInfo) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *MenuInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *MenuInfo) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *MenuInfo) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+func (x *MenuInfo) GetChildren() []*MenuInfo {
+	if x != nil {
+		return x.Children
+	}
+	return nil
+}
+
+func (x *MenuInfo) GetRouteUrl() string {
+	if x != nil {
+		return x.RouteUrl
+	}
+	return ""
+}
+
+func (x *MenuInfo) GetOpen() bool {
+	if x != nil {
+		return x.Open
+	}
+	return false
+}
+
+func (x *MenuInfo) GetChecked() bool {
+	if x != nil {
+		return x.Checked
+	}
+	return false
+}
+
+func (x *MenuInfo) GetIcon() string {
+	if x != nil {
+		return x.Icon
+	}
+	return ""
+}
+
+// 获取菜单列表响应
+type ManageMenusRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Menus         []*MenuInfo            `protobuf:"bytes,1,rep,name=menus,proto3" json:"menus" dc:"菜单列表"` // 菜单列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageMenusRes) Reset() {
+	*x = ManageMenusRes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageMenusRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageMenusRes) ProtoMessage() {}
+
+func (x *ManageMenusRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageMenusRes.ProtoReflect.Descriptor instead.
+func (*ManageMenusRes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ManageMenusRes) GetMenus() []*MenuInfo {
+	if x != nil {
+		return x.Menus
+	}
+	return nil
+}
+
 var File_manage_admin_v1_admin_proto protoreflect.FileDescriptor
 
 const file_manage_admin_v1_admin_proto_rawDesc = "" +
@@ -425,12 +624,28 @@ const file_manage_admin_v1_admin_proto_rawDesc = "" +
 	"\x0fManageLogoutReq\"E\n" +
 	"\x0fManageLogoutRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xc1\x02\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x10\n" +
+	"\x0eManageMenusReq\"\xfd\x01\n" +
+	"\bMenuInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\x05R\x04type\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x12\n" +
+	"\x04path\x18\x04 \x01(\tR\x04path\x12\x12\n" +
+	"\x04sort\x18\x05 \x01(\x05R\x04sort\x122\n" +
+	"\bchildren\x18\x06 \x03(\v2\x16.manage_admin.MenuInfoR\bchildren\x12\x1b\n" +
+	"\troute_url\x18\a \x01(\tR\brouteUrl\x12\x12\n" +
+	"\x04open\x18\b \x01(\bR\x04open\x12\x18\n" +
+	"\achecked\x18\t \x01(\bR\achecked\x12\x12\n" +
+	"\x04icon\x18\n" +
+	" \x01(\tR\x04icon\">\n" +
+	"\x0eManageMenusRes\x12,\n" +
+	"\x05menus\x18\x01 \x03(\v2\x16.manage_admin.MenuInfoR\x05menus2\x88\x03\n" +
 	"\x05Admin\x12E\n" +
 	"\x05Login\x12\x1c.manage_admin.ManageLoginReq\x1a\x1c.manage_admin.ManageLoginRes\"\x00\x12Z\n" +
 	"\fRefreshToken\x12#.manage_admin.ManageRefreshTokenReq\x1a#.manage_admin.ManageRefreshTokenRes\"\x00\x12K\n" +
 	"\aGetInfo\x12\x1e.manage_admin.ManageGetInfoReq\x1a\x1e.manage_admin.ManageGetInfoRes\"\x00\x12H\n" +
-	"\x06Logout\x12\x1d.manage_admin.ManageLogoutReq\x1a\x1d.manage_admin.ManageLogoutRes\"\x00B\x17Z\x15./api/manage/admin/v1b\x06proto3"
+	"\x06Logout\x12\x1d.manage_admin.ManageLogoutReq\x1a\x1d.manage_admin.ManageLogoutRes\"\x00\x12E\n" +
+	"\x05Menus\x12\x1c.manage_admin.ManageMenusReq\x1a\x1c.manage_admin.ManageMenusRes\"\x00B\x17Z\x15./api/manage/admin/v1b\x06proto3"
 
 var (
 	file_manage_admin_v1_admin_proto_rawDescOnce sync.Once
@@ -444,7 +659,7 @@ func file_manage_admin_v1_admin_proto_rawDescGZIP() []byte {
 	return file_manage_admin_v1_admin_proto_rawDescData
 }
 
-var file_manage_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_manage_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_manage_admin_v1_admin_proto_goTypes = []any{
 	(*ManageLoginReq)(nil),        // 0: manage_admin.ManageLoginReq
 	(*ManageLoginRes)(nil),        // 1: manage_admin.ManageLoginRes
@@ -454,21 +669,28 @@ var file_manage_admin_v1_admin_proto_goTypes = []any{
 	(*ManageGetInfoRes)(nil),      // 5: manage_admin.ManageGetInfoRes
 	(*ManageLogoutReq)(nil),       // 6: manage_admin.ManageLogoutReq
 	(*ManageLogoutRes)(nil),       // 7: manage_admin.ManageLogoutRes
+	(*ManageMenusReq)(nil),        // 8: manage_admin.ManageMenusReq
+	(*MenuInfo)(nil),              // 9: manage_admin.MenuInfo
+	(*ManageMenusRes)(nil),        // 10: manage_admin.ManageMenusRes
 }
 var file_manage_admin_v1_admin_proto_depIdxs = []int32{
-	0, // 0: manage_admin.Admin.Login:input_type -> manage_admin.ManageLoginReq
-	2, // 1: manage_admin.Admin.RefreshToken:input_type -> manage_admin.ManageRefreshTokenReq
-	4, // 2: manage_admin.Admin.GetInfo:input_type -> manage_admin.ManageGetInfoReq
-	6, // 3: manage_admin.Admin.Logout:input_type -> manage_admin.ManageLogoutReq
-	1, // 4: manage_admin.Admin.Login:output_type -> manage_admin.ManageLoginRes
-	3, // 5: manage_admin.Admin.RefreshToken:output_type -> manage_admin.ManageRefreshTokenRes
-	5, // 6: manage_admin.Admin.GetInfo:output_type -> manage_admin.ManageGetInfoRes
-	7, // 7: manage_admin.Admin.Logout:output_type -> manage_admin.ManageLogoutRes
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	9,  // 0: manage_admin.MenuInfo.children:type_name -> manage_admin.MenuInfo
+	9,  // 1: manage_admin.ManageMenusRes.menus:type_name -> manage_admin.MenuInfo
+	0,  // 2: manage_admin.Admin.Login:input_type -> manage_admin.ManageLoginReq
+	2,  // 3: manage_admin.Admin.RefreshToken:input_type -> manage_admin.ManageRefreshTokenReq
+	4,  // 4: manage_admin.Admin.GetInfo:input_type -> manage_admin.ManageGetInfoReq
+	6,  // 5: manage_admin.Admin.Logout:input_type -> manage_admin.ManageLogoutReq
+	8,  // 6: manage_admin.Admin.Menus:input_type -> manage_admin.ManageMenusReq
+	1,  // 7: manage_admin.Admin.Login:output_type -> manage_admin.ManageLoginRes
+	3,  // 8: manage_admin.Admin.RefreshToken:output_type -> manage_admin.ManageRefreshTokenRes
+	5,  // 9: manage_admin.Admin.GetInfo:output_type -> manage_admin.ManageGetInfoRes
+	7,  // 10: manage_admin.Admin.Logout:output_type -> manage_admin.ManageLogoutRes
+	10, // 11: manage_admin.Admin.Menus:output_type -> manage_admin.ManageMenusRes
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_manage_admin_v1_admin_proto_init() }
@@ -482,7 +704,7 @@ func file_manage_admin_v1_admin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_admin_v1_admin_proto_rawDesc), len(file_manage_admin_v1_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

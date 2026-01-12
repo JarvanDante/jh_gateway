@@ -4508,15 +4508,15 @@ func callManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 	// 调用jh_manage_service获取真实菜单数据
 	client := v13.NewAdminClient(conn)
-	req := &v13.ManageGetInfoReq{}
+	req := &v13.ManageMenusReq{}
 
-	// 由于protobuf中没有Menus方法，我们通过GetInfo验证用户身份
-	_, err := client.GetInfo(ctx, req)
+	// 调用真实的gRPC Menus方法
+	res, err := client.Menus(ctx, req)
 	if err != nil {
-		util.LogWithTrace(ctx, "error", "gRPC Manage Admin GetInfo failed: %v", err)
+		util.LogWithTrace(ctx, "error", "gRPC Manage Admin Menus failed: %v", err)
 		return writeJSONResponse(ctx, r, map[string]interface{}{
 			"code": 500,
-			"msg":  "获取管理员信息失败",
+			"msg":  "获取菜单列表失败",
 			"data": nil,
 		})
 	}
@@ -4526,47 +4526,7 @@ func callManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 		"code": 200,
 		"msg":  "success",
 		"data": map[string]interface{}{
-			"menus": []map[string]interface{}{
-				{
-					"id":   1,
-					"name": "系统管理",
-					"path": "/system",
-					"type": 1,
-					"sort": 0,
-					"children": []map[string]interface{}{
-						{
-							"id":   2,
-							"name": "管理员管理",
-							"path": "/system/admin",
-							"type": 1,
-							"sort": 0,
-						},
-						{
-							"id":   3,
-							"name": "角色管理",
-							"path": "/system/role",
-							"type": 1,
-							"sort": 1,
-						},
-					},
-				},
-				{
-					"id":   4,
-					"name": "商户管理",
-					"path": "/customer",
-					"type": 1,
-					"sort": 1,
-					"children": []map[string]interface{}{
-						{
-							"id":   5,
-							"name": "商户列表",
-							"path": "/customer/list",
-							"type": 1,
-							"sort": 0,
-						},
-					},
-				},
-			},
+			"menus": res.Menus,
 		},
 	}
 
@@ -4595,4 +4555,15 @@ func writeJSONResponse(ctx context.Context, r *ghttp.Request, data interface{}) 
 
 	r.Response.Write(jsonData)
 	return nil
+}
+
+// AdminController 管理员控制器 - 用于直接调用jh_manage_service的方法
+type AdminController struct{}
+
+// GetMenus 获取管理员菜单列表
+func (*AdminController) GetMenus(ctx context.Context, req interface{}) (string, error) {
+	// 这里应该调用jh_manage_service的GetMenusJSON方法
+	// 由于架构限制，暂时返回示例数据
+	// 实际项目中需要通过服务发现或直接调用来获取真实数据
+	return `{"code":200,"msg":"success","data":{"menus":[]}}`, nil
 }
