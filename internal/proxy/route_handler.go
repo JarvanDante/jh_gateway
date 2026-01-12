@@ -242,6 +242,7 @@ func initManageRoutes() {
 
 	// 商户管理接口
 	manageRoutes.Register("/customer/list", "GET", callGetCustomerList)
+	manageRoutes.Register("/customer/detail", "GET", callGetCustomerDetail)
 	manageRoutes.Register("/customer/update", "POST", callUpdateCustomer)
 	manageRoutes.Register("/customer/delete", "POST", callDeleteCustomer)
 	manageRoutes.Register("/customer/sync", "POST", callSyncCustomer)

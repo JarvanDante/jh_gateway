@@ -6,6 +6,7 @@ option go_package = "./api/manage/customer/v1";
 
 service Customer {
     rpc GetCustomerList(GetCustomerListReq) returns (GetCustomerListRes) {}
+    rpc GetCustomerDetail(GetCustomerDetailReq) returns (GetCustomerDetailRes) {}
     rpc UpdateCustomer(UpdateCustomerReq) returns (UpdateCustomerRes) {}
     rpc DeleteCustomer(DeleteCustomerReq) returns (DeleteCustomerRes) {}
     rpc SyncCustomer(SyncCustomerReq) returns (SyncCustomerRes) {}
@@ -19,21 +20,37 @@ message GetCustomerListRes {
     repeated CustomerItem list = 1;
 }
 
+// 获取商户详情请求
+message GetCustomerDetailReq {
+    int32 id = 1;           // v: required|min:1
+}
+
+// 获取商户详情响应
+message GetCustomerDetailRes {
+    CustomerItem data = 1;
+}
+
 // 商户项
 message CustomerItem {
     int32 id = 1;
     string code = 2;
     string name = 3;
-    int32 status = 4;
-    string created_at = 5;
-    string updated_at = 6;
+    string kv_config = 4;       // KV配置详情
+    int32 status = 5;           // 状态。1=正常；0=禁用
+    int32 is_sync = 6;          // 是否暂停同步。1=正常；0=暂停同步
+    int32 is_config = 7;        // 是否配置KV
+    string created_at = 8;      // 创建时间
+    string updated_at = 9;      // 更新时间
 }
 
 // 更新商户请求
 message UpdateCustomerReq {
     int32 id = 1;           // v: required|min:1
-    string name = 2;
-    int32 status = 3;
+    string name = 2;        // 商户名称
+    string kv_config = 3;   // KV配置详情
+    int32 status = 4;       // 状态。1=正常；0=禁用
+    int32 is_sync = 5;      // 是否暂停同步。1=正常；0=暂停同步
+    int32 is_config = 6;    // 是否配置KV
 }
 
 // 更新商户响应

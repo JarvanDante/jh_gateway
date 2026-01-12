@@ -20,10 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Customer_GetCustomerList_FullMethodName = "/customer.Customer/GetCustomerList"
-	Customer_UpdateCustomer_FullMethodName  = "/customer.Customer/UpdateCustomer"
-	Customer_DeleteCustomer_FullMethodName  = "/customer.Customer/DeleteCustomer"
-	Customer_SyncCustomer_FullMethodName    = "/customer.Customer/SyncCustomer"
+	Customer_GetCustomerList_FullMethodName   = "/customer.Customer/GetCustomerList"
+	Customer_GetCustomerDetail_FullMethodName = "/customer.Customer/GetCustomerDetail"
+	Customer_UpdateCustomer_FullMethodName    = "/customer.Customer/UpdateCustomer"
+	Customer_DeleteCustomer_FullMethodName    = "/customer.Customer/DeleteCustomer"
+	Customer_SyncCustomer_FullMethodName      = "/customer.Customer/SyncCustomer"
 )
 
 // CustomerClient is the client API for Customer service.
@@ -31,6 +32,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CustomerClient interface {
 	GetCustomerList(ctx context.Context, in *GetCustomerListReq, opts ...grpc.CallOption) (*GetCustomerListRes, error)
+	GetCustomerDetail(ctx context.Context, in *GetCustomerDetailReq, opts ...grpc.CallOption) (*GetCustomerDetailRes, error)
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerReq, opts ...grpc.CallOption) (*UpdateCustomerRes, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerReq, opts ...grpc.CallOption) (*DeleteCustomerRes, error)
 	SyncCustomer(ctx context.Context, in *SyncCustomerReq, opts ...grpc.CallOption) (*SyncCustomerRes, error)
@@ -48,6 +50,16 @@ func (c *customerClient) GetCustomerList(ctx context.Context, in *GetCustomerLis
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetCustomerListRes)
 	err := c.cc.Invoke(ctx, Customer_GetCustomerList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerClient) GetCustomerDetail(ctx context.Context, in *GetCustomerDetailReq, opts ...grpc.CallOption) (*GetCustomerDetailRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCustomerDetailRes)
+	err := c.cc.Invoke(ctx, Customer_GetCustomerDetail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,6 +101,7 @@ func (c *customerClient) SyncCustomer(ctx context.Context, in *SyncCustomerReq, 
 // for forward compatibility.
 type CustomerServer interface {
 	GetCustomerList(context.Context, *GetCustomerListReq) (*GetCustomerListRes, error)
+	GetCustomerDetail(context.Context, *GetCustomerDetailReq) (*GetCustomerDetailRes, error)
 	UpdateCustomer(context.Context, *UpdateCustomerReq) (*UpdateCustomerRes, error)
 	DeleteCustomer(context.Context, *DeleteCustomerReq) (*DeleteCustomerRes, error)
 	SyncCustomer(context.Context, *SyncCustomerReq) (*SyncCustomerRes, error)
@@ -104,6 +117,9 @@ type UnimplementedCustomerServer struct{}
 
 func (UnimplementedCustomerServer) GetCustomerList(context.Context, *GetCustomerListReq) (*GetCustomerListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetCustomerList not implemented")
+}
+func (UnimplementedCustomerServer) GetCustomerDetail(context.Context, *GetCustomerDetailReq) (*GetCustomerDetailRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCustomerDetail not implemented")
 }
 func (UnimplementedCustomerServer) UpdateCustomer(context.Context, *UpdateCustomerReq) (*UpdateCustomerRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateCustomer not implemented")
@@ -149,6 +165,24 @@ func _Customer_GetCustomerList_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CustomerServer).GetCustomerList(ctx, req.(*GetCustomerListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Customer_GetCustomerDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomerDetailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServer).GetCustomerDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Customer_GetCustomerDetail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServer).GetCustomerDetail(ctx, req.(*GetCustomerDetailReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -217,6 +251,10 @@ var Customer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCustomerList",
 			Handler:    _Customer_GetCustomerList_Handler,
+		},
+		{
+			MethodName: "GetCustomerDetail",
+			Handler:    _Customer_GetCustomerDetail_Handler,
 		},
 		{
 			MethodName: "UpdateCustomer",

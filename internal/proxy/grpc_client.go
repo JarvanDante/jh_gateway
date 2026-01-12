@@ -4197,6 +4197,50 @@ func callGetCustomerList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 /**
  * showdoc
  * @catalog 总后台/商户管理
+ * @title 获取商户详情
+ * @description 获取指定商户详情的接口
+ * @method get
+ * @url /api/manage/customer/detail/{id}
+ * @param id 必选 int 商户ID
+ * @return {"code":0,"msg":"success","data":{"id":1,"code":"SITE001","name":"测试商户","kv_config":"","status":1,"is_sync":1,"is_config":1,"created_at":"2024-01-01 12:00:00","updated_at":"2024-01-01 12:00:00"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 商户详情数据
+ * @number 1.5
+ */
+func callGetCustomerDetail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer GetCustomerDetail")
+
+	// 从URL路径中获取ID参数
+	idStr := r.Get("id").String()
+	if idStr == "" {
+		util.WriteBadRequest(r, "商户ID不能为空")
+		return fmt.Errorf("商户ID不能为空")
+	}
+
+	id := r.Get("id").Int32()
+	if id <= 0 {
+		util.WriteBadRequest(r, "商户ID必须大于0")
+		return fmt.Errorf("商户ID必须大于0")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.GetCustomerDetailReq{
+		Id: id,
+	}
+
+	res, err := client.GetCustomerDetail(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer GetCustomerDetail failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/商户管理
  * @title 更新商户
  * @description 更新商户信息的接口
  * @method post

@@ -104,25 +104,116 @@ func (x *GetCustomerListRes) GetList() []*CustomerItem {
 	return nil
 }
 
+// 获取商户详情请求
+type GetCustomerDetailReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"` // v: required|min:1
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCustomerDetailReq) Reset() {
+	*x = GetCustomerDetailReq{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomerDetailReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomerDetailReq) ProtoMessage() {}
+
+func (x *GetCustomerDetailReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomerDetailReq.ProtoReflect.Descriptor instead.
+func (*GetCustomerDetailReq) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetCustomerDetailReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 获取商户详情响应
+type GetCustomerDetailRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *CustomerItem          `protobuf:"bytes,1,opt,name=data,proto3" json:"data"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCustomerDetailRes) Reset() {
+	*x = GetCustomerDetailRes{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomerDetailRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomerDetailRes) ProtoMessage() {}
+
+func (x *GetCustomerDetailRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomerDetailRes.ProtoReflect.Descriptor instead.
+func (*GetCustomerDetailRes) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetCustomerDetailRes) GetData() *CustomerItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 // 商户项
 type CustomerItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
 	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code"`
 	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	KvConfig      string                 `protobuf:"bytes,4,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`        // KV配置详情
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                     // 状态。1=正常；0=禁用
-	IsSync        int32                  `protobuf:"varint,6,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否暂停同步。1=正常；0=暂停同步"` // 是否暂停同步。1=正常；0=暂停同步
-	IsConfig      int32                  `protobuf:"varint,7,opt,name=is_config,json=isConfig,proto3" json:"is_config" dc:"是否配置KV"`       // 是否配置KV
-	CreatedAt     string                 `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`       // 创建时间
-	UpdatedAt     string                 `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`       // 更新时间
+	Timezone      string                 `protobuf:"bytes,4,opt,name=timezone,proto3" json:"timezone"`
+	Currency      string                 `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency"`
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                        // 状态。1=正常；0=禁用
+	KvConfig      string                 `protobuf:"bytes,7,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`           // KV配置详情
+	IsSync        int32                  `protobuf:"varint,8,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"` // 是否发布同步。1=发布同步；0=未发布同步
+	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`          // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`         // 更新时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CustomerItem) Reset() {
 	*x = CustomerItem{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[2]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -134,7 +225,7 @@ func (x *CustomerItem) String() string {
 func (*CustomerItem) ProtoMessage() {}
 
 func (x *CustomerItem) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[2]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -147,7 +238,7 @@ func (x *CustomerItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerItem.ProtoReflect.Descriptor instead.
 func (*CustomerItem) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{2}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CustomerItem) GetId() int32 {
@@ -171,9 +262,16 @@ func (x *CustomerItem) GetName() string {
 	return ""
 }
 
-func (x *CustomerItem) GetKvConfig() string {
+func (x *CustomerItem) GetTimezone() string {
 	if x != nil {
-		return x.KvConfig
+		return x.Timezone
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetCurrency() string {
+	if x != nil {
+		return x.Currency
 	}
 	return ""
 }
@@ -185,16 +283,16 @@ func (x *CustomerItem) GetStatus() int32 {
 	return 0
 }
 
+func (x *CustomerItem) GetKvConfig() string {
+	if x != nil {
+		return x.KvConfig
+	}
+	return ""
+}
+
 func (x *CustomerItem) GetIsSync() int32 {
 	if x != nil {
 		return x.IsSync
-	}
-	return 0
-}
-
-func (x *CustomerItem) GetIsConfig() int32 {
-	if x != nil {
-		return x.IsConfig
 	}
 	return 0
 }
@@ -228,7 +326,7 @@ type UpdateCustomerReq struct {
 
 func (x *UpdateCustomerReq) Reset() {
 	*x = UpdateCustomerReq{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[3]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -240,7 +338,7 @@ func (x *UpdateCustomerReq) String() string {
 func (*UpdateCustomerReq) ProtoMessage() {}
 
 func (x *UpdateCustomerReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[3]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -253,7 +351,7 @@ func (x *UpdateCustomerReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomerReq.ProtoReflect.Descriptor instead.
 func (*UpdateCustomerReq) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{3}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateCustomerReq) GetId() int32 {
@@ -307,7 +405,7 @@ type UpdateCustomerRes struct {
 
 func (x *UpdateCustomerRes) Reset() {
 	*x = UpdateCustomerRes{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[4]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -319,7 +417,7 @@ func (x *UpdateCustomerRes) String() string {
 func (*UpdateCustomerRes) ProtoMessage() {}
 
 func (x *UpdateCustomerRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[4]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -332,7 +430,7 @@ func (x *UpdateCustomerRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomerRes.ProtoReflect.Descriptor instead.
 func (*UpdateCustomerRes) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{4}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{6}
 }
 
 // 删除商户请求
@@ -345,7 +443,7 @@ type DeleteCustomerReq struct {
 
 func (x *DeleteCustomerReq) Reset() {
 	*x = DeleteCustomerReq{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[5]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -357,7 +455,7 @@ func (x *DeleteCustomerReq) String() string {
 func (*DeleteCustomerReq) ProtoMessage() {}
 
 func (x *DeleteCustomerReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[5]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -370,7 +468,7 @@ func (x *DeleteCustomerReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCustomerReq.ProtoReflect.Descriptor instead.
 func (*DeleteCustomerReq) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{5}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *DeleteCustomerReq) GetId() int32 {
@@ -389,7 +487,7 @@ type DeleteCustomerRes struct {
 
 func (x *DeleteCustomerRes) Reset() {
 	*x = DeleteCustomerRes{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[6]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -401,7 +499,7 @@ func (x *DeleteCustomerRes) String() string {
 func (*DeleteCustomerRes) ProtoMessage() {}
 
 func (x *DeleteCustomerRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[6]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -414,7 +512,7 @@ func (x *DeleteCustomerRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCustomerRes.ProtoReflect.Descriptor instead.
 func (*DeleteCustomerRes) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{6}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{8}
 }
 
 // 同步商户请求
@@ -427,7 +525,7 @@ type SyncCustomerReq struct {
 
 func (x *SyncCustomerReq) Reset() {
 	*x = SyncCustomerReq{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[7]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -439,7 +537,7 @@ func (x *SyncCustomerReq) String() string {
 func (*SyncCustomerReq) ProtoMessage() {}
 
 func (x *SyncCustomerReq) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[7]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -452,7 +550,7 @@ func (x *SyncCustomerReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncCustomerReq.ProtoReflect.Descriptor instead.
 func (*SyncCustomerReq) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{7}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SyncCustomerReq) GetData() []*CustomerItem {
@@ -471,7 +569,7 @@ type SyncCustomerRes struct {
 
 func (x *SyncCustomerRes) Reset() {
 	*x = SyncCustomerRes{}
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[8]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -483,7 +581,7 @@ func (x *SyncCustomerRes) String() string {
 func (*SyncCustomerRes) ProtoMessage() {}
 
 func (x *SyncCustomerRes) ProtoReflect() protoreflect.Message {
-	mi := &file_manage_customer_v1_customer_proto_msgTypes[8]
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -496,7 +594,7 @@ func (x *SyncCustomerRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncCustomerRes.ProtoReflect.Descriptor instead.
 func (*SyncCustomerRes) Descriptor() ([]byte, []int) {
-	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{8}
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{10}
 }
 
 var File_manage_customer_v1_customer_proto protoreflect.FileDescriptor
@@ -506,19 +604,25 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"!manage/customer/v1/customer.proto\x12\bcustomer\"\x14\n" +
 	"\x12GetCustomerListReq\"@\n" +
 	"\x12GetCustomerListRes\x12*\n" +
-	"\x04list\x18\x01 \x03(\v2\x16.customer.CustomerItemR\x04list\"\xef\x01\n" +
+	"\x04list\x18\x01 \x03(\v2\x16.customer.CustomerItemR\x04list\"&\n" +
+	"\x14GetCustomerDetailReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"B\n" +
+	"\x14GetCustomerDetailRes\x12*\n" +
+	"\x04data\x18\x01 \x01(\v2\x16.customer.CustomerItemR\x04data\"\x8a\x02\n" +
 	"\fCustomerItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x1b\n" +
-	"\tkv_config\x18\x04 \x01(\tR\bkvConfig\x12\x16\n" +
-	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x17\n" +
-	"\ais_sync\x18\x06 \x01(\x05R\x06isSync\x12\x1b\n" +
-	"\tis_config\x18\a \x01(\x05R\bisConfig\x12\x1d\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x1a\n" +
+	"\btimezone\x18\x04 \x01(\tR\btimezone\x12\x1a\n" +
+	"\bcurrency\x18\x05 \x01(\tR\bcurrency\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\x05R\x06status\x12\x1b\n" +
+	"\tkv_config\x18\a \x01(\tR\bkvConfig\x12\x17\n" +
+	"\ais_sync\x18\b \x01(\x05R\x06isSync\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\b \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\t \x01(\tR\tupdatedAt\"\xa2\x01\n" +
+	"updated_at\x18\n" +
+	" \x01(\tR\tupdatedAt\"\xa2\x01\n" +
 	"\x11UpdateCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
@@ -532,9 +636,10 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\x11DeleteCustomerRes\"=\n" +
 	"\x0fSyncCustomerReq\x12*\n" +
 	"\x04data\x18\x01 \x03(\v2\x16.customer.CustomerItemR\x04data\"\x11\n" +
-	"\x0fSyncCustomerRes2\xbf\x02\n" +
+	"\x0fSyncCustomerRes2\x96\x03\n" +
 	"\bCustomer\x12O\n" +
-	"\x0fGetCustomerList\x12\x1c.customer.GetCustomerListReq\x1a\x1c.customer.GetCustomerListRes\"\x00\x12L\n" +
+	"\x0fGetCustomerList\x12\x1c.customer.GetCustomerListReq\x1a\x1c.customer.GetCustomerListRes\"\x00\x12U\n" +
+	"\x11GetCustomerDetail\x12\x1e.customer.GetCustomerDetailReq\x1a\x1e.customer.GetCustomerDetailRes\"\x00\x12L\n" +
 	"\x0eUpdateCustomer\x12\x1b.customer.UpdateCustomerReq\x1a\x1b.customer.UpdateCustomerRes\"\x00\x12L\n" +
 	"\x0eDeleteCustomer\x12\x1b.customer.DeleteCustomerReq\x1a\x1b.customer.DeleteCustomerRes\"\x00\x12F\n" +
 	"\fSyncCustomer\x12\x19.customer.SyncCustomerReq\x1a\x19.customer.SyncCustomerRes\"\x00B\x1aZ\x18./api/manage/customer/v1b\x06proto3"
@@ -551,34 +656,39 @@ func file_manage_customer_v1_customer_proto_rawDescGZIP() []byte {
 	return file_manage_customer_v1_customer_proto_rawDescData
 }
 
-var file_manage_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_manage_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_manage_customer_v1_customer_proto_goTypes = []any{
-	(*GetCustomerListReq)(nil), // 0: customer.GetCustomerListReq
-	(*GetCustomerListRes)(nil), // 1: customer.GetCustomerListRes
-	(*CustomerItem)(nil),       // 2: customer.CustomerItem
-	(*UpdateCustomerReq)(nil),  // 3: customer.UpdateCustomerReq
-	(*UpdateCustomerRes)(nil),  // 4: customer.UpdateCustomerRes
-	(*DeleteCustomerReq)(nil),  // 5: customer.DeleteCustomerReq
-	(*DeleteCustomerRes)(nil),  // 6: customer.DeleteCustomerRes
-	(*SyncCustomerReq)(nil),    // 7: customer.SyncCustomerReq
-	(*SyncCustomerRes)(nil),    // 8: customer.SyncCustomerRes
+	(*GetCustomerListReq)(nil),   // 0: customer.GetCustomerListReq
+	(*GetCustomerListRes)(nil),   // 1: customer.GetCustomerListRes
+	(*GetCustomerDetailReq)(nil), // 2: customer.GetCustomerDetailReq
+	(*GetCustomerDetailRes)(nil), // 3: customer.GetCustomerDetailRes
+	(*CustomerItem)(nil),         // 4: customer.CustomerItem
+	(*UpdateCustomerReq)(nil),    // 5: customer.UpdateCustomerReq
+	(*UpdateCustomerRes)(nil),    // 6: customer.UpdateCustomerRes
+	(*DeleteCustomerReq)(nil),    // 7: customer.DeleteCustomerReq
+	(*DeleteCustomerRes)(nil),    // 8: customer.DeleteCustomerRes
+	(*SyncCustomerReq)(nil),      // 9: customer.SyncCustomerReq
+	(*SyncCustomerRes)(nil),      // 10: customer.SyncCustomerRes
 }
 var file_manage_customer_v1_customer_proto_depIdxs = []int32{
-	2, // 0: customer.GetCustomerListRes.list:type_name -> customer.CustomerItem
-	2, // 1: customer.SyncCustomerReq.data:type_name -> customer.CustomerItem
-	0, // 2: customer.Customer.GetCustomerList:input_type -> customer.GetCustomerListReq
-	3, // 3: customer.Customer.UpdateCustomer:input_type -> customer.UpdateCustomerReq
-	5, // 4: customer.Customer.DeleteCustomer:input_type -> customer.DeleteCustomerReq
-	7, // 5: customer.Customer.SyncCustomer:input_type -> customer.SyncCustomerReq
-	1, // 6: customer.Customer.GetCustomerList:output_type -> customer.GetCustomerListRes
-	4, // 7: customer.Customer.UpdateCustomer:output_type -> customer.UpdateCustomerRes
-	6, // 8: customer.Customer.DeleteCustomer:output_type -> customer.DeleteCustomerRes
-	8, // 9: customer.Customer.SyncCustomer:output_type -> customer.SyncCustomerRes
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	4,  // 0: customer.GetCustomerListRes.list:type_name -> customer.CustomerItem
+	4,  // 1: customer.GetCustomerDetailRes.data:type_name -> customer.CustomerItem
+	4,  // 2: customer.SyncCustomerReq.data:type_name -> customer.CustomerItem
+	0,  // 3: customer.Customer.GetCustomerList:input_type -> customer.GetCustomerListReq
+	2,  // 4: customer.Customer.GetCustomerDetail:input_type -> customer.GetCustomerDetailReq
+	5,  // 5: customer.Customer.UpdateCustomer:input_type -> customer.UpdateCustomerReq
+	7,  // 6: customer.Customer.DeleteCustomer:input_type -> customer.DeleteCustomerReq
+	9,  // 7: customer.Customer.SyncCustomer:input_type -> customer.SyncCustomerReq
+	1,  // 8: customer.Customer.GetCustomerList:output_type -> customer.GetCustomerListRes
+	3,  // 9: customer.Customer.GetCustomerDetail:output_type -> customer.GetCustomerDetailRes
+	6,  // 10: customer.Customer.UpdateCustomer:output_type -> customer.UpdateCustomerRes
+	8,  // 11: customer.Customer.DeleteCustomer:output_type -> customer.DeleteCustomerRes
+	10, // 12: customer.Customer.SyncCustomer:output_type -> customer.SyncCustomerRes
+	8,  // [8:13] is the sub-list for method output_type
+	3,  // [3:8] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_manage_customer_v1_customer_proto_init() }
@@ -592,7 +702,7 @@ func file_manage_customer_v1_customer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_customer_v1_customer_proto_rawDesc), len(file_manage_customer_v1_customer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
