@@ -157,6 +157,666 @@ func (x *OptionItem) GetLabel() string {
 	return ""
 }
 
+// 获取站点选项请求
+type GetSiteOptionsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteOptionsReq) Reset() {
+	*x = GetSiteOptionsReq{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteOptionsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteOptionsReq) ProtoMessage() {}
+
+func (x *GetSiteOptionsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteOptionsReq.ProtoReflect.Descriptor instead.
+func (*GetSiteOptionsReq) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{3}
+}
+
+// 获取站点选项响应
+type GetSiteOptionsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*SiteOptionItem      `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteOptionsRes) Reset() {
+	*x = GetSiteOptionsRes{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteOptionsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteOptionsRes) ProtoMessage() {}
+
+func (x *GetSiteOptionsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteOptionsRes.ProtoReflect.Descriptor instead.
+func (*GetSiteOptionsRes) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetSiteOptionsRes) GetList() []*SiteOptionItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+// 站点选项项
+type SiteOptionItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value" dc:"站点编码"` // 站点编码
+	Label         string                 `protobuf:"bytes,2,opt,name=label,proto3" json:"label" dc:"站点名称"` // 站点名称
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SiteOptionItem) Reset() {
+	*x = SiteOptionItem{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SiteOptionItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SiteOptionItem) ProtoMessage() {}
+
+func (x *SiteOptionItem) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SiteOptionItem.ProtoReflect.Descriptor instead.
+func (*SiteOptionItem) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SiteOptionItem) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *SiteOptionItem) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+// 创建域名请求
+type CreateSiteDomainReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteCode      string                 `protobuf:"bytes,1,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点编码"`        // 站点编码
+	Domain        string                 `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain" dc:"域名"`                              // 域名
+	DomainType    int32                  `protobuf:"varint,3,opt,name=domain_type,json=domainType,proto3" json:"domain_type" dc:"域名类型"` // 域名类型
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" dc:"状态"`                             // 状态
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSiteDomainReq) Reset() {
+	*x = CreateSiteDomainReq{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSiteDomainReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSiteDomainReq) ProtoMessage() {}
+
+func (x *CreateSiteDomainReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSiteDomainReq.ProtoReflect.Descriptor instead.
+func (*CreateSiteDomainReq) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CreateSiteDomainReq) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *CreateSiteDomainReq) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *CreateSiteDomainReq) GetDomainType() int32 {
+	if x != nil {
+		return x.DomainType
+	}
+	return 0
+}
+
+func (x *CreateSiteDomainReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+// 创建域名响应
+type CreateSiteDomainRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSiteDomainRes) Reset() {
+	*x = CreateSiteDomainRes{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSiteDomainRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSiteDomainRes) ProtoMessage() {}
+
+func (x *CreateSiteDomainRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSiteDomainRes.ProtoReflect.Descriptor instead.
+func (*CreateSiteDomainRes) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{7}
+}
+
+// 更新域名请求
+type UpdateSiteDomainReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"域名ID"`                                   // 域名ID
+	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点编码"`        // 站点编码
+	Domain        string                 `protobuf:"bytes,3,opt,name=domain,proto3" json:"domain" dc:"域名"`                              // 域名
+	DomainType    int32                  `protobuf:"varint,4,opt,name=domain_type,json=domainType,proto3" json:"domain_type" dc:"域名类型"` // 域名类型
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态"`                             // 状态
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSiteDomainReq) Reset() {
+	*x = UpdateSiteDomainReq{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSiteDomainReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSiteDomainReq) ProtoMessage() {}
+
+func (x *UpdateSiteDomainReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSiteDomainReq.ProtoReflect.Descriptor instead.
+func (*UpdateSiteDomainReq) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateSiteDomainReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateSiteDomainReq) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *UpdateSiteDomainReq) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *UpdateSiteDomainReq) GetDomainType() int32 {
+	if x != nil {
+		return x.DomainType
+	}
+	return 0
+}
+
+func (x *UpdateSiteDomainReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+// 更新域名响应
+type UpdateSiteDomainRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSiteDomainRes) Reset() {
+	*x = UpdateSiteDomainRes{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSiteDomainRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSiteDomainRes) ProtoMessage() {}
+
+func (x *UpdateSiteDomainRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSiteDomainRes.ProtoReflect.Descriptor instead.
+func (*UpdateSiteDomainRes) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{9}
+}
+
+// 删除域名请求
+type DeleteSiteDomainReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"域名ID"` // 域名ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSiteDomainReq) Reset() {
+	*x = DeleteSiteDomainReq{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSiteDomainReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSiteDomainReq) ProtoMessage() {}
+
+func (x *DeleteSiteDomainReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSiteDomainReq.ProtoReflect.Descriptor instead.
+func (*DeleteSiteDomainReq) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *DeleteSiteDomainReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 删除域名响应
+type DeleteSiteDomainRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSiteDomainRes) Reset() {
+	*x = DeleteSiteDomainRes{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSiteDomainRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSiteDomainRes) ProtoMessage() {}
+
+func (x *DeleteSiteDomainRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSiteDomainRes.ProtoReflect.Descriptor instead.
+func (*DeleteSiteDomainRes) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{11}
+}
+
+// 获取域名列表请求
+type GetSiteDomainListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page" dc:"页码"`                                   // 页码
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size" dc:"每页数量"`                                 // 每页数量
+	SiteCode      string                 `protobuf:"bytes,3,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点编码筛选"`        // 站点编码筛选
+	DomainType    int32                  `protobuf:"varint,4,opt,name=domain_type,json=domainType,proto3" json:"domain_type" dc:"域名类型筛选"` // 域名类型筛选
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态筛选"`                             // 状态筛选
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteDomainListReq) Reset() {
+	*x = GetSiteDomainListReq{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteDomainListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteDomainListReq) ProtoMessage() {}
+
+func (x *GetSiteDomainListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteDomainListReq.ProtoReflect.Descriptor instead.
+func (*GetSiteDomainListReq) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetSiteDomainListReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetSiteDomainListReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetSiteDomainListReq) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *GetSiteDomainListReq) GetDomainType() int32 {
+	if x != nil {
+		return x.DomainType
+	}
+	return 0
+}
+
+func (x *GetSiteDomainListReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+// 获取域名列表响应
+type GetSiteDomainListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*SiteDomainItem      `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteDomainListRes) Reset() {
+	*x = GetSiteDomainListRes{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteDomainListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteDomainListRes) ProtoMessage() {}
+
+func (x *GetSiteDomainListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteDomainListRes.ProtoReflect.Descriptor instead.
+func (*GetSiteDomainListRes) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetSiteDomainListRes) GetList() []*SiteDomainItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetSiteDomainListRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+// 域名项
+type SiteDomainItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code"`
+	Domain        string                 `protobuf:"bytes,3,opt,name=domain,proto3" json:"domain"`
+	DomainType    int32                  `protobuf:"varint,4,opt,name=domain_type,json=domainType,proto3" json:"domain_type"`
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status"`
+	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SiteDomainItem) Reset() {
+	*x = SiteDomainItem{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SiteDomainItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SiteDomainItem) ProtoMessage() {}
+
+func (x *SiteDomainItem) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SiteDomainItem.ProtoReflect.Descriptor instead.
+func (*SiteDomainItem) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SiteDomainItem) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *SiteDomainItem) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *SiteDomainItem) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *SiteDomainItem) GetDomainType() int32 {
+	if x != nil {
+		return x.DomainType
+	}
+	return 0
+}
+
+func (x *SiteDomainItem) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *SiteDomainItem) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *SiteDomainItem) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
 var File_manage_option_v1_option_proto protoreflect.FileDescriptor
 
 const file_manage_option_v1_option_proto_rawDesc = "" +
@@ -168,9 +828,59 @@ const file_manage_option_v1_option_proto_rawDesc = "" +
 	"\n" +
 	"OptionItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x14\n" +
-	"\x05label\x18\x02 \x01(\tR\x05label2x\n" +
+	"\x05label\x18\x02 \x01(\tR\x05label\"\x13\n" +
+	"\x11GetSiteOptionsReq\"F\n" +
+	"\x11GetSiteOptionsRes\x121\n" +
+	"\x04list\x18\x01 \x03(\v2\x1d.manage_option.SiteOptionItemR\x04list\"<\n" +
+	"\x0eSiteOptionItem\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\x12\x14\n" +
+	"\x05label\x18\x02 \x01(\tR\x05label\"\x83\x01\n" +
+	"\x13CreateSiteDomainReq\x12\x1b\n" +
+	"\tsite_code\x18\x01 \x01(\tR\bsiteCode\x12\x16\n" +
+	"\x06domain\x18\x02 \x01(\tR\x06domain\x12\x1f\n" +
+	"\vdomain_type\x18\x03 \x01(\x05R\n" +
+	"domainType\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\x05R\x06status\"\x15\n" +
+	"\x13CreateSiteDomainRes\"\x93\x01\n" +
+	"\x13UpdateSiteDomainReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1b\n" +
+	"\tsite_code\x18\x02 \x01(\tR\bsiteCode\x12\x16\n" +
+	"\x06domain\x18\x03 \x01(\tR\x06domain\x12\x1f\n" +
+	"\vdomain_type\x18\x04 \x01(\x05R\n" +
+	"domainType\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\"\x15\n" +
+	"\x13UpdateSiteDomainRes\"%\n" +
+	"\x13DeleteSiteDomainReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\x15\n" +
+	"\x13DeleteSiteDomainRes\"\x94\x01\n" +
+	"\x14GetSiteDomainListReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\x12\x1b\n" +
+	"\tsite_code\x18\x03 \x01(\tR\bsiteCode\x12\x1f\n" +
+	"\vdomain_type\x18\x04 \x01(\x05R\n" +
+	"domainType\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\"_\n" +
+	"\x14GetSiteDomainListRes\x121\n" +
+	"\x04list\x18\x01 \x03(\v2\x1d.manage_option.SiteDomainItemR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\xcc\x01\n" +
+	"\x0eSiteDomainItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1b\n" +
+	"\tsite_code\x18\x02 \x01(\tR\bsiteCode\x12\x16\n" +
+	"\x06domain\x18\x03 \x01(\tR\x06domain\x12\x1f\n" +
+	"\vdomain_type\x18\x04 \x01(\x05R\n" +
+	"domainType\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAt2\xcb\x04\n" +
 	"\fManageOption\x12h\n" +
-	"\x14GetDomainTypeOptions\x12&.manage_option.GetDomainTypeOptionsReq\x1a&.manage_option.GetDomainTypeOptionsRes\"\x00B\x18Z\x16./api/manage/option/v1b\x06proto3"
+	"\x14GetDomainTypeOptions\x12&.manage_option.GetDomainTypeOptionsReq\x1a&.manage_option.GetDomainTypeOptionsRes\"\x00\x12V\n" +
+	"\x0eGetSiteOptions\x12 .manage_option.GetSiteOptionsReq\x1a .manage_option.GetSiteOptionsRes\"\x00\x12\\\n" +
+	"\x10CreateSiteDomain\x12\".manage_option.CreateSiteDomainReq\x1a\".manage_option.CreateSiteDomainRes\"\x00\x12\\\n" +
+	"\x10UpdateSiteDomain\x12\".manage_option.UpdateSiteDomainReq\x1a\".manage_option.UpdateSiteDomainRes\"\x00\x12\\\n" +
+	"\x10DeleteSiteDomain\x12\".manage_option.DeleteSiteDomainReq\x1a\".manage_option.DeleteSiteDomainRes\"\x00\x12_\n" +
+	"\x11GetSiteDomainList\x12#.manage_option.GetSiteDomainListReq\x1a#.manage_option.GetSiteDomainListRes\"\x00B\x18Z\x16./api/manage/option/v1b\x06proto3"
 
 var (
 	file_manage_option_v1_option_proto_rawDescOnce sync.Once
@@ -184,21 +894,45 @@ func file_manage_option_v1_option_proto_rawDescGZIP() []byte {
 	return file_manage_option_v1_option_proto_rawDescData
 }
 
-var file_manage_option_v1_option_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_manage_option_v1_option_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_manage_option_v1_option_proto_goTypes = []any{
 	(*GetDomainTypeOptionsReq)(nil), // 0: manage_option.GetDomainTypeOptionsReq
 	(*GetDomainTypeOptionsRes)(nil), // 1: manage_option.GetDomainTypeOptionsRes
 	(*OptionItem)(nil),              // 2: manage_option.OptionItem
+	(*GetSiteOptionsReq)(nil),       // 3: manage_option.GetSiteOptionsReq
+	(*GetSiteOptionsRes)(nil),       // 4: manage_option.GetSiteOptionsRes
+	(*SiteOptionItem)(nil),          // 5: manage_option.SiteOptionItem
+	(*CreateSiteDomainReq)(nil),     // 6: manage_option.CreateSiteDomainReq
+	(*CreateSiteDomainRes)(nil),     // 7: manage_option.CreateSiteDomainRes
+	(*UpdateSiteDomainReq)(nil),     // 8: manage_option.UpdateSiteDomainReq
+	(*UpdateSiteDomainRes)(nil),     // 9: manage_option.UpdateSiteDomainRes
+	(*DeleteSiteDomainReq)(nil),     // 10: manage_option.DeleteSiteDomainReq
+	(*DeleteSiteDomainRes)(nil),     // 11: manage_option.DeleteSiteDomainRes
+	(*GetSiteDomainListReq)(nil),    // 12: manage_option.GetSiteDomainListReq
+	(*GetSiteDomainListRes)(nil),    // 13: manage_option.GetSiteDomainListRes
+	(*SiteDomainItem)(nil),          // 14: manage_option.SiteDomainItem
 }
 var file_manage_option_v1_option_proto_depIdxs = []int32{
-	2, // 0: manage_option.GetDomainTypeOptionsRes.list:type_name -> manage_option.OptionItem
-	0, // 1: manage_option.ManageOption.GetDomainTypeOptions:input_type -> manage_option.GetDomainTypeOptionsReq
-	1, // 2: manage_option.ManageOption.GetDomainTypeOptions:output_type -> manage_option.GetDomainTypeOptionsRes
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2,  // 0: manage_option.GetDomainTypeOptionsRes.list:type_name -> manage_option.OptionItem
+	5,  // 1: manage_option.GetSiteOptionsRes.list:type_name -> manage_option.SiteOptionItem
+	14, // 2: manage_option.GetSiteDomainListRes.list:type_name -> manage_option.SiteDomainItem
+	0,  // 3: manage_option.ManageOption.GetDomainTypeOptions:input_type -> manage_option.GetDomainTypeOptionsReq
+	3,  // 4: manage_option.ManageOption.GetSiteOptions:input_type -> manage_option.GetSiteOptionsReq
+	6,  // 5: manage_option.ManageOption.CreateSiteDomain:input_type -> manage_option.CreateSiteDomainReq
+	8,  // 6: manage_option.ManageOption.UpdateSiteDomain:input_type -> manage_option.UpdateSiteDomainReq
+	10, // 7: manage_option.ManageOption.DeleteSiteDomain:input_type -> manage_option.DeleteSiteDomainReq
+	12, // 8: manage_option.ManageOption.GetSiteDomainList:input_type -> manage_option.GetSiteDomainListReq
+	1,  // 9: manage_option.ManageOption.GetDomainTypeOptions:output_type -> manage_option.GetDomainTypeOptionsRes
+	4,  // 10: manage_option.ManageOption.GetSiteOptions:output_type -> manage_option.GetSiteOptionsRes
+	7,  // 11: manage_option.ManageOption.CreateSiteDomain:output_type -> manage_option.CreateSiteDomainRes
+	9,  // 12: manage_option.ManageOption.UpdateSiteDomain:output_type -> manage_option.UpdateSiteDomainRes
+	11, // 13: manage_option.ManageOption.DeleteSiteDomain:output_type -> manage_option.DeleteSiteDomainRes
+	13, // 14: manage_option.ManageOption.GetSiteDomainList:output_type -> manage_option.GetSiteDomainListRes
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_manage_option_v1_option_proto_init() }
@@ -212,7 +946,7 @@ func file_manage_option_v1_option_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_option_v1_option_proto_rawDesc), len(file_manage_option_v1_option_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

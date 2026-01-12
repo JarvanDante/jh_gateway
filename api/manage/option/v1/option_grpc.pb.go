@@ -21,6 +21,11 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ManageOption_GetDomainTypeOptions_FullMethodName = "/manage_option.ManageOption/GetDomainTypeOptions"
+	ManageOption_GetSiteOptions_FullMethodName       = "/manage_option.ManageOption/GetSiteOptions"
+	ManageOption_CreateSiteDomain_FullMethodName     = "/manage_option.ManageOption/CreateSiteDomain"
+	ManageOption_UpdateSiteDomain_FullMethodName     = "/manage_option.ManageOption/UpdateSiteDomain"
+	ManageOption_DeleteSiteDomain_FullMethodName     = "/manage_option.ManageOption/DeleteSiteDomain"
+	ManageOption_GetSiteDomainList_FullMethodName    = "/manage_option.ManageOption/GetSiteDomainList"
 )
 
 // ManageOptionClient is the client API for ManageOption service.
@@ -28,6 +33,11 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ManageOptionClient interface {
 	GetDomainTypeOptions(ctx context.Context, in *GetDomainTypeOptionsReq, opts ...grpc.CallOption) (*GetDomainTypeOptionsRes, error)
+	GetSiteOptions(ctx context.Context, in *GetSiteOptionsReq, opts ...grpc.CallOption) (*GetSiteOptionsRes, error)
+	CreateSiteDomain(ctx context.Context, in *CreateSiteDomainReq, opts ...grpc.CallOption) (*CreateSiteDomainRes, error)
+	UpdateSiteDomain(ctx context.Context, in *UpdateSiteDomainReq, opts ...grpc.CallOption) (*UpdateSiteDomainRes, error)
+	DeleteSiteDomain(ctx context.Context, in *DeleteSiteDomainReq, opts ...grpc.CallOption) (*DeleteSiteDomainRes, error)
+	GetSiteDomainList(ctx context.Context, in *GetSiteDomainListReq, opts ...grpc.CallOption) (*GetSiteDomainListRes, error)
 }
 
 type manageOptionClient struct {
@@ -48,11 +58,66 @@ func (c *manageOptionClient) GetDomainTypeOptions(ctx context.Context, in *GetDo
 	return out, nil
 }
 
+func (c *manageOptionClient) GetSiteOptions(ctx context.Context, in *GetSiteOptionsReq, opts ...grpc.CallOption) (*GetSiteOptionsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSiteOptionsRes)
+	err := c.cc.Invoke(ctx, ManageOption_GetSiteOptions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageOptionClient) CreateSiteDomain(ctx context.Context, in *CreateSiteDomainReq, opts ...grpc.CallOption) (*CreateSiteDomainRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSiteDomainRes)
+	err := c.cc.Invoke(ctx, ManageOption_CreateSiteDomain_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageOptionClient) UpdateSiteDomain(ctx context.Context, in *UpdateSiteDomainReq, opts ...grpc.CallOption) (*UpdateSiteDomainRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSiteDomainRes)
+	err := c.cc.Invoke(ctx, ManageOption_UpdateSiteDomain_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageOptionClient) DeleteSiteDomain(ctx context.Context, in *DeleteSiteDomainReq, opts ...grpc.CallOption) (*DeleteSiteDomainRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSiteDomainRes)
+	err := c.cc.Invoke(ctx, ManageOption_DeleteSiteDomain_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageOptionClient) GetSiteDomainList(ctx context.Context, in *GetSiteDomainListReq, opts ...grpc.CallOption) (*GetSiteDomainListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSiteDomainListRes)
+	err := c.cc.Invoke(ctx, ManageOption_GetSiteDomainList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ManageOptionServer is the server API for ManageOption service.
 // All implementations must embed UnimplementedManageOptionServer
 // for forward compatibility.
 type ManageOptionServer interface {
 	GetDomainTypeOptions(context.Context, *GetDomainTypeOptionsReq) (*GetDomainTypeOptionsRes, error)
+	GetSiteOptions(context.Context, *GetSiteOptionsReq) (*GetSiteOptionsRes, error)
+	CreateSiteDomain(context.Context, *CreateSiteDomainReq) (*CreateSiteDomainRes, error)
+	UpdateSiteDomain(context.Context, *UpdateSiteDomainReq) (*UpdateSiteDomainRes, error)
+	DeleteSiteDomain(context.Context, *DeleteSiteDomainReq) (*DeleteSiteDomainRes, error)
+	GetSiteDomainList(context.Context, *GetSiteDomainListReq) (*GetSiteDomainListRes, error)
 	mustEmbedUnimplementedManageOptionServer()
 }
 
@@ -65,6 +130,21 @@ type UnimplementedManageOptionServer struct{}
 
 func (UnimplementedManageOptionServer) GetDomainTypeOptions(context.Context, *GetDomainTypeOptionsReq) (*GetDomainTypeOptionsRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetDomainTypeOptions not implemented")
+}
+func (UnimplementedManageOptionServer) GetSiteOptions(context.Context, *GetSiteOptionsReq) (*GetSiteOptionsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSiteOptions not implemented")
+}
+func (UnimplementedManageOptionServer) CreateSiteDomain(context.Context, *CreateSiteDomainReq) (*CreateSiteDomainRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateSiteDomain not implemented")
+}
+func (UnimplementedManageOptionServer) UpdateSiteDomain(context.Context, *UpdateSiteDomainReq) (*UpdateSiteDomainRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSiteDomain not implemented")
+}
+func (UnimplementedManageOptionServer) DeleteSiteDomain(context.Context, *DeleteSiteDomainReq) (*DeleteSiteDomainRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteSiteDomain not implemented")
+}
+func (UnimplementedManageOptionServer) GetSiteDomainList(context.Context, *GetSiteDomainListReq) (*GetSiteDomainListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSiteDomainList not implemented")
 }
 func (UnimplementedManageOptionServer) mustEmbedUnimplementedManageOptionServer() {}
 func (UnimplementedManageOptionServer) testEmbeddedByValue()                      {}
@@ -105,6 +185,96 @@ func _ManageOption_GetDomainTypeOptions_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ManageOption_GetSiteOptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSiteOptionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageOptionServer).GetSiteOptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageOption_GetSiteOptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageOptionServer).GetSiteOptions(ctx, req.(*GetSiteOptionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ManageOption_CreateSiteDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSiteDomainReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageOptionServer).CreateSiteDomain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageOption_CreateSiteDomain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageOptionServer).CreateSiteDomain(ctx, req.(*CreateSiteDomainReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ManageOption_UpdateSiteDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSiteDomainReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageOptionServer).UpdateSiteDomain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageOption_UpdateSiteDomain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageOptionServer).UpdateSiteDomain(ctx, req.(*UpdateSiteDomainReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ManageOption_DeleteSiteDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSiteDomainReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageOptionServer).DeleteSiteDomain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageOption_DeleteSiteDomain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageOptionServer).DeleteSiteDomain(ctx, req.(*DeleteSiteDomainReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ManageOption_GetSiteDomainList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSiteDomainListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageOptionServer).GetSiteDomainList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageOption_GetSiteDomainList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageOptionServer).GetSiteDomainList(ctx, req.(*GetSiteDomainListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ManageOption_ServiceDesc is the grpc.ServiceDesc for ManageOption service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,6 +285,26 @@ var ManageOption_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDomainTypeOptions",
 			Handler:    _ManageOption_GetDomainTypeOptions_Handler,
+		},
+		{
+			MethodName: "GetSiteOptions",
+			Handler:    _ManageOption_GetSiteOptions_Handler,
+		},
+		{
+			MethodName: "CreateSiteDomain",
+			Handler:    _ManageOption_CreateSiteDomain_Handler,
+		},
+		{
+			MethodName: "UpdateSiteDomain",
+			Handler:    _ManageOption_UpdateSiteDomain_Handler,
+		},
+		{
+			MethodName: "DeleteSiteDomain",
+			Handler:    _ManageOption_DeleteSiteDomain_Handler,
+		},
+		{
+			MethodName: "GetSiteDomainList",
+			Handler:    _ManageOption_GetSiteDomainList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

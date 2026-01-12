@@ -1,37 +1,38 @@
 syntax = "proto3";
 
-package admin;
+package manage_admin;
 
 option go_package = "./api/manage/admin/v1";
 
 service Admin {
-    rpc Login(LoginReq) returns (LoginRes) {}
-    rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRes) {}
-    rpc GetInfo(GetInfoReq) returns (GetInfoRes) {}
-    rpc Logout(LogoutReq) returns (LogoutRes) {}
+    rpc Login(ManageLoginReq) returns (ManageLoginRes) {}
+    rpc RefreshToken(ManageRefreshTokenReq) returns (ManageRefreshTokenRes) {}
+    rpc GetInfo(ManageGetInfoReq) returns (ManageGetInfoRes) {}
+    rpc Logout(ManageLogoutReq) returns (ManageLogoutRes) {}
+    rpc Menus(ManageMenusReq) returns (ManageMenusRes) {}
 }
 
-message LoginReq {
+message ManageLoginReq {
     string username = 1; // v: required
     string password = 2; // v: required
 }
 
-message LoginRes {
+message ManageLoginRes {
     string token = 1;
     string message = 2;
 }
 
-message RefreshTokenReq {}
+message ManageRefreshTokenReq {}
 
-message RefreshTokenRes {
+message ManageRefreshTokenRes {
     string token = 1;
 }
 
 // 获取管理员信息请求
-message GetInfoReq {}
+message ManageGetInfoReq {}
 
 // 获取管理员信息响应
-message GetInfoRes {
+message ManageGetInfoRes {
     repeated string roles = 1;        // 角色列表
     string name = 2;                  // 管理员名称
     string avatar = 3;                // 头像
@@ -39,10 +40,32 @@ message GetInfoRes {
 }
 
 // 退出登录请求
-message LogoutReq {}
+message ManageLogoutReq {}
 
 // 退出登录响应
-message LogoutRes {
+message ManageLogoutRes {
     bool success = 1;                 // 是否成功
     string message = 2;               // 响应消息
+}
+
+// 获取菜单列表请求
+message ManageMenusReq {}
+
+// 菜单信息
+message MenuInfo {
+    int32 id = 1;                     // 菜单ID
+    int32 type = 2;                   // 菜单类型
+    string name = 3;                  // 菜单名称
+    string path = 4;                  // 菜单路径
+    int32 sort = 5;                   // 排序
+    repeated MenuInfo children = 6;   // 子菜单
+    string route_url = 7;             // 前端URL
+    bool open = 8;                    // 是否展开
+    bool checked = 9;                // 是否选中
+    string icon = 10;                 // 图标
+}
+
+// 获取菜单列表响应
+message ManageMenusRes {
+    repeated MenuInfo menus = 1;      // 菜单列表
 }

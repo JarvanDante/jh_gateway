@@ -4486,6 +4486,118 @@ func callGetDomainTypeOptions(ctx context.Context, conn *grpc.ClientConn, r *ght
 	return writeProtobufResponse(ctx, r, res)
 }
 
+func callGetSiteOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption GetSiteOptions")
+
+	client := v14.NewManageOptionClient(conn)
+	req := &v14.GetSiteOptionsReq{}
+
+	res, err := client.GetSiteOptions(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageOption GetSiteOptions failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+func callGetSiteDomainList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption GetSiteDomainList")
+
+	client := v14.NewManageOptionClient(conn)
+	req := &v14.GetSiteDomainListReq{
+		Page:       gconv.Int32(r.Get("page")),
+		Size:       gconv.Int32(r.Get("size")),
+		SiteCode:   r.Get("site_code").String(),
+		DomainType: gconv.Int32(r.Get("domain_type")),
+		Status:     gconv.Int32(r.Get("status")),
+	}
+
+	res, err := client.GetSiteDomainList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageOption GetSiteDomainList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+func callCreateSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption CreateSiteDomain")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v14.NewManageOptionClient(conn)
+	req := &v14.CreateSiteDomainReq{
+		SiteCode:   gconv.String(reqData["site_code"]),
+		Domain:     gconv.String(reqData["domain"]),
+		DomainType: gconv.Int32(reqData["domain_type"]),
+		Status:     gconv.Int32(reqData["status"]),
+	}
+
+	res, err := client.CreateSiteDomain(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageOption CreateSiteDomain failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+func callUpdateSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption UpdateSiteDomain")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v14.NewManageOptionClient(conn)
+	req := &v14.UpdateSiteDomainReq{
+		Id:         gconv.Int64(reqData["id"]),
+		SiteCode:   gconv.String(reqData["site_code"]),
+		Domain:     gconv.String(reqData["domain"]),
+		DomainType: gconv.Int32(reqData["domain_type"]),
+		Status:     gconv.Int32(reqData["status"]),
+	}
+
+	res, err := client.UpdateSiteDomain(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageOption UpdateSiteDomain failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+func callDeleteSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption DeleteSiteDomain")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v14.NewManageOptionClient(conn)
+	req := &v14.DeleteSiteDomainReq{
+		Id: gconv.Int64(reqData["id"]),
+	}
+
+	res, err := client.DeleteSiteDomain(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageOption DeleteSiteDomain failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
 /**
  * showdoc
  * @catalog 总后台/管理员认证

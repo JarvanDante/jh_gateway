@@ -250,4 +250,9 @@ func initManageRoutes() {
 
 	// 选项接口
 	manageRoutes.Register("/options/domain-type", "GET", callGetDomainTypeOptions)
+	manageRoutes.Register("/options/site", "GET", callGetSiteOptions)
+	manageRoutes.Register("/site-domain/list", "GET", callGetSiteDomainList)
+	manageRoutes.Register("/site-domain/create", "POST", callCreateSiteDomain)
+	manageRoutes.Register("/site-domain/update", "POST", callUpdateSiteDomain)
+	manageRoutes.Register("/site-domain/delete", "POST", callDeleteSiteDomain)
 }
