@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package manage_option;
+
+option go_package = "./api/manage/option/v1";
+
+service ManageOption {
+    rpc GetDomainTypeOptions(GetDomainTypeOptionsReq) returns (GetDomainTypeOptionsRes) {}
+}
+
+// 获取域名类型选项请求
+message GetDomainTypeOptionsReq {}
+
+// 获取域名类型选项响应
+message GetDomainTypeOptionsRes {
+    repeated OptionItem list = 1;
+}
+
+// 选项项
+message OptionItem {
+    int32 value = 1;        // 选项值
+    string label = 2;       // 选项标签
+}

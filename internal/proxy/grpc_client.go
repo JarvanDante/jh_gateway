@@ -19,6 +19,7 @@ import (
 	v5 "jh_gateway/api/backend/user/v1"
 	v13 "jh_gateway/api/manage/admin/v1"
 	v12 "jh_gateway/api/manage/customer/v1"
+	v14 "jh_gateway/api/manage/option/v1"
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/util"
 	"path/filepath"
@@ -4448,6 +4449,37 @@ func callPublishCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	res, err := client.PublishCustomer(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Customer PublishCustomer failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/选项接口
+ * @title 获取域名类型选项
+ * @description 获取域名类型选项列表的接口
+ * @method get
+ * @url /api/manage/options/domain-type
+ * @return {"code":0,"msg":"success","data":{"list":[{"value":1,"label":"API"},{"value":2,"label":"H5"},{"value":3,"label":"管理后台"},{"value":4,"label":"回调"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.list array 选项列表
+ * @return_param data.list.value int 选项值
+ * @return_param data.list.label string 选项标签
+ * @number 1
+ */
+func callGetDomainTypeOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption GetDomainTypeOptions")
+
+	client := v14.NewManageOptionClient(conn)
+	req := &v14.GetDomainTypeOptionsReq{}
+
+	res, err := client.GetDomainTypeOptions(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageOption GetDomainTypeOptions failed: %v", err)
 		return err
 	}
 
