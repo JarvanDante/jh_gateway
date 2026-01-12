@@ -78,6 +78,8 @@ func ManageRouteDispatcher() ghttp.HandlerFunc {
 		path := r.URL.Path
 		method := r.Method
 
+		util.LogWithTrace(ctx, "info", "=== ManageRouteDispatcher 开始处理请求: %s %s ===", method, path)
+
 		// 创建HTTP请求的Jaeger span
 		ctx, span := tracing.StartSpan(ctx, "manage.request", trace.WithAttributes(
 			attribute.String("http.method", method),
@@ -96,16 +98,20 @@ func ManageRouteDispatcher() ghttp.HandlerFunc {
 			return
 		}
 
+		util.LogWithTrace(ctx, "info", "=== 确定目标服务: %s ===", serviceName)
 		tracing.SetSpanAttributes(span, attribute.String("target.service", serviceName))
 
 		// 调用对应的服务处理器
+		util.LogWithTrace(ctx, "info", "=== 准备调用服务处理器 ===")
 		if err := callServiceWithRouting(ctx, serviceName, r); err != nil {
 			tracing.SetSpanError(span, err)
 			util.WriteInternalError(r, err.Error())
 			return
 		}
 
+		util.LogWithTrace(ctx, "info", "=== 服务处理器调用完成 ===")
 		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
+		util.LogWithTrace(ctx, "info", "=== ManageRouteDispatcher 处理完成 ===")
 	}
 }
 

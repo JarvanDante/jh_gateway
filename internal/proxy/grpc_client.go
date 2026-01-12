@@ -4506,57 +4506,26 @@ func callManageAdminLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 func callManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling Manage Admin Menus")
 
-	// 调用jh_manage_service获取真实菜单数据
+	// 创建 gRPC 客户端
 	client := v13.NewAdminClient(conn)
 	req := &v13.ManageMenusReq{}
 
-	// 调用真实的gRPC Menus方法
+	// 调用 gRPC 服务
 	res, err := client.Menus(ctx, req)
 	if err != nil {
-		util.LogWithTrace(ctx, "error", "gRPC Manage Admin Menus failed: %v", err)
-		return writeJSONResponse(ctx, r, map[string]interface{}{
-			"code": 500,
-			"msg":  "获取菜单列表失败",
-			"data": nil,
-		})
+		// 根据gRPC错误类型返回不同的HTTP状态码
+		if strings.Contains(err.Error(), "未登录或登录已过期") ||
+			strings.Contains(err.Error(), "管理员不存在") ||
+			strings.Contains(err.Error(), "账号已被禁用") {
+			util.WriteUnauthorized(r, "登录已过期，请重新登录")
+		} else {
+			util.WriteInternalError(r, "获取菜单列表失败，请稍后重试")
+		}
+		return nil
 	}
 
-	// 使用protobuf序列化处理菜单数据，确保children正确序列化
-	marshaler := protojson.MarshalOptions{
-		UseProtoNames:   true, // 使用proto字段名
-		EmitUnpopulated: true, // 输出零值字段，确保空数组显示为[]而不是null
-	}
-
-	// 序列化菜单数据
-	menusJSON, err := marshaler.Marshal(res)
-	if err != nil {
-		util.LogWithTrace(ctx, "error", "protobuf JSON marshal failed: %v", err)
-		return writeJSONResponse(ctx, r, map[string]interface{}{
-			"code": 500,
-			"msg":  "菜单数据序列化失败",
-			"data": nil,
-		})
-	}
-
-	// 解析为map以便包装
-	var menusData map[string]interface{}
-	if err := json.Unmarshal(menusJSON, &menusData); err != nil {
-		util.LogWithTrace(ctx, "error", "JSON parse failed: %v", err)
-		return writeJSONResponse(ctx, r, map[string]interface{}{
-			"code": 500,
-			"msg":  "菜单数据解析失败",
-			"data": nil,
-		})
-	}
-
-	// 构建最终响应
-	menuData := map[string]interface{}{
-		"code": 200,
-		"msg":  "success",
-		"data": menusData, // 直接使用protobuf序列化的结果
-	}
-
-	return writeJSONResponse(ctx, r, menuData)
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
 }
 
 // getAdminIdFromRequest 从请求中获取管理员ID
@@ -4570,17 +4539,42 @@ func getAdminIdFromRequest(r *ghttp.Request) uint {
 
 // writeJSONResponse 写入JSON响应
 func writeJSONResponse(ctx context.Context, r *ghttp.Request, data interface{}) error {
-	r.Response.Header().Set("Content-Type", "application/json")
-	r.Response.WriteStatus(200)
+	util.LogWithTrace(ctx, "info", "=== writeJSONResponse 开始 ===")
 
+	// 确保响应头正确设置
+	r.Response.Header().Set("Content-Type", "application/json; charset=utf-8")
+	r.Response.Header().Set("Cache-Control", "no-cache")
+
+	util.LogWithTrace(ctx, "info", "=== 响应头设置完成，开始序列化 ===")
+	// 序列化数据
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "序列化JSON响应失败: %v", err)
 		return err
 	}
 
+	util.LogWithTrace(ctx, "info", "=== 序列化完成，准备写入响应，数据长度: %d ===", len(jsonData))
+	util.LogWithTrace(ctx, "info", "=== 响应数据前100字符: %s ===", string(jsonData[:min(100, len(jsonData))]))
+
+	// 设置状态码
+	r.Response.WriteStatus(200)
+	util.LogWithTrace(ctx, "info", "=== 状态码设置完成，开始写入数据 ===")
+
+	// 写入响应数据
 	r.Response.Write(jsonData)
+	util.LogWithTrace(ctx, "info", "=== 数据写入完成 ===")
+
+	// 不调用ExitAll，让请求正常完成
+	util.LogWithTrace(ctx, "info", "=== writeJSONResponse 完成 ===")
 	return nil
+}
+
+// min 辅助函数
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 // AdminController 管理员控制器 - 用于直接调用jh_manage_service的方法
