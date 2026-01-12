@@ -25,6 +25,7 @@ const (
 	Customer_UpdateCustomer_FullMethodName    = "/customer.Customer/UpdateCustomer"
 	Customer_DeleteCustomer_FullMethodName    = "/customer.Customer/DeleteCustomer"
 	Customer_SyncCustomer_FullMethodName      = "/customer.Customer/SyncCustomer"
+	Customer_PublishCustomer_FullMethodName   = "/customer.Customer/PublishCustomer"
 )
 
 // CustomerClient is the client API for Customer service.
@@ -36,6 +37,7 @@ type CustomerClient interface {
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerReq, opts ...grpc.CallOption) (*UpdateCustomerRes, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerReq, opts ...grpc.CallOption) (*DeleteCustomerRes, error)
 	SyncCustomer(ctx context.Context, in *SyncCustomerReq, opts ...grpc.CallOption) (*SyncCustomerRes, error)
+	PublishCustomer(ctx context.Context, in *PublishCustomerReq, opts ...grpc.CallOption) (*PublishCustomerRes, error)
 }
 
 type customerClient struct {
@@ -96,6 +98,16 @@ func (c *customerClient) SyncCustomer(ctx context.Context, in *SyncCustomerReq, 
 	return out, nil
 }
 
+func (c *customerClient) PublishCustomer(ctx context.Context, in *PublishCustomerReq, opts ...grpc.CallOption) (*PublishCustomerRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PublishCustomerRes)
+	err := c.cc.Invoke(ctx, Customer_PublishCustomer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CustomerServer is the server API for Customer service.
 // All implementations must embed UnimplementedCustomerServer
 // for forward compatibility.
@@ -105,6 +117,7 @@ type CustomerServer interface {
 	UpdateCustomer(context.Context, *UpdateCustomerReq) (*UpdateCustomerRes, error)
 	DeleteCustomer(context.Context, *DeleteCustomerReq) (*DeleteCustomerRes, error)
 	SyncCustomer(context.Context, *SyncCustomerReq) (*SyncCustomerRes, error)
+	PublishCustomer(context.Context, *PublishCustomerReq) (*PublishCustomerRes, error)
 	mustEmbedUnimplementedCustomerServer()
 }
 
@@ -129,6 +142,9 @@ func (UnimplementedCustomerServer) DeleteCustomer(context.Context, *DeleteCustom
 }
 func (UnimplementedCustomerServer) SyncCustomer(context.Context, *SyncCustomerReq) (*SyncCustomerRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method SyncCustomer not implemented")
+}
+func (UnimplementedCustomerServer) PublishCustomer(context.Context, *PublishCustomerReq) (*PublishCustomerRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method PublishCustomer not implemented")
 }
 func (UnimplementedCustomerServer) mustEmbedUnimplementedCustomerServer() {}
 func (UnimplementedCustomerServer) testEmbeddedByValue()                  {}
@@ -241,6 +257,24 @@ func _Customer_SyncCustomer_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Customer_PublishCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PublishCustomerReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServer).PublishCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Customer_PublishCustomer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServer).PublishCustomer(ctx, req.(*PublishCustomerReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Customer_ServiceDesc is the grpc.ServiceDesc for Customer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +301,10 @@ var Customer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SyncCustomer",
 			Handler:    _Customer_SyncCustomer_Handler,
+		},
+		{
+			MethodName: "PublishCustomer",
+			Handler:    _Customer_PublishCustomer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

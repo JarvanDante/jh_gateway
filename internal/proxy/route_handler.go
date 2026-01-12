@@ -246,4 +246,5 @@ func initManageRoutes() {
 	manageRoutes.Register("/customer/update", "POST", callUpdateCustomer)
 	manageRoutes.Register("/customer/delete", "POST", callDeleteCustomer)
 	manageRoutes.Register("/customer/sync", "POST", callSyncCustomer)
+	manageRoutes.Register("/customer/publish", "POST", callPublishCustomer)
 }

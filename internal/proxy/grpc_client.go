@@ -4271,9 +4271,13 @@ func callUpdateCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 	client := v12.NewCustomerClient(conn)
 	req := &v12.UpdateCustomerReq{
-		Id:     gconv.Int32(reqData["id"]),
-		Name:   gconv.String(reqData["name"]),
-		Status: gconv.Int32(reqData["status"]),
+		Id:       gconv.Int32(reqData["id"]),
+		Name:     gconv.String(reqData["name"]),
+		Timezone: gconv.String(reqData["timezone"]),
+		Currency: gconv.String(reqData["currency"]),
+		Status:   gconv.Int32(reqData["status"]),
+		KvConfig: gconv.String(reqData["kv_config"]),
+		IsSync:   gconv.Int32(reqData["is_sync"]),
 	}
 
 	res, err := client.UpdateCustomer(ctx, req)
@@ -4369,7 +4373,11 @@ func callSyncCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 					Id:        gconv.Int32(customerMap["id"]),
 					Code:      gconv.String(customerMap["code"]),
 					Name:      gconv.String(customerMap["name"]),
+					Timezone:  gconv.String(customerMap["timezone"]),
+					Currency:  gconv.String(customerMap["currency"]),
 					Status:    gconv.Int32(customerMap["status"]),
+					KvConfig:  gconv.String(customerMap["kv_config"]),
+					IsSync:    gconv.Int32(customerMap["is_sync"]),
 					CreatedAt: gconv.String(customerMap["created_at"]),
 					UpdatedAt: gconv.String(customerMap["updated_at"]),
 				}
@@ -4389,6 +4397,57 @@ func callSyncCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	res, err := client.SyncCustomer(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Customer SyncCustomer failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/商户管理
+ * @title 发布商户配置
+ * @description 发布商户配置到Consul KV的接口
+ * @method post
+ * @url /api/manage/customer/publish
+ * @param id 必选 int 商户ID
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"发布成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.success bool 发布是否成功
+ * @return_param data.message string 发布结果消息
+ * @number 5
+ */
+func callPublishCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer PublishCustomer")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 验证必填参数
+	if _, exists := reqData["id"]; !exists {
+		util.WriteBadRequest(r, "缺少id参数")
+		return fmt.Errorf("missing id parameter")
+	}
+
+	id := gconv.Int32(reqData["id"])
+	if id <= 0 {
+		util.WriteBadRequest(r, "商户ID必须大于0")
+		return fmt.Errorf("商户ID必须大于0")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.PublishCustomerReq{
+		Id: id,
+	}
+
+	res, err := client.PublishCustomer(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer PublishCustomer failed: %v", err)
 		return err
 	}
 

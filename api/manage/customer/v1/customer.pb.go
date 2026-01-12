@@ -314,12 +314,13 @@ func (x *CustomerItem) GetUpdatedAt() string {
 // 更新商户请求
 type UpdateCustomerReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                            // v: required|min:1
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                  // 商户名称
-	KvConfig      string                 `protobuf:"bytes,3,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`        // KV配置详情
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                     // 状态。1=正常；0=禁用
-	IsSync        int32                  `protobuf:"varint,5,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否暂停同步。1=正常；0=暂停同步"` // 是否暂停同步。1=正常；0=暂停同步
-	IsConfig      int32                  `protobuf:"varint,6,opt,name=is_config,json=isConfig,proto3" json:"is_config" dc:"是否配置KV"`       // 是否配置KV
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                               // v: required|min:1
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                     // 商户名称
+	Timezone      string                 `protobuf:"bytes,3,opt,name=timezone,proto3" json:"timezone" dc:"时区"`                               // 时区
+	Currency      string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency" dc:"币种"`                               // 币种
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                        // 状态。1=正常；0=禁用
+	KvConfig      string                 `protobuf:"bytes,6,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`           // KV配置详情
+	IsSync        int32                  `protobuf:"varint,7,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"` // 是否发布同步。1=发布同步；0=未发布同步
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -368,9 +369,16 @@ func (x *UpdateCustomerReq) GetName() string {
 	return ""
 }
 
-func (x *UpdateCustomerReq) GetKvConfig() string {
+func (x *UpdateCustomerReq) GetTimezone() string {
 	if x != nil {
-		return x.KvConfig
+		return x.Timezone
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetCurrency() string {
+	if x != nil {
+		return x.Currency
 	}
 	return ""
 }
@@ -382,16 +390,16 @@ func (x *UpdateCustomerReq) GetStatus() int32 {
 	return 0
 }
 
+func (x *UpdateCustomerReq) GetKvConfig() string {
+	if x != nil {
+		return x.KvConfig
+	}
+	return ""
+}
+
 func (x *UpdateCustomerReq) GetIsSync() int32 {
 	if x != nil {
 		return x.IsSync
-	}
-	return 0
-}
-
-func (x *UpdateCustomerReq) GetIsConfig() int32 {
-	if x != nil {
-		return x.IsConfig
 	}
 	return 0
 }
@@ -597,6 +605,104 @@ func (*SyncCustomerRes) Descriptor() ([]byte, []int) {
 	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{10}
 }
 
+// 发布商户请求
+type PublishCustomerReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"商户ID"` // 商户ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublishCustomerReq) Reset() {
+	*x = PublishCustomerReq{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublishCustomerReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublishCustomerReq) ProtoMessage() {}
+
+func (x *PublishCustomerReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublishCustomerReq.ProtoReflect.Descriptor instead.
+func (*PublishCustomerReq) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *PublishCustomerReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 发布商户响应
+type PublishCustomerRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"发布是否成功"` // 发布是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"发布结果消息"`  // 发布结果消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublishCustomerRes) Reset() {
+	*x = PublishCustomerRes{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublishCustomerRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublishCustomerRes) ProtoMessage() {}
+
+func (x *PublishCustomerRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublishCustomerRes.ProtoReflect.Descriptor instead.
+func (*PublishCustomerRes) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *PublishCustomerRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *PublishCustomerRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_manage_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_manage_customer_v1_customer_proto_rawDesc = "" +
@@ -622,27 +728,34 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"created_at\x18\t \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
 	"updated_at\x18\n" +
-	" \x01(\tR\tupdatedAt\"\xa2\x01\n" +
+	" \x01(\tR\tupdatedAt\"\xbd\x01\n" +
 	"\x11UpdateCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
-	"\tkv_config\x18\x03 \x01(\tR\bkvConfig\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\x05R\x06status\x12\x17\n" +
-	"\ais_sync\x18\x05 \x01(\x05R\x06isSync\x12\x1b\n" +
-	"\tis_config\x18\x06 \x01(\x05R\bisConfig\"\x13\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\btimezone\x18\x03 \x01(\tR\btimezone\x12\x1a\n" +
+	"\bcurrency\x18\x04 \x01(\tR\bcurrency\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x1b\n" +
+	"\tkv_config\x18\x06 \x01(\tR\bkvConfig\x12\x17\n" +
+	"\ais_sync\x18\a \x01(\x05R\x06isSync\"\x13\n" +
 	"\x11UpdateCustomerRes\"#\n" +
 	"\x11DeleteCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x13\n" +
 	"\x11DeleteCustomerRes\"=\n" +
 	"\x0fSyncCustomerReq\x12*\n" +
 	"\x04data\x18\x01 \x03(\v2\x16.customer.CustomerItemR\x04data\"\x11\n" +
-	"\x0fSyncCustomerRes2\x96\x03\n" +
+	"\x0fSyncCustomerRes\"$\n" +
+	"\x12PublishCustomerReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"H\n" +
+	"\x12PublishCustomerRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xe7\x03\n" +
 	"\bCustomer\x12O\n" +
 	"\x0fGetCustomerList\x12\x1c.customer.GetCustomerListReq\x1a\x1c.customer.GetCustomerListRes\"\x00\x12U\n" +
 	"\x11GetCustomerDetail\x12\x1e.customer.GetCustomerDetailReq\x1a\x1e.customer.GetCustomerDetailRes\"\x00\x12L\n" +
 	"\x0eUpdateCustomer\x12\x1b.customer.UpdateCustomerReq\x1a\x1b.customer.UpdateCustomerRes\"\x00\x12L\n" +
 	"\x0eDeleteCustomer\x12\x1b.customer.DeleteCustomerReq\x1a\x1b.customer.DeleteCustomerRes\"\x00\x12F\n" +
-	"\fSyncCustomer\x12\x19.customer.SyncCustomerReq\x1a\x19.customer.SyncCustomerRes\"\x00B\x1aZ\x18./api/manage/customer/v1b\x06proto3"
+	"\fSyncCustomer\x12\x19.customer.SyncCustomerReq\x1a\x19.customer.SyncCustomerRes\"\x00\x12O\n" +
+	"\x0fPublishCustomer\x12\x1c.customer.PublishCustomerReq\x1a\x1c.customer.PublishCustomerRes\"\x00B\x1aZ\x18./api/manage/customer/v1b\x06proto3"
 
 var (
 	file_manage_customer_v1_customer_proto_rawDescOnce sync.Once
@@ -656,7 +769,7 @@ func file_manage_customer_v1_customer_proto_rawDescGZIP() []byte {
 	return file_manage_customer_v1_customer_proto_rawDescData
 }
 
-var file_manage_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_manage_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_manage_customer_v1_customer_proto_goTypes = []any{
 	(*GetCustomerListReq)(nil),   // 0: customer.GetCustomerListReq
 	(*GetCustomerListRes)(nil),   // 1: customer.GetCustomerListRes
@@ -669,6 +782,8 @@ var file_manage_customer_v1_customer_proto_goTypes = []any{
 	(*DeleteCustomerRes)(nil),    // 8: customer.DeleteCustomerRes
 	(*SyncCustomerReq)(nil),      // 9: customer.SyncCustomerReq
 	(*SyncCustomerRes)(nil),      // 10: customer.SyncCustomerRes
+	(*PublishCustomerReq)(nil),   // 11: customer.PublishCustomerReq
+	(*PublishCustomerRes)(nil),   // 12: customer.PublishCustomerRes
 }
 var file_manage_customer_v1_customer_proto_depIdxs = []int32{
 	4,  // 0: customer.GetCustomerListRes.list:type_name -> customer.CustomerItem
@@ -679,13 +794,15 @@ var file_manage_customer_v1_customer_proto_depIdxs = []int32{
 	5,  // 5: customer.Customer.UpdateCustomer:input_type -> customer.UpdateCustomerReq
 	7,  // 6: customer.Customer.DeleteCustomer:input_type -> customer.DeleteCustomerReq
 	9,  // 7: customer.Customer.SyncCustomer:input_type -> customer.SyncCustomerReq
-	1,  // 8: customer.Customer.GetCustomerList:output_type -> customer.GetCustomerListRes
-	3,  // 9: customer.Customer.GetCustomerDetail:output_type -> customer.GetCustomerDetailRes
-	6,  // 10: customer.Customer.UpdateCustomer:output_type -> customer.UpdateCustomerRes
-	8,  // 11: customer.Customer.DeleteCustomer:output_type -> customer.DeleteCustomerRes
-	10, // 12: customer.Customer.SyncCustomer:output_type -> customer.SyncCustomerRes
-	8,  // [8:13] is the sub-list for method output_type
-	3,  // [3:8] is the sub-list for method input_type
+	11, // 8: customer.Customer.PublishCustomer:input_type -> customer.PublishCustomerReq
+	1,  // 9: customer.Customer.GetCustomerList:output_type -> customer.GetCustomerListRes
+	3,  // 10: customer.Customer.GetCustomerDetail:output_type -> customer.GetCustomerDetailRes
+	6,  // 11: customer.Customer.UpdateCustomer:output_type -> customer.UpdateCustomerRes
+	8,  // 12: customer.Customer.DeleteCustomer:output_type -> customer.DeleteCustomerRes
+	10, // 13: customer.Customer.SyncCustomer:output_type -> customer.SyncCustomerRes
+	12, // 14: customer.Customer.PublishCustomer:output_type -> customer.PublishCustomerRes
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -702,7 +819,7 @@ func file_manage_customer_v1_customer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_customer_v1_customer_proto_rawDesc), len(file_manage_customer_v1_customer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
