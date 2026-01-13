@@ -4280,13 +4280,16 @@ func callUpdateCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 	client := v12.NewCustomerClient(conn)
 	req := &v12.UpdateCustomerReq{
-		Id:       gconv.Int32(reqData["id"]),
-		Name:     gconv.String(reqData["name"]),
-		Timezone: gconv.String(reqData["timezone"]),
-		Currency: gconv.String(reqData["currency"]),
-		Status:   gconv.Int32(reqData["status"]),
-		KvConfig: gconv.String(reqData["kv_config"]),
-		IsSync:   gconv.Int32(reqData["is_sync"]),
+		Id:            gconv.Int32(reqData["id"]),
+		Name:          gconv.String(reqData["name"]),
+		Timezone:      gconv.String(reqData["timezone"]),
+		Currency:      gconv.String(reqData["currency"]),
+		Status:        gconv.Int32(reqData["status"]),
+		KvConfig:      gconv.String(reqData["kv_config"]),
+		DbLinkSite:    gconv.String(reqData["db_link_site"]),
+		DbLinkBalance: gconv.String(reqData["db_link_balance"]),
+		DbLinkGame:    gconv.String(reqData["db_link_game"]),
+		IsSync:        gconv.Int32(reqData["is_sync"]),
 	}
 
 	res, err := client.UpdateCustomer(ctx, req)

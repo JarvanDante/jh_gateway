@@ -11,6 +11,7 @@ service ManageOption {
     rpc UpdateSiteDomain(UpdateSiteDomainReq) returns (UpdateSiteDomainRes) {}
     rpc DeleteSiteDomain(DeleteSiteDomainReq) returns (DeleteSiteDomainRes) {}
     rpc GetSiteDomainList(GetSiteDomainListReq) returns (GetSiteDomainListRes) {}
+    rpc PublishSiteDomain(PublishSiteDomainReq) returns (PublishSiteDomainRes) {}
 }
 
 // 获取域名类型选项请求
@@ -96,4 +97,15 @@ message SiteDomainItem {
     int32 status = 5;
     string created_at = 6;
     string updated_at = 7;
+}
+
+// 发布域名请求
+message PublishSiteDomainReq {
+    string site_code = 1;       // 站点编码
+}
+
+// 发布域名响应
+message PublishSiteDomainRes {
+    bool success = 1;           // 发布是否成功
+    string message = 2;         // 发布结果消息
 }

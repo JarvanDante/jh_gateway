@@ -202,11 +202,14 @@ type CustomerItem struct {
 	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
 	Timezone      string                 `protobuf:"bytes,4,opt,name=timezone,proto3" json:"timezone"`
 	Currency      string                 `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency"`
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                        // 状态。1=正常；0=禁用
-	KvConfig      string                 `protobuf:"bytes,7,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`           // KV配置详情
-	IsSync        int32                  `protobuf:"varint,8,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"` // 是否发布同步。1=发布同步；0=未发布同步
-	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`          // 创建时间
-	UpdatedAt     string                 `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`         // 更新时间
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                                     // 状态。1=正常；0=禁用
+	KvConfig      string                 `protobuf:"bytes,7,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`                        // KV配置详情
+	DbLinkSite    string                 `protobuf:"bytes,8,opt,name=db_link_site,json=dbLinkSite,proto3" json:"db_link_site" dc:"site数据库连接"`             // site数据库连接
+	DbLinkBalance string                 `protobuf:"bytes,9,opt,name=db_link_balance,json=dbLinkBalance,proto3" json:"db_link_balance" dc:"balance数据库连接"` // balance数据库连接
+	DbLinkGame    string                 `protobuf:"bytes,10,opt,name=db_link_game,json=dbLinkGame,proto3" json:"db_link_game" dc:"game数据库连接"`            // game数据库连接
+	IsSync        int32                  `protobuf:"varint,11,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"`             // 是否发布同步。1=发布同步；0=未发布同步
+	CreatedAt     string                 `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                      // 创建时间
+	UpdatedAt     string                 `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`                      // 更新时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -290,6 +293,27 @@ func (x *CustomerItem) GetKvConfig() string {
 	return ""
 }
 
+func (x *CustomerItem) GetDbLinkSite() string {
+	if x != nil {
+		return x.DbLinkSite
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetDbLinkBalance() string {
+	if x != nil {
+		return x.DbLinkBalance
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetDbLinkGame() string {
+	if x != nil {
+		return x.DbLinkGame
+	}
+	return ""
+}
+
 func (x *CustomerItem) GetIsSync() int32 {
 	if x != nil {
 		return x.IsSync
@@ -314,13 +338,16 @@ func (x *CustomerItem) GetUpdatedAt() string {
 // 更新商户请求
 type UpdateCustomerReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                               // v: required|min:1
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                     // 商户名称
-	Timezone      string                 `protobuf:"bytes,3,opt,name=timezone,proto3" json:"timezone" dc:"时区"`                               // 时区
-	Currency      string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency" dc:"币种"`                               // 币种
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                        // 状态。1=正常；0=禁用
-	KvConfig      string                 `protobuf:"bytes,6,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`           // KV配置详情
-	IsSync        int32                  `protobuf:"varint,7,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"` // 是否发布同步。1=发布同步；0=未发布同步
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                                            // v: required|min:1
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                                  // 商户名称
+	Timezone      string                 `protobuf:"bytes,3,opt,name=timezone,proto3" json:"timezone" dc:"时区"`                                            // 时区
+	Currency      string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency" dc:"币种"`                                            // 币种
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                                     // 状态。1=正常；0=禁用
+	KvConfig      string                 `protobuf:"bytes,6,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`                        // KV配置详情
+	DbLinkSite    string                 `protobuf:"bytes,7,opt,name=db_link_site,json=dbLinkSite,proto3" json:"db_link_site" dc:"site数据库连接"`             // site数据库连接
+	DbLinkBalance string                 `protobuf:"bytes,8,opt,name=db_link_balance,json=dbLinkBalance,proto3" json:"db_link_balance" dc:"balance数据库连接"` // balance数据库连接
+	DbLinkGame    string                 `protobuf:"bytes,9,opt,name=db_link_game,json=dbLinkGame,proto3" json:"db_link_game" dc:"game数据库连接"`             // game数据库连接
+	IsSync        int32                  `protobuf:"varint,10,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"`             // 是否发布同步。1=发布同步；0=未发布同步
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -393,6 +420,27 @@ func (x *UpdateCustomerReq) GetStatus() int32 {
 func (x *UpdateCustomerReq) GetKvConfig() string {
 	if x != nil {
 		return x.KvConfig
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetDbLinkSite() string {
+	if x != nil {
+		return x.DbLinkSite
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetDbLinkBalance() string {
+	if x != nil {
+		return x.DbLinkBalance
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetDbLinkGame() string {
+	if x != nil {
+		return x.DbLinkGame
 	}
 	return ""
 }
@@ -714,7 +762,7 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\x14GetCustomerDetailReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"B\n" +
 	"\x14GetCustomerDetailRes\x12*\n" +
-	"\x04data\x18\x01 \x01(\v2\x16.customer.CustomerItemR\x04data\"\x8a\x02\n" +
+	"\x04data\x18\x01 \x01(\v2\x16.customer.CustomerItemR\x04data\"\xf6\x02\n" +
 	"\fCustomerItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
@@ -722,21 +770,32 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\btimezone\x18\x04 \x01(\tR\btimezone\x12\x1a\n" +
 	"\bcurrency\x18\x05 \x01(\tR\bcurrency\x12\x16\n" +
 	"\x06status\x18\x06 \x01(\x05R\x06status\x12\x1b\n" +
-	"\tkv_config\x18\a \x01(\tR\bkvConfig\x12\x17\n" +
-	"\ais_sync\x18\b \x01(\x05R\x06isSync\x12\x1d\n" +
+	"\tkv_config\x18\a \x01(\tR\bkvConfig\x12 \n" +
+	"\fdb_link_site\x18\b \x01(\tR\n" +
+	"dbLinkSite\x12&\n" +
+	"\x0fdb_link_balance\x18\t \x01(\tR\rdbLinkBalance\x12 \n" +
+	"\fdb_link_game\x18\n" +
+	" \x01(\tR\n" +
+	"dbLinkGame\x12\x17\n" +
+	"\ais_sync\x18\v \x01(\x05R\x06isSync\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\t \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\n" +
-	" \x01(\tR\tupdatedAt\"\xbd\x01\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\"\xa9\x02\n" +
 	"\x11UpdateCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
 	"\btimezone\x18\x03 \x01(\tR\btimezone\x12\x1a\n" +
 	"\bcurrency\x18\x04 \x01(\tR\bcurrency\x12\x16\n" +
 	"\x06status\x18\x05 \x01(\x05R\x06status\x12\x1b\n" +
-	"\tkv_config\x18\x06 \x01(\tR\bkvConfig\x12\x17\n" +
-	"\ais_sync\x18\a \x01(\x05R\x06isSync\"\x13\n" +
+	"\tkv_config\x18\x06 \x01(\tR\bkvConfig\x12 \n" +
+	"\fdb_link_site\x18\a \x01(\tR\n" +
+	"dbLinkSite\x12&\n" +
+	"\x0fdb_link_balance\x18\b \x01(\tR\rdbLinkBalance\x12 \n" +
+	"\fdb_link_game\x18\t \x01(\tR\n" +
+	"dbLinkGame\x12\x17\n" +
+	"\ais_sync\x18\n" +
+	" \x01(\x05R\x06isSync\"\x13\n" +
 	"\x11UpdateCustomerRes\"#\n" +
 	"\x11DeleteCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x13\n" +
