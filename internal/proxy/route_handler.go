@@ -255,4 +255,5 @@ func initManageRoutes() {
 	manageRoutes.Register("/site-domain/create", "POST", callCreateSiteDomain)
 	manageRoutes.Register("/site-domain/update", "POST", callUpdateSiteDomain)
 	manageRoutes.Register("/site-domain/delete", "POST", callDeleteSiteDomain)
+	manageRoutes.Register("/site-domain/publish", "POST", callPublishSiteDomain)
 }

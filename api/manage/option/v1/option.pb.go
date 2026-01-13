@@ -817,6 +817,104 @@ func (x *SiteDomainItem) GetUpdatedAt() string {
 	return ""
 }
 
+// 发布域名请求
+type PublishSiteDomainReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteCode      string                 `protobuf:"bytes,1,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点编码"` // 站点编码
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublishSiteDomainReq) Reset() {
+	*x = PublishSiteDomainReq{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublishSiteDomainReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublishSiteDomainReq) ProtoMessage() {}
+
+func (x *PublishSiteDomainReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublishSiteDomainReq.ProtoReflect.Descriptor instead.
+func (*PublishSiteDomainReq) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *PublishSiteDomainReq) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+// 发布域名响应
+type PublishSiteDomainRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"发布是否成功"` // 发布是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"发布结果消息"`  // 发布结果消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublishSiteDomainRes) Reset() {
+	*x = PublishSiteDomainRes{}
+	mi := &file_manage_option_v1_option_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublishSiteDomainRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublishSiteDomainRes) ProtoMessage() {}
+
+func (x *PublishSiteDomainRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_option_v1_option_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublishSiteDomainRes.ProtoReflect.Descriptor instead.
+func (*PublishSiteDomainRes) Descriptor() ([]byte, []int) {
+	return file_manage_option_v1_option_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *PublishSiteDomainRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *PublishSiteDomainRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_manage_option_v1_option_proto protoreflect.FileDescriptor
 
 const file_manage_option_v1_option_proto_rawDesc = "" +
@@ -873,14 +971,20 @@ const file_manage_option_v1_option_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt2\xcb\x04\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAt\"3\n" +
+	"\x14PublishSiteDomainReq\x12\x1b\n" +
+	"\tsite_code\x18\x01 \x01(\tR\bsiteCode\"J\n" +
+	"\x14PublishSiteDomainRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xac\x05\n" +
 	"\fManageOption\x12h\n" +
 	"\x14GetDomainTypeOptions\x12&.manage_option.GetDomainTypeOptionsReq\x1a&.manage_option.GetDomainTypeOptionsRes\"\x00\x12V\n" +
 	"\x0eGetSiteOptions\x12 .manage_option.GetSiteOptionsReq\x1a .manage_option.GetSiteOptionsRes\"\x00\x12\\\n" +
 	"\x10CreateSiteDomain\x12\".manage_option.CreateSiteDomainReq\x1a\".manage_option.CreateSiteDomainRes\"\x00\x12\\\n" +
 	"\x10UpdateSiteDomain\x12\".manage_option.UpdateSiteDomainReq\x1a\".manage_option.UpdateSiteDomainRes\"\x00\x12\\\n" +
 	"\x10DeleteSiteDomain\x12\".manage_option.DeleteSiteDomainReq\x1a\".manage_option.DeleteSiteDomainRes\"\x00\x12_\n" +
-	"\x11GetSiteDomainList\x12#.manage_option.GetSiteDomainListReq\x1a#.manage_option.GetSiteDomainListRes\"\x00B\x18Z\x16./api/manage/option/v1b\x06proto3"
+	"\x11GetSiteDomainList\x12#.manage_option.GetSiteDomainListReq\x1a#.manage_option.GetSiteDomainListRes\"\x00\x12_\n" +
+	"\x11PublishSiteDomain\x12#.manage_option.PublishSiteDomainReq\x1a#.manage_option.PublishSiteDomainRes\"\x00B\x18Z\x16./api/manage/option/v1b\x06proto3"
 
 var (
 	file_manage_option_v1_option_proto_rawDescOnce sync.Once
@@ -894,7 +998,7 @@ func file_manage_option_v1_option_proto_rawDescGZIP() []byte {
 	return file_manage_option_v1_option_proto_rawDescData
 }
 
-var file_manage_option_v1_option_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_manage_option_v1_option_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_manage_option_v1_option_proto_goTypes = []any{
 	(*GetDomainTypeOptionsReq)(nil), // 0: manage_option.GetDomainTypeOptionsReq
 	(*GetDomainTypeOptionsRes)(nil), // 1: manage_option.GetDomainTypeOptionsRes
@@ -911,6 +1015,8 @@ var file_manage_option_v1_option_proto_goTypes = []any{
 	(*GetSiteDomainListReq)(nil),    // 12: manage_option.GetSiteDomainListReq
 	(*GetSiteDomainListRes)(nil),    // 13: manage_option.GetSiteDomainListRes
 	(*SiteDomainItem)(nil),          // 14: manage_option.SiteDomainItem
+	(*PublishSiteDomainReq)(nil),    // 15: manage_option.PublishSiteDomainReq
+	(*PublishSiteDomainRes)(nil),    // 16: manage_option.PublishSiteDomainRes
 }
 var file_manage_option_v1_option_proto_depIdxs = []int32{
 	2,  // 0: manage_option.GetDomainTypeOptionsRes.list:type_name -> manage_option.OptionItem
@@ -922,14 +1028,16 @@ var file_manage_option_v1_option_proto_depIdxs = []int32{
 	8,  // 6: manage_option.ManageOption.UpdateSiteDomain:input_type -> manage_option.UpdateSiteDomainReq
 	10, // 7: manage_option.ManageOption.DeleteSiteDomain:input_type -> manage_option.DeleteSiteDomainReq
 	12, // 8: manage_option.ManageOption.GetSiteDomainList:input_type -> manage_option.GetSiteDomainListReq
-	1,  // 9: manage_option.ManageOption.GetDomainTypeOptions:output_type -> manage_option.GetDomainTypeOptionsRes
-	4,  // 10: manage_option.ManageOption.GetSiteOptions:output_type -> manage_option.GetSiteOptionsRes
-	7,  // 11: manage_option.ManageOption.CreateSiteDomain:output_type -> manage_option.CreateSiteDomainRes
-	9,  // 12: manage_option.ManageOption.UpdateSiteDomain:output_type -> manage_option.UpdateSiteDomainRes
-	11, // 13: manage_option.ManageOption.DeleteSiteDomain:output_type -> manage_option.DeleteSiteDomainRes
-	13, // 14: manage_option.ManageOption.GetSiteDomainList:output_type -> manage_option.GetSiteDomainListRes
-	9,  // [9:15] is the sub-list for method output_type
-	3,  // [3:9] is the sub-list for method input_type
+	15, // 9: manage_option.ManageOption.PublishSiteDomain:input_type -> manage_option.PublishSiteDomainReq
+	1,  // 10: manage_option.ManageOption.GetDomainTypeOptions:output_type -> manage_option.GetDomainTypeOptionsRes
+	4,  // 11: manage_option.ManageOption.GetSiteOptions:output_type -> manage_option.GetSiteOptionsRes
+	7,  // 12: manage_option.ManageOption.CreateSiteDomain:output_type -> manage_option.CreateSiteDomainRes
+	9,  // 13: manage_option.ManageOption.UpdateSiteDomain:output_type -> manage_option.UpdateSiteDomainRes
+	11, // 14: manage_option.ManageOption.DeleteSiteDomain:output_type -> manage_option.DeleteSiteDomainRes
+	13, // 15: manage_option.ManageOption.GetSiteDomainList:output_type -> manage_option.GetSiteDomainListRes
+	16, // 16: manage_option.ManageOption.PublishSiteDomain:output_type -> manage_option.PublishSiteDomainRes
+	10, // [10:17] is the sub-list for method output_type
+	3,  // [3:10] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -946,7 +1054,7 @@ func file_manage_option_v1_option_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_option_v1_option_proto_rawDesc), len(file_manage_option_v1_option_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
