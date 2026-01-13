@@ -3,6 +3,7 @@ package router
 import (
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/proxy"
+	"jh_gateway/internal/registry"
 	"jh_gateway/internal/util"
 
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -12,6 +13,17 @@ func Register(s *ghttp.Server) {
 	// 健康检查
 	s.BindHandler("/gateway/health", func(r *ghttp.Request) {
 		util.WriteSuccess(r, nil)
+	})
+
+	// 域名映射调试接口
+	s.BindHandler("/gateway/domain-mappings", func(r *ghttp.Request) {
+		mappings := registry.GetAllDomainMappings()
+		stats := registry.GetDomainStats()
+
+		util.WriteSuccess(r, map[string]interface{}{
+			"mappings": mappings,
+			"stats":    stats,
+		})
 	})
 
 	// 总后台管理接口统一入口
@@ -33,7 +45,8 @@ func Register(s *ghttp.Server) {
 	// 后台管理接口统一入口
 	s.Group("/api/backend", func(group *ghttp.RouterGroup) {
 		group.Middleware(
-			middleware.CORS, // CORS 跨域中间件
+			middleware.CORS,           // CORS 跨域中间件
+			middleware.DomainResolver, // 域名解析中间件
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
@@ -49,7 +62,8 @@ func Register(s *ghttp.Server) {
 	// 前台用户接口（预留）
 	s.Group("/api/frontend", func(group *ghttp.RouterGroup) {
 		group.Middleware(
-			middleware.CORS, // CORS 跨域中间件
+			middleware.CORS,           // CORS 跨域中间件
+			middleware.DomainResolver, // 域名解析中间件
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,

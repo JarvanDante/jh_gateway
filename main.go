@@ -49,6 +49,14 @@ func main() {
 	g.Log().Info(ctx, "初始化Consul客户端...")
 	registry.InitConsul()
 
+	// 初始化域名监听器
+	g.Log().Info(ctx, "初始化域名监听器...")
+	if err := registry.InitDomainWatcher(); err != nil {
+		g.Log().Errorf(ctx, "初始化域名监听器失败: %v", err)
+	} else {
+		g.Log().Info(ctx, "域名监听器初始化成功")
+	}
+
 	// 启动 gRPC 网关（在后台运行）
 	g.Log().Info(ctx, "启动gRPC网关...")
 	grpcAddr := g.Cfg().MustGet(ctx, "grpcGateway.address").String()

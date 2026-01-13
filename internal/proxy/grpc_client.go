@@ -403,6 +403,14 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		}
 	}
 
+	// 添加站点ID（从域名解析中间件获取）
+	if siteIdVar := r.GetCtxVar("site_id"); siteIdVar != nil {
+		if id := siteIdVar.Int64(); id > 0 {
+			md.Set("site_id", fmt.Sprint(id))
+			util.LogWithTrace(ctx, "debug", "添加 site_id 到 gRPC metadata: %d", id)
+		}
+	}
+
 	// 添加客户端IP
 	if clientIP := r.GetClientIp(); clientIP != "" {
 		md.Set("client_ip", clientIP)
