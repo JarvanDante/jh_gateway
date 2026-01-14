@@ -379,11 +379,13 @@ func (x *MenuInfo) GetIcon() string {
 // 获取管理员信息响应
 type GetInfoRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Roles         []string               `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles" dc:"角色列表"`             // 角色列表
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"管理员名称"`              // 管理员名称
-	Avatar        string                 `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar" dc:"头像"`             // 头像
-	Introduction  string                 `protobuf:"bytes,4,opt,name=introduction,proto3" json:"introduction" dc:"介绍"` // 介绍
-	Menus         []*MenuInfo            `protobuf:"bytes,5,rep,name=menus,proto3" json:"menus" dc:"菜单权限"`             // 菜单权限
+	Roles         []string               `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles" dc:"角色列表"`                       // 角色列表
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"管理员名称"`                        // 管理员名称
+	Avatar        string                 `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar" dc:"头像"`                       // 头像
+	Introduction  string                 `protobuf:"bytes,4,opt,name=introduction,proto3" json:"introduction" dc:"介绍"`           // 介绍
+	Menus         []*MenuInfo            `protobuf:"bytes,5,rep,name=menus,proto3" json:"menus" dc:"菜单权限"`                       // 菜单权限
+	SiteCode      string                 `protobuf:"bytes,6,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点代码"` // 站点代码
+	SiteName      string                 `protobuf:"bytes,7,opt,name=site_name,json=siteName,proto3" json:"site_name" dc:"站点名称"` // 站点名称
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -451,6 +453,20 @@ func (x *GetInfoRes) GetMenus() []*MenuInfo {
 		return x.Menus
 	}
 	return nil
+}
+
+func (x *GetInfoRes) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *GetInfoRes) GetSiteName() string {
+	if x != nil {
+		return x.SiteName
+	}
+	return ""
 }
 
 // 获取菜单列表请求
@@ -1521,14 +1537,16 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\x04open\x18\t \x01(\bR\x04open\x12\x18\n" +
 	"\achecked\x18\n" +
 	" \x01(\bR\achecked\x12\x12\n" +
-	"\x04icon\x18\v \x01(\tR\x04icon\"\x99\x01\n" +
+	"\x04icon\x18\v \x01(\tR\x04icon\"\xd3\x01\n" +
 	"\n" +
 	"GetInfoRes\x12\x14\n" +
 	"\x05roles\x18\x01 \x03(\tR\x05roles\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
 	"\x06avatar\x18\x03 \x01(\tR\x06avatar\x12\"\n" +
 	"\fintroduction\x18\x04 \x01(\tR\fintroduction\x12%\n" +
-	"\x05menus\x18\x05 \x03(\v2\x0f.admin.MenuInfoR\x05menus\"\n" +
+	"\x05menus\x18\x05 \x03(\v2\x0f.admin.MenuInfoR\x05menus\x12\x1b\n" +
+	"\tsite_code\x18\x06 \x01(\tR\bsiteCode\x12\x1b\n" +
+	"\tsite_name\x18\a \x01(\tR\bsiteName\"\n" +
 	"\n" +
 	"\bMenusReq\"1\n" +
 	"\bMenusRes\x12%\n" +
