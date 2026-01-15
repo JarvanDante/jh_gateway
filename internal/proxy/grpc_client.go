@@ -4877,7 +4877,7 @@ func callGetCustomerVersionHistory(ctx context.Context, conn *grpc.ClientConn, r
 /**
  * showdoc
  * @catalog 前台/用户
- * @title ✅快速注册
+ * @title OK快速注册
  * @description 用户快速注册接口
  * @method post
  * @url /api/frontend/app/quickRegister
