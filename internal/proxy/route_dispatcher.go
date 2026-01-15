@@ -180,14 +180,12 @@ func FrontendRouteDispatcher() ghttp.HandlerFunc {
 
 		tracing.SetSpanAttributes(span, attribute.String("target.service", serviceName))
 
-		// 暂时返回未实现，后续可以实现具体的前台逻辑
-		util.WriteSuccess(r, map[string]interface{}{
-			"message": "Frontend API not implemented yet",
-			"path":    path,
-			"method":  method,
-			"service": serviceName,
-			"status":  "coming_soon",
-		})
+		// 调用对应的服务处理器
+		if err := callServiceWithRouting(ctx, serviceName, r); err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteInternalError(r, err.Error())
+			return
+		}
 
 		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
 	}
@@ -276,6 +274,10 @@ func callServiceWithRouting(ctx context.Context, serviceName string, r *ghttp.Re
 	// 根据服务名称调用对应的处理方法
 	switch serviceName {
 	case "jh_app_service":
+		// 判断是前台还是后台请求
+		if strings.HasPrefix(r.URL.Path, "/api/frontend") {
+			return callFrontendGRPCMethod(ctx, conn, r)
+		}
 		return callAppGRPCMethod(ctx, conn, r)
 	case "jh_balance_service":
 		return callBalanceGRPCMethod(ctx, conn, r)

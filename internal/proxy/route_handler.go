@@ -56,10 +56,11 @@ func (rr *RouteRegistry) Handle(ctx context.Context, conn *grpc.ClientConn, r *g
 
 // 全局路由注册表
 var (
-	appRoutes     *RouteRegistry
-	balanceRoutes *RouteRegistry
-	gameRoutes    *RouteRegistry
-	manageRoutes  *RouteRegistry
+	appRoutes      *RouteRegistry
+	balanceRoutes  *RouteRegistry
+	gameRoutes     *RouteRegistry
+	manageRoutes   *RouteRegistry
+	frontendRoutes *RouteRegistry
 )
 
 // 初始化路由注册表
@@ -68,6 +69,7 @@ func init() {
 	initBalanceRoutes()
 	initGameRoutes()
 	initManageRoutes()
+	initFrontendRoutes()
 }
 
 // initAppRoutes 初始化应用路由
@@ -257,4 +259,12 @@ func initManageRoutes() {
 	manageRoutes.Register("/site-domain/create", "POST", callCreateSiteDomain)
 	manageRoutes.Register("/site-domain/update", "POST", callUpdateSiteDomain)
 	manageRoutes.Register("/site-domain/delete", "POST", callDeleteSiteDomain)
+}
+
+// initFrontendRoutes 初始化前台路由
+func initFrontendRoutes() {
+	frontendRoutes = NewRouteRegistry()
+
+	// 快速注册
+	frontendRoutes.Register("/quickRegister", "POST", callQuickRegister)
 }

@@ -39,27 +39,22 @@ func AuthWithSkip(skipPaths ...string) ghttp.HandlerFunc {
 			return
 		}
 
-		r.SetCtxVar("admin_id", claims.AdminID)
-		r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
-		util.LogWithTrace(ctx, "info", "后台-admin_id放入上下文: %d", claims.AdminID)
-
 		//// 如果是管理员相关接口，也设置管理员ID
-		//if strings.HasPrefix(path, "/api/backend/app") {
-		//	r.SetCtxVar("admin_id", claims.AdminID)
-		//	r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
-		//	util.LogWithTrace(ctx, "info", "admin_service:管理员信息admin_id放入上下文: %d", claims.AdminID)
-		//} else if strings.HasPrefix(path, "/api/backend/balance") {
-		//	r.SetCtxVar("admin_id", claims.AdminID)
-		//	r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
-		//	util.LogWithTrace(ctx, "info", "balance_service:管理员信息admin_id放入上下文: %d", claims.AdminID)
-		//} else {
-		//	// 验证成功，将用户信息放入上下文和请求头
-		//	r.SetCtxVar("user_id", claims.UserID)
-		//	r.Header.Set("X-User-Id", fmt.Sprint(claims.UserID))
-		//	util.LogWithTrace(ctx, "info", "用户信息user_id放入上下文: %d", claims.UserID)
-		//}
+		if strings.HasPrefix(path, "/api/frontend/app") {
+			// 验证成功，将用户信息放入上下文和请求头
+			r.SetCtxVar("user_id", claims.UserID)
+			r.Header.Set("X-User-Id", fmt.Sprint(claims.UserID))
+			util.LogWithTrace(ctx, "info", "用户信息user_id放入上下文: %d", claims.UserID)
 
-		util.LogWithTrace(ctx, "debug", "token验证成功: %s, userId: %d", path, claims.UserID)
+			util.LogWithTrace(ctx, "debug", "token验证成功: %s, userId: %d", path, claims.UserID)
+		} else {
+			// 验证成功，将管理员信息放入上下文和请求头
+			r.SetCtxVar("admin_id", claims.AdminID)
+			r.Header.Set("X-Admin-Id", fmt.Sprint(claims.AdminID))
+			util.LogWithTrace(ctx, "info", "admin_service:管理员信息admin_id放入上下文: %d", claims.AdminID)
+
+			util.LogWithTrace(ctx, "debug", "token验证成功: %s, adminId: %d", path, claims.AdminID)
+		}
 
 		r.Middleware.Next()
 	}

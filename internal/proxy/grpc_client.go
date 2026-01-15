@@ -17,6 +17,7 @@ import (
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
 	v5 "jh_gateway/api/backend/user/v1"
+	v15 "jh_gateway/api/frontend/public/v1"
 	v13 "jh_gateway/api/manage/admin/v1"
 	v12 "jh_gateway/api/manage/customer/v1"
 	v14 "jh_gateway/api/manage/option/v1"
@@ -408,6 +409,14 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		if id := siteIdVar.Int64(); id > 0 {
 			md.Set("site_id", fmt.Sprint(id))
 			util.LogWithTrace(ctx, "debug", "添加 site_id 到 gRPC metadata: %d", id)
+		}
+	}
+
+	// 添加站点代码（从域名解析中间件获取）
+	if siteCodeVar := r.GetCtxVar("site_code"); siteCodeVar != nil {
+		if code := siteCodeVar.String(); code != "" {
+			md.Set("site_code", code)
+			util.LogWithTrace(ctx, "debug", "添加 site_code 到 gRPC metadata: %s", code)
 		}
 	}
 
@@ -4863,4 +4872,89 @@ func callGetCustomerVersionHistory(ctx context.Context, conn *grpc.ClientConn, r
 	}
 
 	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title ✅快速注册
+ * @description 用户快速注册接口
+ * @method post
+ * @url /api/frontend/app/quickRegister
+ * @param code 必选 string 验证码
+ * @param time 必选 string 时间戳
+ * @param domain 可选 string 注册域名
+ * @return {"code":0,"msg":"success","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","username":"a1b2c3","password":"a1b2c3"}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.token string JWT token
+ * @return_param data.username string 用户名
+ * @return_param data.password string 密码
+ * @return_param msg string 提示说明
+ * @remark 快速注册会自动生成随机用户名和密码
+ * @number 100
+ */
+func callQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	code, _ := reqData["code"].(string)
+	time, _ := reqData["time"].(string)
+	domain, _ := reqData["domain"].(string)
+
+	if time == "" {
+		util.WriteBadRequest(r, "时间戳必填")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC QuickRegister with time=%s", time)
+
+	// 创建 gRPC 客户端
+	client := v15.NewPublicClient(conn)
+	req := &v15.QuickRegisterReq{
+		Code:   code,
+		Time:   time,
+		Domain: domain,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.QuickRegister(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "验证码") {
+			util.WriteForbidden(r, "验证码错误")
+		} else if strings.Contains(err.Error(), "注册失败") {
+			util.WriteInternalError(r, "注册失败，请稍后重试")
+		} else {
+			util.WriteInternalError(r, "注册服务暂时不可用，请稍后重试")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"token":    res.Token,
+		"username": res.Username,
+		"password": res.Password,
+	})
+	return nil
+}
+
+// callFrontendGRPCMethod 根据 HTTP 路径调用对应的前台 gRPC 方法
+func callFrontendGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 统一添加traceId到gRPC上下文
+	ctx = addTraceToContext(ctx, r)
+
+	// 前台接口需要添加域名解析信息到gRPC metadata
+	// 域名解析中间件已经将site_id和site_code添加到context中
+	ctx = addUserInfoToGRPCContext(ctx, r)
+
+	util.LogWithTrace(ctx, "info", "calling frontend gRPC method for path: %s, method: %s", r.URL.Path, r.Method)
+
+	// 使用路由注册表处理请求
+	return frontendRoutes.Handle(ctx, conn, r)
 }
