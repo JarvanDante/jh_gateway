@@ -12,25 +12,55 @@ import (
 	"github.com/hashicorp/consul/api"
 )
 
-// DomainConfig 域名配置结构
+// SiteConfig 站点完整配置结构
+type SiteConfig struct {
+	Meta   MetaConfig   `json:"Meta"`
+	Base   BaseConfig   `json:"Base"`
+	Domain DomainConfig `json:"Domain"`
+}
+
+// MetaConfig 元数据配置
+type MetaConfig struct {
+	Version     int64  `json:"version"`
+	PublishedAt string `json:"published_at"`
+	AdminId     int    `json:"admin_id"`
+}
+
+// BaseConfig 基础配置
+type BaseConfig struct {
+	SiteId        int    `json:"site_id"`
+	Code          string `json:"code"`
+	TimeZone      string `json:"timezone"`
+	Currency      string `json:"currency"`
+	DbLinkSite    string `json:"db_link_site"`
+	DbLinkBalance string `json:"db_link_balance"`
+	DbLinkGame    string `json:"db_link_game"`
+	Status        int    `json:"status"`
+}
+
+// DomainConfig 域名配置
 type DomainConfig struct {
-	SiteID      int64               `json:"site_id"`
-	SiteCode    string              `json:"site_code"`
-	Domains     map[string][]string `json:"domains"`
-	TotalCount  int                 `json:"total_count"`
-	PublishedAt string              `json:"published_at"`
-	Version     int64               `json:"version"`
+	API      []string `json:"api"`
+	H5       []string `json:"h5"`
+	Admin    []string `json:"admin"`
+	Callback []string `json:"callback"`
 }
 
 // DomainWatcher 域名监听器
 type DomainWatcher struct {
 	client      *api.Client
-	domainMap   map[string]int64         // 域名到site_id的映射
-	siteConfigs map[string]*DomainConfig // site_code到配置的映射
+	domainMap   map[string]*SiteInfo   // 域名到站点信息的映射
+	siteConfigs map[string]*SiteConfig // site_code到配置的映射
 	mutex       sync.RWMutex
 	ctx         context.Context
 	cancel      context.CancelFunc
 	watchPrefix string
+}
+
+// SiteInfo 站点信息
+type SiteInfo struct {
+	SiteID   int64
+	SiteCode string
 }
 
 var (
@@ -50,18 +80,22 @@ func InitDomainWatcher() error {
 		ctx, cancel := context.WithCancel(context.Background())
 		domainWatcher = &DomainWatcher{
 			client:      client,
-			domainMap:   make(map[string]int64),
-			siteConfigs: make(map[string]*DomainConfig),
+			domainMap:   make(map[string]*SiteInfo),
+			siteConfigs: make(map[string]*SiteConfig),
 			ctx:         ctx,
 			cancel:      cancel,
 			watchPrefix: "sites/",
 		}
 
-		// 启动监听器
-		go domainWatcher.startWatching()
-
 		// 初始加载所有域名配置
 		err = domainWatcher.loadAllDomainConfigs()
+		if err != nil {
+			log.Printf("初始加载域名配置失败: %v", err)
+			return
+		}
+
+		// 启动监听器
+		go domainWatcher.startWatching()
 	})
 
 	return err
@@ -71,41 +105,24 @@ func InitDomainWatcher() error {
 func (dw *DomainWatcher) startWatching() {
 	log.Printf("开始监听域名配置变化，前缀: %s", dw.watchPrefix)
 
+	queryOpts := &api.QueryOptions{
+		WaitTime: 30 * time.Second,
+	}
+
 	for {
 		select {
 		case <-dw.ctx.Done():
 			log.Println("域名监听器已停止")
 			return
 		default:
-			if err := dw.watchKVChanges(); err != nil {
-				log.Printf("监听KV变化失败: %v，5秒后重试", err)
-				time.Sleep(5 * time.Second)
-			}
-		}
-	}
-}
-
-// watchKVChanges 监听KV变化
-func (dw *DomainWatcher) watchKVChanges() error {
-	queryOpts := &api.QueryOptions{
-		WaitTime: 30 * time.Second, // 长轮询30秒
-	}
-
-	for {
-		select {
-		case <-dw.ctx.Done():
-			return nil
-		default:
-			// 获取所有sites/前缀的KV
 			pairs, meta, err := dw.client.KV().List(dw.watchPrefix, queryOpts)
 			if err != nil {
-				return fmt.Errorf("获取KV列表失败: %v", err)
+				log.Printf("监听KV变化失败: %v，5秒后重试", err)
+				time.Sleep(5 * time.Second)
+				continue
 			}
 
-			// 更新查询选项的索引，用于下次长轮询
 			queryOpts.WaitIndex = meta.LastIndex
-
-			// 处理KV变化
 			dw.processKVChanges(pairs)
 		}
 	}
@@ -116,43 +133,56 @@ func (dw *DomainWatcher) processKVChanges(pairs api.KVPairs) {
 	dw.mutex.Lock()
 	defer dw.mutex.Unlock()
 
-	// 清空现有映射
-	dw.domainMap = make(map[string]int64)
-	dw.siteConfigs = make(map[string]*DomainConfig)
+	newDomainMap := make(map[string]*SiteInfo)
+	newSiteConfigs := make(map[string]*SiteConfig)
 
 	for _, pair := range pairs {
-		// 只处理domains配置
-		if !strings.HasSuffix(pair.Key, "/domains") {
-			continue
-		}
-
-		// 解析site_code
+		// 解析 key: sites/{site_code}
 		parts := strings.Split(pair.Key, "/")
-		if len(parts) < 3 {
+		if len(parts) != 2 {
 			continue
 		}
 		siteCode := parts[1]
 
-		// 解析域名配置
-		var config DomainConfig
+		// 解析站点配置
+		var config SiteConfig
 		if err := json.Unmarshal(pair.Value, &config); err != nil {
-			log.Printf("解析域名配置失败，key: %s, error: %v", pair.Key, err)
+			log.Printf("解析站点配置失败，key: %s, error: %v", pair.Key, err)
 			continue
 		}
 
 		// 存储站点配置
-		dw.siteConfigs[siteCode] = &config
+		newSiteConfigs[siteCode] = &config
 
 		// 构建域名映射
-		for _, domains := range config.Domains {
-			for _, domain := range domains {
-				dw.domainMap[domain] = config.SiteID
-			}
+		siteInfo := &SiteInfo{
+			SiteID:   int64(config.Base.SiteId),
+			SiteCode: config.Base.Code,
 		}
 
-		log.Printf("更新站点域名配置: site_code=%s, site_id=%d, 域名数量=%d",
-			siteCode, config.SiteID, config.TotalCount)
+		// 映射所有类型的域名
+		for _, domain := range config.Domain.API {
+			newDomainMap[domain] = siteInfo
+		}
+		for _, domain := range config.Domain.H5 {
+			newDomainMap[domain] = siteInfo
+		}
+		for _, domain := range config.Domain.Admin {
+			newDomainMap[domain] = siteInfo
+		}
+		for _, domain := range config.Domain.Callback {
+			newDomainMap[domain] = siteInfo
+		}
+
+		totalDomains := len(config.Domain.API) + len(config.Domain.H5) +
+			len(config.Domain.Admin) + len(config.Domain.Callback)
+
+		log.Printf("更新站点配置: site_code=%s, site_id=%d, 域名数量=%d",
+			siteCode, config.Base.SiteId, totalDomains)
 	}
+
+	dw.domainMap = newDomainMap
+	dw.siteConfigs = newSiteConfigs
 
 	log.Printf("域名映射更新完成，共%d个域名映射到%d个站点",
 		len(dw.domainMap), len(dw.siteConfigs))
@@ -181,18 +211,55 @@ func GetSiteIDByDomain(domain string) (int64, bool) {
 	domainWatcher.mutex.RLock()
 	defer domainWatcher.mutex.RUnlock()
 
-	siteID, exists := domainWatcher.domainMap[domain]
+	siteInfo, exists := domainWatcher.domainMap[domain]
 	if !exists {
-		log.Printf("域名 %s 未找到对应的site_id", domain)
+		log.Printf("域名 %s 未找到对应的站点", domain)
 		return 0, false
 	}
 
-	log.Printf("域名 %s 映射到 site_id: %d", domain, siteID)
-	return siteID, true
+	log.Printf("域名 %s 映射到 site_id: %d, site_code: %s", domain, siteInfo.SiteID, siteInfo.SiteCode)
+	return siteInfo.SiteID, true
+}
+
+// GetSiteCodeByDomain 根据域名获取site_code
+func GetSiteCodeByDomain(domain string) (string, bool) {
+	if domainWatcher == nil {
+		log.Printf("域名监听器未初始化")
+		return "", false
+	}
+
+	domainWatcher.mutex.RLock()
+	defer domainWatcher.mutex.RUnlock()
+
+	siteInfo, exists := domainWatcher.domainMap[domain]
+	if !exists {
+		log.Printf("域名 %s 未找到对应的站点", domain)
+		return "", false
+	}
+
+	return siteInfo.SiteCode, true
+}
+
+// GetSiteInfoByDomain 根据域名获取完整站点信息
+func GetSiteInfoByDomain(domain string) (*SiteInfo, bool) {
+	if domainWatcher == nil {
+		log.Printf("域名监听器未初始化")
+		return nil, false
+	}
+
+	domainWatcher.mutex.RLock()
+	defer domainWatcher.mutex.RUnlock()
+
+	siteInfo, exists := domainWatcher.domainMap[domain]
+	if !exists {
+		return nil, false
+	}
+
+	return siteInfo, true
 }
 
 // GetSiteConfig 根据site_code获取站点配置
-func GetSiteConfig(siteCode string) (*DomainConfig, bool) {
+func GetSiteConfig(siteCode string) (*SiteConfig, bool) {
 	if domainWatcher == nil {
 		return nil, false
 	}
@@ -205,18 +272,17 @@ func GetSiteConfig(siteCode string) (*DomainConfig, bool) {
 }
 
 // GetAllDomainMappings 获取所有域名映射（用于调试）
-func GetAllDomainMappings() map[string]int64 {
+func GetAllDomainMappings() map[string]*SiteInfo {
 	if domainWatcher == nil {
-		return make(map[string]int64)
+		return make(map[string]*SiteInfo)
 	}
 
 	domainWatcher.mutex.RLock()
 	defer domainWatcher.mutex.RUnlock()
 
-	// 创建副本避免并发问题
-	mappings := make(map[string]int64)
-	for domain, siteID := range domainWatcher.domainMap {
-		mappings[domain] = siteID
+	mappings := make(map[string]*SiteInfo)
+	for domain, siteInfo := range domainWatcher.domainMap {
+		mappings[domain] = siteInfo
 	}
 
 	return mappings

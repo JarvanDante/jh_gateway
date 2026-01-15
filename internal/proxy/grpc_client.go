@@ -4609,29 +4609,6 @@ func callDeleteSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	return writeProtobufResponse(ctx, r, res)
 }
 
-func callPublishSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
-	util.LogWithTrace(ctx, "info", "calling gRPC ManageOption PublishSiteDomain")
-
-	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
-	if err != nil {
-		util.WriteBadRequest(r, "请求数据解析失败")
-		return err
-	}
-
-	client := v14.NewManageOptionClient(conn)
-	req := &v14.PublishSiteDomainReq{
-		SiteCode: gconv.String(reqData["site_code"]),
-	}
-
-	res, err := client.PublishSiteDomain(ctx, req)
-	if err != nil {
-		util.LogWithTrace(ctx, "error", "gRPC ManageOption PublishSiteDomain failed: %v", err)
-		return err
-	}
-
-	return writeProtobufResponse(ctx, r, res)
-}
-
 /**
  * showdoc
  * @catalog 总后台/管理员认证

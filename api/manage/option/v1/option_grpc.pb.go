@@ -26,7 +26,6 @@ const (
 	ManageOption_UpdateSiteDomain_FullMethodName     = "/manage_option.ManageOption/UpdateSiteDomain"
 	ManageOption_DeleteSiteDomain_FullMethodName     = "/manage_option.ManageOption/DeleteSiteDomain"
 	ManageOption_GetSiteDomainList_FullMethodName    = "/manage_option.ManageOption/GetSiteDomainList"
-	ManageOption_PublishSiteDomain_FullMethodName    = "/manage_option.ManageOption/PublishSiteDomain"
 )
 
 // ManageOptionClient is the client API for ManageOption service.
@@ -39,7 +38,6 @@ type ManageOptionClient interface {
 	UpdateSiteDomain(ctx context.Context, in *UpdateSiteDomainReq, opts ...grpc.CallOption) (*UpdateSiteDomainRes, error)
 	DeleteSiteDomain(ctx context.Context, in *DeleteSiteDomainReq, opts ...grpc.CallOption) (*DeleteSiteDomainRes, error)
 	GetSiteDomainList(ctx context.Context, in *GetSiteDomainListReq, opts ...grpc.CallOption) (*GetSiteDomainListRes, error)
-	PublishSiteDomain(ctx context.Context, in *PublishSiteDomainReq, opts ...grpc.CallOption) (*PublishSiteDomainRes, error)
 }
 
 type manageOptionClient struct {
@@ -110,16 +108,6 @@ func (c *manageOptionClient) GetSiteDomainList(ctx context.Context, in *GetSiteD
 	return out, nil
 }
 
-func (c *manageOptionClient) PublishSiteDomain(ctx context.Context, in *PublishSiteDomainReq, opts ...grpc.CallOption) (*PublishSiteDomainRes, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PublishSiteDomainRes)
-	err := c.cc.Invoke(ctx, ManageOption_PublishSiteDomain_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ManageOptionServer is the server API for ManageOption service.
 // All implementations must embed UnimplementedManageOptionServer
 // for forward compatibility.
@@ -130,7 +118,6 @@ type ManageOptionServer interface {
 	UpdateSiteDomain(context.Context, *UpdateSiteDomainReq) (*UpdateSiteDomainRes, error)
 	DeleteSiteDomain(context.Context, *DeleteSiteDomainReq) (*DeleteSiteDomainRes, error)
 	GetSiteDomainList(context.Context, *GetSiteDomainListReq) (*GetSiteDomainListRes, error)
-	PublishSiteDomain(context.Context, *PublishSiteDomainReq) (*PublishSiteDomainRes, error)
 	mustEmbedUnimplementedManageOptionServer()
 }
 
@@ -158,9 +145,6 @@ func (UnimplementedManageOptionServer) DeleteSiteDomain(context.Context, *Delete
 }
 func (UnimplementedManageOptionServer) GetSiteDomainList(context.Context, *GetSiteDomainListReq) (*GetSiteDomainListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetSiteDomainList not implemented")
-}
-func (UnimplementedManageOptionServer) PublishSiteDomain(context.Context, *PublishSiteDomainReq) (*PublishSiteDomainRes, error) {
-	return nil, status.Error(codes.Unimplemented, "method PublishSiteDomain not implemented")
 }
 func (UnimplementedManageOptionServer) mustEmbedUnimplementedManageOptionServer() {}
 func (UnimplementedManageOptionServer) testEmbeddedByValue()                      {}
@@ -291,24 +275,6 @@ func _ManageOption_GetSiteDomainList_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ManageOption_PublishSiteDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PublishSiteDomainReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ManageOptionServer).PublishSiteDomain(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ManageOption_PublishSiteDomain_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManageOptionServer).PublishSiteDomain(ctx, req.(*PublishSiteDomainReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // ManageOption_ServiceDesc is the grpc.ServiceDesc for ManageOption service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -339,10 +305,6 @@ var ManageOption_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSiteDomainList",
 			Handler:    _ManageOption_GetSiteDomainList_Handler,
-		},
-		{
-			MethodName: "PublishSiteDomain",
-			Handler:    _ManageOption_PublishSiteDomain_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
