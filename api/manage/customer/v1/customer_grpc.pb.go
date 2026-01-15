@@ -20,12 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Customer_GetCustomerList_FullMethodName   = "/customer.Customer/GetCustomerList"
-	Customer_GetCustomerDetail_FullMethodName = "/customer.Customer/GetCustomerDetail"
-	Customer_UpdateCustomer_FullMethodName    = "/customer.Customer/UpdateCustomer"
-	Customer_DeleteCustomer_FullMethodName    = "/customer.Customer/DeleteCustomer"
-	Customer_SyncCustomer_FullMethodName      = "/customer.Customer/SyncCustomer"
-	Customer_PublishCustomer_FullMethodName   = "/customer.Customer/PublishCustomer"
+	Customer_GetCustomerList_FullMethodName           = "/customer.Customer/GetCustomerList"
+	Customer_GetCustomerDetail_FullMethodName         = "/customer.Customer/GetCustomerDetail"
+	Customer_UpdateCustomer_FullMethodName            = "/customer.Customer/UpdateCustomer"
+	Customer_DeleteCustomer_FullMethodName            = "/customer.Customer/DeleteCustomer"
+	Customer_SyncCustomer_FullMethodName              = "/customer.Customer/SyncCustomer"
+	Customer_PublishCustomer_FullMethodName           = "/customer.Customer/PublishCustomer"
+	Customer_RollbackCustomer_FullMethodName          = "/customer.Customer/RollbackCustomer"
+	Customer_GetCustomerVersionHistory_FullMethodName = "/customer.Customer/GetCustomerVersionHistory"
 )
 
 // CustomerClient is the client API for Customer service.
@@ -38,6 +40,8 @@ type CustomerClient interface {
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerReq, opts ...grpc.CallOption) (*DeleteCustomerRes, error)
 	SyncCustomer(ctx context.Context, in *SyncCustomerReq, opts ...grpc.CallOption) (*SyncCustomerRes, error)
 	PublishCustomer(ctx context.Context, in *PublishCustomerReq, opts ...grpc.CallOption) (*PublishCustomerRes, error)
+	RollbackCustomer(ctx context.Context, in *RollbackCustomerReq, opts ...grpc.CallOption) (*RollbackCustomerRes, error)
+	GetCustomerVersionHistory(ctx context.Context, in *GetCustomerVersionHistoryReq, opts ...grpc.CallOption) (*GetCustomerVersionHistoryRes, error)
 }
 
 type customerClient struct {
@@ -108,6 +112,26 @@ func (c *customerClient) PublishCustomer(ctx context.Context, in *PublishCustome
 	return out, nil
 }
 
+func (c *customerClient) RollbackCustomer(ctx context.Context, in *RollbackCustomerReq, opts ...grpc.CallOption) (*RollbackCustomerRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RollbackCustomerRes)
+	err := c.cc.Invoke(ctx, Customer_RollbackCustomer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerClient) GetCustomerVersionHistory(ctx context.Context, in *GetCustomerVersionHistoryReq, opts ...grpc.CallOption) (*GetCustomerVersionHistoryRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCustomerVersionHistoryRes)
+	err := c.cc.Invoke(ctx, Customer_GetCustomerVersionHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CustomerServer is the server API for Customer service.
 // All implementations must embed UnimplementedCustomerServer
 // for forward compatibility.
@@ -118,6 +142,8 @@ type CustomerServer interface {
 	DeleteCustomer(context.Context, *DeleteCustomerReq) (*DeleteCustomerRes, error)
 	SyncCustomer(context.Context, *SyncCustomerReq) (*SyncCustomerRes, error)
 	PublishCustomer(context.Context, *PublishCustomerReq) (*PublishCustomerRes, error)
+	RollbackCustomer(context.Context, *RollbackCustomerReq) (*RollbackCustomerRes, error)
+	GetCustomerVersionHistory(context.Context, *GetCustomerVersionHistoryReq) (*GetCustomerVersionHistoryRes, error)
 	mustEmbedUnimplementedCustomerServer()
 }
 
@@ -145,6 +171,12 @@ func (UnimplementedCustomerServer) SyncCustomer(context.Context, *SyncCustomerRe
 }
 func (UnimplementedCustomerServer) PublishCustomer(context.Context, *PublishCustomerReq) (*PublishCustomerRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method PublishCustomer not implemented")
+}
+func (UnimplementedCustomerServer) RollbackCustomer(context.Context, *RollbackCustomerReq) (*RollbackCustomerRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method RollbackCustomer not implemented")
+}
+func (UnimplementedCustomerServer) GetCustomerVersionHistory(context.Context, *GetCustomerVersionHistoryReq) (*GetCustomerVersionHistoryRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCustomerVersionHistory not implemented")
 }
 func (UnimplementedCustomerServer) mustEmbedUnimplementedCustomerServer() {}
 func (UnimplementedCustomerServer) testEmbeddedByValue()                  {}
@@ -275,6 +307,42 @@ func _Customer_PublishCustomer_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Customer_RollbackCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RollbackCustomerReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServer).RollbackCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Customer_RollbackCustomer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServer).RollbackCustomer(ctx, req.(*RollbackCustomerReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Customer_GetCustomerVersionHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomerVersionHistoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServer).GetCustomerVersionHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Customer_GetCustomerVersionHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServer).GetCustomerVersionHistory(ctx, req.(*GetCustomerVersionHistoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Customer_ServiceDesc is the grpc.ServiceDesc for Customer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -305,6 +373,14 @@ var Customer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PublishCustomer",
 			Handler:    _Customer_PublishCustomer_Handler,
+		},
+		{
+			MethodName: "RollbackCustomer",
+			Handler:    _Customer_RollbackCustomer_Handler,
+		},
+		{
+			MethodName: "GetCustomerVersionHistory",
+			Handler:    _Customer_GetCustomerVersionHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

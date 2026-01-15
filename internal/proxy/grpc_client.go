@@ -4796,3 +4796,71 @@ func (*AdminController) GetMenus(ctx context.Context, req interface{}) (string, 
 	// 实际项目中需要通过服务发现或直接调用来获取真实数据
 	return `{"code":200,"msg":"success","data":{"menus":[]}}`, nil
 }
+
+func callRollbackCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer RollbackCustomer")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	id := gconv.Int32(reqData["id"])
+	targetVersion := gconv.Uint64(reqData["target_version"])
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "商户ID必须大于0")
+		return fmt.Errorf("商户ID必须大于0")
+	}
+
+	if targetVersion <= 0 {
+		util.WriteBadRequest(r, "目标版本号必须大于0")
+		return fmt.Errorf("目标版本号必须大于0")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.RollbackCustomerReq{
+		Id:            id,
+		TargetVersion: targetVersion,
+	}
+
+	res, err := client.RollbackCustomer(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer RollbackCustomer failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+func callGetCustomerVersionHistory(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Customer GetCustomerVersionHistory")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	siteCode := gconv.String(reqData["site_code"])
+	if siteCode == "" {
+		util.WriteBadRequest(r, "站点代码不能为空")
+		return fmt.Errorf("站点代码不能为空")
+	}
+
+	client := v12.NewCustomerClient(conn)
+	req := &v12.GetCustomerVersionHistoryReq{
+		SiteCode: siteCode,
+		Page:     gconv.Int32(reqData["page"]),
+		Size:     gconv.Int32(reqData["size"]),
+	}
+
+	res, err := client.GetCustomerVersionHistory(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Customer GetCustomerVersionHistory failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}

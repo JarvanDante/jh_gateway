@@ -751,6 +751,335 @@ func (x *PublishCustomerRes) GetMessage() string {
 	return ""
 }
 
+// 回滚商户请求
+type RollbackCustomerReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"商户ID"`                                             // 商户ID
+	TargetVersion uint64                 `protobuf:"varint,2,opt,name=target_version,json=targetVersion,proto3" json:"target_version" dc:"目标版本号"` // 目标版本号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RollbackCustomerReq) Reset() {
+	*x = RollbackCustomerReq{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RollbackCustomerReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RollbackCustomerReq) ProtoMessage() {}
+
+func (x *RollbackCustomerReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RollbackCustomerReq.ProtoReflect.Descriptor instead.
+func (*RollbackCustomerReq) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *RollbackCustomerReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *RollbackCustomerReq) GetTargetVersion() uint64 {
+	if x != nil {
+		return x.TargetVersion
+	}
+	return 0
+}
+
+// 回滚商户响应
+type RollbackCustomerRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"回滚是否成功"` // 回滚是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"回滚结果消息"`  // 回滚结果消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RollbackCustomerRes) Reset() {
+	*x = RollbackCustomerRes{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RollbackCustomerRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RollbackCustomerRes) ProtoMessage() {}
+
+func (x *RollbackCustomerRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RollbackCustomerRes.ProtoReflect.Descriptor instead.
+func (*RollbackCustomerRes) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *RollbackCustomerRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *RollbackCustomerRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 获取商户版本历史请求
+type GetCustomerVersionHistoryReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteCode      string                 `protobuf:"bytes,1,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点代码"` // 站点代码
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page" dc:"页码"`                          // 页码
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size" dc:"每页数量"`                        // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCustomerVersionHistoryReq) Reset() {
+	*x = GetCustomerVersionHistoryReq{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomerVersionHistoryReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomerVersionHistoryReq) ProtoMessage() {}
+
+func (x *GetCustomerVersionHistoryReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomerVersionHistoryReq.ProtoReflect.Descriptor instead.
+func (*GetCustomerVersionHistoryReq) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetCustomerVersionHistoryReq) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *GetCustomerVersionHistoryReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetCustomerVersionHistoryReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 获取商户版本历史响应
+type GetCustomerVersionHistoryRes struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	List           []*VersionHistoryItem  `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total          int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentVersion uint64                 `protobuf:"varint,3,opt,name=current_version,json=currentVersion,proto3" json:"current_version" dc:"当前版本号"` // 当前版本号
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetCustomerVersionHistoryRes) Reset() {
+	*x = GetCustomerVersionHistoryRes{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomerVersionHistoryRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomerVersionHistoryRes) ProtoMessage() {}
+
+func (x *GetCustomerVersionHistoryRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomerVersionHistoryRes.ProtoReflect.Descriptor instead.
+func (*GetCustomerVersionHistoryRes) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetCustomerVersionHistoryRes) GetList() []*VersionHistoryItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetCustomerVersionHistoryRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *GetCustomerVersionHistoryRes) GetCurrentVersion() uint64 {
+	if x != nil {
+		return x.CurrentVersion
+	}
+	return 0
+}
+
+// 版本历史项
+type VersionHistoryItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Version       uint64                 `protobuf:"varint,1,opt,name=version,proto3" json:"version" dc:"版本号"`                                          // 版本号
+	PublishType   int32                  `protobuf:"varint,2,opt,name=publish_type,json=publishType,proto3" json:"publish_type" dc:"发布类型: 1=正常发布 2=回滚"` // 发布类型: 1=正常发布 2=回滚
+	RollbackFrom  uint64                 `protobuf:"varint,3,opt,name=rollback_from,json=rollbackFrom,proto3" json:"rollback_from" dc:"回滚来源版本"`         // 回滚来源版本
+	OperatorId    uint64                 `protobuf:"varint,4,opt,name=operator_id,json=operatorId,proto3" json:"operator_id" dc:"操作人ID"`                // 操作人ID
+	OperatorName  string                 `protobuf:"bytes,5,opt,name=operator_name,json=operatorName,proto3" json:"operator_name" dc:"操作人名称"`           // 操作人名称
+	Comment       string                 `protobuf:"bytes,6,opt,name=comment,proto3" json:"comment" dc:"发布说明"`                                          // 发布说明
+	PublishedAt   string                 `protobuf:"bytes,7,opt,name=published_at,json=publishedAt,proto3" json:"published_at" dc:"发布时间"`               // 发布时间
+	IsCurrent     bool                   `protobuf:"varint,8,opt,name=is_current,json=isCurrent,proto3" json:"is_current" dc:"是否当前版本"`                  // 是否当前版本
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VersionHistoryItem) Reset() {
+	*x = VersionHistoryItem{}
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VersionHistoryItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VersionHistoryItem) ProtoMessage() {}
+
+func (x *VersionHistoryItem) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_customer_v1_customer_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VersionHistoryItem.ProtoReflect.Descriptor instead.
+func (*VersionHistoryItem) Descriptor() ([]byte, []int) {
+	return file_manage_customer_v1_customer_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *VersionHistoryItem) GetVersion() uint64 {
+	if x != nil {
+		return x.Version
+	}
+	return 0
+}
+
+func (x *VersionHistoryItem) GetPublishType() int32 {
+	if x != nil {
+		return x.PublishType
+	}
+	return 0
+}
+
+func (x *VersionHistoryItem) GetRollbackFrom() uint64 {
+	if x != nil {
+		return x.RollbackFrom
+	}
+	return 0
+}
+
+func (x *VersionHistoryItem) GetOperatorId() uint64 {
+	if x != nil {
+		return x.OperatorId
+	}
+	return 0
+}
+
+func (x *VersionHistoryItem) GetOperatorName() string {
+	if x != nil {
+		return x.OperatorName
+	}
+	return ""
+}
+
+func (x *VersionHistoryItem) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+func (x *VersionHistoryItem) GetPublishedAt() string {
+	if x != nil {
+		return x.PublishedAt
+	}
+	return ""
+}
+
+func (x *VersionHistoryItem) GetIsCurrent() bool {
+	if x != nil {
+		return x.IsCurrent
+	}
+	return false
+}
+
 var File_manage_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_manage_customer_v1_customer_proto_rawDesc = "" +
@@ -807,14 +1136,41 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"H\n" +
 	"\x12PublishCustomerRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xe7\x03\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"L\n" +
+	"\x13RollbackCustomerReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12%\n" +
+	"\x0etarget_version\x18\x02 \x01(\x04R\rtargetVersion\"I\n" +
+	"\x13RollbackCustomerRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"c\n" +
+	"\x1cGetCustomerVersionHistoryReq\x12\x1b\n" +
+	"\tsite_code\x18\x01 \x01(\tR\bsiteCode\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x03 \x01(\x05R\x04size\"\x8f\x01\n" +
+	"\x1cGetCustomerVersionHistoryRes\x120\n" +
+	"\x04list\x18\x01 \x03(\v2\x1c.customer.VersionHistoryItemR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12'\n" +
+	"\x0fcurrent_version\x18\x03 \x01(\x04R\x0ecurrentVersion\"\x98\x02\n" +
+	"\x12VersionHistoryItem\x12\x18\n" +
+	"\aversion\x18\x01 \x01(\x04R\aversion\x12!\n" +
+	"\fpublish_type\x18\x02 \x01(\x05R\vpublishType\x12#\n" +
+	"\rrollback_from\x18\x03 \x01(\x04R\frollbackFrom\x12\x1f\n" +
+	"\voperator_id\x18\x04 \x01(\x04R\n" +
+	"operatorId\x12#\n" +
+	"\roperator_name\x18\x05 \x01(\tR\foperatorName\x12\x18\n" +
+	"\acomment\x18\x06 \x01(\tR\acomment\x12!\n" +
+	"\fpublished_at\x18\a \x01(\tR\vpublishedAt\x12\x1d\n" +
+	"\n" +
+	"is_current\x18\b \x01(\bR\tisCurrent2\xaa\x05\n" +
 	"\bCustomer\x12O\n" +
 	"\x0fGetCustomerList\x12\x1c.customer.GetCustomerListReq\x1a\x1c.customer.GetCustomerListRes\"\x00\x12U\n" +
 	"\x11GetCustomerDetail\x12\x1e.customer.GetCustomerDetailReq\x1a\x1e.customer.GetCustomerDetailRes\"\x00\x12L\n" +
 	"\x0eUpdateCustomer\x12\x1b.customer.UpdateCustomerReq\x1a\x1b.customer.UpdateCustomerRes\"\x00\x12L\n" +
 	"\x0eDeleteCustomer\x12\x1b.customer.DeleteCustomerReq\x1a\x1b.customer.DeleteCustomerRes\"\x00\x12F\n" +
 	"\fSyncCustomer\x12\x19.customer.SyncCustomerReq\x1a\x19.customer.SyncCustomerRes\"\x00\x12O\n" +
-	"\x0fPublishCustomer\x12\x1c.customer.PublishCustomerReq\x1a\x1c.customer.PublishCustomerRes\"\x00B\x1aZ\x18./api/manage/customer/v1b\x06proto3"
+	"\x0fPublishCustomer\x12\x1c.customer.PublishCustomerReq\x1a\x1c.customer.PublishCustomerRes\"\x00\x12R\n" +
+	"\x10RollbackCustomer\x12\x1d.customer.RollbackCustomerReq\x1a\x1d.customer.RollbackCustomerRes\"\x00\x12m\n" +
+	"\x19GetCustomerVersionHistory\x12&.customer.GetCustomerVersionHistoryReq\x1a&.customer.GetCustomerVersionHistoryRes\"\x00B\x1aZ\x18./api/manage/customer/v1b\x06proto3"
 
 var (
 	file_manage_customer_v1_customer_proto_rawDescOnce sync.Once
@@ -828,43 +1184,53 @@ func file_manage_customer_v1_customer_proto_rawDescGZIP() []byte {
 	return file_manage_customer_v1_customer_proto_rawDescData
 }
 
-var file_manage_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_manage_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_manage_customer_v1_customer_proto_goTypes = []any{
-	(*GetCustomerListReq)(nil),   // 0: customer.GetCustomerListReq
-	(*GetCustomerListRes)(nil),   // 1: customer.GetCustomerListRes
-	(*GetCustomerDetailReq)(nil), // 2: customer.GetCustomerDetailReq
-	(*GetCustomerDetailRes)(nil), // 3: customer.GetCustomerDetailRes
-	(*CustomerItem)(nil),         // 4: customer.CustomerItem
-	(*UpdateCustomerReq)(nil),    // 5: customer.UpdateCustomerReq
-	(*UpdateCustomerRes)(nil),    // 6: customer.UpdateCustomerRes
-	(*DeleteCustomerReq)(nil),    // 7: customer.DeleteCustomerReq
-	(*DeleteCustomerRes)(nil),    // 8: customer.DeleteCustomerRes
-	(*SyncCustomerReq)(nil),      // 9: customer.SyncCustomerReq
-	(*SyncCustomerRes)(nil),      // 10: customer.SyncCustomerRes
-	(*PublishCustomerReq)(nil),   // 11: customer.PublishCustomerReq
-	(*PublishCustomerRes)(nil),   // 12: customer.PublishCustomerRes
+	(*GetCustomerListReq)(nil),           // 0: customer.GetCustomerListReq
+	(*GetCustomerListRes)(nil),           // 1: customer.GetCustomerListRes
+	(*GetCustomerDetailReq)(nil),         // 2: customer.GetCustomerDetailReq
+	(*GetCustomerDetailRes)(nil),         // 3: customer.GetCustomerDetailRes
+	(*CustomerItem)(nil),                 // 4: customer.CustomerItem
+	(*UpdateCustomerReq)(nil),            // 5: customer.UpdateCustomerReq
+	(*UpdateCustomerRes)(nil),            // 6: customer.UpdateCustomerRes
+	(*DeleteCustomerReq)(nil),            // 7: customer.DeleteCustomerReq
+	(*DeleteCustomerRes)(nil),            // 8: customer.DeleteCustomerRes
+	(*SyncCustomerReq)(nil),              // 9: customer.SyncCustomerReq
+	(*SyncCustomerRes)(nil),              // 10: customer.SyncCustomerRes
+	(*PublishCustomerReq)(nil),           // 11: customer.PublishCustomerReq
+	(*PublishCustomerRes)(nil),           // 12: customer.PublishCustomerRes
+	(*RollbackCustomerReq)(nil),          // 13: customer.RollbackCustomerReq
+	(*RollbackCustomerRes)(nil),          // 14: customer.RollbackCustomerRes
+	(*GetCustomerVersionHistoryReq)(nil), // 15: customer.GetCustomerVersionHistoryReq
+	(*GetCustomerVersionHistoryRes)(nil), // 16: customer.GetCustomerVersionHistoryRes
+	(*VersionHistoryItem)(nil),           // 17: customer.VersionHistoryItem
 }
 var file_manage_customer_v1_customer_proto_depIdxs = []int32{
 	4,  // 0: customer.GetCustomerListRes.list:type_name -> customer.CustomerItem
 	4,  // 1: customer.GetCustomerDetailRes.data:type_name -> customer.CustomerItem
 	4,  // 2: customer.SyncCustomerReq.data:type_name -> customer.CustomerItem
-	0,  // 3: customer.Customer.GetCustomerList:input_type -> customer.GetCustomerListReq
-	2,  // 4: customer.Customer.GetCustomerDetail:input_type -> customer.GetCustomerDetailReq
-	5,  // 5: customer.Customer.UpdateCustomer:input_type -> customer.UpdateCustomerReq
-	7,  // 6: customer.Customer.DeleteCustomer:input_type -> customer.DeleteCustomerReq
-	9,  // 7: customer.Customer.SyncCustomer:input_type -> customer.SyncCustomerReq
-	11, // 8: customer.Customer.PublishCustomer:input_type -> customer.PublishCustomerReq
-	1,  // 9: customer.Customer.GetCustomerList:output_type -> customer.GetCustomerListRes
-	3,  // 10: customer.Customer.GetCustomerDetail:output_type -> customer.GetCustomerDetailRes
-	6,  // 11: customer.Customer.UpdateCustomer:output_type -> customer.UpdateCustomerRes
-	8,  // 12: customer.Customer.DeleteCustomer:output_type -> customer.DeleteCustomerRes
-	10, // 13: customer.Customer.SyncCustomer:output_type -> customer.SyncCustomerRes
-	12, // 14: customer.Customer.PublishCustomer:output_type -> customer.PublishCustomerRes
-	9,  // [9:15] is the sub-list for method output_type
-	3,  // [3:9] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	17, // 3: customer.GetCustomerVersionHistoryRes.list:type_name -> customer.VersionHistoryItem
+	0,  // 4: customer.Customer.GetCustomerList:input_type -> customer.GetCustomerListReq
+	2,  // 5: customer.Customer.GetCustomerDetail:input_type -> customer.GetCustomerDetailReq
+	5,  // 6: customer.Customer.UpdateCustomer:input_type -> customer.UpdateCustomerReq
+	7,  // 7: customer.Customer.DeleteCustomer:input_type -> customer.DeleteCustomerReq
+	9,  // 8: customer.Customer.SyncCustomer:input_type -> customer.SyncCustomerReq
+	11, // 9: customer.Customer.PublishCustomer:input_type -> customer.PublishCustomerReq
+	13, // 10: customer.Customer.RollbackCustomer:input_type -> customer.RollbackCustomerReq
+	15, // 11: customer.Customer.GetCustomerVersionHistory:input_type -> customer.GetCustomerVersionHistoryReq
+	1,  // 12: customer.Customer.GetCustomerList:output_type -> customer.GetCustomerListRes
+	3,  // 13: customer.Customer.GetCustomerDetail:output_type -> customer.GetCustomerDetailRes
+	6,  // 14: customer.Customer.UpdateCustomer:output_type -> customer.UpdateCustomerRes
+	8,  // 15: customer.Customer.DeleteCustomer:output_type -> customer.DeleteCustomerRes
+	10, // 16: customer.Customer.SyncCustomer:output_type -> customer.SyncCustomerRes
+	12, // 17: customer.Customer.PublishCustomer:output_type -> customer.PublishCustomerRes
+	14, // 18: customer.Customer.RollbackCustomer:output_type -> customer.RollbackCustomerRes
+	16, // 19: customer.Customer.GetCustomerVersionHistory:output_type -> customer.GetCustomerVersionHistoryRes
+	12, // [12:20] is the sub-list for method output_type
+	4,  // [4:12] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_manage_customer_v1_customer_proto_init() }
@@ -878,7 +1244,7 @@ func file_manage_customer_v1_customer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_customer_v1_customer_proto_rawDesc), len(file_manage_customer_v1_customer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -247,6 +247,8 @@ func initManageRoutes() {
 	manageRoutes.Register("/customer/delete", "POST", callDeleteCustomer)
 	manageRoutes.Register("/customer/sync", "POST", callSyncCustomer)
 	manageRoutes.Register("/customer/publish", "POST", callPublishCustomer)
+	manageRoutes.Register("/customer/rollback", "POST", callRollbackCustomer)
+	manageRoutes.Register("/customer/version-history", "GET", callGetCustomerVersionHistory)
 
 	// 选项接口
 	manageRoutes.Register("/options/domain-type", "GET", callGetDomainTypeOptions)
