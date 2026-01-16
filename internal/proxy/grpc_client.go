@@ -5025,8 +5025,8 @@ func callUserLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request)
 
 /**
  * showdoc
- * @catalog 前台
- * @title 获取验证码
+ * @catalog 前台/用户
+ * @title OK获取验证码
  * @description 生成验证码图片
  * @method get
  * @url /api/frontend/app/captcha?time=1234567890
