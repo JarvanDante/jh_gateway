@@ -4958,3 +4958,67 @@ func callFrontendGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	// 使用路由注册表处理请求
 	return frontendRoutes.Handle(ctx, conn, r)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title OK用户登录
+ * @description 用户登录接口
+ * @method post
+ * @url /api/frontend/app/login
+ * @param username 必选 string 用户名
+ * @param password 必选 string 密码
+ * @param code 可选 string 验证码
+ * @param time 可选 string 时间戳
+ * @return {"code":0,"msg":"success","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param data.token string JWT token
+ * @return_param msg string 提示说明
+ * @remark 用户登录成功后返回JWT token
+ * @number 101
+ */
+func callUserLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	username, _ := reqData["username"].(string)
+	password, _ := reqData["password"].(string)
+	code, _ := reqData["code"].(string)
+	time, _ := reqData["time"].(string)
+
+	if username == "" || password == "" {
+		util.WriteBadRequest(r, "用户名和密码必填")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC Login with username=%s", username)
+
+	client := v15.NewPublicClient(conn)
+	req := &v15.LoginReq{
+		Username: username,
+		Password: password,
+		Code:     code,
+		Time:     time,
+	}
+
+	res, err := client.Login(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "用户名或密码错误") {
+			util.WriteForbidden(r, "用户名或密码错误")
+		} else if strings.Contains(err.Error(), "验证码") {
+			util.WriteForbidden(r, "验证码错误")
+		} else {
+			util.WriteInternalError(r, "登录服务暂时不可用，请稍后重试")
+		}
+		return nil
+	}
+
+	util.WriteSuccess(r, map[string]interface{}{
+		"token": res.Token,
+	})
+	return nil
+}

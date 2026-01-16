@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Public_QuickRegister_FullMethodName = "/public.Public/QuickRegister"
+	Public_Login_FullMethodName         = "/public.Public/Login"
 )
 
 // PublicClient is the client API for Public service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PublicClient interface {
 	QuickRegister(ctx context.Context, in *QuickRegisterReq, opts ...grpc.CallOption) (*QuickRegisterRes, error)
+	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRes, error)
 }
 
 type publicClient struct {
@@ -48,11 +50,22 @@ func (c *publicClient) QuickRegister(ctx context.Context, in *QuickRegisterReq, 
 	return out, nil
 }
 
+func (c *publicClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoginRes)
+	err := c.cc.Invoke(ctx, Public_Login_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PublicServer is the server API for Public service.
 // All implementations must embed UnimplementedPublicServer
 // for forward compatibility.
 type PublicServer interface {
 	QuickRegister(context.Context, *QuickRegisterReq) (*QuickRegisterRes, error)
+	Login(context.Context, *LoginReq) (*LoginRes, error)
 	mustEmbedUnimplementedPublicServer()
 }
 
@@ -65,6 +78,9 @@ type UnimplementedPublicServer struct{}
 
 func (UnimplementedPublicServer) QuickRegister(context.Context, *QuickRegisterReq) (*QuickRegisterRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method QuickRegister not implemented")
+}
+func (UnimplementedPublicServer) Login(context.Context, *LoginReq) (*LoginRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedPublicServer) mustEmbedUnimplementedPublicServer() {}
 func (UnimplementedPublicServer) testEmbeddedByValue()                {}
@@ -105,6 +121,24 @@ func _Public_QuickRegister_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Public_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Public_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServer).Login(ctx, req.(*LoginReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Public_ServiceDesc is the grpc.ServiceDesc for Public service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,6 +149,10 @@ var Public_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QuickRegister",
 			Handler:    _Public_QuickRegister_Handler,
+		},
+		{
+			MethodName: "Login",
+			Handler:    _Public_Login_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

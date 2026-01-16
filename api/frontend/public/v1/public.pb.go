@@ -144,6 +144,120 @@ func (x *QuickRegisterRes) GetPassword() string {
 	return ""
 }
 
+// 登录请求
+type LoginReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" v:"required"` // v: required
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password" v:"required"` // v: required
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"验证码"`             // 验证码
+	Time          string                 `protobuf:"bytes,4,opt,name=time,proto3" json:"time" dc:"时间戳"`             // 时间戳
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginReq) Reset() {
+	*x = LoginReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginReq) ProtoMessage() {}
+
+func (x *LoginReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginReq.ProtoReflect.Descriptor instead.
+func (*LoginReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LoginReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *LoginReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *LoginReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *LoginReq) GetTime() string {
+	if x != nil {
+		return x.Time
+	}
+	return ""
+}
+
+// 登录响应
+type LoginRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"` // JWT token
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginRes) Reset() {
+	*x = LoginRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRes) ProtoMessage() {}
+
+func (x *LoginRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRes.ProtoReflect.Descriptor instead.
+func (*LoginRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *LoginRes) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
 var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
@@ -156,9 +270,17 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x10QuickRegisterRes\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword2O\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\"j\n" +
+	"\bLoginReq\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x12\x12\n" +
+	"\x04time\x18\x04 \x01(\tR\x04time\" \n" +
+	"\bLoginRes\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token2~\n" +
 	"\x06Public\x12E\n" +
-	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
+	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x12-\n" +
+	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
 var (
 	file_frontend_public_v1_public_proto_rawDescOnce sync.Once
@@ -172,16 +294,20 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*QuickRegisterReq)(nil), // 0: public.QuickRegisterReq
 	(*QuickRegisterRes)(nil), // 1: public.QuickRegisterRes
+	(*LoginReq)(nil),         // 2: public.LoginReq
+	(*LoginRes)(nil),         // 3: public.LoginRes
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	0, // 0: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
-	1, // 1: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: public.Public.Login:input_type -> public.LoginReq
+	1, // 2: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	3, // 3: public.Public.Login:output_type -> public.LoginRes
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -198,7 +324,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
