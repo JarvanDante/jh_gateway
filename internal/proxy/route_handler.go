@@ -269,4 +269,6 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/quickRegister", "POST", callQuickRegister)
 	// 用户登录
 	frontendRoutes.Register("/login", "POST", callUserLogin)
+	// 获取验证码
+	frontendRoutes.Register("/captcha", "GET", callGenerateCaptcha)
 }

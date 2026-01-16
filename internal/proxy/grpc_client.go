@@ -5022,3 +5022,64 @@ func callUserLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request)
 	})
 	return nil
 }
+
+/**
+ * showdoc
+ * @catalog 前台
+ * @title 获取验证码
+ * @description 生成验证码图片
+ * @method get
+ * @url /api/frontend/app/captcha?time=1234567890
+ * @param time 必选 string 时间戳
+ * @return 验证码图片（image/jpeg）
+ * @remark 返回验证码图片，验证码有效期5分钟
+ * @number 102
+ */
+func callGenerateCaptcha(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	time := r.Get("time").String()
+
+	if time == "" {
+		util.WriteBadRequest(r, "时间戳必填")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC GenerateCaptcha with time=%s", time)
+
+	client := v15.NewPublicClient(conn)
+	req := &v15.GenerateCaptchaReq{
+		Time: time,
+	}
+
+	res, err := client.GenerateCaptcha(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "GenerateCaptcha gRPC error: %v", err)
+		util.WriteInternalError(r, "生成验证码失败")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "GenerateCaptcha success, image size: %d bytes, content_type: %s", len(res.Image), res.ContentType)
+
+	// 检查图片数据是否为空
+	if len(res.Image) == 0 {
+		util.LogWithTrace(ctx, "error", "验证码图片数据为空")
+		util.WriteInternalError(r, "验证码图片生成失败")
+		return nil
+	}
+
+	// 清除之前可能设置的响应头
+	r.Response.ClearBuffer()
+
+	// 设置响应头
+	r.Response.Header().Set("Content-Type", res.ContentType)
+	r.Response.Header().Set("Cache-Control", "no-cache, must-revalidate")
+	r.Response.Header().Set("Content-Length", fmt.Sprintf("%d", len(res.Image)))
+
+	util.LogWithTrace(ctx, "info", "准备写入图片数据: %d bytes", len(res.Image))
+
+	// 直接写入图片数据并退出
+	r.Response.Write(res.Image)
+	r.ExitAll()
+
+	util.LogWithTrace(ctx, "info", "图片数据已写入响应")
+	return nil
+}

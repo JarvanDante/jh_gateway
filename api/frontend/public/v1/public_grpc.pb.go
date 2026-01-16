@@ -20,8 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Public_QuickRegister_FullMethodName = "/public.Public/QuickRegister"
-	Public_Login_FullMethodName         = "/public.Public/Login"
+	Public_QuickRegister_FullMethodName   = "/public.Public/QuickRegister"
+	Public_Login_FullMethodName           = "/public.Public/Login"
+	Public_GenerateCaptcha_FullMethodName = "/public.Public/GenerateCaptcha"
 )
 
 // PublicClient is the client API for Public service.
@@ -30,6 +31,7 @@ const (
 type PublicClient interface {
 	QuickRegister(ctx context.Context, in *QuickRegisterReq, opts ...grpc.CallOption) (*QuickRegisterRes, error)
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRes, error)
+	GenerateCaptcha(ctx context.Context, in *GenerateCaptchaReq, opts ...grpc.CallOption) (*GenerateCaptchaRes, error)
 }
 
 type publicClient struct {
@@ -60,12 +62,23 @@ func (c *publicClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *publicClient) GenerateCaptcha(ctx context.Context, in *GenerateCaptchaReq, opts ...grpc.CallOption) (*GenerateCaptchaRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenerateCaptchaRes)
+	err := c.cc.Invoke(ctx, Public_GenerateCaptcha_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PublicServer is the server API for Public service.
 // All implementations must embed UnimplementedPublicServer
 // for forward compatibility.
 type PublicServer interface {
 	QuickRegister(context.Context, *QuickRegisterReq) (*QuickRegisterRes, error)
 	Login(context.Context, *LoginReq) (*LoginRes, error)
+	GenerateCaptcha(context.Context, *GenerateCaptchaReq) (*GenerateCaptchaRes, error)
 	mustEmbedUnimplementedPublicServer()
 }
 
@@ -81,6 +94,9 @@ func (UnimplementedPublicServer) QuickRegister(context.Context, *QuickRegisterRe
 }
 func (UnimplementedPublicServer) Login(context.Context, *LoginReq) (*LoginRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedPublicServer) GenerateCaptcha(context.Context, *GenerateCaptchaReq) (*GenerateCaptchaRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GenerateCaptcha not implemented")
 }
 func (UnimplementedPublicServer) mustEmbedUnimplementedPublicServer() {}
 func (UnimplementedPublicServer) testEmbeddedByValue()                {}
@@ -139,6 +155,24 @@ func _Public_Login_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Public_GenerateCaptcha_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateCaptchaReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServer).GenerateCaptcha(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Public_GenerateCaptcha_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServer).GenerateCaptcha(ctx, req.(*GenerateCaptchaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Public_ServiceDesc is the grpc.ServiceDesc for Public service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -153,6 +187,10 @@ var Public_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _Public_Login_Handler,
+		},
+		{
+			MethodName: "GenerateCaptcha",
+			Handler:    _Public_GenerateCaptcha_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

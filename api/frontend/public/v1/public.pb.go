@@ -258,6 +258,104 @@ func (x *LoginRes) GetToken() string {
 	return ""
 }
 
+// 生成验证码请求
+type GenerateCaptchaReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Time          string                 `protobuf:"bytes,1,opt,name=time,proto3" json:"time" v:"required"` // v: required
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateCaptchaReq) Reset() {
+	*x = GenerateCaptchaReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateCaptchaReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateCaptchaReq) ProtoMessage() {}
+
+func (x *GenerateCaptchaReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateCaptchaReq.ProtoReflect.Descriptor instead.
+func (*GenerateCaptchaReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GenerateCaptchaReq) GetTime() string {
+	if x != nil {
+		return x.Time
+	}
+	return ""
+}
+
+// 生成验证码响应
+type GenerateCaptchaRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Image         []byte                 `protobuf:"bytes,1,opt,name=image,proto3" json:"image" dc:"验证码图片数据"`                             // 验证码图片数据
+	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type" dc:"图片类型"` // 图片类型
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateCaptchaRes) Reset() {
+	*x = GenerateCaptchaRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateCaptchaRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateCaptchaRes) ProtoMessage() {}
+
+func (x *GenerateCaptchaRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateCaptchaRes.ProtoReflect.Descriptor instead.
+func (*GenerateCaptchaRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GenerateCaptchaRes) GetImage() []byte {
+	if x != nil {
+		return x.Image
+	}
+	return nil
+}
+
+func (x *GenerateCaptchaRes) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
 var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
@@ -277,10 +375,16 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x12\x12\n" +
 	"\x04time\x18\x04 \x01(\tR\x04time\" \n" +
 	"\bLoginRes\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token2~\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"(\n" +
+	"\x12GenerateCaptchaReq\x12\x12\n" +
+	"\x04time\x18\x01 \x01(\tR\x04time\"M\n" +
+	"\x12GenerateCaptchaRes\x12\x14\n" +
+	"\x05image\x18\x01 \x01(\fR\x05image\x12!\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType2\xcb\x01\n" +
 	"\x06Public\x12E\n" +
 	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x12-\n" +
-	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
+	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00\x12K\n" +
+	"\x0fGenerateCaptcha\x12\x1a.public.GenerateCaptchaReq\x1a\x1a.public.GenerateCaptchaRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
 var (
 	file_frontend_public_v1_public_proto_rawDescOnce sync.Once
@@ -294,20 +398,24 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_frontend_public_v1_public_proto_goTypes = []any{
-	(*QuickRegisterReq)(nil), // 0: public.QuickRegisterReq
-	(*QuickRegisterRes)(nil), // 1: public.QuickRegisterRes
-	(*LoginReq)(nil),         // 2: public.LoginReq
-	(*LoginRes)(nil),         // 3: public.LoginRes
+	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
+	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
+	(*LoginReq)(nil),           // 2: public.LoginReq
+	(*LoginRes)(nil),           // 3: public.LoginRes
+	(*GenerateCaptchaReq)(nil), // 4: public.GenerateCaptchaReq
+	(*GenerateCaptchaRes)(nil), // 5: public.GenerateCaptchaRes
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	0, // 0: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
 	2, // 1: public.Public.Login:input_type -> public.LoginReq
-	1, // 2: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	3, // 3: public.Public.Login:output_type -> public.LoginRes
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
+	1, // 3: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	3, // 4: public.Public.Login:output_type -> public.LoginRes
+	5, // 5: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -324,7 +432,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
