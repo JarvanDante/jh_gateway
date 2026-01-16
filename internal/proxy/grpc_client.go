@@ -4939,7 +4939,6 @@ func callQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	util.WriteSuccess(r, map[string]interface{}{
 		"token":    res.Token,
 		"username": res.Username,
-		"password": res.Password,
 	})
 	return nil
 }
