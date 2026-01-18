@@ -1,7 +1,10 @@
 package util
 
 import (
+	"strings"
+
 	"github.com/gogf/gf/v2/net/ghttp"
+	"google.golang.org/grpc/status"
 )
 
 // Response 统一响应结构
@@ -33,6 +36,32 @@ var ErrorMessages = map[int]string{
 	CodeTooManyRequests:    "too many requests",
 	CodeInternalError:      "internal server error",
 	CodeServiceUnavailable: "service unavailable",
+}
+
+// ExtractGRPCErrorMessage 从gRPC错误中提取纯净的错误消息
+// 将 "rpc error: code = Unknown desc = 已经绑定过密码请勿重新修改" 转换为 "已经绑定过密码请勿重新修改"
+func ExtractGRPCErrorMessage(err error) string {
+	if err == nil {
+		return ""
+	}
+
+	// 尝试使用grpc status提取错误消息
+	if st, ok := status.FromError(err); ok {
+		return st.Message()
+	}
+
+	// 如果不是标准gRPC错误，尝试手动解析
+	errStr := err.Error()
+
+	// 处理 "rpc error: code = XXX desc = YYY" 格式
+	if strings.Contains(errStr, "desc = ") {
+		parts := strings.SplitN(errStr, "desc = ", 2)
+		if len(parts) == 2 {
+			return parts[1]
+		}
+	}
+
+	return errStr
 }
 
 // WriteSuccess 返回成功响应
@@ -83,7 +112,21 @@ func WriteTooManyRequests(r *ghttp.Request, msg string) {
 
 // WriteInternalError 500 错误
 func WriteInternalError(r *ghttp.Request, msg string) {
-	WriteError(r, CodeInternalError, msg)
+	// 清理gRPC错误前缀
+	cleanMsg := cleanGRPCErrorMessage(msg)
+	WriteError(r, CodeInternalError, cleanMsg)
+}
+
+// cleanGRPCErrorMessage 清理gRPC错误消息中的前缀
+func cleanGRPCErrorMessage(msg string) string {
+	// 处理 "rpc error: code = XXX desc = YYY" 格式
+	if strings.Contains(msg, "desc = ") {
+		parts := strings.SplitN(msg, "desc = ", 2)
+		if len(parts) == 2 {
+			return parts[1]
+		}
+	}
+	return msg
 }
 
 // WriteServiceUnavailable 503 错误
