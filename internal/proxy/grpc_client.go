@@ -5050,7 +5050,7 @@ func callUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 /**
  * showdoc
  * @catalog 前台/用户
- * @title 获取用户信息
+ * @title OK获取用户信息
  * @description 获取当前登录用户的详细信息
  * @method get
  * @url /api/frontend/app/user-info
