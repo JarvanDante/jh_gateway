@@ -5362,7 +5362,7 @@ func callBindLoginPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 /**
  * showdoc
  * @catalog 前台/余额
- * @title 刷新用户余额
+ * @title OK刷新用户余额
  * @description 刷新用户余额接口
  * @method get
  * @url /api/frontend/balance/refresh-balance
