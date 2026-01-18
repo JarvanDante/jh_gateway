@@ -72,7 +72,6 @@ type GetUserInfoRes struct {
 	LastLoginTime     string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                        // 最后登录时间
 	LastLoginAddress  string                 `protobuf:"bytes,9,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`               // 最后登录地址
 	ShowBeginnerGuide int32                  `protobuf:"varint,10,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"` // 新手引导 0=不显示 1=显示
-	Gpwd              string                 `protobuf:"bytes,11,opt,name=gpwd,proto3" json:"gpwd" dc:"游戏密码(base64)"`                                                          // 游戏密码(base64)
 	// 余额相关（先写死默认值）
 	Balance       string `protobuf:"bytes,12,opt,name=balance,proto3" json:"balance" dc:"余额相关（先写死默认值）余额"`                        // 余额
 	BalanceFrozen string `protobuf:"bytes,13,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"` // 冻结余额
@@ -199,13 +198,6 @@ func (x *GetUserInfoRes) GetShowBeginnerGuide() int32 {
 		return x.ShowBeginnerGuide
 	}
 	return 0
-}
-
-func (x *GetUserInfoRes) GetGpwd() string {
-	if x != nil {
-		return x.Gpwd
-	}
-	return ""
 }
 
 func (x *GetUserInfoRes) GetBalance() string {
@@ -456,12 +448,94 @@ func (x *LastMessage) GetCreatedAt() string {
 	return ""
 }
 
+// 退出登录请求
+type LogoutReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogoutReq) Reset() {
+	*x = LogoutReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutReq) ProtoMessage() {}
+
+func (x *LogoutReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LogoutReq.ProtoReflect.Descriptor instead.
+func (*LogoutReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{4}
+}
+
+// 退出登录响应
+type LogoutRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"提示消息"` // 提示消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogoutRes) Reset() {
+	*x = LogoutRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutRes) ProtoMessage() {}
+
+func (x *LogoutRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LogoutRes.ProtoReflect.Descriptor instead.
+func (*LogoutRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *LogoutRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/user/v1/user.proto\x12\rfrontend_user\"\x10\n" +
-	"\x0eGetUserInfoReq\"\xb2\b\n" +
+	"\x0eGetUserInfoReq\"\x9e\b\n" +
 	"\x0eGetUserInfoRes\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\brealname\x18\x02 \x01(\tR\brealname\x12\x14\n" +
@@ -473,8 +547,7 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x0flast_login_time\x18\b \x01(\tR\rlastLoginTime\x12,\n" +
 	"\x12last_login_address\x18\t \x01(\tR\x10lastLoginAddress\x12.\n" +
 	"\x13show_beginner_guide\x18\n" +
-	" \x01(\x05R\x11showBeginnerGuide\x12\x12\n" +
-	"\x04gpwd\x18\v \x01(\tR\x04gpwd\x12\x18\n" +
+	" \x01(\x05R\x11showBeginnerGuide\x12\x18\n" +
 	"\abalance\x18\f \x01(\tR\abalance\x12%\n" +
 	"\x0ebalance_frozen\x18\r \x01(\tR\rbalanceFrozen\x12\x16\n" +
 	"\x06points\x18\x0e \x01(\tR\x06points\x12\x19\n" +
@@ -506,9 +579,13 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\tR\tcreatedAt2U\n" +
+	"created_at\x18\x03 \x01(\tR\tcreatedAt\"\v\n" +
+	"\tLogoutReq\"%\n" +
+	"\tLogoutRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\x95\x01\n" +
 	"\x04User\x12M\n" +
-	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
+	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -522,21 +599,25 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil), // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil), // 1: frontend_user.GetUserInfoRes
 	(*LastRecord)(nil),     // 2: frontend_user.LastRecord
 	(*LastMessage)(nil),    // 3: frontend_user.LastMessage
+	(*LogoutReq)(nil),      // 4: frontend_user.LogoutReq
+	(*LogoutRes)(nil),      // 5: frontend_user.LogoutRes
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	2, // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
 	2, // 1: frontend_user.GetUserInfoRes.last_withdraw:type_name -> frontend_user.LastRecord
 	3, // 2: frontend_user.GetUserInfoRes.last_message:type_name -> frontend_user.LastMessage
 	0, // 3: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
-	1, // 4: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	4, // [4:5] is the sub-list for method output_type
-	3, // [3:4] is the sub-list for method input_type
+	4, // 4: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
+	1, // 5: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5, // 6: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -553,7 +634,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

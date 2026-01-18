@@ -4938,8 +4938,11 @@ func callQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 
 	// 返回成功响应
 	util.WriteSuccess(r, map[string]interface{}{
-		"token":    res.Token,
-		"username": res.Username,
+		"token":              res.Token,
+		"username":           res.Username,
+		"refresh_token":      res.RefreshToken,
+		"expires_in":         res.ExpiresIn,
+		"refresh_expires_in": res.RefreshExpiresIn,
 	})
 	return nil
 }
@@ -5042,7 +5045,67 @@ func callUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 
 	// 返回成功响应
 	util.WriteSuccess(r, map[string]interface{}{
-		"token": res.Token,
+		"token":              res.Token,
+		"refresh_token":      res.RefreshToken,
+		"expires_in":         res.ExpiresIn,
+		"refresh_expires_in": res.RefreshExpiresIn,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 刷新token
+ * @description 使用refresh_token刷新access_token
+ * @method post
+ * @url /api/frontend/app/refresh-token
+ * @param refresh_token 必选 string 刷新token
+ * @return {"code":0,"msg":"success","data":{"token":"xxx","refresh_token":"yyy","expires_in":3600,"refresh_expires_in":2592000}}
+ * @return_param code int 状态码
+ * @return_param data object 响应数据
+ * @return_param msg string 提示说明
+ * @remark token过期后使用refresh_token刷新，每次刷新都会延长refresh_token有效期
+ * @number 102.5
+ */
+func callRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	refreshToken, _ := reqData["refresh_token"].(string)
+	if refreshToken == "" {
+		util.WriteBadRequest(r, "refresh_token必填")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC RefreshToken")
+
+	client := v15.NewPublicClient(conn)
+	req := &v15.RefreshTokenReq{
+		RefreshToken: refreshToken,
+	}
+
+	res, err := client.RefreshToken(ctx, req)
+	if err != nil {
+		errMsg := err.Error()
+		if strings.Contains(errMsg, "无效") || strings.Contains(errMsg, "过期") {
+			util.WriteUnauthorized(r, "refresh token无效或已过期，请重新登录")
+		} else if strings.Contains(errMsg, "用户不存在") || strings.Contains(errMsg, "已禁用") {
+			util.WriteUnauthorized(r, "用户不存在或已禁用")
+		} else {
+			util.WriteInternalError(r, "刷新token失败")
+		}
+		return nil
+	}
+
+	util.WriteSuccess(r, map[string]interface{}{
+		"token":              res.Token,
+		"refresh_token":      res.RefreshToken,
+		"expires_in":         res.ExpiresIn,
+		"refresh_expires_in": res.RefreshExpiresIn,
 	})
 	return nil
 }
@@ -5082,6 +5145,40 @@ func callGetUserInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 
 	// 返回成功响应
 	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 用户退出登录
+ * @description 用户退出登录接口
+ * @method post
+ * @url /api/frontend/app/logout
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"message":"退出成功"}}
+ * @return_param code int 状态码
+ * @return_param data object 响应数据
+ * @return_param msg string 提示说明
+ * @remark 需要登录后访问，JWT模式下主要由前端删除token完成
+ * @number 104
+ */
+func callUserLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Logout")
+
+	client := v16.NewUserClient(conn)
+	req := &v16.LogoutReq{}
+
+	res, err := client.Logout(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "退出登录失败")
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": res.Message,
+	})
+	return nil
 }
 
 // callFrontendGRPCMethod 根据 HTTP 路径调用对应的前台 gRPC 方法
@@ -5158,7 +5255,10 @@ func callUserLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request)
 	}
 
 	util.WriteSuccess(r, map[string]interface{}{
-		"token": res.Token,
+		"token":              res.Token,
+		"refresh_token":      res.RefreshToken,
+		"expires_in":         res.ExpiresIn,
+		"refresh_expires_in": res.RefreshExpiresIn,
 	})
 	return nil
 }

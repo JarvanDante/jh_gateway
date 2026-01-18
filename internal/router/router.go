@@ -68,7 +68,7 @@ func Register(s *ghttp.Server) {
 			middleware.Trace,
 			middleware.RateLimit,
 			middleware.RequestParser, // 解析请求体数据
-			middleware.AuthWithSkip("/quickRegister", "/register", "/captcha", "/login", "/logout"), // 认证中间件（跳过 /login 接口）
+			middleware.AuthWithSkip("/quickRegister", "/register", "/captcha", "/refresh-token", "/login", "/logout"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
 		)
 

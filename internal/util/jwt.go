@@ -23,19 +23,43 @@ func ParseToken(ctx context.Context, authHeader string) (*Claims, error) {
 	tokenStr := parts[1]
 	secret := g.Cfg().MustGet(ctx, "jwt.secret").String()
 
-	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+	// 先用MapClaims解析，以便获取jti
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return []byte(secret), nil
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	claims, ok := token.Claims.(*Claims)
-	if !ok || !token.Valid {
+	if !token.Valid {
 		return nil, fmt.Errorf("invalid token")
 	}
 
-	return claims, nil
+	// 检查token是否在黑名单中（使用jti）
+	if mapClaims, ok := token.Claims.(jwt.MapClaims); ok {
+		if jti, exists := mapClaims["jti"]; exists {
+			jtiStr, _ := jti.(string)
+			if jtiStr != "" {
+				blacklistKey := fmt.Sprintf("token_blacklist:%s", jtiStr)
+				isBlacklisted, err := g.Redis().Exists(ctx, blacklistKey)
+				if err == nil && isBlacklisted > 0 {
+					return nil, fmt.Errorf("token已失效，请重新登录或刷新token")
+				}
+			}
+		}
+
+		// 从MapClaims提取Claims结构体需要的字段
+		claims := &Claims{}
+		if userID, ok := mapClaims["user_id"].(float64); ok {
+			claims.UserID = int(userID)
+		}
+		if adminID, ok := mapClaims["admin_id"].(float64); ok {
+			claims.AdminID = int(adminID)
+		}
+		return claims, nil
+	}
+
+	return nil, fmt.Errorf("invalid token claims")
 }
 
 func ParseManageToken(ctx context.Context, authHeader string) (*Claims, error) {

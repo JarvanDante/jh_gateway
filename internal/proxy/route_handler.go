@@ -273,6 +273,10 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/login", "POST", callUserLogin)
 	// 获取验证码
 	frontendRoutes.Register("/captcha", "GET", callGenerateCaptcha)
+	// 刷新token
+	frontendRoutes.Register("/refresh-token", "POST", callRefreshToken)
 	// 获取用户信息
 	frontendRoutes.Register("/user-info", "GET", callGetUserInfo)
+	// 用户退出
+	frontendRoutes.Register("/logout", "POST", callUserLogout)
 }

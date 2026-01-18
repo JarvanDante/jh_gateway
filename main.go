@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	_ "github.com/gogf/gf/contrib/nosql/redis/v2"
+
 	"jh_gateway/internal/proxy"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/router"

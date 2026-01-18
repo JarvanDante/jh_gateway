@@ -85,11 +85,14 @@ func (x *QuickRegisterReq) GetDomain() string {
 
 // 快速注册响应
 type QuickRegisterRes struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"` // JWT token
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"` // 用户名
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Token            string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"`                                                             // JWT token
+	Username         string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                                             // 用户名
+	RefreshToken     string                 `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token" dc:"刷新token"`                             // 刷新token
+	ExpiresIn        int64                  `protobuf:"varint,4,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in" dc:"token过期时间（秒）"`                                // token过期时间（秒）
+	RefreshExpiresIn int64                  `protobuf:"varint,5,opt,name=refresh_expires_in,json=refreshExpiresIn,proto3" json:"refresh_expires_in" dc:"refresh_token过期时间（秒）"` // refresh_token过期时间（秒）
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *QuickRegisterRes) Reset() {
@@ -134,6 +137,27 @@ func (x *QuickRegisterRes) GetUsername() string {
 		return x.Username
 	}
 	return ""
+}
+
+func (x *QuickRegisterRes) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
+func (x *QuickRegisterRes) GetExpiresIn() int64 {
+	if x != nil {
+		return x.ExpiresIn
+	}
+	return 0
+}
+
+func (x *QuickRegisterRes) GetRefreshExpiresIn() int64 {
+	if x != nil {
+		return x.RefreshExpiresIn
+	}
+	return 0
 }
 
 // 登录请求
@@ -207,10 +231,13 @@ func (x *LoginReq) GetTime() string {
 
 // 登录响应
 type LoginRes struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"` // JWT token
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Token            string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"`                                                             // JWT token
+	RefreshToken     string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token" dc:"刷新token"`                             // 刷新token
+	ExpiresIn        int64                  `protobuf:"varint,3,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in" dc:"token过期时间（秒）"`                                // token过期时间（秒）
+	RefreshExpiresIn int64                  `protobuf:"varint,4,opt,name=refresh_expires_in,json=refreshExpiresIn,proto3" json:"refresh_expires_in" dc:"refresh_token过期时间（秒）"` // refresh_token过期时间（秒）
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *LoginRes) Reset() {
@@ -248,6 +275,27 @@ func (x *LoginRes) GetToken() string {
 		return x.Token
 	}
 	return ""
+}
+
+func (x *LoginRes) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
+func (x *LoginRes) GetExpiresIn() int64 {
+	if x != nil {
+		return x.ExpiresIn
+	}
+	return 0
+}
+
+func (x *LoginRes) GetRefreshExpiresIn() int64 {
+	if x != nil {
+		return x.RefreshExpiresIn
+	}
+	return 0
 }
 
 // 生成验证码请求
@@ -348,6 +396,120 @@ func (x *GenerateCaptchaRes) GetContentType() string {
 	return ""
 }
 
+// 刷新token请求
+type RefreshTokenReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RefreshToken  string                 `protobuf:"bytes,1,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token" v:"required"` // v: required
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefreshTokenReq) Reset() {
+	*x = RefreshTokenReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefreshTokenReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefreshTokenReq) ProtoMessage() {}
+
+func (x *RefreshTokenReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefreshTokenReq.ProtoReflect.Descriptor instead.
+func (*RefreshTokenReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RefreshTokenReq) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
+// 刷新token响应
+type RefreshTokenRes struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Token            string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"新的JWT token"`                                                           // 新的JWT token
+	RefreshToken     string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token" dc:"新的刷新token"`                           // 新的刷新token
+	ExpiresIn        int64                  `protobuf:"varint,3,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in" dc:"token过期时间（秒）"`                                // token过期时间（秒）
+	RefreshExpiresIn int64                  `protobuf:"varint,4,opt,name=refresh_expires_in,json=refreshExpiresIn,proto3" json:"refresh_expires_in" dc:"refresh_token过期时间（秒）"` // refresh_token过期时间（秒）
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *RefreshTokenRes) Reset() {
+	*x = RefreshTokenRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefreshTokenRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefreshTokenRes) ProtoMessage() {}
+
+func (x *RefreshTokenRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefreshTokenRes.ProtoReflect.Descriptor instead.
+func (*RefreshTokenRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *RefreshTokenRes) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *RefreshTokenRes) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
+func (x *RefreshTokenRes) GetExpiresIn() int64 {
+	if x != nil {
+		return x.ExpiresIn
+	}
+	return 0
+}
+
+func (x *RefreshTokenRes) GetRefreshExpiresIn() int64 {
+	if x != nil {
+		return x.RefreshExpiresIn
+	}
+	return 0
+}
+
 // 注册请求
 type RegisterReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -369,7 +531,7 @@ type RegisterReq struct {
 
 func (x *RegisterReq) Reset() {
 	*x = RegisterReq{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[6]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -381,7 +543,7 @@ func (x *RegisterReq) String() string {
 func (*RegisterReq) ProtoMessage() {}
 
 func (x *RegisterReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[6]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -394,7 +556,7 @@ func (x *RegisterReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterReq.ProtoReflect.Descriptor instead.
 func (*RegisterReq) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{6}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *RegisterReq) GetUsername() string {
@@ -483,15 +645,18 @@ func (x *RegisterReq) GetDomain() string {
 
 // 注册响应
 type RegisterRes struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"` // JWT token
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Token            string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"`                                                             // JWT token
+	RefreshToken     string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token" dc:"刷新token"`                             // 刷新token
+	ExpiresIn        int64                  `protobuf:"varint,3,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in" dc:"token过期时间（秒）"`                                // token过期时间（秒）
+	RefreshExpiresIn int64                  `protobuf:"varint,4,opt,name=refresh_expires_in,json=refreshExpiresIn,proto3" json:"refresh_expires_in" dc:"refresh_token过期时间（秒）"` // refresh_token过期时间（秒）
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *RegisterRes) Reset() {
 	*x = RegisterRes{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[7]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -503,7 +668,7 @@ func (x *RegisterRes) String() string {
 func (*RegisterRes) ProtoMessage() {}
 
 func (x *RegisterRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[7]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -516,7 +681,7 @@ func (x *RegisterRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRes.ProtoReflect.Descriptor instead.
 func (*RegisterRes) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{7}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *RegisterRes) GetToken() string {
@@ -524,6 +689,27 @@ func (x *RegisterRes) GetToken() string {
 		return x.Token
 	}
 	return ""
+}
+
+func (x *RegisterRes) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
+func (x *RegisterRes) GetExpiresIn() int64 {
+	if x != nil {
+		return x.ExpiresIn
+	}
+	return 0
+}
+
+func (x *RegisterRes) GetRefreshExpiresIn() int64 {
+	if x != nil {
+		return x.RefreshExpiresIn
+	}
+	return 0
 }
 
 // 获取用户信息请求
@@ -535,7 +721,7 @@ type GetUserInfoReq struct {
 
 func (x *GetUserInfoReq) Reset() {
 	*x = GetUserInfoReq{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[8]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -547,7 +733,7 @@ func (x *GetUserInfoReq) String() string {
 func (*GetUserInfoReq) ProtoMessage() {}
 
 func (x *GetUserInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[8]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -560,7 +746,7 @@ func (x *GetUserInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserInfoReq.ProtoReflect.Descriptor instead.
 func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{8}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{10}
 }
 
 // 获取用户信息响应
@@ -601,7 +787,7 @@ type GetUserInfoRes struct {
 
 func (x *GetUserInfoRes) Reset() {
 	*x = GetUserInfoRes{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[9]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -613,7 +799,7 @@ func (x *GetUserInfoRes) String() string {
 func (*GetUserInfoRes) ProtoMessage() {}
 
 func (x *GetUserInfoRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[9]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -626,7 +812,7 @@ func (x *GetUserInfoRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserInfoRes.ProtoReflect.Descriptor instead.
 func (*GetUserInfoRes) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{9}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetUserInfoRes) GetUsername() string {
@@ -844,7 +1030,7 @@ type LastRecord struct {
 
 func (x *LastRecord) Reset() {
 	*x = LastRecord{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[10]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -856,7 +1042,7 @@ func (x *LastRecord) String() string {
 func (*LastRecord) ProtoMessage() {}
 
 func (x *LastRecord) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[10]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -869,7 +1055,7 @@ func (x *LastRecord) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LastRecord.ProtoReflect.Descriptor instead.
 func (*LastRecord) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{10}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *LastRecord) GetId() int32 {
@@ -905,7 +1091,7 @@ type LastMessage struct {
 
 func (x *LastMessage) Reset() {
 	*x = LastMessage{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[11]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -917,7 +1103,7 @@ func (x *LastMessage) String() string {
 func (*LastMessage) ProtoMessage() {}
 
 func (x *LastMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[11]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -930,7 +1116,7 @@ func (x *LastMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LastMessage.ProtoReflect.Descriptor instead.
 func (*LastMessage) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{11}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *LastMessage) GetId() int32 {
@@ -962,22 +1148,38 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x10QuickRegisterReq\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
 	"\x04time\x18\x02 \x01(\tR\x04time\x12\x16\n" +
-	"\x06domain\x18\x03 \x01(\tR\x06domain\"D\n" +
+	"\x06domain\x18\x03 \x01(\tR\x06domain\"\xb6\x01\n" +
 	"\x10QuickRegisterRes\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\"j\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12#\n" +
+	"\rrefresh_token\x18\x03 \x01(\tR\frefreshToken\x12\x1d\n" +
+	"\n" +
+	"expires_in\x18\x04 \x01(\x03R\texpiresIn\x12,\n" +
+	"\x12refresh_expires_in\x18\x05 \x01(\x03R\x10refreshExpiresIn\"j\n" +
 	"\bLoginReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x12\x12\n" +
-	"\x04time\x18\x04 \x01(\tR\x04time\" \n" +
+	"\x04time\x18\x04 \x01(\tR\x04time\"\x92\x01\n" +
 	"\bLoginRes\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"(\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12#\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x1d\n" +
+	"\n" +
+	"expires_in\x18\x03 \x01(\x03R\texpiresIn\x12,\n" +
+	"\x12refresh_expires_in\x18\x04 \x01(\x03R\x10refreshExpiresIn\"(\n" +
 	"\x12GenerateCaptchaReq\x12\x12\n" +
 	"\x04time\x18\x01 \x01(\tR\x04time\"M\n" +
 	"\x12GenerateCaptchaRes\x12\x14\n" +
 	"\x05image\x18\x01 \x01(\fR\x05image\x12!\n" +
-	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"\xcc\x02\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"6\n" +
+	"\x0fRefreshTokenReq\x12#\n" +
+	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"\x99\x01\n" +
+	"\x0fRefreshTokenRes\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12#\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x1d\n" +
+	"\n" +
+	"expires_in\x18\x03 \x01(\x03R\texpiresIn\x12,\n" +
+	"\x12refresh_expires_in\x18\x04 \x01(\x03R\x10refreshExpiresIn\"\xcc\x02\n" +
 	"\vRegisterReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x16\n" +
@@ -993,9 +1195,13 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	" \x01(\tR\bbirthday\x12\x1d\n" +
 	"\n" +
 	"agent_salt\x18\v \x01(\tR\tagentSalt\x12\x16\n" +
-	"\x06domain\x18\f \x01(\tR\x06domain\"#\n" +
+	"\x06domain\x18\f \x01(\tR\x06domain\"\x95\x01\n" +
 	"\vRegisterRes\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"\x10\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12#\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x1d\n" +
+	"\n" +
+	"expires_in\x18\x03 \x01(\x03R\texpiresIn\x12,\n" +
+	"\x12refresh_expires_in\x18\x04 \x01(\x03R\x10refreshExpiresIn\"\x10\n" +
 	"\x0eGetUserInfoReq\"\x9d\b\n" +
 	"\x0eGetUserInfoRes\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
@@ -1041,12 +1247,13 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\tR\tcreatedAt2\x83\x02\n" +
+	"created_at\x18\x03 \x01(\tR\tcreatedAt2\xc7\x02\n" +
 	"\x06Public\x12E\n" +
 	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x126\n" +
 	"\bRegister\x12\x13.public.RegisterReq\x1a\x13.public.RegisterRes\"\x00\x12-\n" +
 	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00\x12K\n" +
-	"\x0fGenerateCaptcha\x12\x1a.public.GenerateCaptchaReq\x1a\x1a.public.GenerateCaptchaRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
+	"\x0fGenerateCaptcha\x12\x1a.public.GenerateCaptchaReq\x1a\x1a.public.GenerateCaptchaRes\"\x00\x12B\n" +
+	"\fRefreshToken\x12\x17.public.RefreshTokenReq\x1a\x17.public.RefreshTokenRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
 var (
 	file_frontend_public_v1_public_proto_rawDescOnce sync.Once
@@ -1060,7 +1267,7 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
 	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
@@ -1068,27 +1275,31 @@ var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*LoginRes)(nil),           // 3: public.LoginRes
 	(*GenerateCaptchaReq)(nil), // 4: public.GenerateCaptchaReq
 	(*GenerateCaptchaRes)(nil), // 5: public.GenerateCaptchaRes
-	(*RegisterReq)(nil),        // 6: public.RegisterReq
-	(*RegisterRes)(nil),        // 7: public.RegisterRes
-	(*GetUserInfoReq)(nil),     // 8: public.GetUserInfoReq
-	(*GetUserInfoRes)(nil),     // 9: public.GetUserInfoRes
-	(*LastRecord)(nil),         // 10: public.LastRecord
-	(*LastMessage)(nil),        // 11: public.LastMessage
+	(*RefreshTokenReq)(nil),    // 6: public.RefreshTokenReq
+	(*RefreshTokenRes)(nil),    // 7: public.RefreshTokenRes
+	(*RegisterReq)(nil),        // 8: public.RegisterReq
+	(*RegisterRes)(nil),        // 9: public.RegisterRes
+	(*GetUserInfoReq)(nil),     // 10: public.GetUserInfoReq
+	(*GetUserInfoRes)(nil),     // 11: public.GetUserInfoRes
+	(*LastRecord)(nil),         // 12: public.LastRecord
+	(*LastMessage)(nil),        // 13: public.LastMessage
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
-	10, // 0: public.GetUserInfoRes.last_recharge:type_name -> public.LastRecord
-	10, // 1: public.GetUserInfoRes.last_withdraw:type_name -> public.LastRecord
-	11, // 2: public.GetUserInfoRes.last_message:type_name -> public.LastMessage
+	12, // 0: public.GetUserInfoRes.last_recharge:type_name -> public.LastRecord
+	12, // 1: public.GetUserInfoRes.last_withdraw:type_name -> public.LastRecord
+	13, // 2: public.GetUserInfoRes.last_message:type_name -> public.LastMessage
 	0,  // 3: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
-	6,  // 4: public.Public.Register:input_type -> public.RegisterReq
+	8,  // 4: public.Public.Register:input_type -> public.RegisterReq
 	2,  // 5: public.Public.Login:input_type -> public.LoginReq
 	4,  // 6: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
-	1,  // 7: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	7,  // 8: public.Public.Register:output_type -> public.RegisterRes
-	3,  // 9: public.Public.Login:output_type -> public.LoginRes
-	5,  // 10: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
-	7,  // [7:11] is the sub-list for method output_type
-	3,  // [3:7] is the sub-list for method input_type
+	6,  // 7: public.Public.RefreshToken:input_type -> public.RefreshTokenReq
+	1,  // 8: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	9,  // 9: public.Public.Register:output_type -> public.RegisterRes
+	3,  // 10: public.Public.Login:output_type -> public.LoginRes
+	5,  // 11: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	7,  // 12: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
+	8,  // [8:13] is the sub-list for method output_type
+	3,  // [3:8] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -1105,7 +1316,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
