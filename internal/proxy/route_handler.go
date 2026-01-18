@@ -292,4 +292,6 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/change-login-password", "POST", callChangeLoginPassword)
 	// 绑定登录密码（针对快速注册用户）
 	frontendRoutes.Register("/bind-login-password", "POST", callBindLoginPassword)
+	// 获取会员等级列表
+	frontendRoutes.Register("/grade-list", "GET", callGetGradeList)
 }

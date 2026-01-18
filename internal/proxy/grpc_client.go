@@ -5540,3 +5540,44 @@ func callGenerateCaptcha(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	util.LogWithTrace(ctx, "info", "图片数据已写入响应")
 	return nil
 }
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 获取会员等级列表
+ * @description 获取会员等级列表接口
+ * @method get
+ * @url /api/frontend/app/grade-list
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"name":"普通会员","points_upgrade":0,"bonus_upgrade":"0.00","bonus_birthday":"0.00","rebate_percent_sports":"0.00","rebate_percent_lottery":"0.00","rebate_percent_live":"0.00","rebate_percent_egame":"0.00","rebate_percent_poker":"0.00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 等级列表
+ * @return_param data.list.id int 等级ID
+ * @return_param data.list.name string 等级名称
+ * @return_param data.list.points_upgrade int 升级所需积分
+ * @return_param data.list.bonus_upgrade string 升级赠送彩金
+ * @return_param data.list.bonus_birthday string 生日彩金
+ * @return_param data.list.rebate_percent_sports string 体育返水比例
+ * @return_param data.list.rebate_percent_lottery string 彩票返水比例
+ * @return_param data.list.rebate_percent_live string 真人视讯返水比例
+ * @return_param data.list.rebate_percent_egame string 电子游戏返水比例
+ * @return_param data.list.rebate_percent_poker string 棋牌返水比例
+ * @number 110
+ */
+func callGetGradeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetGradeList")
+
+	client := v16.NewUserClient(conn)
+	req := &v16.GetGradeListReq{}
+
+	res, err := client.GetGradeList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}

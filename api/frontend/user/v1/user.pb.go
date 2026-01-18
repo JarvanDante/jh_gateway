@@ -898,6 +898,221 @@ func (x *BindLoginPasswordRes) GetMessage() string {
 	return ""
 }
 
+// 获取会员等级列表请求
+type GetGradeListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGradeListReq) Reset() {
+	*x = GetGradeListReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGradeListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGradeListReq) ProtoMessage() {}
+
+func (x *GetGradeListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGradeListReq.ProtoReflect.Descriptor instead.
+func (*GetGradeListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{14}
+}
+
+// 获取会员等级列表响应
+type GetGradeListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*GradeItem           `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"等级列表"` // 等级列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGradeListRes) Reset() {
+	*x = GetGradeListRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGradeListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGradeListRes) ProtoMessage() {}
+
+func (x *GetGradeListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGradeListRes.ProtoReflect.Descriptor instead.
+func (*GetGradeListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetGradeListRes) GetList() []*GradeItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+// 会员等级项
+type GradeItem struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Id                   int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"等级ID"`                                                                    // 等级ID
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"等级名称"`                                                                 // 等级名称
+	PointsUpgrade        int32                  `protobuf:"varint,3,opt,name=points_upgrade,json=pointsUpgrade,proto3" json:"points_upgrade" dc:"升级所需积分"`                       // 升级所需积分
+	BonusUpgrade         string                 `protobuf:"bytes,4,opt,name=bonus_upgrade,json=bonusUpgrade,proto3" json:"bonus_upgrade" dc:"升级赠送彩金"`                           // 升级赠送彩金
+	BonusBirthday        string                 `protobuf:"bytes,5,opt,name=bonus_birthday,json=bonusBirthday,proto3" json:"bonus_birthday" dc:"生日彩金"`                          // 生日彩金
+	RebatePercentSports  string                 `protobuf:"bytes,6,opt,name=rebate_percent_sports,json=rebatePercentSports,proto3" json:"rebate_percent_sports" dc:"体育返水比例"`    // 体育返水比例
+	RebatePercentLottery string                 `protobuf:"bytes,7,opt,name=rebate_percent_lottery,json=rebatePercentLottery,proto3" json:"rebate_percent_lottery" dc:"彩票返水比例"` // 彩票返水比例
+	RebatePercentLive    string                 `protobuf:"bytes,8,opt,name=rebate_percent_live,json=rebatePercentLive,proto3" json:"rebate_percent_live" dc:"真人视讯返水比例"`        // 真人视讯返水比例
+	RebatePercentEgame   string                 `protobuf:"bytes,9,opt,name=rebate_percent_egame,json=rebatePercentEgame,proto3" json:"rebate_percent_egame" dc:"电子游戏返水比例"`     // 电子游戏返水比例
+	RebatePercentPoker   string                 `protobuf:"bytes,10,opt,name=rebate_percent_poker,json=rebatePercentPoker,proto3" json:"rebate_percent_poker" dc:"棋牌返水比例"`      // 棋牌返水比例
+	DepositAmount        string                 `protobuf:"bytes,11,opt,name=deposit_amount,json=depositAmount,proto3" json:"deposit_amount" dc:"充值金额"`                         // 充值金额
+	BetAmount            string                 `protobuf:"bytes,12,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount" dc:"投注金额"`                                     // 投注金额
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *GradeItem) Reset() {
+	*x = GradeItem{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GradeItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GradeItem) ProtoMessage() {}
+
+func (x *GradeItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GradeItem.ProtoReflect.Descriptor instead.
+func (*GradeItem) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GradeItem) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *GradeItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GradeItem) GetPointsUpgrade() int32 {
+	if x != nil {
+		return x.PointsUpgrade
+	}
+	return 0
+}
+
+func (x *GradeItem) GetBonusUpgrade() string {
+	if x != nil {
+		return x.BonusUpgrade
+	}
+	return ""
+}
+
+func (x *GradeItem) GetBonusBirthday() string {
+	if x != nil {
+		return x.BonusBirthday
+	}
+	return ""
+}
+
+func (x *GradeItem) GetRebatePercentSports() string {
+	if x != nil {
+		return x.RebatePercentSports
+	}
+	return ""
+}
+
+func (x *GradeItem) GetRebatePercentLottery() string {
+	if x != nil {
+		return x.RebatePercentLottery
+	}
+	return ""
+}
+
+func (x *GradeItem) GetRebatePercentLive() string {
+	if x != nil {
+		return x.RebatePercentLive
+	}
+	return ""
+}
+
+func (x *GradeItem) GetRebatePercentEgame() string {
+	if x != nil {
+		return x.RebatePercentEgame
+	}
+	return ""
+}
+
+func (x *GradeItem) GetRebatePercentPoker() string {
+	if x != nil {
+		return x.RebatePercentPoker
+	}
+	return ""
+}
+
+func (x *GradeItem) GetDepositAmount() string {
+	if x != nil {
+		return x.DepositAmount
+	}
+	return ""
+}
+
+func (x *GradeItem) GetBetAmount() string {
+	if x != nil {
+		return x.BetAmount
+	}
+	return ""
+}
+
 var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_frontend_user_v1_user_proto_rawDesc = "" +
@@ -967,7 +1182,25 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x14BindLoginPasswordReq\x12!\n" +
 	"\fnew_password\x18\x01 \x01(\tR\vnewPassword\"0\n" +
 	"\x14BindLoginPasswordRes\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xf2\x03\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\x11\n" +
+	"\x0fGetGradeListReq\"?\n" +
+	"\x0fGetGradeListRes\x12,\n" +
+	"\x04list\x18\x01 \x03(\v2\x18.frontend_user.GradeItemR\x04list\"\xe6\x03\n" +
+	"\tGradeItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
+	"\x0epoints_upgrade\x18\x03 \x01(\x05R\rpointsUpgrade\x12#\n" +
+	"\rbonus_upgrade\x18\x04 \x01(\tR\fbonusUpgrade\x12%\n" +
+	"\x0ebonus_birthday\x18\x05 \x01(\tR\rbonusBirthday\x122\n" +
+	"\x15rebate_percent_sports\x18\x06 \x01(\tR\x13rebatePercentSports\x124\n" +
+	"\x16rebate_percent_lottery\x18\a \x01(\tR\x14rebatePercentLottery\x12.\n" +
+	"\x13rebate_percent_live\x18\b \x01(\tR\x11rebatePercentLive\x120\n" +
+	"\x14rebate_percent_egame\x18\t \x01(\tR\x12rebatePercentEgame\x120\n" +
+	"\x14rebate_percent_poker\x18\n" +
+	" \x01(\tR\x12rebatePercentPoker\x12%\n" +
+	"\x0edeposit_amount\x18\v \x01(\tR\rdepositAmount\x12\x1d\n" +
+	"\n" +
+	"bet_amount\x18\f \x01(\tR\tbetAmount2\xc4\x04\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
 	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
@@ -975,7 +1208,8 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"BindMobile\x12\x1c.frontend_user.BindMobileReq\x1a\x1c.frontend_user.BindMobileRes\"\x00\x12e\n" +
 	"\x13ChangeLoginPassword\x12%.frontend_user.ChangeLoginPasswordReq\x1a%.frontend_user.ChangeLoginPasswordRes\"\x00\x12_\n" +
-	"\x11BindLoginPassword\x12#.frontend_user.BindLoginPasswordReq\x1a#.frontend_user.BindLoginPasswordRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\x11BindLoginPassword\x12#.frontend_user.BindLoginPasswordReq\x1a#.frontend_user.BindLoginPasswordRes\"\x00\x12P\n" +
+	"\fGetGradeList\x12\x1e.frontend_user.GetGradeListReq\x1a\x1e.frontend_user.GetGradeListRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -989,7 +1223,7 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil),         // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil),         // 1: frontend_user.GetUserInfoRes
@@ -1005,28 +1239,34 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*ChangeLoginPasswordRes)(nil), // 11: frontend_user.ChangeLoginPasswordRes
 	(*BindLoginPasswordReq)(nil),   // 12: frontend_user.BindLoginPasswordReq
 	(*BindLoginPasswordRes)(nil),   // 13: frontend_user.BindLoginPasswordRes
+	(*GetGradeListReq)(nil),        // 14: frontend_user.GetGradeListReq
+	(*GetGradeListRes)(nil),        // 15: frontend_user.GetGradeListRes
+	(*GradeItem)(nil),              // 16: frontend_user.GradeItem
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	2,  // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
 	2,  // 1: frontend_user.GetUserInfoRes.last_withdraw:type_name -> frontend_user.LastRecord
 	3,  // 2: frontend_user.GetUserInfoRes.last_message:type_name -> frontend_user.LastMessage
-	0,  // 3: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
-	4,  // 4: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
-	6,  // 5: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
-	8,  // 6: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
-	10, // 7: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
-	12, // 8: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
-	1,  // 9: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5,  // 10: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	7,  // 11: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
-	9,  // 12: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
-	11, // 13: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
-	13, // 14: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
-	9,  // [9:15] is the sub-list for method output_type
-	3,  // [3:9] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	16, // 3: frontend_user.GetGradeListRes.list:type_name -> frontend_user.GradeItem
+	0,  // 4: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
+	4,  // 5: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
+	6,  // 6: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
+	8,  // 7: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
+	10, // 8: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
+	12, // 9: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
+	14, // 10: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
+	1,  // 11: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5,  // 12: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7,  // 13: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9,  // 14: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	11, // 15: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
+	13, // 16: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
+	15, // 17: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
+	11, // [11:18] is the sub-list for method output_type
+	4,  // [4:11] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_frontend_user_v1_user_proto_init() }
@@ -1040,7 +1280,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
