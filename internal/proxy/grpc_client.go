@@ -5056,7 +5056,7 @@ func callUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 /**
  * showdoc
  * @catalog 前台/用户
- * @title 刷新token
+ * @title OK刷新token
  * @description 使用refresh_token刷新access_token
  * @method post
  * @url /api/frontend/app/refresh-token
@@ -5150,7 +5150,7 @@ func callGetUserInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 /**
  * showdoc
  * @catalog 前台/用户
- * @title 用户退出登录
+ * @title OK用户退出登录
  * @description 用户退出登录接口
  * @method post
  * @url /api/frontend/app/logout
