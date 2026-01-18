@@ -1132,6 +1132,168 @@ func (x *LastMessage) GetCreatedAt() string {
 	return ""
 }
 
+// 获取站点设置请求
+type GetSiteSettingReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteSettingReq) Reset() {
+	*x = GetSiteSettingReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteSettingReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteSettingReq) ProtoMessage() {}
+
+func (x *GetSiteSettingReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteSettingReq.ProtoReflect.Descriptor instead.
+func (*GetSiteSettingReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{14}
+}
+
+// 获取站点设置响应
+type GetSiteSettingRes struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	AgentUrl       string                 `protobuf:"bytes,1,opt,name=agent_url,json=agentUrl,proto3" json:"agent_url" dc:"代理url"`                               // 代理url
+	SiteName       string                 `protobuf:"bytes,2,opt,name=site_name,json=siteName,proto3" json:"site_name" dc:"站点名称"`                                // 站点名称
+	MobileUrl      string                 `protobuf:"bytes,3,opt,name=mobile_url,json=mobileUrl,proto3" json:"mobile_url" dc:"手机url"`                            // 手机url
+	SwitchRegister int32                  `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"会员注册开关 0=关闭 1=开启"` // 会员注册开关 0=关闭 1=开启
+	SwitchGrade    int32                  `protobuf:"varint,5,opt,name=switch_grade,json=switchGrade,proto3" json:"switch_grade" dc:"会员等级开关 0=关闭 1=开启"`          // 会员等级开关 0=关闭 1=开启
+	ServiceUrl     string                 `protobuf:"bytes,6,opt,name=service_url,json=serviceUrl,proto3" json:"service_url" dc:"客服链接"`                          // 客服链接
+	Close          int32                  `protobuf:"varint,7,opt,name=close,proto3" json:"close" dc:"站点关闭开关 0=正常 1=关闭"`                                         // 站点关闭开关 0=正常 1=关闭
+	MinWithdraw    string                 `protobuf:"bytes,8,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最小提现金额"`                   // 单笔最小提现金额
+	MaxWithdraw    string                 `protobuf:"bytes,9,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最大提现金额"`                   // 单笔最大提现金额
+	MobileLogo     string                 `protobuf:"bytes,10,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端logo"`                      // 手机端logo
+	CloseReason    string                 `protobuf:"bytes,11,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"站点关闭理由"`                    // 站点关闭理由
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetSiteSettingRes) Reset() {
+	*x = GetSiteSettingRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteSettingRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteSettingRes) ProtoMessage() {}
+
+func (x *GetSiteSettingRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteSettingRes.ProtoReflect.Descriptor instead.
+func (*GetSiteSettingRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetSiteSettingRes) GetAgentUrl() string {
+	if x != nil {
+		return x.AgentUrl
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetSiteName() string {
+	if x != nil {
+		return x.SiteName
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetMobileUrl() string {
+	if x != nil {
+		return x.MobileUrl
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetSwitchRegister() int32 {
+	if x != nil {
+		return x.SwitchRegister
+	}
+	return 0
+}
+
+func (x *GetSiteSettingRes) GetSwitchGrade() int32 {
+	if x != nil {
+		return x.SwitchGrade
+	}
+	return 0
+}
+
+func (x *GetSiteSettingRes) GetServiceUrl() string {
+	if x != nil {
+		return x.ServiceUrl
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetClose() int32 {
+	if x != nil {
+		return x.Close
+	}
+	return 0
+}
+
+func (x *GetSiteSettingRes) GetMinWithdraw() string {
+	if x != nil {
+		return x.MinWithdraw
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetMaxWithdraw() string {
+	if x != nil {
+		return x.MaxWithdraw
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetMobileLogo() string {
+	if x != nil {
+		return x.MobileLogo
+	}
+	return ""
+}
+
+func (x *GetSiteSettingRes) GetCloseReason() string {
+	if x != nil {
+		return x.CloseReason
+	}
+	return ""
+}
+
 var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
@@ -1238,13 +1400,31 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\tR\tcreatedAt2\xc7\x02\n" +
+	"created_at\x18\x03 \x01(\tR\tcreatedAt\"\x13\n" +
+	"\x11GetSiteSettingReq\"\xf9\x02\n" +
+	"\x11GetSiteSettingRes\x12\x1b\n" +
+	"\tagent_url\x18\x01 \x01(\tR\bagentUrl\x12\x1b\n" +
+	"\tsite_name\x18\x02 \x01(\tR\bsiteName\x12\x1d\n" +
+	"\n" +
+	"mobile_url\x18\x03 \x01(\tR\tmobileUrl\x12'\n" +
+	"\x0fswitch_register\x18\x04 \x01(\x05R\x0eswitchRegister\x12!\n" +
+	"\fswitch_grade\x18\x05 \x01(\x05R\vswitchGrade\x12\x1f\n" +
+	"\vservice_url\x18\x06 \x01(\tR\n" +
+	"serviceUrl\x12\x14\n" +
+	"\x05close\x18\a \x01(\x05R\x05close\x12!\n" +
+	"\fmin_withdraw\x18\b \x01(\tR\vminWithdraw\x12!\n" +
+	"\fmax_withdraw\x18\t \x01(\tR\vmaxWithdraw\x12\x1f\n" +
+	"\vmobile_logo\x18\n" +
+	" \x01(\tR\n" +
+	"mobileLogo\x12!\n" +
+	"\fclose_reason\x18\v \x01(\tR\vcloseReason2\x91\x03\n" +
 	"\x06Public\x12E\n" +
 	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x126\n" +
 	"\bRegister\x12\x13.public.RegisterReq\x1a\x13.public.RegisterRes\"\x00\x12-\n" +
 	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00\x12K\n" +
 	"\x0fGenerateCaptcha\x12\x1a.public.GenerateCaptchaReq\x1a\x1a.public.GenerateCaptchaRes\"\x00\x12B\n" +
-	"\fRefreshToken\x12\x17.public.RefreshTokenReq\x1a\x17.public.RefreshTokenRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
+	"\fRefreshToken\x12\x17.public.RefreshTokenReq\x1a\x17.public.RefreshTokenRes\"\x00\x12H\n" +
+	"\x0eGetSiteSetting\x12\x19.public.GetSiteSettingReq\x1a\x19.public.GetSiteSettingRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
 var (
 	file_frontend_public_v1_public_proto_rawDescOnce sync.Once
@@ -1258,7 +1438,7 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
 	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
@@ -1274,6 +1454,8 @@ var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*GetUserInfoRes)(nil),     // 11: public.GetUserInfoRes
 	(*LastRecord)(nil),         // 12: public.LastRecord
 	(*LastMessage)(nil),        // 13: public.LastMessage
+	(*GetSiteSettingReq)(nil),  // 14: public.GetSiteSettingReq
+	(*GetSiteSettingRes)(nil),  // 15: public.GetSiteSettingRes
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	12, // 0: public.GetUserInfoRes.last_recharge:type_name -> public.LastRecord
@@ -1284,13 +1466,15 @@ var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	2,  // 5: public.Public.Login:input_type -> public.LoginReq
 	4,  // 6: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
 	6,  // 7: public.Public.RefreshToken:input_type -> public.RefreshTokenReq
-	1,  // 8: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	9,  // 9: public.Public.Register:output_type -> public.RegisterRes
-	3,  // 10: public.Public.Login:output_type -> public.LoginRes
-	5,  // 11: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
-	7,  // 12: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
-	8,  // [8:13] is the sub-list for method output_type
-	3,  // [3:8] is the sub-list for method input_type
+	14, // 8: public.Public.GetSiteSetting:input_type -> public.GetSiteSettingReq
+	1,  // 9: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	9,  // 10: public.Public.Register:output_type -> public.RegisterRes
+	3,  // 11: public.Public.Login:output_type -> public.LoginRes
+	5,  // 12: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	7,  // 13: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
+	15, // 14: public.Public.GetSiteSetting:output_type -> public.GetSiteSettingRes
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -1307,7 +1491,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

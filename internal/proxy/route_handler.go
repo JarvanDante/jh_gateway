@@ -294,4 +294,6 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/bind-login-password", "POST", callBindLoginPassword)
 	// 获取会员等级列表
 	frontendRoutes.Register("/grade-list", "GET", callGetGradeList)
+	// 获取站点设置
+	frontendRoutes.Register("/setting-site", "GET", callGetSiteSetting)
 }

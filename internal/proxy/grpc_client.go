@@ -5581,3 +5581,43 @@ func callGetGradeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	// 使用统一的protobuf JSON序列化函数
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/公共
+ * @title 获取站点设置
+ * @description 获取站点设置接口
+ * @method get
+ * @url /api/frontend/app/setting-site
+ * @return {"code":0,"msg":"success","data":{"agent_url":"","site_name":"测试站点","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100.00","max_withdraw":"50000.00","mobile_logo":"","close_reason":"您好，系统正在维护中，估计需要1个小时左右，给您造成不便，敬请谅解！"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.agent_url string 代理url
+ * @return_param data.site_name string 站点名称
+ * @return_param data.mobile_url string 手机url
+ * @return_param data.switch_register int 会员注册开关 0=关闭 1=开启
+ * @return_param data.switch_grade int 会员等级开关 0=关闭 1=开启
+ * @return_param data.service_url string 客服链接
+ * @return_param data.close int 站点关闭开关 0=正常 1=关闭
+ * @return_param data.min_withdraw string 单笔最小提现金额
+ * @return_param data.max_withdraw string 单笔最大提现金额
+ * @return_param data.mobile_logo string 手机端logo
+ * @return_param data.close_reason string 站点关闭理由
+ * @number 111
+ */
+func callGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetSiteSetting")
+
+	client := v15.NewPublicClient(conn)
+	req := &v15.GetSiteSettingReq{}
+
+	res, err := client.GetSiteSetting(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}
