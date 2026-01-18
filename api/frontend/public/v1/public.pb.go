@@ -526,6 +526,434 @@ func (x *RegisterRes) GetToken() string {
 	return ""
 }
 
+// 获取用户信息请求
+type GetUserInfoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserInfoReq) Reset() {
+	*x = GetUserInfoReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserInfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserInfoReq) ProtoMessage() {}
+
+func (x *GetUserInfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserInfoReq.ProtoReflect.Descriptor instead.
+func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{8}
+}
+
+// 获取用户信息响应
+type GetUserInfoRes struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Username            string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名"`                                                                     // 用户名
+	Realname            string                 `protobuf:"bytes,2,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                                                    // 真实姓名
+	Email               string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                                            // 邮箱
+	Mobile              string                 `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                                         // 手机号
+	Qq                  string                 `protobuf:"bytes,5,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                                                 // QQ号
+	Sex                 int32                  `protobuf:"varint,6,opt,name=sex,proto3" json:"sex" dc:"性别 0=未知 1=男 2=女"`                                                                  // 性别 0=未知 1=男 2=女
+	Birthday            string                 `protobuf:"bytes,7,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                                      // 生日
+	LastLoginTime       string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                                 // 最后登录时间
+	LastLoginAddress    string                 `protobuf:"bytes,9,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`                        // 最后登录地址
+	ShowBeginnerGuide   int32                  `protobuf:"varint,10,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"`          // 新手引导 0=不显示 1=显示
+	Gpwd                string                 `protobuf:"bytes,11,opt,name=gpwd,proto3" json:"gpwd" dc:"游戏密码(base64)"`                                                                   // 游戏密码(base64)
+	Balance             string                 `protobuf:"bytes,12,opt,name=balance,proto3" json:"balance" dc:"余额(默认值)"`                                                                  // 余额(默认值)
+	BalanceFrozen       string                 `protobuf:"bytes,13,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额(默认值)"`                               // 冻结余额(默认值)
+	Points              string                 `protobuf:"bytes,14,opt,name=points,proto3" json:"points" dc:"积分(默认值)"`                                                                    // 积分(默认值)
+	GradeId             int32                  `protobuf:"varint,15,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"会员等级ID"`                                                   // 会员等级ID
+	GradeName           string                 `protobuf:"bytes,16,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"会员等级名称"`                                              // 会员等级名称
+	BindSafeQuestion    int32                  `protobuf:"varint,17,opt,name=bind_safe_question,json=bindSafeQuestion,proto3" json:"bind_safe_question" dc:"是否绑定安全问题 0=否 1=是"`            // 是否绑定安全问题 0=否 1=是
+	BindPayPassword     int32                  `protobuf:"varint,18,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=否 1=是"`               // 是否绑定资金密码 0=否 1=是
+	UnreadMessageCount  int32                  `protobuf:"varint,19,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"未读消息数量(默认值)"`           // 未读消息数量(默认值)
+	SwitchSign          int32                  `protobuf:"varint,20,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                                  // 签到开关 0=关闭 1=开启
+	BindBank            int32                  `protobuf:"varint,21,opt,name=bind_bank,json=bindBank,proto3" json:"bind_bank" dc:"是否绑定银行卡 0=否 1=是"`                                       // 是否绑定银行卡 0=否 1=是
+	ApplyBirthdayBonus  int32                  `protobuf:"varint,22,opt,name=apply_birthday_bonus,json=applyBirthdayBonus,proto3" json:"apply_birthday_bonus" dc:"是否可申请生日礼金 0=否 1=是"`     // 是否可申请生日礼金 0=否 1=是
+	AutoBindGameBalance int32                  `protobuf:"varint,23,opt,name=auto_bind_game_balance,json=autoBindGameBalance,proto3" json:"auto_bind_game_balance" dc:"自动绑定游戏余额 0=否 1=是"` // 自动绑定游戏余额 0=否 1=是
+	TotalBet            string                 `protobuf:"bytes,24,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"总投注(默认值)"`                                               // 总投注(默认值)
+	TotalBonus          string                 `protobuf:"bytes,25,opt,name=total_bonus,json=totalBonus,proto3" json:"total_bonus" dc:"总彩金(默认值)"`                                         // 总彩金(默认值)
+	TotalRebate         string                 `protobuf:"bytes,26,opt,name=total_rebate,json=totalRebate,proto3" json:"total_rebate" dc:"总返水(默认值)"`                                      // 总返水(默认值)
+	LastRecharge        []*LastRecord          `protobuf:"bytes,27,rep,name=last_recharge,json=lastRecharge,proto3" json:"last_recharge" dc:"最后充值记录(默认值)"`                                // 最后充值记录(默认值)
+	LastWithdraw        []*LastRecord          `protobuf:"bytes,28,rep,name=last_withdraw,json=lastWithdraw,proto3" json:"last_withdraw" dc:"最后提现记录(默认值)"`                                // 最后提现记录(默认值)
+	LastMessage         []*LastMessage         `protobuf:"bytes,29,rep,name=last_message,json=lastMessage,proto3" json:"last_message" dc:"最后消息(默认值)"`                                     // 最后消息(默认值)
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *GetUserInfoRes) Reset() {
+	*x = GetUserInfoRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserInfoRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserInfoRes) ProtoMessage() {}
+
+func (x *GetUserInfoRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserInfoRes.ProtoReflect.Descriptor instead.
+func (*GetUserInfoRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetUserInfoRes) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetRealname() string {
+	if x != nil {
+		return x.Realname
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetMobile() string {
+	if x != nil {
+		return x.Mobile
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetQq() string {
+	if x != nil {
+		return x.Qq
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetSex() int32 {
+	if x != nil {
+		return x.Sex
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetBirthday() string {
+	if x != nil {
+		return x.Birthday
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetLastLoginTime() string {
+	if x != nil {
+		return x.LastLoginTime
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetLastLoginAddress() string {
+	if x != nil {
+		return x.LastLoginAddress
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetShowBeginnerGuide() int32 {
+	if x != nil {
+		return x.ShowBeginnerGuide
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetGpwd() string {
+	if x != nil {
+		return x.Gpwd
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetBalance() string {
+	if x != nil {
+		return x.Balance
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetBalanceFrozen() string {
+	if x != nil {
+		return x.BalanceFrozen
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetPoints() string {
+	if x != nil {
+		return x.Points
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetGradeId() int32 {
+	if x != nil {
+		return x.GradeId
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetGradeName() string {
+	if x != nil {
+		return x.GradeName
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetBindSafeQuestion() int32 {
+	if x != nil {
+		return x.BindSafeQuestion
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetBindPayPassword() int32 {
+	if x != nil {
+		return x.BindPayPassword
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetUnreadMessageCount() int32 {
+	if x != nil {
+		return x.UnreadMessageCount
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetSwitchSign() int32 {
+	if x != nil {
+		return x.SwitchSign
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetBindBank() int32 {
+	if x != nil {
+		return x.BindBank
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetApplyBirthdayBonus() int32 {
+	if x != nil {
+		return x.ApplyBirthdayBonus
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetAutoBindGameBalance() int32 {
+	if x != nil {
+		return x.AutoBindGameBalance
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetTotalBet() string {
+	if x != nil {
+		return x.TotalBet
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetTotalBonus() string {
+	if x != nil {
+		return x.TotalBonus
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetTotalRebate() string {
+	if x != nil {
+		return x.TotalRebate
+	}
+	return ""
+}
+
+func (x *GetUserInfoRes) GetLastRecharge() []*LastRecord {
+	if x != nil {
+		return x.LastRecharge
+	}
+	return nil
+}
+
+func (x *GetUserInfoRes) GetLastWithdraw() []*LastRecord {
+	if x != nil {
+		return x.LastWithdraw
+	}
+	return nil
+}
+
+func (x *GetUserInfoRes) GetLastMessage() []*LastMessage {
+	if x != nil {
+		return x.LastMessage
+	}
+	return nil
+}
+
+// 最后记录
+type LastRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Amount        string                 `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount"`
+	CreatedAt     string                 `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LastRecord) Reset() {
+	*x = LastRecord{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LastRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LastRecord) ProtoMessage() {}
+
+func (x *LastRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LastRecord.ProtoReflect.Descriptor instead.
+func (*LastRecord) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *LastRecord) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *LastRecord) GetAmount() string {
+	if x != nil {
+		return x.Amount
+	}
+	return ""
+}
+
+func (x *LastRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 最后消息
+type LastMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	CreatedAt     string                 `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LastMessage) Reset() {
+	*x = LastMessage{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LastMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LastMessage) ProtoMessage() {}
+
+func (x *LastMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LastMessage.ProtoReflect.Descriptor instead.
+func (*LastMessage) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *LastMessage) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *LastMessage) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *LastMessage) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
 var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
@@ -567,7 +995,53 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"agent_salt\x18\v \x01(\tR\tagentSalt\x12\x16\n" +
 	"\x06domain\x18\f \x01(\tR\x06domain\"#\n" +
 	"\vRegisterRes\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token2\x83\x02\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\x10\n" +
+	"\x0eGetUserInfoReq\"\x9d\b\n" +
+	"\x0eGetUserInfoRes\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\brealname\x18\x02 \x01(\tR\brealname\x12\x14\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\x12\x16\n" +
+	"\x06mobile\x18\x04 \x01(\tR\x06mobile\x12\x0e\n" +
+	"\x02qq\x18\x05 \x01(\tR\x02qq\x12\x10\n" +
+	"\x03sex\x18\x06 \x01(\x05R\x03sex\x12\x1a\n" +
+	"\bbirthday\x18\a \x01(\tR\bbirthday\x12&\n" +
+	"\x0flast_login_time\x18\b \x01(\tR\rlastLoginTime\x12,\n" +
+	"\x12last_login_address\x18\t \x01(\tR\x10lastLoginAddress\x12.\n" +
+	"\x13show_beginner_guide\x18\n" +
+	" \x01(\x05R\x11showBeginnerGuide\x12\x12\n" +
+	"\x04gpwd\x18\v \x01(\tR\x04gpwd\x12\x18\n" +
+	"\abalance\x18\f \x01(\tR\abalance\x12%\n" +
+	"\x0ebalance_frozen\x18\r \x01(\tR\rbalanceFrozen\x12\x16\n" +
+	"\x06points\x18\x0e \x01(\tR\x06points\x12\x19\n" +
+	"\bgrade_id\x18\x0f \x01(\x05R\agradeId\x12\x1d\n" +
+	"\n" +
+	"grade_name\x18\x10 \x01(\tR\tgradeName\x12,\n" +
+	"\x12bind_safe_question\x18\x11 \x01(\x05R\x10bindSafeQuestion\x12*\n" +
+	"\x11bind_pay_password\x18\x12 \x01(\x05R\x0fbindPayPassword\x120\n" +
+	"\x14unread_message_count\x18\x13 \x01(\x05R\x12unreadMessageCount\x12\x1f\n" +
+	"\vswitch_sign\x18\x14 \x01(\x05R\n" +
+	"switchSign\x12\x1b\n" +
+	"\tbind_bank\x18\x15 \x01(\x05R\bbindBank\x120\n" +
+	"\x14apply_birthday_bonus\x18\x16 \x01(\x05R\x12applyBirthdayBonus\x123\n" +
+	"\x16auto_bind_game_balance\x18\x17 \x01(\x05R\x13autoBindGameBalance\x12\x1b\n" +
+	"\ttotal_bet\x18\x18 \x01(\tR\btotalBet\x12\x1f\n" +
+	"\vtotal_bonus\x18\x19 \x01(\tR\n" +
+	"totalBonus\x12!\n" +
+	"\ftotal_rebate\x18\x1a \x01(\tR\vtotalRebate\x127\n" +
+	"\rlast_recharge\x18\x1b \x03(\v2\x12.public.LastRecordR\flastRecharge\x127\n" +
+	"\rlast_withdraw\x18\x1c \x03(\v2\x12.public.LastRecordR\flastWithdraw\x126\n" +
+	"\flast_message\x18\x1d \x03(\v2\x13.public.LastMessageR\vlastMessage\"S\n" +
+	"\n" +
+	"LastRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
+	"\x06amount\x18\x02 \x01(\tR\x06amount\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x03 \x01(\tR\tcreatedAt\"R\n" +
+	"\vLastMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x03 \x01(\tR\tcreatedAt2\x83\x02\n" +
 	"\x06Public\x12E\n" +
 	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x126\n" +
 	"\bRegister\x12\x13.public.RegisterReq\x1a\x13.public.RegisterRes\"\x00\x12-\n" +
@@ -586,7 +1060,7 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
 	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
@@ -596,21 +1070,28 @@ var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*GenerateCaptchaRes)(nil), // 5: public.GenerateCaptchaRes
 	(*RegisterReq)(nil),        // 6: public.RegisterReq
 	(*RegisterRes)(nil),        // 7: public.RegisterRes
+	(*GetUserInfoReq)(nil),     // 8: public.GetUserInfoReq
+	(*GetUserInfoRes)(nil),     // 9: public.GetUserInfoRes
+	(*LastRecord)(nil),         // 10: public.LastRecord
+	(*LastMessage)(nil),        // 11: public.LastMessage
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
-	0, // 0: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
-	6, // 1: public.Public.Register:input_type -> public.RegisterReq
-	2, // 2: public.Public.Login:input_type -> public.LoginReq
-	4, // 3: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
-	1, // 4: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	7, // 5: public.Public.Register:output_type -> public.RegisterRes
-	3, // 6: public.Public.Login:output_type -> public.LoginRes
-	5, // 7: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	10, // 0: public.GetUserInfoRes.last_recharge:type_name -> public.LastRecord
+	10, // 1: public.GetUserInfoRes.last_withdraw:type_name -> public.LastRecord
+	11, // 2: public.GetUserInfoRes.last_message:type_name -> public.LastMessage
+	0,  // 3: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
+	6,  // 4: public.Public.Register:input_type -> public.RegisterReq
+	2,  // 5: public.Public.Login:input_type -> public.LoginReq
+	4,  // 6: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
+	1,  // 7: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	7,  // 8: public.Public.Register:output_type -> public.RegisterRes
+	3,  // 9: public.Public.Login:output_type -> public.LoginRes
+	5,  // 10: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	7,  // [7:11] is the sub-list for method output_type
+	3,  // [3:7] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_frontend_public_v1_public_proto_init() }
@@ -624,7 +1105,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

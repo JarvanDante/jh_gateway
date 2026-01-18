@@ -18,6 +18,7 @@ import (
 	v4 "jh_gateway/api/backend/upload/v1"
 	v5 "jh_gateway/api/backend/user/v1"
 	v15 "jh_gateway/api/frontend/public/v1"
+	v16 "jh_gateway/api/frontend/user/v1"
 	v13 "jh_gateway/api/manage/admin/v1"
 	v12 "jh_gateway/api/manage/customer/v1"
 	v14 "jh_gateway/api/manage/option/v1"
@@ -5044,6 +5045,43 @@ func callUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		"token": res.Token,
 	})
 	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 获取用户信息
+ * @description 获取当前登录用户的详细信息
+ * @method get
+ * @url /api/frontend/app/user-info
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"username":"test001","realname":"张三","email":"test@example.com","mobile":"13800138000","balance":"1000.00","grade_name":"普通会员",...}}
+ * @return_param code int 状态码
+ * @return_param data object 用户信息
+ * @return_param msg string 提示说明
+ * @remark 需要登录后访问，通过JWT token获取用户信息
+ * @number 103
+ */
+func callGetUserInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetUserInfo")
+
+	client := v16.NewUserClient(conn)
+	req := &v16.GetUserInfoReq{}
+
+	res, err := client.GetUserInfo(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "未登录") {
+			util.WriteUnauthorized(r, "请先登录")
+		} else if strings.Contains(err.Error(), "用户不存在") {
+			util.WriteNotFound(r, "用户不存在")
+		} else {
+			util.WriteInternalError(r, "获取用户信息失败")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	return writeProtobufResponse(ctx, r, res)
 }
 
 // callFrontendGRPCMethod 根据 HTTP 路径调用对应的前台 gRPC 方法
