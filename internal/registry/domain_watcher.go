@@ -87,11 +87,38 @@ func InitDomainWatcher() error {
 			watchPrefix: "sites/",
 		}
 
-		// 初始加载所有域名配置
-		err = domainWatcher.loadAllDomainConfigs()
-		if err != nil {
-			log.Printf("初始加载域名配置失败: %v", err)
-			return
+		// 初始加载所有域名配置（带重试机制）
+		maxRetries := 5
+		retryDelay := 3 * time.Second
+
+		for i := 0; i < maxRetries; i++ {
+			err = domainWatcher.loadAllDomainConfigs()
+
+			// 检查是否加载成功且有数据
+			domainCount := len(domainWatcher.domainMap)
+
+			if err == nil && domainCount > 0 {
+				log.Printf("✅ 域名配置加载成功，共加载 %d 个域名映射", domainCount)
+				break
+			}
+
+			// 如果是最后一次尝试，记录错误并继续（允许服务启动，但会警告）
+			if i == maxRetries-1 {
+				log.Printf("⚠️  警告：经过 %d 次尝试后仍未加载到域名配置", maxRetries)
+				log.Printf("⚠️  Gateway将继续启动，但域名解析可能失败")
+				log.Printf("⚠️  请检查Consul服务状态和KV配置: sites/")
+				break
+			}
+
+			// 记录重试信息
+			if err != nil {
+				log.Printf("❌ 加载域名配置失败（尝试 %d/%d）: %v", i+1, maxRetries, err)
+			} else {
+				log.Printf("⚠️  域名配置为空（尝试 %d/%d），可能Consul数据尚未就绪", i+1, maxRetries)
+			}
+
+			log.Printf("⏳ %v 后重试...", retryDelay)
+			time.Sleep(retryDelay)
 		}
 
 		// 启动监听器
@@ -313,5 +340,54 @@ func StopDomainWatcher() {
 	if domainWatcher != nil && domainWatcher.cancel != nil {
 		domainWatcher.cancel()
 		log.Println("域名监听器已停止")
+	}
+}
+
+// GetDomainCount 获取当前加载的域名数量
+func GetDomainCount() int {
+	if domainWatcher == nil {
+		return 0
+	}
+
+	domainWatcher.mutex.RLock()
+	defer domainWatcher.mutex.RUnlock()
+
+	return len(domainWatcher.domainMap)
+}
+
+// GetSiteCount 获取当前加载的站点数量
+func GetSiteCount() int {
+	if domainWatcher == nil {
+		return 0
+	}
+
+	domainWatcher.mutex.RLock()
+	defer domainWatcher.mutex.RUnlock()
+
+	return len(domainWatcher.siteConfigs)
+}
+
+// GetHealthStatus 获取域名监听器的健康状态
+func GetHealthStatus() map[string]interface{} {
+	if domainWatcher == nil {
+		return map[string]interface{}{
+			"status":       "uninitialized",
+			"domain_count": 0,
+			"site_count":   0,
+		}
+	}
+
+	domainWatcher.mutex.RLock()
+	defer domainWatcher.mutex.RUnlock()
+
+	status := "healthy"
+	if len(domainWatcher.domainMap) == 0 {
+		status = "warning"
+	}
+
+	return map[string]interface{}{
+		"status":       status,
+		"domain_count": len(domainWatcher.domainMap),
+		"site_count":   len(domainWatcher.siteConfigs),
 	}
 }

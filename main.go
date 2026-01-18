@@ -57,6 +57,21 @@ func main() {
 		g.Log().Info(ctx, "域名监听器初始化成功")
 	}
 
+	// 检查域名配置加载状态
+	healthStatus := registry.GetHealthStatus()
+	g.Log().Infof(ctx, "域名配置状态: %v", healthStatus)
+
+	domainCount := registry.GetDomainCount()
+	siteCount := registry.GetSiteCount()
+
+	if domainCount == 0 {
+		g.Log().Warning(ctx, "⚠️  警告：未加载任何域名配置！")
+		g.Log().Warning(ctx, "⚠️  请检查Consul KV配置: sites/")
+		g.Log().Warning(ctx, "⚠️  Gateway将继续运行，但域名解析将失败")
+	} else {
+		g.Log().Infof(ctx, "✅ 域名配置加载成功: %d个域名映射到%d个站点", domainCount, siteCount)
+	}
+
 	// 启动 gRPC 网关（在后台运行）
 	g.Log().Info(ctx, "启动gRPC网关...")
 	grpcAddr := g.Cfg().MustGet(ctx, "grpcGateway.address").String()
