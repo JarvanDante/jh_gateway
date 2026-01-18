@@ -144,6 +144,104 @@ func (x *InitBalanceUserRes) GetMessage() string {
 	return ""
 }
 
+// 刷新用户余额请求
+type RefreshBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefreshBalanceReq) Reset() {
+	*x = RefreshBalanceReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefreshBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefreshBalanceReq) ProtoMessage() {}
+
+func (x *RefreshBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefreshBalanceReq.ProtoReflect.Descriptor instead.
+func (*RefreshBalanceReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{2}
+}
+
+// 刷新用户余额响应
+type RefreshBalanceRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Balance       string                 `protobuf:"bytes,1,opt,name=balance,proto3" json:"balance" dc:"余额"`                                    // 余额
+	BalanceFrozen string                 `protobuf:"bytes,2,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"` // 冻结余额
+	Points        int64                  `protobuf:"varint,3,opt,name=points,proto3" json:"points" dc:"积分"`                                     // 积分
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefreshBalanceRes) Reset() {
+	*x = RefreshBalanceRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefreshBalanceRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefreshBalanceRes) ProtoMessage() {}
+
+func (x *RefreshBalanceRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefreshBalanceRes.ProtoReflect.Descriptor instead.
+func (*RefreshBalanceRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RefreshBalanceRes) GetBalance() string {
+	if x != nil {
+		return x.Balance
+	}
+	return ""
+}
+
+func (x *RefreshBalanceRes) GetBalanceFrozen() string {
+	if x != nil {
+		return x.BalanceFrozen
+	}
+	return ""
+}
+
+func (x *RefreshBalanceRes) GetPoints() int64 {
+	if x != nil {
+		return x.Points
+	}
+	return 0
+}
+
 var File_frontend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_frontend_balance_v1_balance_proto_rawDesc = "" +
@@ -156,9 +254,15 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\bcurrency\x18\x04 \x01(\tR\bcurrency\"H\n" +
 	"\x12InitBalanceUserRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2j\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x13\n" +
+	"\x11RefreshBalanceReq\"l\n" +
+	"\x11RefreshBalanceRes\x12\x18\n" +
+	"\abalance\x18\x01 \x01(\tR\abalance\x12%\n" +
+	"\x0ebalance_frozen\x18\x02 \x01(\tR\rbalanceFrozen\x12\x16\n" +
+	"\x06points\x18\x03 \x01(\x03R\x06points2\xc8\x01\n" +
 	"\aBalance\x12_\n" +
-	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00B(Z&jh_app_service/api/frontend/balance/v1b\x06proto3"
+	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
+	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
 var (
 	file_frontend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -172,16 +276,20 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*InitBalanceUserReq)(nil), // 0: frontend_balance.InitBalanceUserReq
 	(*InitBalanceUserRes)(nil), // 1: frontend_balance.InitBalanceUserRes
+	(*RefreshBalanceReq)(nil),  // 2: frontend_balance.RefreshBalanceReq
+	(*RefreshBalanceRes)(nil),  // 3: frontend_balance.RefreshBalanceRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	0, // 0: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
-	1, // 1: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
+	1, // 2: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3, // 3: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -198,7 +306,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

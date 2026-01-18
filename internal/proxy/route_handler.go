@@ -176,6 +176,11 @@ func initAppRoutes() {
 func initBalanceRoutes() {
 	balanceRoutes = NewRouteRegistry()
 
+	// 前台接口
+	// 刷新用户余额
+	balanceRoutes.Register("/refresh-balance", "GET", callRefreshBalance)
+
+	// 后台接口
 	// 账变记录
 	balanceRoutes.Register("/balance-changes", "GET", callGetBalanceChanges)
 	// 交易类型列表

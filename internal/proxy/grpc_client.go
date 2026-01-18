@@ -17,6 +17,7 @@ import (
 	v3 "jh_gateway/api/backend/site/v1"
 	v4 "jh_gateway/api/backend/upload/v1"
 	v5 "jh_gateway/api/backend/user/v1"
+	v17 "jh_gateway/api/frontend/balance/v1"
 	v15 "jh_gateway/api/frontend/public/v1"
 	v16 "jh_gateway/api/frontend/user/v1"
 	v13 "jh_gateway/api/manage/admin/v1"
@@ -5354,6 +5355,45 @@ func callBindLoginPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	// 返回成功响应
 	util.WriteSuccess(r, map[string]interface{}{
 		"message": res.Message,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/余额
+ * @title 刷新用户余额
+ * @description 刷新用户余额接口
+ * @method get
+ * @url /api/frontend/balance/refresh-balance
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"balance":"100.00","balance_frozen":"0.00","points":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.balance string 余额
+ * @return_param data.balance_frozen string 冻结余额
+ * @return_param data.points int 积分
+ * @number 109
+ */
+func callRefreshBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC RefreshBalance")
+
+	// conn已经是balance服务的连接（由route_dispatcher根据路径/balance自动路由）
+	client := v17.NewBalanceClient(conn)
+	req := &v17.RefreshBalanceReq{}
+
+	res, err := client.RefreshBalance(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"balance":        res.Balance,
+		"balance_frozen": res.BalanceFrozen,
+		"points":         res.Points,
 	})
 	return nil
 }
