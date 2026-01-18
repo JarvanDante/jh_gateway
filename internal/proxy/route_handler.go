@@ -285,4 +285,6 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/bind-mobile", "POST", callBindMobile)
 	// 修改登录密码
 	frontendRoutes.Register("/change-login-password", "POST", callChangeLoginPassword)
+	// 绑定登录密码（针对快速注册用户）
+	frontendRoutes.Register("/bind-login-password", "POST", callBindLoginPassword)
 }

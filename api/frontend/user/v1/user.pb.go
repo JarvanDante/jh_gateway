@@ -808,6 +808,96 @@ func (x *ChangeLoginPasswordRes) GetMessage() string {
 	return ""
 }
 
+// 绑定登录密码请求（针对快速注册用户）
+type BindLoginPasswordReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	NewPassword   string                 `protobuf:"bytes,1,opt,name=new_password,json=newPassword,proto3" json:"new_password" dc:"新密码"` // 新密码
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindLoginPasswordReq) Reset() {
+	*x = BindLoginPasswordReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindLoginPasswordReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindLoginPasswordReq) ProtoMessage() {}
+
+func (x *BindLoginPasswordReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindLoginPasswordReq.ProtoReflect.Descriptor instead.
+func (*BindLoginPasswordReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *BindLoginPasswordReq) GetNewPassword() string {
+	if x != nil {
+		return x.NewPassword
+	}
+	return ""
+}
+
+// 绑定登录密码响应
+type BindLoginPasswordRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"提示消息"` // 提示消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindLoginPasswordRes) Reset() {
+	*x = BindLoginPasswordRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindLoginPasswordRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindLoginPasswordRes) ProtoMessage() {}
+
+func (x *BindLoginPasswordRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindLoginPasswordRes.ProtoReflect.Descriptor instead.
+func (*BindLoginPasswordRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *BindLoginPasswordRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_frontend_user_v1_user_proto_rawDesc = "" +
@@ -873,14 +963,19 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\fold_password\x18\x01 \x01(\tR\voldPassword\x12!\n" +
 	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"2\n" +
 	"\x16ChangeLoginPasswordRes\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\x91\x03\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"9\n" +
+	"\x14BindLoginPasswordReq\x12!\n" +
+	"\fnew_password\x18\x01 \x01(\tR\vnewPassword\"0\n" +
+	"\x14BindLoginPasswordRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xf2\x03\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
 	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
 	"\tBindEmail\x12\x1b.frontend_user.BindEmailReq\x1a\x1b.frontend_user.BindEmailRes\"\x00\x12J\n" +
 	"\n" +
 	"BindMobile\x12\x1c.frontend_user.BindMobileReq\x1a\x1c.frontend_user.BindMobileRes\"\x00\x12e\n" +
-	"\x13ChangeLoginPassword\x12%.frontend_user.ChangeLoginPasswordReq\x1a%.frontend_user.ChangeLoginPasswordRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\x13ChangeLoginPassword\x12%.frontend_user.ChangeLoginPasswordReq\x1a%.frontend_user.ChangeLoginPasswordRes\"\x00\x12_\n" +
+	"\x11BindLoginPassword\x12#.frontend_user.BindLoginPasswordReq\x1a#.frontend_user.BindLoginPasswordRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -894,7 +989,7 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil),         // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil),         // 1: frontend_user.GetUserInfoRes
@@ -908,6 +1003,8 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*BindMobileRes)(nil),          // 9: frontend_user.BindMobileRes
 	(*ChangeLoginPasswordReq)(nil), // 10: frontend_user.ChangeLoginPasswordReq
 	(*ChangeLoginPasswordRes)(nil), // 11: frontend_user.ChangeLoginPasswordRes
+	(*BindLoginPasswordReq)(nil),   // 12: frontend_user.BindLoginPasswordReq
+	(*BindLoginPasswordRes)(nil),   // 13: frontend_user.BindLoginPasswordRes
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	2,  // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
@@ -918,13 +1015,15 @@ var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	6,  // 5: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
 	8,  // 6: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
 	10, // 7: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
-	1,  // 8: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5,  // 9: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	7,  // 10: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
-	9,  // 11: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
-	11, // 12: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
-	8,  // [8:13] is the sub-list for method output_type
-	3,  // [3:8] is the sub-list for method input_type
+	12, // 8: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
+	1,  // 9: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5,  // 10: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7,  // 11: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9,  // 12: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	11, // 13: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
+	13, // 14: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -941,7 +1040,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

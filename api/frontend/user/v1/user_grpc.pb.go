@@ -25,6 +25,7 @@ const (
 	User_BindEmail_FullMethodName           = "/frontend_user.User/BindEmail"
 	User_BindMobile_FullMethodName          = "/frontend_user.User/BindMobile"
 	User_ChangeLoginPassword_FullMethodName = "/frontend_user.User/ChangeLoginPassword"
+	User_BindLoginPassword_FullMethodName   = "/frontend_user.User/BindLoginPassword"
 )
 
 // UserClient is the client API for User service.
@@ -36,6 +37,7 @@ type UserClient interface {
 	BindEmail(ctx context.Context, in *BindEmailReq, opts ...grpc.CallOption) (*BindEmailRes, error)
 	BindMobile(ctx context.Context, in *BindMobileReq, opts ...grpc.CallOption) (*BindMobileRes, error)
 	ChangeLoginPassword(ctx context.Context, in *ChangeLoginPasswordReq, opts ...grpc.CallOption) (*ChangeLoginPasswordRes, error)
+	BindLoginPassword(ctx context.Context, in *BindLoginPasswordReq, opts ...grpc.CallOption) (*BindLoginPasswordRes, error)
 }
 
 type userClient struct {
@@ -96,6 +98,16 @@ func (c *userClient) ChangeLoginPassword(ctx context.Context, in *ChangeLoginPas
 	return out, nil
 }
 
+func (c *userClient) BindLoginPassword(ctx context.Context, in *BindLoginPasswordReq, opts ...grpc.CallOption) (*BindLoginPasswordRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BindLoginPasswordRes)
+	err := c.cc.Invoke(ctx, User_BindLoginPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -105,6 +117,7 @@ type UserServer interface {
 	BindEmail(context.Context, *BindEmailReq) (*BindEmailRes, error)
 	BindMobile(context.Context, *BindMobileReq) (*BindMobileRes, error)
 	ChangeLoginPassword(context.Context, *ChangeLoginPasswordReq) (*ChangeLoginPasswordRes, error)
+	BindLoginPassword(context.Context, *BindLoginPasswordReq) (*BindLoginPasswordRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -129,6 +142,9 @@ func (UnimplementedUserServer) BindMobile(context.Context, *BindMobileReq) (*Bin
 }
 func (UnimplementedUserServer) ChangeLoginPassword(context.Context, *ChangeLoginPasswordReq) (*ChangeLoginPasswordRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method ChangeLoginPassword not implemented")
+}
+func (UnimplementedUserServer) BindLoginPassword(context.Context, *BindLoginPasswordReq) (*BindLoginPasswordRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method BindLoginPassword not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -241,6 +257,24 @@ func _User_ChangeLoginPassword_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_BindLoginPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindLoginPasswordReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).BindLoginPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_BindLoginPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).BindLoginPassword(ctx, req.(*BindLoginPasswordReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +301,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeLoginPassword",
 			Handler:    _User_ChangeLoginPassword_Handler,
+		},
+		{
+			MethodName: "BindLoginPassword",
+			Handler:    _User_BindLoginPassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

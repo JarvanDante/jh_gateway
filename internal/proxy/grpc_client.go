@@ -5314,6 +5314,50 @@ func callChangeLoginPassword(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 	return nil
 }
 
+/**
+ * showdoc
+ * @catalog 前台/会员
+ * @title OK绑定登录密码
+ * @description 绑定登录密码接口（针对快速注册用户）
+ * @method post
+ * @url /api/frontend/app/bind-login-password
+ * @param token 必选 string token
+ * @param new_password 必选 string 新密码（6-20位）
+ * @return {"code":0,"msg":"success","data":{"message":"绑定登录密码成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.message string 提示消息
+ * @number 108
+ */
+func callBindLoginPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC BindLoginPassword")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v16.NewUserClient(conn)
+	req := &v16.BindLoginPasswordReq{
+		NewPassword: gconv.String(reqData["new_password"]),
+	}
+
+	res, err := client.BindLoginPassword(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": res.Message,
+	})
+	return nil
+}
+
 // callFrontendGRPCMethod 根据 HTTP 路径调用对应的前台 gRPC 方法
 func callFrontendGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 统一添加traceId到gRPC上下文
