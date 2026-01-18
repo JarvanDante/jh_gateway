@@ -4904,7 +4904,6 @@ func callQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	}
 
 	// 提取字段
-	code, _ := reqData["code"].(string)
 	time, _ := reqData["time"].(string)
 	domain, _ := reqData["domain"].(string)
 
@@ -4918,7 +4917,6 @@ func callQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	// 创建 gRPC 客户端
 	client := v15.NewPublicClient(conn)
 	req := &v15.QuickRegisterReq{
-		Code:   code,
 		Time:   time,
 		Domain: domain,
 	}
@@ -5255,7 +5253,6 @@ func callBindMobile(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	client := v16.NewUserClient(conn)
 	req := &v16.BindMobileReq{
 		Mobile: gconv.String(reqData["mobile"]),
-		Code:   gconv.String(reqData["code"]),
 	}
 
 	res, err := client.BindMobile(ctx, req)

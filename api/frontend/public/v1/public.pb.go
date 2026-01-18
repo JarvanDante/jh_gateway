@@ -25,9 +25,8 @@ const (
 // 快速注册请求
 type QuickRegisterReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code" dc:"验证码"`      // 验证码
-	Time          string                 `protobuf:"bytes,2,opt,name=time,proto3" json:"time" v:"required"`  // v: required
-	Domain        string                 `protobuf:"bytes,3,opt,name=domain,proto3" json:"domain" dc:"注册域名"` // 注册域名
+	Time          string                 `protobuf:"bytes,1,opt,name=time,proto3" json:"time" v:"required"`  // v: required
+	Domain        string                 `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain" dc:"注册域名"` // 注册域名
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -60,13 +59,6 @@ func (x *QuickRegisterReq) ProtoReflect() protoreflect.Message {
 // Deprecated: Use QuickRegisterReq.ProtoReflect.Descriptor instead.
 func (*QuickRegisterReq) Descriptor() ([]byte, []int) {
 	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *QuickRegisterReq) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
 }
 
 func (x *QuickRegisterReq) GetTime() string {
@@ -1144,11 +1136,10 @@ var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\n" +
-	"\x1ffrontend/public/v1/public.proto\x12\x06public\"R\n" +
+	"\x1ffrontend/public/v1/public.proto\x12\x06public\">\n" +
 	"\x10QuickRegisterReq\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
-	"\x04time\x18\x02 \x01(\tR\x04time\x12\x16\n" +
-	"\x06domain\x18\x03 \x01(\tR\x06domain\"\xb6\x01\n" +
+	"\x04time\x18\x01 \x01(\tR\x04time\x12\x16\n" +
+	"\x06domain\x18\x02 \x01(\tR\x06domain\"\xb6\x01\n" +
 	"\x10QuickRegisterRes\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12#\n" +

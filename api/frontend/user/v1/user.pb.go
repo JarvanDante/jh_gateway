@@ -624,7 +624,6 @@ func (x *BindEmailRes) GetMessage() string {
 type BindMobileReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Mobile        string                 `protobuf:"bytes,1,opt,name=mobile,proto3" json:"mobile" dc:"手机号"` // 手机号
-	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" dc:"手机验证码"`   // 手机验证码
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -662,13 +661,6 @@ func (*BindMobileReq) Descriptor() ([]byte, []int) {
 func (x *BindMobileReq) GetMobile() string {
 	if x != nil {
 		return x.Mobile
-	}
-	return ""
-}
-
-func (x *BindMobileReq) GetCode() string {
-	if x != nil {
-		return x.Code
 	}
 	return ""
 }
@@ -774,10 +766,9 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\fBindEmailReq\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\"(\n" +
 	"\fBindEmailRes\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\";\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"'\n" +
 	"\rBindMobileReq\x12\x16\n" +
-	"\x06mobile\x18\x01 \x01(\tR\x06mobile\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\")\n" +
+	"\x06mobile\x18\x01 \x01(\tR\x06mobile\")\n" +
 	"\rBindMobileRes\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2\xaa\x02\n" +
 	"\x04User\x12M\n" +
