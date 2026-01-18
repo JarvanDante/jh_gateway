@@ -283,4 +283,6 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/bind-email", "POST", callBindEmail)
 	// 绑定手机
 	frontendRoutes.Register("/bind-mobile", "POST", callBindMobile)
+	// 修改登录密码
+	frontendRoutes.Register("/change-login-password", "POST", callChangeLoginPassword)
 }
