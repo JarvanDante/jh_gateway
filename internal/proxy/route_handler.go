@@ -72,7 +72,7 @@ func init() {
 	initFrontendRoutes()
 }
 
-// initAppRoutes 初始化应用路由
+// initAppRoutes 初始化应用路由（后台）
 func initAppRoutes() {
 	appRoutes = NewRouteRegistry()
 
