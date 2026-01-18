@@ -5182,7 +5182,7 @@ func callUserLogout(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 /**
  * showdoc
- * @catalog 前台/会员
+ * @catalog 前台/用户
  * @title OK绑定邮箱
  * @description 绑定邮箱接口
  * @method post
@@ -5226,7 +5226,7 @@ func callBindEmail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request)
 
 /**
  * showdoc
- * @catalog 前台/会员
+ * @catalog 前台/用户
  * @title OK绑定手机
  * @description 绑定手机接口
  * @method post
@@ -5271,7 +5271,7 @@ func callBindMobile(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 /**
  * showdoc
- * @catalog 前台/会员
+ * @catalog 前台/用户
  * @title OK修改登录密码
  * @description 修改登录密码接口
  * @method post
@@ -5317,7 +5317,7 @@ func callChangeLoginPassword(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 
 /**
  * showdoc
- * @catalog 前台/会员
+ * @catalog 前台/用户
  * @title OK绑定登录密码
  * @description 绑定登录密码接口（针对快速注册用户）
  * @method post
@@ -5361,7 +5361,7 @@ func callBindLoginPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 /**
  * showdoc
- * @catalog 前台/余额
+ * @catalog 前台/用户
  * @title OK刷新用户余额
  * @description 刷新用户余额接口
  * @method get
