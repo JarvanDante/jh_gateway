@@ -530,6 +530,194 @@ func (x *LogoutRes) GetMessage() string {
 	return ""
 }
 
+// 绑定邮箱请求
+type BindEmailReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email" dc:"邮箱地址"` // 邮箱地址
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindEmailReq) Reset() {
+	*x = BindEmailReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindEmailReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindEmailReq) ProtoMessage() {}
+
+func (x *BindEmailReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindEmailReq.ProtoReflect.Descriptor instead.
+func (*BindEmailReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *BindEmailReq) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+// 绑定邮箱响应
+type BindEmailRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"提示消息"` // 提示消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindEmailRes) Reset() {
+	*x = BindEmailRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindEmailRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindEmailRes) ProtoMessage() {}
+
+func (x *BindEmailRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindEmailRes.ProtoReflect.Descriptor instead.
+func (*BindEmailRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *BindEmailRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 绑定手机请求
+type BindMobileReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Mobile        string                 `protobuf:"bytes,1,opt,name=mobile,proto3" json:"mobile" dc:"手机号"` // 手机号
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" dc:"手机验证码"`   // 手机验证码
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindMobileReq) Reset() {
+	*x = BindMobileReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindMobileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindMobileReq) ProtoMessage() {}
+
+func (x *BindMobileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindMobileReq.ProtoReflect.Descriptor instead.
+func (*BindMobileReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *BindMobileReq) GetMobile() string {
+	if x != nil {
+		return x.Mobile
+	}
+	return ""
+}
+
+func (x *BindMobileReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+// 绑定手机响应
+type BindMobileRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"提示消息"` // 提示消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindMobileRes) Reset() {
+	*x = BindMobileRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindMobileRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindMobileRes) ProtoMessage() {}
+
+func (x *BindMobileRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindMobileRes.ProtoReflect.Descriptor instead.
+func (*BindMobileRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *BindMobileRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_frontend_user_v1_user_proto_rawDesc = "" +
@@ -582,10 +770,22 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"created_at\x18\x03 \x01(\tR\tcreatedAt\"\v\n" +
 	"\tLogoutReq\"%\n" +
 	"\tLogoutRes\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\x95\x01\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"$\n" +
+	"\fBindEmailReq\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\"(\n" +
+	"\fBindEmailRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\";\n" +
+	"\rBindMobileReq\x12\x16\n" +
+	"\x06mobile\x18\x01 \x01(\tR\x06mobile\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\")\n" +
+	"\rBindMobileRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xaa\x02\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
-	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
+	"\tBindEmail\x12\x1b.frontend_user.BindEmailReq\x1a\x1b.frontend_user.BindEmailRes\"\x00\x12J\n" +
+	"\n" +
+	"BindMobile\x12\x1c.frontend_user.BindMobileReq\x1a\x1c.frontend_user.BindMobileRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -599,7 +799,7 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil), // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil), // 1: frontend_user.GetUserInfoRes
@@ -607,6 +807,10 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*LastMessage)(nil),    // 3: frontend_user.LastMessage
 	(*LogoutReq)(nil),      // 4: frontend_user.LogoutReq
 	(*LogoutRes)(nil),      // 5: frontend_user.LogoutRes
+	(*BindEmailReq)(nil),   // 6: frontend_user.BindEmailReq
+	(*BindEmailRes)(nil),   // 7: frontend_user.BindEmailRes
+	(*BindMobileReq)(nil),  // 8: frontend_user.BindMobileReq
+	(*BindMobileRes)(nil),  // 9: frontend_user.BindMobileRes
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	2, // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
@@ -614,10 +818,14 @@ var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	3, // 2: frontend_user.GetUserInfoRes.last_message:type_name -> frontend_user.LastMessage
 	0, // 3: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
 	4, // 4: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
-	1, // 5: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5, // 6: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	5, // [5:7] is the sub-list for method output_type
-	3, // [3:5] is the sub-list for method input_type
+	6, // 5: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
+	8, // 6: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
+	1, // 7: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5, // 8: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7, // 9: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9, // 10: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -634,7 +842,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

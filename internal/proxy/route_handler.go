@@ -279,4 +279,8 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/user-info", "GET", callGetUserInfo)
 	// 用户退出
 	frontendRoutes.Register("/logout", "POST", callUserLogout)
+	// 绑定邮箱
+	frontendRoutes.Register("/bind-email", "POST", callBindEmail)
+	// 绑定手机
+	frontendRoutes.Register("/bind-mobile", "POST", callBindMobile)
 }

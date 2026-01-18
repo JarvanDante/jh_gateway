@@ -22,6 +22,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	User_GetUserInfo_FullMethodName = "/frontend_user.User/GetUserInfo"
 	User_Logout_FullMethodName      = "/frontend_user.User/Logout"
+	User_BindEmail_FullMethodName   = "/frontend_user.User/BindEmail"
+	User_BindMobile_FullMethodName  = "/frontend_user.User/BindMobile"
 )
 
 // UserClient is the client API for User service.
@@ -30,6 +32,8 @@ const (
 type UserClient interface {
 	GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoRes, error)
 	Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutRes, error)
+	BindEmail(ctx context.Context, in *BindEmailReq, opts ...grpc.CallOption) (*BindEmailRes, error)
+	BindMobile(ctx context.Context, in *BindMobileReq, opts ...grpc.CallOption) (*BindMobileRes, error)
 }
 
 type userClient struct {
@@ -60,12 +64,34 @@ func (c *userClient) Logout(ctx context.Context, in *LogoutReq, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *userClient) BindEmail(ctx context.Context, in *BindEmailReq, opts ...grpc.CallOption) (*BindEmailRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BindEmailRes)
+	err := c.cc.Invoke(ctx, User_BindEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) BindMobile(ctx context.Context, in *BindMobileReq, opts ...grpc.CallOption) (*BindMobileRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BindMobileRes)
+	err := c.cc.Invoke(ctx, User_BindMobile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
 type UserServer interface {
 	GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoRes, error)
 	Logout(context.Context, *LogoutReq) (*LogoutRes, error)
+	BindEmail(context.Context, *BindEmailReq) (*BindEmailRes, error)
+	BindMobile(context.Context, *BindMobileReq) (*BindMobileRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -81,6 +107,12 @@ func (UnimplementedUserServer) GetUserInfo(context.Context, *GetUserInfoReq) (*G
 }
 func (UnimplementedUserServer) Logout(context.Context, *LogoutReq) (*LogoutRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedUserServer) BindEmail(context.Context, *BindEmailReq) (*BindEmailRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method BindEmail not implemented")
+}
+func (UnimplementedUserServer) BindMobile(context.Context, *BindMobileReq) (*BindMobileRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method BindMobile not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -139,6 +171,42 @@ func _User_Logout_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_BindEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindEmailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).BindEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_BindEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).BindEmail(ctx, req.(*BindEmailReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_BindMobile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindMobileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).BindMobile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_BindMobile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).BindMobile(ctx, req.(*BindMobileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -153,6 +221,14 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Logout",
 			Handler:    _User_Logout_Handler,
+		},
+		{
+			MethodName: "BindEmail",
+			Handler:    _User_BindEmail_Handler,
+		},
+		{
+			MethodName: "BindMobile",
+			Handler:    _User_BindMobile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
