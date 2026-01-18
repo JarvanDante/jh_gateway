@@ -4943,6 +4943,109 @@ func callQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	return nil
 }
 
+/**
+ * showdoc
+ * @catalog 前台
+ * @title 用户注册
+ * @description 用户注册接口
+ * @method post
+ * @url /api/frontend/app/register
+ * @param username 必选 string 用户名
+ * @param password 必选 string 密码
+ * @param mobile 可选 string 手机号
+ * @param code 必选 string 图片验证码
+ * @param time 必选 string 时间戳
+ * @param phone_code 可选 string 手机验证码
+ * @param pay_password 可选 string 资金密码
+ * @param realname 可选 string 真实姓名
+ * @param email 可选 string 邮箱
+ * @param birthday 可选 string 生日
+ * @param agent_salt 可选 string 代理码
+ * @param domain 可选 string 注册域名
+ * @return {"code":0,"msg":"success","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."}}
+ * @return_param code int 状态码
+ * @return_param data object 主要数据
+ * @return_param msg string 提示说明
+ * @remark 备注
+ * @number 101
+ */
+func callUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	// 提取字段
+	username, _ := reqData["username"].(string)
+	password, _ := reqData["password"].(string)
+	mobile, _ := reqData["mobile"].(string)
+	code, _ := reqData["code"].(string)
+	time, _ := reqData["time"].(string)
+	phoneCode, _ := reqData["phone_code"].(string)
+	payPassword, _ := reqData["pay_password"].(string)
+	realname, _ := reqData["realname"].(string)
+	email, _ := reqData["email"].(string)
+	birthday, _ := reqData["birthday"].(string)
+	agentSalt, _ := reqData["agent_salt"].(string)
+	domain, _ := reqData["domain"].(string)
+
+	if username == "" {
+		util.WriteBadRequest(r, "用户名必填")
+		return nil
+	}
+	if password == "" {
+		util.WriteBadRequest(r, "密码必填")
+		return nil
+	}
+	if time == "" {
+		util.WriteBadRequest(r, "时间戳必填")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC Register with username=%s", username)
+
+	// 创建 gRPC 客户端
+	client := v15.NewPublicClient(conn)
+	req := &v15.RegisterReq{
+		Username:    username,
+		Password:    password,
+		Mobile:      mobile,
+		Code:        code,
+		Time:        time,
+		PhoneCode:   phoneCode,
+		PayPassword: payPassword,
+		Realname:    realname,
+		Email:       email,
+		Birthday:    birthday,
+		AgentSalt:   agentSalt,
+		Domain:      domain,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.Register(ctx, req)
+	if err != nil {
+		errMsg := err.Error()
+		if strings.Contains(errMsg, "验证码") {
+			util.WriteForbidden(r, errMsg)
+		} else if strings.Contains(errMsg, "已经被注册") {
+			util.WriteBadRequest(r, errMsg)
+		} else if strings.Contains(errMsg, "注册失败") {
+			util.WriteInternalError(r, "注册失败，请稍后重试")
+		} else {
+			util.WriteInternalError(r, "注册服务暂时不可用，请稍后重试")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"token": res.Token,
+	})
+	return nil
+}
+
 // callFrontendGRPCMethod 根据 HTTP 路径调用对应的前台 gRPC 方法
 func callFrontendGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 统一添加traceId到gRPC上下文

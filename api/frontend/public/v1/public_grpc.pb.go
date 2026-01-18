@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Public_QuickRegister_FullMethodName   = "/public.Public/QuickRegister"
+	Public_Register_FullMethodName        = "/public.Public/Register"
 	Public_Login_FullMethodName           = "/public.Public/Login"
 	Public_GenerateCaptcha_FullMethodName = "/public.Public/GenerateCaptcha"
 )
@@ -30,6 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PublicClient interface {
 	QuickRegister(ctx context.Context, in *QuickRegisterReq, opts ...grpc.CallOption) (*QuickRegisterRes, error)
+	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterRes, error)
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRes, error)
 	GenerateCaptcha(ctx context.Context, in *GenerateCaptchaReq, opts ...grpc.CallOption) (*GenerateCaptchaRes, error)
 }
@@ -46,6 +48,16 @@ func (c *publicClient) QuickRegister(ctx context.Context, in *QuickRegisterReq, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(QuickRegisterRes)
 	err := c.cc.Invoke(ctx, Public_QuickRegister_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *publicClient) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RegisterRes)
+	err := c.cc.Invoke(ctx, Public_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,6 +89,7 @@ func (c *publicClient) GenerateCaptcha(ctx context.Context, in *GenerateCaptchaR
 // for forward compatibility.
 type PublicServer interface {
 	QuickRegister(context.Context, *QuickRegisterReq) (*QuickRegisterRes, error)
+	Register(context.Context, *RegisterReq) (*RegisterRes, error)
 	Login(context.Context, *LoginReq) (*LoginRes, error)
 	GenerateCaptcha(context.Context, *GenerateCaptchaReq) (*GenerateCaptchaRes, error)
 	mustEmbedUnimplementedPublicServer()
@@ -91,6 +104,9 @@ type UnimplementedPublicServer struct{}
 
 func (UnimplementedPublicServer) QuickRegister(context.Context, *QuickRegisterReq) (*QuickRegisterRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method QuickRegister not implemented")
+}
+func (UnimplementedPublicServer) Register(context.Context, *RegisterReq) (*RegisterRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedPublicServer) Login(context.Context, *LoginReq) (*LoginRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method Login not implemented")
@@ -133,6 +149,24 @@ func _Public_QuickRegister_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PublicServer).QuickRegister(ctx, req.(*QuickRegisterReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Public_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServer).Register(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Public_Register_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServer).Register(ctx, req.(*RegisterReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -183,6 +217,10 @@ var Public_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QuickRegister",
 			Handler:    _Public_QuickRegister_Handler,
+		},
+		{
+			MethodName: "Register",
+			Handler:    _Public_Register_Handler,
 		},
 		{
 			MethodName: "Login",

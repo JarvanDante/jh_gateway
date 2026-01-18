@@ -348,6 +348,184 @@ func (x *GenerateCaptchaRes) GetContentType() string {
 	return ""
 }
 
+// 注册请求
+type RegisterReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" v:"required"`                       // v: required
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password" v:"required"`                       // v: required
+	Mobile        string                 `protobuf:"bytes,3,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                               // 手机号
+	Code          string                 `protobuf:"bytes,4,opt,name=code,proto3" json:"code" dc:"图片验证码"`                                 // 图片验证码
+	Time          string                 `protobuf:"bytes,5,opt,name=time,proto3" json:"time" dc:"时间戳"`                                   // 时间戳
+	PhoneCode     string                 `protobuf:"bytes,6,opt,name=phone_code,json=phoneCode,proto3" json:"phone_code" dc:"手机验证码"`      // 手机验证码
+	PayPassword   string                 `protobuf:"bytes,7,opt,name=pay_password,json=payPassword,proto3" json:"pay_password" dc:"资金密码"` // 资金密码
+	Realname      string                 `protobuf:"bytes,8,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                          // 真实姓名
+	Email         string                 `protobuf:"bytes,9,opt,name=email,proto3" json:"email" dc:"邮箱"`                                  // 邮箱
+	Birthday      string                 `protobuf:"bytes,10,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                           // 生日
+	AgentSalt     string                 `protobuf:"bytes,11,opt,name=agent_salt,json=agentSalt,proto3" json:"agent_salt" dc:"代理码"`       // 代理码
+	Domain        string                 `protobuf:"bytes,12,opt,name=domain,proto3" json:"domain" dc:"注册域名"`                             // 注册域名
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterReq) Reset() {
+	*x = RegisterReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterReq) ProtoMessage() {}
+
+func (x *RegisterReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterReq.ProtoReflect.Descriptor instead.
+func (*RegisterReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RegisterReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetMobile() string {
+	if x != nil {
+		return x.Mobile
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetTime() string {
+	if x != nil {
+		return x.Time
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetPhoneCode() string {
+	if x != nil {
+		return x.PhoneCode
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetPayPassword() string {
+	if x != nil {
+		return x.PayPassword
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetRealname() string {
+	if x != nil {
+		return x.Realname
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetBirthday() string {
+	if x != nil {
+		return x.Birthday
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetAgentSalt() string {
+	if x != nil {
+		return x.AgentSalt
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+// 注册响应
+type RegisterRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token" dc:"JWT token"` // JWT token
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterRes) Reset() {
+	*x = RegisterRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterRes) ProtoMessage() {}
+
+func (x *RegisterRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterRes.ProtoReflect.Descriptor instead.
+func (*RegisterRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *RegisterRes) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
 var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
@@ -371,9 +549,28 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x04time\x18\x01 \x01(\tR\x04time\"M\n" +
 	"\x12GenerateCaptchaRes\x12\x14\n" +
 	"\x05image\x18\x01 \x01(\fR\x05image\x12!\n" +
-	"\fcontent_type\x18\x02 \x01(\tR\vcontentType2\xcb\x01\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"\xcc\x02\n" +
+	"\vRegisterReq\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x16\n" +
+	"\x06mobile\x18\x03 \x01(\tR\x06mobile\x12\x12\n" +
+	"\x04code\x18\x04 \x01(\tR\x04code\x12\x12\n" +
+	"\x04time\x18\x05 \x01(\tR\x04time\x12\x1d\n" +
+	"\n" +
+	"phone_code\x18\x06 \x01(\tR\tphoneCode\x12!\n" +
+	"\fpay_password\x18\a \x01(\tR\vpayPassword\x12\x1a\n" +
+	"\brealname\x18\b \x01(\tR\brealname\x12\x14\n" +
+	"\x05email\x18\t \x01(\tR\x05email\x12\x1a\n" +
+	"\bbirthday\x18\n" +
+	" \x01(\tR\bbirthday\x12\x1d\n" +
+	"\n" +
+	"agent_salt\x18\v \x01(\tR\tagentSalt\x12\x16\n" +
+	"\x06domain\x18\f \x01(\tR\x06domain\"#\n" +
+	"\vRegisterRes\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token2\x83\x02\n" +
 	"\x06Public\x12E\n" +
-	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x12-\n" +
+	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x126\n" +
+	"\bRegister\x12\x13.public.RegisterReq\x1a\x13.public.RegisterRes\"\x00\x12-\n" +
 	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00\x12K\n" +
 	"\x0fGenerateCaptcha\x12\x1a.public.GenerateCaptchaReq\x1a\x1a.public.GenerateCaptchaRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
@@ -389,7 +586,7 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
 	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
@@ -397,16 +594,20 @@ var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*LoginRes)(nil),           // 3: public.LoginRes
 	(*GenerateCaptchaReq)(nil), // 4: public.GenerateCaptchaReq
 	(*GenerateCaptchaRes)(nil), // 5: public.GenerateCaptchaRes
+	(*RegisterReq)(nil),        // 6: public.RegisterReq
+	(*RegisterRes)(nil),        // 7: public.RegisterRes
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	0, // 0: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
-	2, // 1: public.Public.Login:input_type -> public.LoginReq
-	4, // 2: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
-	1, // 3: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	3, // 4: public.Public.Login:output_type -> public.LoginRes
-	5, // 5: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	6, // 1: public.Public.Register:input_type -> public.RegisterReq
+	2, // 2: public.Public.Login:input_type -> public.LoginReq
+	4, // 3: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
+	1, // 4: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	7, // 5: public.Public.Register:output_type -> public.RegisterRes
+	3, // 6: public.Public.Login:output_type -> public.LoginRes
+	5, // 7: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -423,7 +624,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

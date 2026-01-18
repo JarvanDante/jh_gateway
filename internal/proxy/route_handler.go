@@ -267,6 +267,8 @@ func initFrontendRoutes() {
 
 	// 快速注册
 	frontendRoutes.Register("/quickRegister", "POST", callQuickRegister)
+	// 用户注册
+	frontendRoutes.Register("/register", "POST", callUserRegister)
 	// 用户登录
 	frontendRoutes.Register("/login", "POST", callUserLogin)
 	// 获取验证码
