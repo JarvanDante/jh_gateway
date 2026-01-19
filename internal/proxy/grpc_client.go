@@ -1920,6 +1920,9 @@ func callSaveUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 					RebatePercentLive:    getFloat64FromMap(gradeMap, "rebate_percent_live"),
 					RebatePercentEgame:   getFloat64FromMap(gradeMap, "rebate_percent_egame"),
 					RebatePercentPoker:   getFloat64FromMap(gradeMap, "rebate_percent_poker"),
+					PaymentLimit:         getFloat64FromMap(gradeMap, "payment_limit"),
+					BetLimit:             getFloat64FromMap(gradeMap, "bet_limit"),
+					MoneyLimit:           getFloat64FromMap(gradeMap, "money_limit"),
 				}
 				gradeInfos = append(gradeInfos, gradeInfo)
 			}
