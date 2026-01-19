@@ -1157,10 +1157,12 @@ type UserGradeInfo struct {
 	RebatePercentLive    float64                `protobuf:"fixed64,8,opt,name=rebate_percent_live,json=rebatePercentLive,proto3" json:"rebate_percent_live" dc:"真人视讯返水比例"`        // 真人视讯返水比例
 	RebatePercentEgame   float64                `protobuf:"fixed64,9,opt,name=rebate_percent_egame,json=rebatePercentEgame,proto3" json:"rebate_percent_egame" dc:"电子游戏返水比例"`     // 电子游戏返水比例
 	RebatePercentPoker   float64                `protobuf:"fixed64,10,opt,name=rebate_percent_poker,json=rebatePercentPoker,proto3" json:"rebate_percent_poker" dc:"扑克返水比例"`      // 扑克返水比例
-	UserCount            int32                  `protobuf:"varint,11,opt,name=user_count,json=userCount,proto3" json:"user_count" dc:"该等级用户数量"`                                   // 该等级用户数量
-	FieldsDisable        string                 `protobuf:"bytes,12,opt,name=fields_disable,json=fieldsDisable,proto3" json:"fields_disable" dc:"禁用字段配置"`                         // 禁用字段配置
-	AutoProviding        string                 `protobuf:"bytes,13,opt,name=auto_providing,json=autoProviding,proto3" json:"auto_providing" dc:"自动发放配置"`                         // 自动发放配置
-	Activities           []string               `protobuf:"bytes,14,rep,name=activities,proto3" json:"activities" dc:"关联活动列表"`                                                    // 关联活动列表
+	FieldsDisable        string                 `protobuf:"bytes,11,opt,name=fields_disable,json=fieldsDisable,proto3" json:"fields_disable" dc:"禁用字段配置"`                         // 禁用字段配置
+	AutoProviding        string                 `protobuf:"bytes,12,opt,name=auto_providing,json=autoProviding,proto3" json:"auto_providing" dc:"自动发放配置"`                         // 自动发放配置
+	PaymentLimit         float64                `protobuf:"fixed64,13,opt,name=payment_limit,json=paymentLimit,proto3" json:"payment_limit" dc:"存款金额"`                            // 存款金额
+	BetLimit             float64                `protobuf:"fixed64,14,opt,name=bet_limit,json=betLimit,proto3" json:"bet_limit" dc:"有效投注"`                                        // 有效投注
+	MoneyLimit           float64                `protobuf:"fixed64,15,opt,name=money_limit,json=moneyLimit,proto3" json:"money_limit" dc:"升级礼金"`                                  // 升级礼金
+	Activities           []string               `protobuf:"bytes,16,rep,name=activities,proto3" json:"activities" dc:"关联活动列表"`                                                    // 关联活动列表
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1265,13 +1267,6 @@ func (x *UserGradeInfo) GetRebatePercentPoker() float64 {
 	return 0
 }
 
-func (x *UserGradeInfo) GetUserCount() int32 {
-	if x != nil {
-		return x.UserCount
-	}
-	return 0
-}
-
 func (x *UserGradeInfo) GetFieldsDisable() string {
 	if x != nil {
 		return x.FieldsDisable
@@ -1284,6 +1279,27 @@ func (x *UserGradeInfo) GetAutoProviding() string {
 		return x.AutoProviding
 	}
 	return ""
+}
+
+func (x *UserGradeInfo) GetPaymentLimit() float64 {
+	if x != nil {
+		return x.PaymentLimit
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetBetLimit() float64 {
+	if x != nil {
+		return x.BetLimit
+	}
+	return 0
+}
+
+func (x *UserGradeInfo) GetMoneyLimit() float64 {
+	if x != nil {
+		return x.MoneyLimit
+	}
+	return 0
 }
 
 func (x *UserGradeInfo) GetActivities() []string {
@@ -2002,7 +2018,7 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\x13GetUserBasicInfoRes\x12'\n" +
 	"\x04user\x18\x01 \x01(\v2\x13.user.UserBasicInfoR\x04user\"+\n" +
 	"\x10GetUserGradesReq\x12\x17\n" +
-	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xb1\x04\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\"\xf5\x04\n" +
 	"\rUserGradeInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
@@ -2014,13 +2030,15 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\x13rebate_percent_live\x18\b \x01(\x01R\x11rebatePercentLive\x120\n" +
 	"\x14rebate_percent_egame\x18\t \x01(\x01R\x12rebatePercentEgame\x120\n" +
 	"\x14rebate_percent_poker\x18\n" +
-	" \x01(\x01R\x12rebatePercentPoker\x12\x1d\n" +
+	" \x01(\x01R\x12rebatePercentPoker\x12%\n" +
+	"\x0efields_disable\x18\v \x01(\tR\rfieldsDisable\x12%\n" +
+	"\x0eauto_providing\x18\f \x01(\tR\rautoProviding\x12#\n" +
+	"\rpayment_limit\x18\r \x01(\x01R\fpaymentLimit\x12\x1b\n" +
+	"\tbet_limit\x18\x0e \x01(\x01R\bbetLimit\x12\x1f\n" +
+	"\vmoney_limit\x18\x0f \x01(\x01R\n" +
+	"moneyLimit\x12\x1e\n" +
 	"\n" +
-	"user_count\x18\v \x01(\x05R\tuserCount\x12%\n" +
-	"\x0efields_disable\x18\f \x01(\tR\rfieldsDisable\x12%\n" +
-	"\x0eauto_providing\x18\r \x01(\tR\rautoProviding\x12\x1e\n" +
-	"\n" +
-	"activities\x18\x0e \x03(\tR\n" +
+	"activities\x18\x10 \x03(\tR\n" +
 	"activities\"i\n" +
 	"\x10GetUserGradesRes\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
