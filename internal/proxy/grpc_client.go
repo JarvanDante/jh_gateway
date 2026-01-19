@@ -22,7 +22,9 @@ import (
 	v16 "jh_gateway/api/frontend/user/v1"
 	v13 "jh_gateway/api/manage/admin/v1"
 	v12 "jh_gateway/api/manage/customer/v1"
+	v18 "jh_gateway/api/manage/game/v1"
 	v14 "jh_gateway/api/manage/option/v1"
+	v19 "jh_gateway/api/manage/site_game/v1"
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/util"
 	"path/filepath"
@@ -5627,8 +5629,8 @@ func callGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
- * @catalog 前台/公共
- * @title 获取公告列表
+ * @catalog 前台/运营
+ * @title OK获取公告列表
  * @description 获取最新公告列表接口
  * @method get
  * @url /api/frontend/app/notice-list
@@ -5664,8 +5666,8 @@ func callGetAppNoticeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 /**
  * showdoc
- * @catalog 前台/公共
- * @title 获取广告列表
+ * @catalog 前台/运营
+ * @title OK获取广告列表
  * @description 获取首页广告列表接口
  * @method get
  * @url /api/frontend/app/ad-list
@@ -5699,5 +5701,345 @@ func callGetAppAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	}
 
 	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 获取游戏列表
+ * @description 获取游戏列表的接口
+ * @method get
+ * @url /api/manage/game/list
+ * @param type 可选 int 游戏类型 1=体育 2=彩票 3=真人 4=电子游戏
+ * @param status 可选 int 状态 1=启用 0=禁用
+ * @param platform 可选 string 平台标识
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认20
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func callGetGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame GetGameList")
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.GetGameListReq{
+		Type:     r.Get("type", 0).Int32(),
+		Status:   r.Get("status", -1).Int32(),
+		Platform: r.Get("platform", "").String(),
+		Page:     r.Get("page", 1).Int32(),
+		Size:     r.Get("size", 20).Int32(),
+	}
+
+	res, err := client.GetGameList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGameList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 获取游戏详情
+ * @description 获取指定游戏详情的接口
+ * @method get
+ * @url /api/manage/game/detail/{id}
+ * @param id 必选 int 游戏ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 游戏详情数据
+ * @number 2
+ */
+func callGetGameDetail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame GetGameDetail")
+
+	idStr := r.Get("id").String()
+	if idStr == "" {
+		util.WriteBadRequest(r, "游戏ID不能为空")
+		return fmt.Errorf("游戏ID不能为空")
+	}
+
+	id := r.Get("id").Int32()
+	if id <= 0 {
+		util.WriteBadRequest(r, "游戏ID必须大于0")
+		return fmt.Errorf("游戏ID必须大于0")
+	}
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.GetGameDetailReq{
+		Id: id,
+	}
+
+	res, err := client.GetGameDetail(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGameDetail failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 创建游戏
+ * @description 创建游戏的接口
+ * @method post
+ * @url /api/manage/game/create
+ * @param type 必选 int 游戏类型 1=体育 2=彩票 3=真人 4=电子游戏
+ * @param name 必选 string 游戏名称
+ * @param platform 必选 string 平台标识
+ * @param code 必选 string 游戏标识
+ * @param image_code 可选 string 图片标识
+ * @param status 可选 int 状态 1=启用 0=禁用
+ * @param db_name 可选 string 数据表名称
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"id":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.id int 创建的游戏ID
+ * @number 3
+ */
+func callCreateGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame CreateGame")
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.CreateGameReq{
+		Type:      r.Get("type").Int32(),
+		Name:      r.Get("name").String(),
+		Platform:  r.Get("platform").String(),
+		Code:      r.Get("code").String(),
+		ImageCode: r.Get("image_code", "").String(),
+		Status:    r.Get("status", 1).Int32(),
+		DbName:    r.Get("db_name", "").String(),
+		Remark:    r.Get("remark", "").String(),
+	}
+
+	res, err := client.CreateGame(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game CreateGame failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 更新游戏
+ * @description 更新游戏信息的接口
+ * @method post
+ * @url /api/manage/game/update
+ * @param id 必选 int 游戏ID
+ * @param type 可选 int 游戏类型
+ * @param name 可选 string 游戏名称
+ * @param platform 可选 string 平台标识
+ * @param code 可选 string 游戏标识
+ * @param image_code 可选 string 图片标识
+ * @param status 可选 int 状态
+ * @param db_name 可选 string 数据表名称
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func callUpdateGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame UpdateGame")
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.UpdateGameReq{
+		Id:        r.Get("id").Int32(),
+		Type:      r.Get("type", 0).Int32(),
+		Name:      r.Get("name", "").String(),
+		Platform:  r.Get("platform", "").String(),
+		Code:      r.Get("code", "").String(),
+		ImageCode: r.Get("image_code", "").String(),
+		Status:    r.Get("status", -1).Int32(),
+		DbName:    r.Get("db_name", "").String(),
+		Remark:    r.Get("remark", "").String(),
+	}
+
+	res, err := client.UpdateGame(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game UpdateGame failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 删除游戏
+ * @description 删除游戏的接口
+ * @method post
+ * @url /api/manage/game/delete
+ * @param id 必选 int 游戏ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 5
+ */
+func callDeleteGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame DeleteGame")
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.DeleteGameReq{
+		Id: r.Get("id").Int32(),
+	}
+
+	res, err := client.DeleteGame(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game DeleteGame failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点游戏管理
+ * @title 获取站点游戏列表
+ * @description 获取指定站点的游戏列表
+ * @method get
+ * @url /api/manage/site_game/list
+ * @param site_code 必选 string 站点编码
+ * @return {"code":0,"msg":"success","data":{"list":[]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func callGetSiteGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteGame GetSiteGameList")
+
+	siteCode := r.Get("site_code").String()
+	if siteCode == "" {
+		util.WriteBadRequest(r, "站点编码不能为空")
+		return fmt.Errorf("站点编码不能为空")
+	}
+
+	client := v19.NewManageSiteGameClient(conn)
+	req := &v19.GetSiteGameListReq{
+		SiteCode: siteCode,
+	}
+
+	res, err := client.GetSiteGameList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteGame GetSiteGameList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点游戏管理
+ * @title 更新站点游戏状态
+ * @description 更新站点游戏的启用/禁用状态
+ * @method post
+ * @url /api/manage/site_game/update_status
+ * @param id 必选 int 站点游戏ID
+ * @param status 必选 int 状态 1=启用 0=禁用
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func callUpdateSiteGameStatus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteGame UpdateSiteGameStatus")
+
+	client := v19.NewManageSiteGameClient(conn)
+	req := &v19.UpdateSiteGameStatusReq{
+		Id:     r.Get("id").Int32(),
+		Status: r.Get("status").Int32(),
+	}
+
+	res, err := client.UpdateSiteGameStatus(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteGame UpdateSiteGameStatus failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点游戏管理
+ * @title 绑定游戏到站点
+ * @description 将游戏绑定到指定站点
+ * @method post
+ * @url /api/manage/site_game/bind
+ * @param site_code 必选 string 站点编码
+ * @param game_id 必选 int 游戏ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func callBindSiteGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteGame BindSiteGame")
+
+	client := v19.NewManageSiteGameClient(conn)
+	req := &v19.BindSiteGameReq{
+		SiteCode: r.Get("site_code").String(),
+		GameId:   r.Get("game_id").Int32(),
+	}
+
+	res, err := client.BindSiteGame(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteGame BindSiteGame failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点游戏管理
+ * @title 取消绑定游戏
+ * @description 取消站点游戏绑定
+ * @method post
+ * @url /api/manage/site_game/unbind
+ * @param id 必选 int 站点游戏ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func callUnbindSiteGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteGame UnbindSiteGame")
+
+	client := v19.NewManageSiteGameClient(conn)
+	req := &v19.UnbindSiteGameReq{
+		Id: r.Get("id").Int32(),
+	}
+
+	res, err := client.UnbindSiteGame(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteGame UnbindSiteGame failed: %v", err)
+		return err
+	}
+
 	return writeProtobufResponse(ctx, r, res)
 }

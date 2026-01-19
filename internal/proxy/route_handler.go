@@ -257,6 +257,19 @@ func initManageRoutes() {
 	manageRoutes.Register("/customer/rollback", "POST", callRollbackCustomer)
 	manageRoutes.Register("/customer/version-history", "GET", callGetCustomerVersionHistory)
 
+	// 游戏管理接口
+	manageRoutes.Register("/game/list", "GET", callGetGameList)
+	manageRoutes.Register("/game/detail", "GET", callGetGameDetail)
+	manageRoutes.Register("/game/create", "POST", callCreateGame)
+	manageRoutes.Register("/game/update", "POST", callUpdateGame)
+	manageRoutes.Register("/game/delete", "POST", callDeleteGame)
+
+	// 站点游戏管理接口
+	manageRoutes.Register("/site_game/list", "GET", callGetSiteGameList)
+	manageRoutes.Register("/site_game/update_status", "POST", callUpdateSiteGameStatus)
+	manageRoutes.Register("/site_game/bind", "POST", callBindSiteGame)
+	manageRoutes.Register("/site_game/unbind", "POST", callUnbindSiteGame)
+
 	// 选项接口
 	manageRoutes.Register("/options/domain-type", "GET", callGetDomainTypeOptions)
 	manageRoutes.Register("/options/site", "GET", callGetSiteOptions)
