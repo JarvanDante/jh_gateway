@@ -5544,7 +5544,7 @@ func callGenerateCaptcha(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 /**
  * showdoc
  * @catalog 前台/用户
- * @title 获取会员等级列表
+ * @title OK获取会员等级列表
  * @description 获取会员等级列表接口
  * @method get
  * @url /api/frontend/app/grade-list
@@ -5584,8 +5584,8 @@ func callGetGradeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 
 /**
  * showdoc
- * @catalog 前台/公共
- * @title 获取站点设置
+ * @catalog 前台/网站
+ * @title OK获取站点设置
  * @description 获取站点设置接口
  * @method get
  * @url /api/frontend/app/setting-site
