@@ -293,7 +293,11 @@ func initFrontendRoutes() {
 	// 绑定登录密码（针对快速注册用户）
 	frontendRoutes.Register("/bind-login-password", "POST", callBindLoginPassword)
 	// 获取会员等级列表
-	frontendRoutes.Register("/grade-list", "GET", callGetGradeList)
+	frontendRoutes.Register("/grade-list", "GET", callGetAppGradeList)
+	// 获取公告列表
+	frontendRoutes.Register("/notice-list", "GET", callGetAppNoticeList)
+	// 获取广告列表
+	frontendRoutes.Register("/ad-list", "GET", callGetAppAdList)
 	// 获取站点设置
 	frontendRoutes.Register("/setting-site", "GET", callGetSiteSetting)
 }

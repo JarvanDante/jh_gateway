@@ -1294,6 +1294,348 @@ func (x *GetSiteSettingRes) GetCloseReason() string {
 	return ""
 }
 
+// 获取公告列表请求
+type GetNoticeListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Limit         int32                  `protobuf:"varint,1,opt,name=limit,proto3" json:"limit" dc:"限制数量，默认3"` // 限制数量，默认3
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetNoticeListReq) Reset() {
+	*x = GetNoticeListReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetNoticeListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetNoticeListReq) ProtoMessage() {}
+
+func (x *GetNoticeListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetNoticeListReq.ProtoReflect.Descriptor instead.
+func (*GetNoticeListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetNoticeListReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+// 获取公告列表响应
+type GetNoticeListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*NoticeItem          `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"公告列表"` // 公告列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetNoticeListRes) Reset() {
+	*x = GetNoticeListRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetNoticeListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetNoticeListRes) ProtoMessage() {}
+
+func (x *GetNoticeListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetNoticeListRes.ProtoReflect.Descriptor instead.
+func (*GetNoticeListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetNoticeListRes) GetList() []*NoticeItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+// 公告项
+type NoticeItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" dc:"标题"`                            // 标题
+	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url" dc:"链接"`                                // 链接
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content" dc:"内容"`                        // 内容
+	CreatedAt     string                 `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"` // 创建时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *NoticeItem) Reset() {
+	*x = NoticeItem{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NoticeItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NoticeItem) ProtoMessage() {}
+
+func (x *NoticeItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NoticeItem.ProtoReflect.Descriptor instead.
+func (*NoticeItem) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *NoticeItem) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *NoticeItem) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *NoticeItem) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *NoticeItem) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取广告列表请求
+type GetAdListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Mobile        int32                  `protobuf:"varint,1,opt,name=mobile,proto3" json:"mobile" dc:"是否手机端 0=PC 1=手机"` // 是否手机端 0=PC 1=手机
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAdListReq) Reset() {
+	*x = GetAdListReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAdListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAdListReq) ProtoMessage() {}
+
+func (x *GetAdListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAdListReq.ProtoReflect.Descriptor instead.
+func (*GetAdListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetAdListReq) GetMobile() int32 {
+	if x != nil {
+		return x.Mobile
+	}
+	return 0
+}
+
+// 获取广告列表响应
+type GetAdListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*AdItem              `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"广告列表"` // 广告列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAdListRes) Reset() {
+	*x = GetAdListRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAdListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAdListRes) ProtoMessage() {}
+
+func (x *GetAdListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAdListRes.ProtoReflect.Descriptor instead.
+func (*GetAdListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetAdListRes) GetList() []*AdItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+// 广告项
+type AdItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name" dc:"名称"`                                                  // 名称
+	Image         string                 `protobuf:"bytes,2,opt,name=image,proto3" json:"image" dc:"图片地址"`                                              // 图片地址
+	Url           string                 `protobuf:"bytes,3,opt,name=url,proto3" json:"url" dc:"链接"`                                                    // 链接
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type" dc:"类型 1=首页图片弹窗 2=首页悬浮图片 3=首页banner图片"`                  // 类型 1=首页图片弹窗 2=首页悬浮图片 3=首页banner图片
+	BeforeLogin   int32                  `protobuf:"varint,5,opt,name=before_login,json=beforeLogin,proto3" json:"before_login" dc:"登录前显示 0=登录后 1=登录前"` // 登录前显示 0=登录后 1=登录前
+	Position      int32                  `protobuf:"varint,6,opt,name=position,proto3" json:"position" dc:"位置 1=PC 2=WAP"`                              // 位置 1=PC 2=WAP
+	Sort          int32                  `protobuf:"varint,7,opt,name=sort,proto3" json:"sort" dc:"排序"`                                                 // 排序
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AdItem) Reset() {
+	*x = AdItem{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AdItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AdItem) ProtoMessage() {}
+
+func (x *AdItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AdItem.ProtoReflect.Descriptor instead.
+func (*AdItem) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *AdItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AdItem) GetImage() string {
+	if x != nil {
+		return x.Image
+	}
+	return ""
+}
+
+func (x *AdItem) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *AdItem) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *AdItem) GetBeforeLogin() int32 {
+	if x != nil {
+		return x.BeforeLogin
+	}
+	return 0
+}
+
+func (x *AdItem) GetPosition() int32 {
+	if x != nil {
+		return x.Position
+	}
+	return 0
+}
+
+func (x *AdItem) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
 var File_frontend_public_v1_public_proto protoreflect.FileDescriptor
 
 const file_frontend_public_v1_public_proto_rawDesc = "" +
@@ -1417,14 +1759,39 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\vmobile_logo\x18\n" +
 	" \x01(\tR\n" +
 	"mobileLogo\x12!\n" +
-	"\fclose_reason\x18\v \x01(\tR\vcloseReason2\x91\x03\n" +
+	"\fclose_reason\x18\v \x01(\tR\vcloseReason\"(\n" +
+	"\x10GetNoticeListReq\x12\x14\n" +
+	"\x05limit\x18\x01 \x01(\x05R\x05limit\":\n" +
+	"\x10GetNoticeListRes\x12&\n" +
+	"\x04list\x18\x01 \x03(\v2\x12.public.NoticeItemR\x04list\"m\n" +
+	"\n" +
+	"NoticeItem\x12\x14\n" +
+	"\x05title\x18\x01 \x01(\tR\x05title\x12\x10\n" +
+	"\x03url\x18\x02 \x01(\tR\x03url\x12\x18\n" +
+	"\acontent\x18\x03 \x01(\tR\acontent\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x04 \x01(\tR\tcreatedAt\"&\n" +
+	"\fGetAdListReq\x12\x16\n" +
+	"\x06mobile\x18\x01 \x01(\x05R\x06mobile\"2\n" +
+	"\fGetAdListRes\x12\"\n" +
+	"\x04list\x18\x01 \x03(\v2\x0e.public.AdItemR\x04list\"\xab\x01\n" +
+	"\x06AdItem\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x05image\x18\x02 \x01(\tR\x05image\x12\x10\n" +
+	"\x03url\x18\x03 \x01(\tR\x03url\x12\x12\n" +
+	"\x04type\x18\x04 \x01(\x05R\x04type\x12!\n" +
+	"\fbefore_login\x18\x05 \x01(\x05R\vbeforeLogin\x12\x1a\n" +
+	"\bposition\x18\x06 \x01(\x05R\bposition\x12\x12\n" +
+	"\x04sort\x18\a \x01(\x05R\x04sort2\x99\x04\n" +
 	"\x06Public\x12E\n" +
 	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x126\n" +
 	"\bRegister\x12\x13.public.RegisterReq\x1a\x13.public.RegisterRes\"\x00\x12-\n" +
 	"\x05Login\x12\x10.public.LoginReq\x1a\x10.public.LoginRes\"\x00\x12K\n" +
 	"\x0fGenerateCaptcha\x12\x1a.public.GenerateCaptchaReq\x1a\x1a.public.GenerateCaptchaRes\"\x00\x12B\n" +
 	"\fRefreshToken\x12\x17.public.RefreshTokenReq\x1a\x17.public.RefreshTokenRes\"\x00\x12H\n" +
-	"\x0eGetSiteSetting\x12\x19.public.GetSiteSettingReq\x1a\x19.public.GetSiteSettingRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
+	"\x0eGetSiteSetting\x12\x19.public.GetSiteSettingReq\x1a\x19.public.GetSiteSettingRes\"\x00\x12H\n" +
+	"\x10GetAppNoticeList\x12\x18.public.GetNoticeListReq\x1a\x18.public.GetNoticeListRes\"\x00\x12<\n" +
+	"\fGetAppAdList\x12\x14.public.GetAdListReq\x1a\x14.public.GetAdListRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
 var (
 	file_frontend_public_v1_public_proto_rawDescOnce sync.Once
@@ -1438,7 +1805,7 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
 	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
@@ -1456,28 +1823,40 @@ var file_frontend_public_v1_public_proto_goTypes = []any{
 	(*LastMessage)(nil),        // 13: public.LastMessage
 	(*GetSiteSettingReq)(nil),  // 14: public.GetSiteSettingReq
 	(*GetSiteSettingRes)(nil),  // 15: public.GetSiteSettingRes
+	(*GetNoticeListReq)(nil),   // 16: public.GetNoticeListReq
+	(*GetNoticeListRes)(nil),   // 17: public.GetNoticeListRes
+	(*NoticeItem)(nil),         // 18: public.NoticeItem
+	(*GetAdListReq)(nil),       // 19: public.GetAdListReq
+	(*GetAdListRes)(nil),       // 20: public.GetAdListRes
+	(*AdItem)(nil),             // 21: public.AdItem
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	12, // 0: public.GetUserInfoRes.last_recharge:type_name -> public.LastRecord
 	12, // 1: public.GetUserInfoRes.last_withdraw:type_name -> public.LastRecord
 	13, // 2: public.GetUserInfoRes.last_message:type_name -> public.LastMessage
-	0,  // 3: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
-	8,  // 4: public.Public.Register:input_type -> public.RegisterReq
-	2,  // 5: public.Public.Login:input_type -> public.LoginReq
-	4,  // 6: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
-	6,  // 7: public.Public.RefreshToken:input_type -> public.RefreshTokenReq
-	14, // 8: public.Public.GetSiteSetting:input_type -> public.GetSiteSettingReq
-	1,  // 9: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	9,  // 10: public.Public.Register:output_type -> public.RegisterRes
-	3,  // 11: public.Public.Login:output_type -> public.LoginRes
-	5,  // 12: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
-	7,  // 13: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
-	15, // 14: public.Public.GetSiteSetting:output_type -> public.GetSiteSettingRes
-	9,  // [9:15] is the sub-list for method output_type
-	3,  // [3:9] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	18, // 3: public.GetNoticeListRes.list:type_name -> public.NoticeItem
+	21, // 4: public.GetAdListRes.list:type_name -> public.AdItem
+	0,  // 5: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
+	8,  // 6: public.Public.Register:input_type -> public.RegisterReq
+	2,  // 7: public.Public.Login:input_type -> public.LoginReq
+	4,  // 8: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
+	6,  // 9: public.Public.RefreshToken:input_type -> public.RefreshTokenReq
+	14, // 10: public.Public.GetSiteSetting:input_type -> public.GetSiteSettingReq
+	16, // 11: public.Public.GetAppNoticeList:input_type -> public.GetNoticeListReq
+	19, // 12: public.Public.GetAppAdList:input_type -> public.GetAdListReq
+	1,  // 13: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	9,  // 14: public.Public.Register:output_type -> public.RegisterRes
+	3,  // 15: public.Public.Login:output_type -> public.LoginRes
+	5,  // 16: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	7,  // 17: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
+	15, // 18: public.Public.GetSiteSetting:output_type -> public.GetSiteSettingRes
+	17, // 19: public.Public.GetAppNoticeList:output_type -> public.GetNoticeListRes
+	20, // 20: public.Public.GetAppAdList:output_type -> public.GetAdListRes
+	13, // [13:21] is the sub-list for method output_type
+	5,  // [5:13] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_frontend_public_v1_public_proto_init() }
@@ -1491,7 +1870,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

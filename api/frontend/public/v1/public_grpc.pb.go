@@ -20,12 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Public_QuickRegister_FullMethodName   = "/public.Public/QuickRegister"
-	Public_Register_FullMethodName        = "/public.Public/Register"
-	Public_Login_FullMethodName           = "/public.Public/Login"
-	Public_GenerateCaptcha_FullMethodName = "/public.Public/GenerateCaptcha"
-	Public_RefreshToken_FullMethodName    = "/public.Public/RefreshToken"
-	Public_GetSiteSetting_FullMethodName  = "/public.Public/GetSiteSetting"
+	Public_QuickRegister_FullMethodName    = "/public.Public/QuickRegister"
+	Public_Register_FullMethodName         = "/public.Public/Register"
+	Public_Login_FullMethodName            = "/public.Public/Login"
+	Public_GenerateCaptcha_FullMethodName  = "/public.Public/GenerateCaptcha"
+	Public_RefreshToken_FullMethodName     = "/public.Public/RefreshToken"
+	Public_GetSiteSetting_FullMethodName   = "/public.Public/GetSiteSetting"
+	Public_GetAppNoticeList_FullMethodName = "/public.Public/GetAppNoticeList"
+	Public_GetAppAdList_FullMethodName     = "/public.Public/GetAppAdList"
 )
 
 // PublicClient is the client API for Public service.
@@ -38,6 +40,8 @@ type PublicClient interface {
 	GenerateCaptcha(ctx context.Context, in *GenerateCaptchaReq, opts ...grpc.CallOption) (*GenerateCaptchaRes, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenRes, error)
 	GetSiteSetting(ctx context.Context, in *GetSiteSettingReq, opts ...grpc.CallOption) (*GetSiteSettingRes, error)
+	GetAppNoticeList(ctx context.Context, in *GetNoticeListReq, opts ...grpc.CallOption) (*GetNoticeListRes, error)
+	GetAppAdList(ctx context.Context, in *GetAdListReq, opts ...grpc.CallOption) (*GetAdListRes, error)
 }
 
 type publicClient struct {
@@ -108,6 +112,26 @@ func (c *publicClient) GetSiteSetting(ctx context.Context, in *GetSiteSettingReq
 	return out, nil
 }
 
+func (c *publicClient) GetAppNoticeList(ctx context.Context, in *GetNoticeListReq, opts ...grpc.CallOption) (*GetNoticeListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetNoticeListRes)
+	err := c.cc.Invoke(ctx, Public_GetAppNoticeList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *publicClient) GetAppAdList(ctx context.Context, in *GetAdListReq, opts ...grpc.CallOption) (*GetAdListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAdListRes)
+	err := c.cc.Invoke(ctx, Public_GetAppAdList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PublicServer is the server API for Public service.
 // All implementations must embed UnimplementedPublicServer
 // for forward compatibility.
@@ -118,6 +142,8 @@ type PublicServer interface {
 	GenerateCaptcha(context.Context, *GenerateCaptchaReq) (*GenerateCaptchaRes, error)
 	RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenRes, error)
 	GetSiteSetting(context.Context, *GetSiteSettingReq) (*GetSiteSettingRes, error)
+	GetAppNoticeList(context.Context, *GetNoticeListReq) (*GetNoticeListRes, error)
+	GetAppAdList(context.Context, *GetAdListReq) (*GetAdListRes, error)
 	mustEmbedUnimplementedPublicServer()
 }
 
@@ -145,6 +171,12 @@ func (UnimplementedPublicServer) RefreshToken(context.Context, *RefreshTokenReq)
 }
 func (UnimplementedPublicServer) GetSiteSetting(context.Context, *GetSiteSettingReq) (*GetSiteSettingRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetSiteSetting not implemented")
+}
+func (UnimplementedPublicServer) GetAppNoticeList(context.Context, *GetNoticeListReq) (*GetNoticeListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetAppNoticeList not implemented")
+}
+func (UnimplementedPublicServer) GetAppAdList(context.Context, *GetAdListReq) (*GetAdListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetAppAdList not implemented")
 }
 func (UnimplementedPublicServer) mustEmbedUnimplementedPublicServer() {}
 func (UnimplementedPublicServer) testEmbeddedByValue()                {}
@@ -275,6 +307,42 @@ func _Public_GetSiteSetting_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Public_GetAppNoticeList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNoticeListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServer).GetAppNoticeList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Public_GetAppNoticeList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServer).GetAppNoticeList(ctx, req.(*GetNoticeListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Public_GetAppAdList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAdListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServer).GetAppAdList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Public_GetAppAdList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServer).GetAppAdList(ctx, req.(*GetAdListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Public_ServiceDesc is the grpc.ServiceDesc for Public service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -305,6 +373,14 @@ var Public_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSiteSetting",
 			Handler:    _Public_GetSiteSetting_Handler,
+		},
+		{
+			MethodName: "GetAppNoticeList",
+			Handler:    _Public_GetAppNoticeList_Handler,
+		},
+		{
+			MethodName: "GetAppAdList",
+			Handler:    _Public_GetAppAdList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -5566,7 +5566,7 @@ func callGenerateCaptcha(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
  * @return_param data.list.rebate_percent_poker string 棋牌返水比例
  * @number 110
  */
-func callGetGradeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+func callGetAppGradeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling gRPC GetGradeList")
 
 	client := v16.NewUserClient(conn)
@@ -5613,6 +5613,83 @@ func callGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	req := &v15.GetSiteSettingReq{}
 
 	res, err := client.GetSiteSetting(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/公共
+ * @title 获取公告列表
+ * @description 获取最新公告列表接口
+ * @method get
+ * @url /api/frontend/app/notice-list
+ * @param limit 可选 int 限制数量，默认3
+ * @return {"code":0,"msg":"success","data":{"list":[{"title":"公告标题","url":"","content":"公告内容","created_at":"2025-01-19 10:00:00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 公告列表
+ * @return_param data.list.title string 标题
+ * @return_param data.list.url string 链接
+ * @return_param data.list.content string 内容
+ * @return_param data.list.created_at string 创建时间
+ * @number 111
+ */
+func callGetAppNoticeList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetAppNoticeList")
+
+	client := v15.NewPublicClient(conn)
+	req := &v15.GetNoticeListReq{
+		Limit: r.Get("limit", 3).Int32(),
+	}
+
+	res, err := client.GetAppNoticeList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/公共
+ * @title 获取广告列表
+ * @description 获取首页广告列表接口
+ * @method get
+ * @url /api/frontend/app/ad-list
+ * @param mobile 可选 int 是否手机端 0=PC 1=手机，默认0
+ * @return {"code":0,"msg":"success","data":{"list":[{"name":"广告名称","image":"图片地址","url":"链接","type":1,"before_login":1,"position":1,"sort":0}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 广告列表
+ * @return_param data.list.name string 名称
+ * @return_param data.list.image string 图片地址
+ * @return_param data.list.url string 链接
+ * @return_param data.list.type int 类型 1=首页图片弹窗 2=首页悬浮图片 3=首页banner图片
+ * @return_param data.list.before_login int 登录前显示 0=登录后 1=登录前
+ * @return_param data.list.position int 位置 1=PC 2=WAP
+ * @return_param data.list.sort int 排序
+ * @number 112
+ */
+func callGetAppAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetAppAdList")
+
+	client := v15.NewPublicClient(conn)
+	req := &v15.GetAdListReq{
+		Mobile: r.Get("mobile", 0).Int32(),
+	}
+
+	res, err := client.GetAppAdList(ctx, req)
 	if err != nil {
 		util.WriteInternalError(r, err.Error())
 		return nil
