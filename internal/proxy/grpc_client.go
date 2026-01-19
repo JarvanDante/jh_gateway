@@ -18,6 +18,7 @@ import (
 	v4 "jh_gateway/api/backend/upload/v1"
 	v5 "jh_gateway/api/backend/user/v1"
 	v17 "jh_gateway/api/frontend/balance/v1"
+	v20 "jh_gateway/api/frontend/game/v1"
 	v15 "jh_gateway/api/frontend/public/v1"
 	v16 "jh_gateway/api/frontend/user/v1"
 	v13 "jh_gateway/api/manage/admin/v1"
@@ -3439,6 +3440,72 @@ func callGetGameRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	res, err := client.GetGameRecords(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Game GetGameRecords failed: %v", err)
+		return err
+	}
+
+	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/游戏/游戏管理
+ * @title 进入游戏
+ * @description 获取游戏跳转链接的接口
+ * @method post
+ * @url /api/game/redirect-to-game
+ * @param game_id 必选 int 游戏ID
+ * @param key 可选 string 电子游戏专用KEY
+ * @return {"code":0,"msg":"success","data":{"type":"url","url":"https://game.example.com/..."}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param type string 类型
+ * @return_param url string 游戏跳转链接
+ * @number 4
+ */
+func callRedirectToGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game RedirectToGame")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "failed to get request data: %v", err)
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 解析game_id
+	gameId := int32(0)
+	if gid, exists := reqData["game_id"]; exists {
+		if gidFloat, ok := gid.(float64); ok {
+			gameId = int32(gidFloat)
+		}
+	}
+	if gameId <= 0 {
+		util.WriteBadRequest(r, "缺少game_id参数或参数无效")
+		return fmt.Errorf("missing or invalid game_id parameter")
+	}
+
+	// 解析key（可选）
+	key := ""
+	if k, exists := reqData["key"]; exists {
+		if kStr, ok := k.(string); ok {
+			key = kStr
+		}
+	}
+
+	// 构建请求
+	req := &v20.RedirectToGameReq{
+		GameId: gameId,
+		Key:    key,
+	}
+
+	// 调用gRPC服务
+	client := v20.NewGameClient(conn)
+	res, err := client.RedirectToGame(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game RedirectToGame failed: %v", err)
 		return err
 	}
 

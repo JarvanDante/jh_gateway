@@ -234,6 +234,8 @@ func initGameRoutes() {
 	gameRoutes.Register("/update-games", "POST", callUpdateGames)
 	// 获取游戏记录
 	gameRoutes.Register("/game-record", "POST", callGetGameRecords)
+	// 进入游戏
+	gameRoutes.Register("/redirect-to-game", "POST", callRedirectToGame)
 }
 
 // initManageRoutes 初始化总后台管理路由
