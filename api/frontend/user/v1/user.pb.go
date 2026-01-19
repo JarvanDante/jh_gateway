@@ -993,8 +993,9 @@ type GradeItem struct {
 	RebatePercentLive    string                 `protobuf:"bytes,8,opt,name=rebate_percent_live,json=rebatePercentLive,proto3" json:"rebate_percent_live" dc:"真人视讯返水比例"`        // 真人视讯返水比例
 	RebatePercentEgame   string                 `protobuf:"bytes,9,opt,name=rebate_percent_egame,json=rebatePercentEgame,proto3" json:"rebate_percent_egame" dc:"电子游戏返水比例"`     // 电子游戏返水比例
 	RebatePercentPoker   string                 `protobuf:"bytes,10,opt,name=rebate_percent_poker,json=rebatePercentPoker,proto3" json:"rebate_percent_poker" dc:"棋牌返水比例"`      // 棋牌返水比例
-	DepositAmount        string                 `protobuf:"bytes,11,opt,name=deposit_amount,json=depositAmount,proto3" json:"deposit_amount" dc:"充值金额"`                         // 充值金额
-	BetAmount            string                 `protobuf:"bytes,12,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount" dc:"投注金额"`                                     // 投注金额
+	PaymentLimit         string                 `protobuf:"bytes,11,opt,name=payment_limit,json=paymentLimit,proto3" json:"payment_limit" dc:"充值金额"`                            // 充值金额
+	BetLimit             string                 `protobuf:"bytes,12,opt,name=bet_limit,json=betLimit,proto3" json:"bet_limit" dc:"投注金额"`                                        // 投注金额
+	MoneyLimit           string                 `protobuf:"bytes,13,opt,name=money_limit,json=moneyLimit,proto3" json:"money_limit" dc:"升级礼金"`                                  // 升级礼金
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1099,16 +1100,23 @@ func (x *GradeItem) GetRebatePercentPoker() string {
 	return ""
 }
 
-func (x *GradeItem) GetDepositAmount() string {
+func (x *GradeItem) GetPaymentLimit() string {
 	if x != nil {
-		return x.DepositAmount
+		return x.PaymentLimit
 	}
 	return ""
 }
 
-func (x *GradeItem) GetBetAmount() string {
+func (x *GradeItem) GetBetLimit() string {
 	if x != nil {
-		return x.BetAmount
+		return x.BetLimit
+	}
+	return ""
+}
+
+func (x *GradeItem) GetMoneyLimit() string {
+	if x != nil {
+		return x.MoneyLimit
 	}
 	return ""
 }
@@ -1185,7 +1193,7 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"\x11\n" +
 	"\x0fGetGradeListReq\"?\n" +
 	"\x0fGetGradeListRes\x12,\n" +
-	"\x04list\x18\x01 \x03(\v2\x18.frontend_user.GradeItemR\x04list\"\xe6\x03\n" +
+	"\x04list\x18\x01 \x03(\v2\x18.frontend_user.GradeItemR\x04list\"\x83\x04\n" +
 	"\tGradeItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
@@ -1197,10 +1205,11 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x13rebate_percent_live\x18\b \x01(\tR\x11rebatePercentLive\x120\n" +
 	"\x14rebate_percent_egame\x18\t \x01(\tR\x12rebatePercentEgame\x120\n" +
 	"\x14rebate_percent_poker\x18\n" +
-	" \x01(\tR\x12rebatePercentPoker\x12%\n" +
-	"\x0edeposit_amount\x18\v \x01(\tR\rdepositAmount\x12\x1d\n" +
-	"\n" +
-	"bet_amount\x18\f \x01(\tR\tbetAmount2\xc4\x04\n" +
+	" \x01(\tR\x12rebatePercentPoker\x12#\n" +
+	"\rpayment_limit\x18\v \x01(\tR\fpaymentLimit\x12\x1b\n" +
+	"\tbet_limit\x18\f \x01(\tR\bbetLimit\x12\x1f\n" +
+	"\vmoney_limit\x18\r \x01(\tR\n" +
+	"moneyLimit2\xc4\x04\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
 	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
