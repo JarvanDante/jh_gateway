@@ -5821,6 +5821,9 @@ func callCreateGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		Status:    r.Get("status", 1).Int32(),
 		DbName:    r.Get("db_name", "").String(),
 		Remark:    r.Get("remark", "").String(),
+		ApiId:     r.Get("api_id", "").String(),
+		ApiKey:    r.Get("api_key", "").String(),
+		ApiUrl:    r.Get("api_url", "").String(),
 	}
 
 	res, err := client.CreateGame(ctx, req)
@@ -5868,6 +5871,9 @@ func callUpdateGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		Status:    r.Get("status", -1).Int32(),
 		DbName:    r.Get("db_name", "").String(),
 		Remark:    r.Get("remark", "").String(),
+		ApiId:     r.Get("api_id", "").String(),
+		ApiKey:    r.Get("api_key", "").String(),
+		ApiUrl:    r.Get("api_url", "").String(),
 	}
 
 	res, err := client.UpdateGame(ctx, req)

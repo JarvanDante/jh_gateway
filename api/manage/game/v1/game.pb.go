@@ -253,6 +253,9 @@ type CreateGameReq struct {
 	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态。1=启用；0=禁用"`               // 状态。1=启用；0=禁用
 	DbName        string                 `protobuf:"bytes,7,opt,name=db_name,json=dbName,proto3" json:"db_name" dc:"数据表名称"`         // 数据表名称
 	Remark        string                 `protobuf:"bytes,8,opt,name=remark,proto3" json:"remark" dc:"备注"`                          // 备注
+	ApiId         string                 `protobuf:"bytes,9,opt,name=api_id,json=apiId,proto3" json:"api_id" dc:"API ID"`           // API ID
+	ApiKey        string                 `protobuf:"bytes,10,opt,name=api_key,json=apiKey,proto3" json:"api_key" dc:"API Key"`      // API Key
+	ApiUrl        string                 `protobuf:"bytes,11,opt,name=api_url,json=apiUrl,proto3" json:"api_url" dc:"API URL"`      // API URL
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,6 +346,27 @@ func (x *CreateGameReq) GetRemark() string {
 	return ""
 }
 
+func (x *CreateGameReq) GetApiId() string {
+	if x != nil {
+		return x.ApiId
+	}
+	return ""
+}
+
+func (x *CreateGameReq) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+func (x *CreateGameReq) GetApiUrl() string {
+	if x != nil {
+		return x.ApiUrl
+	}
+	return ""
+}
+
 // 创建游戏响应
 type CreateGameRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -400,6 +424,9 @@ type UpdateGameReq struct {
 	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status"`
 	DbName        string                 `protobuf:"bytes,8,opt,name=db_name,json=dbName,proto3" json:"db_name"`
 	Remark        string                 `protobuf:"bytes,9,opt,name=remark,proto3" json:"remark"`
+	ApiId         string                 `protobuf:"bytes,10,opt,name=api_id,json=apiId,proto3" json:"api_id"`
+	ApiKey        string                 `protobuf:"bytes,11,opt,name=api_key,json=apiKey,proto3" json:"api_key"`
+	ApiUrl        string                 `protobuf:"bytes,12,opt,name=api_url,json=apiUrl,proto3" json:"api_url"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -493,6 +520,27 @@ func (x *UpdateGameReq) GetDbName() string {
 func (x *UpdateGameReq) GetRemark() string {
 	if x != nil {
 		return x.Remark
+	}
+	return ""
+}
+
+func (x *UpdateGameReq) GetApiId() string {
+	if x != nil {
+		return x.ApiId
+	}
+	return ""
+}
+
+func (x *UpdateGameReq) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+func (x *UpdateGameReq) GetApiUrl() string {
+	if x != nil {
+		return x.ApiUrl
 	}
 	return ""
 }
@@ -630,6 +678,9 @@ type GameItem struct {
 	Remark        string                 `protobuf:"bytes,9,opt,name=remark,proto3" json:"remark"`
 	CreatedAt     string                 `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
 	UpdatedAt     string                 `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	ApiId         string                 `protobuf:"bytes,12,opt,name=api_id,json=apiId,proto3" json:"api_id"`
+	ApiKey        string                 `protobuf:"bytes,13,opt,name=api_key,json=apiKey,proto3" json:"api_key"`
+	ApiUrl        string                 `protobuf:"bytes,14,opt,name=api_url,json=apiUrl,proto3" json:"api_url"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -741,6 +792,27 @@ func (x *GameItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *GameItem) GetApiId() string {
+	if x != nil {
+		return x.ApiId
+	}
+	return ""
+}
+
+func (x *GameItem) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+func (x *GameItem) GetApiUrl() string {
+	if x != nil {
+		return x.ApiUrl
+	}
+	return ""
+}
+
 var File_manage_game_v1_game_proto protoreflect.FileDescriptor
 
 const file_manage_game_v1_game_proto_rawDesc = "" +
@@ -758,7 +830,7 @@ const file_manage_game_v1_game_proto_rawDesc = "" +
 	"\x10GetGameDetailReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"=\n" +
 	"\x10GetGameDetailRes\x12)\n" +
-	"\x04data\x18\x01 \x01(\v2\x15.manage_game.GameItemR\x04data\"\xcf\x01\n" +
+	"\x04data\x18\x01 \x01(\v2\x15.manage_game.GameItemR\x04data\"\x98\x02\n" +
 	"\rCreateGameReq\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\x05R\x04type\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -768,9 +840,13 @@ const file_manage_game_v1_game_proto_rawDesc = "" +
 	"image_code\x18\x05 \x01(\tR\timageCode\x12\x16\n" +
 	"\x06status\x18\x06 \x01(\x05R\x06status\x12\x17\n" +
 	"\adb_name\x18\a \x01(\tR\x06dbName\x12\x16\n" +
-	"\x06remark\x18\b \x01(\tR\x06remark\"\x1f\n" +
+	"\x06remark\x18\b \x01(\tR\x06remark\x12\x15\n" +
+	"\x06api_id\x18\t \x01(\tR\x05apiId\x12\x17\n" +
+	"\aapi_key\x18\n" +
+	" \x01(\tR\x06apiKey\x12\x17\n" +
+	"\aapi_url\x18\v \x01(\tR\x06apiUrl\"\x1f\n" +
 	"\rCreateGameRes\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\"\xdf\x01\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xa8\x02\n" +
 	"\rUpdateGameReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\x05R\x04type\x12\x12\n" +
@@ -781,11 +857,15 @@ const file_manage_game_v1_game_proto_rawDesc = "" +
 	"image_code\x18\x06 \x01(\tR\timageCode\x12\x16\n" +
 	"\x06status\x18\a \x01(\x05R\x06status\x12\x17\n" +
 	"\adb_name\x18\b \x01(\tR\x06dbName\x12\x16\n" +
-	"\x06remark\x18\t \x01(\tR\x06remark\"\x0f\n" +
+	"\x06remark\x18\t \x01(\tR\x06remark\x12\x15\n" +
+	"\x06api_id\x18\n" +
+	" \x01(\tR\x05apiId\x12\x17\n" +
+	"\aapi_key\x18\v \x01(\tR\x06apiKey\x12\x17\n" +
+	"\aapi_url\x18\f \x01(\tR\x06apiUrl\"\x0f\n" +
 	"\rUpdateGameRes\"\x1f\n" +
 	"\rDeleteGameReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x0f\n" +
-	"\rDeleteGameRes\"\x98\x02\n" +
+	"\rDeleteGameRes\"\xe1\x02\n" +
 	"\bGameItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\x05R\x04type\x12\x12\n" +
@@ -801,7 +881,10 @@ const file_manage_game_v1_game_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAt2\x80\x03\n" +
+	"updated_at\x18\v \x01(\tR\tupdatedAt\x12\x15\n" +
+	"\x06api_id\x18\f \x01(\tR\x05apiId\x12\x17\n" +
+	"\aapi_key\x18\r \x01(\tR\x06apiKey\x12\x17\n" +
+	"\aapi_url\x18\x0e \x01(\tR\x06apiUrl2\x80\x03\n" +
 	"\n" +
 	"ManageGame\x12I\n" +
 	"\vGetGameList\x12\x1b.manage_game.GetGameListReq\x1a\x1b.manage_game.GetGameListRes\"\x00\x12O\n" +
