@@ -29,6 +29,7 @@ import (
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/util"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -409,6 +410,14 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		}
 	}
 
+	// 添加用户名
+	if usernameVar := r.GetCtxVar("username"); usernameVar != nil {
+		if username := usernameVar.String(); username != "" {
+			md.Set("username", username)
+			util.LogWithTrace(ctx, "debug", "添加 username 到 gRPC metadata: %s", username)
+		}
+	}
+
 	// 添加站点ID（从域名解析中间件获取）
 	if siteIdVar := r.GetCtxVar("site_id"); siteIdVar != nil {
 		if id := siteIdVar.Int64(); id > 0 {
@@ -422,6 +431,22 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		if code := siteCodeVar.String(); code != "" {
 			md.Set("site_code", code)
 			util.LogWithTrace(ctx, "debug", "添加 site_code 到 gRPC metadata: %s", code)
+		}
+	}
+
+	// 添加货币（从域名解析中间件获取）
+	if currencyVar := r.GetCtxVar("currency"); currencyVar != nil {
+		if currency := currencyVar.String(); currency != "" {
+			md.Set("currency", currency)
+			util.LogWithTrace(ctx, "debug", "添加 currency 到 gRPC metadata: %s", currency)
+		}
+	}
+
+	// 添加域名（从域名解析中间件获取）
+	if domainVar := r.GetCtxVar("domain"); domainVar != nil {
+		if domain := domainVar.String(); domain != "" {
+			md.Set("domain", domain)
+			util.LogWithTrace(ctx, "debug", "添加 domain 到 gRPC metadata: %s", domain)
 		}
 	}
 
@@ -3455,7 +3480,8 @@ func callGetGameRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
  * @method post
  * @url /api/game/redirect-to-game
  * @param game_id 必选 int 游戏ID
- * @param key 可选 string 电子游戏专用KEY
+ * @param key 必选 string 游戏代码
+ * @param mobile 可选 int 是否移动端(0=PC, 1=H5)
  * @return {"code":0,"msg":"success","data":{"type":"url","url":"https://game.example.com/..."}}
  * @return_param code int 状态码
  * @return_param msg string 返回信息
@@ -3478,8 +3504,20 @@ func callRedirectToGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	// 解析game_id
 	gameId := int32(0)
 	if gid, exists := reqData["game_id"]; exists {
-		if gidFloat, ok := gid.(float64); ok {
-			gameId = int32(gidFloat)
+		switch v := gid.(type) {
+		case float64:
+			gameId = int32(v)
+		case int:
+			gameId = int32(v)
+		case int32:
+			gameId = v
+		case int64:
+			gameId = int32(v)
+		case string:
+			// 尝试将字符串转换为int32
+			if parsed, err := strconv.ParseInt(v, 10, 32); err == nil {
+				gameId = int32(parsed)
+			}
 		}
 	}
 	if gameId <= 0 {
@@ -3495,10 +3533,31 @@ func callRedirectToGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		}
 	}
 
+	// 解析mobile（可选）
+	mobile := int32(0)
+	if m, exists := reqData["mobile"]; exists {
+		switch v := m.(type) {
+		case float64:
+			mobile = int32(v)
+		case int:
+			mobile = int32(v)
+		case int32:
+			mobile = v
+		case int64:
+			mobile = int32(v)
+		case string:
+			// 尝试将字符串转换为int32
+			if parsed, err := strconv.ParseInt(v, 10, 32); err == nil {
+				mobile = int32(parsed)
+			}
+		}
+	}
+
 	// 构建请求
 	req := &v20.RedirectToGameReq{
 		GameId: gameId,
 		Key:    key,
+		Mobile: mobile,
 	}
 
 	// 调用gRPC服务

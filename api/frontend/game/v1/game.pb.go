@@ -26,6 +26,7 @@ type RedirectToGameReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"` // 游戏ID
 	Key           string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key" dc:"电子游戏专用"`                    // 电子游戏专用
+	Mobile        int32                  `protobuf:"varint,3,opt,name=mobile,proto3" json:"mobile" dc:"电子游戏专用"`             // 电子游戏专用
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -72,6 +73,13 @@ func (x *RedirectToGameReq) GetKey() string {
 		return x.Key
 	}
 	return ""
+}
+
+func (x *RedirectToGameReq) GetMobile() int32 {
+	if x != nil {
+		return x.Mobile
+	}
+	return 0
 }
 
 type RedirectToGameRes struct {
@@ -131,10 +139,11 @@ var File_frontend_game_v1_game_proto protoreflect.FileDescriptor
 const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/game/v1/game.proto\x12\n" +
-	"front_game\">\n" +
+	"front_game\"V\n" +
 	"\x11RedirectToGameReq\x12\x17\n" +
 	"\agame_id\x18\x01 \x01(\x05R\x06gameId\x12\x10\n" +
-	"\x03key\x18\x02 \x01(\tR\x03key\"9\n" +
+	"\x03key\x18\x02 \x01(\tR\x03key\x12\x16\n" +
+	"\x06mobile\x18\x03 \x01(\x05R\x06mobile\"9\n" +
 	"\x11RedirectToGameRes\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12\x10\n" +
 	"\x03url\x18\x02 \x01(\tR\x03url2X\n" +

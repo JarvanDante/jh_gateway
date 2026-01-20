@@ -41,10 +41,14 @@ func AuthWithSkip(skipPaths ...string) ghttp.HandlerFunc {
 
 		// 判断是前台还是后台接口
 		if strings.HasPrefix(path, "/api/frontend/") {
-			// 前台接口：设置用户ID
+			// 前台接口：设置用户ID、用户名、站点ID
 			r.SetCtxVar("user_id", claims.UserID)
+			r.SetCtxVar("username", claims.Username)
+			r.SetCtxVar("site_id", claims.SiteID)
 			r.Header.Set("X-User-Id", fmt.Sprint(claims.UserID))
-			util.LogWithTrace(ctx, "info", "用户信息user_id放入上下文: %d", claims.UserID)
+			r.Header.Set("X-Username", claims.Username)
+			r.Header.Set("X-Site-Id", fmt.Sprint(claims.SiteID))
+			util.LogWithTrace(ctx, "info", "用户信息放入上下文: userId=%d, username=%s, siteId=%d", claims.UserID, claims.Username, claims.SiteID)
 			util.LogWithTrace(ctx, "debug", "token验证成功: %s, userId: %d", path, claims.UserID)
 		} else {
 			// 后台接口：设置管理员ID

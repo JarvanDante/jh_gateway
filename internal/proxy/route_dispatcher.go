@@ -15,6 +15,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 )
 
 // ServiceRoute 服务路由配置
@@ -298,4 +299,51 @@ func GetBackendServiceRoutes() []ServiceRoute {
 // GetFrontendServiceRoutes 获取前台服务路由配置（用于文档生成等）
 func GetFrontendServiceRoutes() []ServiceRoute {
 	return frontendServiceRoutes
+}
+
+// injectUserInfoToMetadata 将HTTP请求上下文中的用户信息注入到gRPC metadata中
+func injectUserInfoToMetadata(ctx context.Context, r *ghttp.Request) context.Context {
+	md := metadata.New(map[string]string{})
+
+	// 从HTTP Header中提取用户信息（由认证中间件设置）
+	if userID := r.Header.Get("X-User-Id"); userID != "" {
+		md.Set("user_id", userID)
+	}
+
+	if username := r.Header.Get("X-Username"); username != "" {
+		md.Set("username", username)
+	}
+
+	if siteID := r.Header.Get("X-Site-Id"); siteID != "" {
+		md.Set("site_id", siteID)
+	}
+
+	if adminID := r.Header.Get("X-Admin-Id"); adminID != "" {
+		md.Set("admin_id", adminID)
+	}
+
+	// 从请求上下文中提取站点配置信息（由domain_resolver中间件设置）
+	if siteCodeVar := r.GetCtxVar("site_code"); siteCodeVar != nil && siteCodeVar.String() != "" {
+		md.Set("site_code", siteCodeVar.String())
+	}
+
+	if currencyVar := r.GetCtxVar("currency"); currencyVar != nil && currencyVar.String() != "" {
+		md.Set("currency", currencyVar.String())
+	}
+
+	if domainVar := r.GetCtxVar("domain"); domainVar != nil && domainVar.String() != "" {
+		md.Set("domain", domainVar.String())
+	}
+
+	// 传递客户端IP
+	if clientIP := r.GetClientIp(); clientIP != "" {
+		md.Set("client_ip", clientIP)
+	}
+
+	// 如果有现有的metadata，合并
+	if existingMd, ok := metadata.FromOutgoingContext(ctx); ok {
+		md = metadata.Join(existingMd, md)
+	}
+
+	return metadata.NewOutgoingContext(ctx, md)
 }

@@ -9,8 +9,10 @@ import (
 )
 
 type Claims struct {
-	UserID  int `json:"user_id"`
-	AdminID int `json:"admin_id"`
+	UserID   int    `json:"user_id"`
+	Username string `json:"username"`
+	SiteID   int    `json:"site_id"`
+	AdminID  int    `json:"admin_id"`
 	jwt.RegisteredClaims
 }
 
@@ -52,6 +54,12 @@ func ParseToken(ctx context.Context, authHeader string) (*Claims, error) {
 		claims := &Claims{}
 		if userID, ok := mapClaims["user_id"].(float64); ok {
 			claims.UserID = int(userID)
+		}
+		if username, ok := mapClaims["username"].(string); ok {
+			claims.Username = username
+		}
+		if siteID, ok := mapClaims["site_id"].(float64); ok {
+			claims.SiteID = int(siteID)
 		}
 		if adminID, ok := mapClaims["admin_id"].(float64); ok {
 			claims.AdminID = int(adminID)

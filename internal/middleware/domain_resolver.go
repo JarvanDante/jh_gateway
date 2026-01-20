@@ -27,29 +27,44 @@ func DomainResolver(r *ghttp.Request) {
 
 	log.Printf("请求域名: %s", host)
 
+	// 将域名设置到请求上下文中
+	r.SetCtxVar("domain", host)
+
 	// 根据域名获取站点信息
 	siteInfo, exists := registry.GetSiteInfoByDomain(host)
 	if exists {
 		// 将site_id和site_code设置到请求上下文中
 		r.SetCtxVar("site_id", siteInfo.SiteID)
 		r.SetCtxVar("site_code", siteInfo.SiteCode)
-		log.Printf("域名 %s 解析到 site_id: %d, site_code: %s", host, siteInfo.SiteID, siteInfo.SiteCode)
+
+		// 从KV获取站点配置，提取currency
+		if siteConfig, configExists := registry.GetSiteConfig(siteInfo.SiteCode); configExists {
+			r.SetCtxVar("currency", siteConfig.Base.Currency)
+			log.Printf("✓ 域名 %s 解析成功 -> site_id: %d, site_code: %s, currency: %s",
+				host, siteInfo.SiteID, siteInfo.SiteCode, siteConfig.Base.Currency)
+		} else {
+			log.Printf("⚠ 域名 %s 解析到 site_id: %d, site_code: %s (未找到KV配置)",
+				host, siteInfo.SiteID, siteInfo.SiteCode)
+		}
 	} else {
 		// 如果没有找到对应的站点，设置默认值
-		log.Printf("警告: 域名 %s 未找到对应的站点，使用默认值", host)
+		log.Printf("✗ 警告: 域名 %s 未找到对应的站点，使用默认值", host)
 		r.SetCtxVar("site_id", int64(0))
 		r.SetCtxVar("site_code", "")
+		r.SetCtxVar("currency", "")
 	}
 
 	// 继续处理请求
 	r.Middleware.Next()
 }
 
-// AddSiteIDToGRPCContext 将site_id和site_code添加到gRPC上下文中
+// AddSiteIDToGRPCContext 将site_id、site_code、currency和domain添加到gRPC上下文中
 func AddSiteIDToGRPCContext(ctx context.Context, r *ghttp.Request) context.Context {
-	// 从请求上下文中获取site_id和site_code
+	// 从请求上下文中获取site_id、site_code、currency和domain
 	siteIdVar := r.GetCtxVar("site_id")
 	siteCodeVar := r.GetCtxVar("site_code")
+	currencyVar := r.GetCtxVar("currency")
+	domainVar := r.GetCtxVar("domain")
 
 	if siteIdVar != nil && siteIdVar.Int64() > 0 {
 		// 创建gRPC metadata
@@ -60,6 +75,16 @@ func AddSiteIDToGRPCContext(ctx context.Context, r *ghttp.Request) context.Conte
 		// 添加site_code
 		if siteCodeVar != nil && siteCodeVar.String() != "" {
 			md.Set("site_code", siteCodeVar.String())
+		}
+
+		// 添加currency
+		if currencyVar != nil && currencyVar.String() != "" {
+			md.Set("currency", currencyVar.String())
+		}
+
+		// 添加domain
+		if domainVar != nil && domainVar.String() != "" {
+			md.Set("domain", domainVar.String())
 		}
 
 		// 将metadata添加到现有的outgoing context中
@@ -73,8 +98,8 @@ func AddSiteIDToGRPCContext(ctx context.Context, r *ghttp.Request) context.Conte
 		}
 
 		ctx = metadata.NewOutgoingContext(ctx, md)
-		log.Printf("已将 site_id: %d, site_code: %s 添加到 gRPC metadata",
-			siteIdVar.Int64(), siteCodeVar.String())
+		log.Printf("已将 site_id: %d, site_code: %s, currency: %s, domain: %s 添加到 gRPC metadata",
+			siteIdVar.Int64(), siteCodeVar.String(), currencyVar.String(), domainVar.String())
 	}
 
 	return ctx
@@ -92,6 +117,22 @@ func GetSiteIDFromRequest(r *ghttp.Request) int64 {
 func GetSiteCodeFromRequest(r *ghttp.Request) string {
 	if siteCodeVar := r.GetCtxVar("site_code"); siteCodeVar != nil {
 		return siteCodeVar.String()
+	}
+	return ""
+}
+
+// GetCurrencyFromRequest 从请求中获取currency
+func GetCurrencyFromRequest(r *ghttp.Request) string {
+	if currencyVar := r.GetCtxVar("currency"); currencyVar != nil {
+		return currencyVar.String()
+	}
+	return ""
+}
+
+// GetDomainFromRequest 从请求中获取domain
+func GetDomainFromRequest(r *ghttp.Request) string {
+	if domainVar := r.GetCtxVar("domain"); domainVar != nil {
+		return domainVar.String()
 	}
 	return ""
 }
@@ -116,6 +157,26 @@ func GetSiteCodeFromContext(ctx context.Context) string {
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		if siteCodes := md.Get("site_code"); len(siteCodes) > 0 {
 			return strings.TrimSpace(siteCodes[0])
+		}
+	}
+	return ""
+}
+
+// GetCurrencyFromContext 从上下文中获取currency（用于gRPC服务端）
+func GetCurrencyFromContext(ctx context.Context) string {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		if currencies := md.Get("currency"); len(currencies) > 0 {
+			return strings.TrimSpace(currencies[0])
+		}
+	}
+	return ""
+}
+
+// GetDomainFromContext 从上下文中获取domain（用于gRPC服务端）
+func GetDomainFromContext(ctx context.Context) string {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		if domains := md.Get("domain"); len(domains) > 0 {
+			return strings.TrimSpace(domains[0])
 		}
 	}
 	return ""
