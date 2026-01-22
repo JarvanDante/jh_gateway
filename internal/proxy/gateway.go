@@ -43,7 +43,7 @@ func grpcProxyHandler(srv interface{}, serverStream grpc.ServerStream) error {
 
 	// 从方法名中提取服务名
 	// 例如：/user.UserService/GetUser -> admin_service
-	serviceName := "admin_service" // 这里可以根据 fullMethod 动态确定
+	serviceName := "jh_app_service" // 这里可以根据 fullMethod 动态确定
 
 	// 从 Consul 获取服务地址
 	addr, err := registry.GetServiceAddr(serviceName)
