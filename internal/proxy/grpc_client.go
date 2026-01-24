@@ -6175,3 +6175,80 @@ func callUnbindSiteGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 补单
+ * @description 补单接口，用于补充指定时间范围内的游戏注单
+ * @method post
+ * @url /api/manage/game/supplement-bet-records
+ * @param platform 必选 string 游戏平台代码，如 "ONE"
+ * @param start_time 必选 string 开始时间，格式: "2026-01-24 00:00:00"
+ * @param end_time 必选 string 结束时间，格式: "2026-01-24 19:00:00"
+ * @param site_codes 可选 array 站点代码列表，为空则所有站点
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"补单完成: 平台=ONE, 成功站点=1, 失败站点=0, 总记录数=100","total_records":100}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 补单结果消息
+ * @return_param data.total_records int 总记录数
+ * @number 6
+ */
+func callSupplementBetRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame SupplementBetRecords")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 验证必填参数
+	platform := gconv.String(reqData["platform"])
+	if platform == "" {
+		util.WriteBadRequest(r, "游戏平台不能为空")
+		return fmt.Errorf("platform is required")
+	}
+
+	startTime := gconv.String(reqData["start_time"])
+	if startTime == "" {
+		util.WriteBadRequest(r, "开始时间不能为空")
+		return fmt.Errorf("start_time is required")
+	}
+
+	endTime := gconv.String(reqData["end_time"])
+	if endTime == "" {
+		util.WriteBadRequest(r, "结束时间不能为空")
+		return fmt.Errorf("end_time is required")
+	}
+
+	// 可选参数：站点代码列表
+	var siteCodes []string
+	if siteCodesData, ok := reqData["site_codes"]; ok {
+		siteCodes = gconv.Strings(siteCodesData)
+	}
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.SupplementBetRecordsReq{
+		Platform:  platform,
+		StartTime: startTime,
+		EndTime:   endTime,
+		SiteCodes: siteCodes,
+	}
+
+	util.LogWithTrace(ctx, "info", "补单请求: platform=%s, start_time=%s, end_time=%s, site_codes=%v",
+		platform, startTime, endTime, siteCodes)
+
+	res, err := client.SupplementBetRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game SupplementBetRecords failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "补单完成: success=%v, message=%s, total_records=%d",
+		res.Success, res.Message, res.TotalRecords)
+
+	return writeProtobufResponse(ctx, r, res)
+}

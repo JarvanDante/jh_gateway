@@ -20,11 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ManageGame_GetGameList_FullMethodName   = "/manage_game.ManageGame/GetGameList"
-	ManageGame_GetGameDetail_FullMethodName = "/manage_game.ManageGame/GetGameDetail"
-	ManageGame_CreateGame_FullMethodName    = "/manage_game.ManageGame/CreateGame"
-	ManageGame_UpdateGame_FullMethodName    = "/manage_game.ManageGame/UpdateGame"
-	ManageGame_DeleteGame_FullMethodName    = "/manage_game.ManageGame/DeleteGame"
+	ManageGame_GetGameList_FullMethodName          = "/manage_game.ManageGame/GetGameList"
+	ManageGame_GetGameDetail_FullMethodName        = "/manage_game.ManageGame/GetGameDetail"
+	ManageGame_CreateGame_FullMethodName           = "/manage_game.ManageGame/CreateGame"
+	ManageGame_UpdateGame_FullMethodName           = "/manage_game.ManageGame/UpdateGame"
+	ManageGame_DeleteGame_FullMethodName           = "/manage_game.ManageGame/DeleteGame"
+	ManageGame_SupplementBetRecords_FullMethodName = "/manage_game.ManageGame/SupplementBetRecords"
 )
 
 // ManageGameClient is the client API for ManageGame service.
@@ -36,6 +37,7 @@ type ManageGameClient interface {
 	CreateGame(ctx context.Context, in *CreateGameReq, opts ...grpc.CallOption) (*CreateGameRes, error)
 	UpdateGame(ctx context.Context, in *UpdateGameReq, opts ...grpc.CallOption) (*UpdateGameRes, error)
 	DeleteGame(ctx context.Context, in *DeleteGameReq, opts ...grpc.CallOption) (*DeleteGameRes, error)
+	SupplementBetRecords(ctx context.Context, in *SupplementBetRecordsReq, opts ...grpc.CallOption) (*SupplementBetRecordsRes, error)
 }
 
 type manageGameClient struct {
@@ -96,6 +98,16 @@ func (c *manageGameClient) DeleteGame(ctx context.Context, in *DeleteGameReq, op
 	return out, nil
 }
 
+func (c *manageGameClient) SupplementBetRecords(ctx context.Context, in *SupplementBetRecordsReq, opts ...grpc.CallOption) (*SupplementBetRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupplementBetRecordsRes)
+	err := c.cc.Invoke(ctx, ManageGame_SupplementBetRecords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ManageGameServer is the server API for ManageGame service.
 // All implementations must embed UnimplementedManageGameServer
 // for forward compatibility.
@@ -105,6 +117,7 @@ type ManageGameServer interface {
 	CreateGame(context.Context, *CreateGameReq) (*CreateGameRes, error)
 	UpdateGame(context.Context, *UpdateGameReq) (*UpdateGameRes, error)
 	DeleteGame(context.Context, *DeleteGameReq) (*DeleteGameRes, error)
+	SupplementBetRecords(context.Context, *SupplementBetRecordsReq) (*SupplementBetRecordsRes, error)
 	mustEmbedUnimplementedManageGameServer()
 }
 
@@ -129,6 +142,9 @@ func (UnimplementedManageGameServer) UpdateGame(context.Context, *UpdateGameReq)
 }
 func (UnimplementedManageGameServer) DeleteGame(context.Context, *DeleteGameReq) (*DeleteGameRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteGame not implemented")
+}
+func (UnimplementedManageGameServer) SupplementBetRecords(context.Context, *SupplementBetRecordsReq) (*SupplementBetRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method SupplementBetRecords not implemented")
 }
 func (UnimplementedManageGameServer) mustEmbedUnimplementedManageGameServer() {}
 func (UnimplementedManageGameServer) testEmbeddedByValue()                    {}
@@ -241,6 +257,24 @@ func _ManageGame_DeleteGame_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ManageGame_SupplementBetRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupplementBetRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageGameServer).SupplementBetRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageGame_SupplementBetRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageGameServer).SupplementBetRecords(ctx, req.(*SupplementBetRecordsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ManageGame_ServiceDesc is the grpc.ServiceDesc for ManageGame service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +301,10 @@ var ManageGame_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteGame",
 			Handler:    _ManageGame_DeleteGame_Handler,
+		},
+		{
+			MethodName: "SupplementBetRecords",
+			Handler:    _ManageGame_SupplementBetRecords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

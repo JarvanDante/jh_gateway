@@ -813,6 +813,144 @@ func (x *GameItem) GetApiUrl() string {
 	return ""
 }
 
+// 补单请求
+type SupplementBetRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Platform      string                 `protobuf:"bytes,1,opt,name=platform,proto3" json:"platform" dc:"游戏平台（ONE、IG_JILI等）"`                              // 游戏平台（ONE、IG_JILI等）
+	StartTime     string                 `protobuf:"bytes,2,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间，格式: 2006-01-02 15:04:05"` // 开始时间，格式: 2006-01-02 15:04:05
+	EndTime       string                 `protobuf:"bytes,3,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间，格式: 2006-01-02 15:04:05"`       // 结束时间，格式: 2006-01-02 15:04:05
+	SiteCodes     []string               `protobuf:"bytes,4,rep,name=site_codes,json=siteCodes,proto3" json:"site_codes" dc:"站点代码列表（可选，为空则所有站点）"`           // 站点代码列表（可选，为空则所有站点）
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SupplementBetRecordsReq) Reset() {
+	*x = SupplementBetRecordsReq{}
+	mi := &file_manage_game_v1_game_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SupplementBetRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SupplementBetRecordsReq) ProtoMessage() {}
+
+func (x *SupplementBetRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_game_v1_game_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SupplementBetRecordsReq.ProtoReflect.Descriptor instead.
+func (*SupplementBetRecordsReq) Descriptor() ([]byte, []int) {
+	return file_manage_game_v1_game_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *SupplementBetRecordsReq) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *SupplementBetRecordsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *SupplementBetRecordsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *SupplementBetRecordsReq) GetSiteCodes() []string {
+	if x != nil {
+		return x.SiteCodes
+	}
+	return nil
+}
+
+// 补单响应
+type SupplementBetRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                               // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                  // 消息
+	TotalRecords  int32                  `protobuf:"varint,3,opt,name=total_records,json=totalRecords,proto3" json:"total_records" dc:"总记录数"` // 总记录数
+	Output        string                 `protobuf:"bytes,4,opt,name=output,proto3" json:"output" dc:"命令输出日志"`                                // 命令输出日志
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SupplementBetRecordsRes) Reset() {
+	*x = SupplementBetRecordsRes{}
+	mi := &file_manage_game_v1_game_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SupplementBetRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SupplementBetRecordsRes) ProtoMessage() {}
+
+func (x *SupplementBetRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_game_v1_game_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SupplementBetRecordsRes.ProtoReflect.Descriptor instead.
+func (*SupplementBetRecordsRes) Descriptor() ([]byte, []int) {
+	return file_manage_game_v1_game_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SupplementBetRecordsRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SupplementBetRecordsRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *SupplementBetRecordsRes) GetTotalRecords() int32 {
+	if x != nil {
+		return x.TotalRecords
+	}
+	return 0
+}
+
+func (x *SupplementBetRecordsRes) GetOutput() string {
+	if x != nil {
+		return x.Output
+	}
+	return ""
+}
+
 var File_manage_game_v1_game_proto protoreflect.FileDescriptor
 
 const file_manage_game_v1_game_proto_rawDesc = "" +
@@ -884,7 +1022,19 @@ const file_manage_game_v1_game_proto_rawDesc = "" +
 	"updated_at\x18\v \x01(\tR\tupdatedAt\x12\x15\n" +
 	"\x06api_id\x18\f \x01(\tR\x05apiId\x12\x17\n" +
 	"\aapi_key\x18\r \x01(\tR\x06apiKey\x12\x17\n" +
-	"\aapi_url\x18\x0e \x01(\tR\x06apiUrl2\x80\x03\n" +
+	"\aapi_url\x18\x0e \x01(\tR\x06apiUrl\"\x8e\x01\n" +
+	"\x17SupplementBetRecordsReq\x12\x1a\n" +
+	"\bplatform\x18\x01 \x01(\tR\bplatform\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x02 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x03 \x01(\tR\aendTime\x12\x1d\n" +
+	"\n" +
+	"site_codes\x18\x04 \x03(\tR\tsiteCodes\"\x8a\x01\n" +
+	"\x17SupplementBetRecordsRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12#\n" +
+	"\rtotal_records\x18\x03 \x01(\x05R\ftotalRecords\x12\x16\n" +
+	"\x06output\x18\x04 \x01(\tR\x06output2\xe6\x03\n" +
 	"\n" +
 	"ManageGame\x12I\n" +
 	"\vGetGameList\x12\x1b.manage_game.GetGameListReq\x1a\x1b.manage_game.GetGameListRes\"\x00\x12O\n" +
@@ -894,7 +1044,8 @@ const file_manage_game_v1_game_proto_rawDesc = "" +
 	"\n" +
 	"UpdateGame\x12\x1a.manage_game.UpdateGameReq\x1a\x1a.manage_game.UpdateGameRes\"\x00\x12F\n" +
 	"\n" +
-	"DeleteGame\x12\x1a.manage_game.DeleteGameReq\x1a\x1a.manage_game.DeleteGameRes\"\x00B\x16Z\x14./api/manage/game/v1b\x06proto3"
+	"DeleteGame\x12\x1a.manage_game.DeleteGameReq\x1a\x1a.manage_game.DeleteGameRes\"\x00\x12d\n" +
+	"\x14SupplementBetRecords\x12$.manage_game.SupplementBetRecordsReq\x1a$.manage_game.SupplementBetRecordsRes\"\x00B\x16Z\x14./api/manage/game/v1b\x06proto3"
 
 var (
 	file_manage_game_v1_game_proto_rawDescOnce sync.Once
@@ -908,19 +1059,21 @@ func file_manage_game_v1_game_proto_rawDescGZIP() []byte {
 	return file_manage_game_v1_game_proto_rawDescData
 }
 
-var file_manage_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_manage_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_manage_game_v1_game_proto_goTypes = []any{
-	(*GetGameListReq)(nil),   // 0: manage_game.GetGameListReq
-	(*GetGameListRes)(nil),   // 1: manage_game.GetGameListRes
-	(*GetGameDetailReq)(nil), // 2: manage_game.GetGameDetailReq
-	(*GetGameDetailRes)(nil), // 3: manage_game.GetGameDetailRes
-	(*CreateGameReq)(nil),    // 4: manage_game.CreateGameReq
-	(*CreateGameRes)(nil),    // 5: manage_game.CreateGameRes
-	(*UpdateGameReq)(nil),    // 6: manage_game.UpdateGameReq
-	(*UpdateGameRes)(nil),    // 7: manage_game.UpdateGameRes
-	(*DeleteGameReq)(nil),    // 8: manage_game.DeleteGameReq
-	(*DeleteGameRes)(nil),    // 9: manage_game.DeleteGameRes
-	(*GameItem)(nil),         // 10: manage_game.GameItem
+	(*GetGameListReq)(nil),          // 0: manage_game.GetGameListReq
+	(*GetGameListRes)(nil),          // 1: manage_game.GetGameListRes
+	(*GetGameDetailReq)(nil),        // 2: manage_game.GetGameDetailReq
+	(*GetGameDetailRes)(nil),        // 3: manage_game.GetGameDetailRes
+	(*CreateGameReq)(nil),           // 4: manage_game.CreateGameReq
+	(*CreateGameRes)(nil),           // 5: manage_game.CreateGameRes
+	(*UpdateGameReq)(nil),           // 6: manage_game.UpdateGameReq
+	(*UpdateGameRes)(nil),           // 7: manage_game.UpdateGameRes
+	(*DeleteGameReq)(nil),           // 8: manage_game.DeleteGameReq
+	(*DeleteGameRes)(nil),           // 9: manage_game.DeleteGameRes
+	(*GameItem)(nil),                // 10: manage_game.GameItem
+	(*SupplementBetRecordsReq)(nil), // 11: manage_game.SupplementBetRecordsReq
+	(*SupplementBetRecordsRes)(nil), // 12: manage_game.SupplementBetRecordsRes
 }
 var file_manage_game_v1_game_proto_depIdxs = []int32{
 	10, // 0: manage_game.GetGameListRes.list:type_name -> manage_game.GameItem
@@ -930,13 +1083,15 @@ var file_manage_game_v1_game_proto_depIdxs = []int32{
 	4,  // 4: manage_game.ManageGame.CreateGame:input_type -> manage_game.CreateGameReq
 	6,  // 5: manage_game.ManageGame.UpdateGame:input_type -> manage_game.UpdateGameReq
 	8,  // 6: manage_game.ManageGame.DeleteGame:input_type -> manage_game.DeleteGameReq
-	1,  // 7: manage_game.ManageGame.GetGameList:output_type -> manage_game.GetGameListRes
-	3,  // 8: manage_game.ManageGame.GetGameDetail:output_type -> manage_game.GetGameDetailRes
-	5,  // 9: manage_game.ManageGame.CreateGame:output_type -> manage_game.CreateGameRes
-	7,  // 10: manage_game.ManageGame.UpdateGame:output_type -> manage_game.UpdateGameRes
-	9,  // 11: manage_game.ManageGame.DeleteGame:output_type -> manage_game.DeleteGameRes
-	7,  // [7:12] is the sub-list for method output_type
-	2,  // [2:7] is the sub-list for method input_type
+	11, // 7: manage_game.ManageGame.SupplementBetRecords:input_type -> manage_game.SupplementBetRecordsReq
+	1,  // 8: manage_game.ManageGame.GetGameList:output_type -> manage_game.GetGameListRes
+	3,  // 9: manage_game.ManageGame.GetGameDetail:output_type -> manage_game.GetGameDetailRes
+	5,  // 10: manage_game.ManageGame.CreateGame:output_type -> manage_game.CreateGameRes
+	7,  // 11: manage_game.ManageGame.UpdateGame:output_type -> manage_game.UpdateGameRes
+	9,  // 12: manage_game.ManageGame.DeleteGame:output_type -> manage_game.DeleteGameRes
+	12, // 13: manage_game.ManageGame.SupplementBetRecords:output_type -> manage_game.SupplementBetRecordsRes
+	8,  // [8:14] is the sub-list for method output_type
+	2,  // [2:8] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
 	2,  // [2:2] is the sub-list for extension extendee
 	0,  // [0:2] is the sub-list for field type_name
@@ -953,7 +1108,7 @@ func file_manage_game_v1_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_game_v1_game_proto_rawDesc), len(file_manage_game_v1_game_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

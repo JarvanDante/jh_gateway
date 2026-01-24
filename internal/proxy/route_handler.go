@@ -265,6 +265,7 @@ func initManageRoutes() {
 	manageRoutes.Register("/game/create", "POST", callCreateGame)
 	manageRoutes.Register("/game/update", "POST", callUpdateGame)
 	manageRoutes.Register("/game/delete", "POST", callDeleteGame)
+	manageRoutes.Register("/game/supplement-bet-records", "POST", callSupplementBetRecords)
 
 	// 站点游戏管理接口
 	manageRoutes.Register("/site_game/list", "GET", callGetSiteGameList)
