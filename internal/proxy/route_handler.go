@@ -7,6 +7,7 @@ import (
 
 	"jh_gateway/internal/proxy/grpc_client/balance"
 	"jh_gateway/internal/proxy/grpc_client/game"
+	"jh_gateway/internal/proxy/grpc_client/manage"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 	"google.golang.org/grpc"
@@ -250,43 +251,43 @@ func initManageRoutes() {
 	manageRoutes = NewRouteRegistry()
 
 	// 管理员认证接口
-	manageRoutes.Register("/admin/login", "POST", callManageAdminLogin)
-	manageRoutes.Register("/admin/refresh-token", "GET", callManageAdminRefreshToken)
-	manageRoutes.Register("/admin/get-info", "GET", callManageAdminGetInfo)
-	manageRoutes.Register("/admin/logout", "POST", callManageAdminLogout)
-	manageRoutes.Register("/admin/menus", "GET", callManageAdminMenus)
+	manageRoutes.Register("/admin/login", "POST", manage.CallManageAdminLogin)
+	manageRoutes.Register("/admin/refresh-token", "GET", manage.CallManageAdminRefreshToken)
+	manageRoutes.Register("/admin/get-info", "GET", manage.CallManageAdminGetInfo)
+	manageRoutes.Register("/admin/logout", "POST", manage.CallManageAdminLogout)
+	manageRoutes.Register("/admin/menus", "GET", manage.CallManageAdminMenus)
 
 	// 商户管理接口
-	manageRoutes.Register("/customer/list", "GET", callGetCustomerList)
-	manageRoutes.Register("/customer/detail", "GET", callGetCustomerDetail)
-	manageRoutes.Register("/customer/update", "POST", callUpdateCustomer)
-	manageRoutes.Register("/customer/delete", "POST", callDeleteCustomer)
-	manageRoutes.Register("/customer/sync", "POST", callSyncCustomer)
-	manageRoutes.Register("/customer/publish", "POST", callPublishCustomer)
-	manageRoutes.Register("/customer/rollback", "POST", callRollbackCustomer)
-	manageRoutes.Register("/customer/version-history", "GET", callGetCustomerVersionHistory)
+	manageRoutes.Register("/customer/list", "GET", manage.CallGetCustomerList)
+	manageRoutes.Register("/customer/detail", "GET", manage.CallGetCustomerDetail)
+	manageRoutes.Register("/customer/update", "POST", manage.CallUpdateCustomer)
+	manageRoutes.Register("/customer/delete", "POST", manage.CallDeleteCustomer)
+	manageRoutes.Register("/customer/sync", "POST", manage.CallSyncCustomer)
+	manageRoutes.Register("/customer/publish", "POST", manage.CallPublishCustomer)
+	manageRoutes.Register("/customer/rollback", "POST", manage.CallRollbackCustomer)
+	manageRoutes.Register("/customer/version-history", "GET", manage.CallGetCustomerVersionHistory)
 
 	// 游戏管理接口
-	manageRoutes.Register("/game/list", "GET", callGetGameList)
-	manageRoutes.Register("/game/detail", "GET", callGetGameDetail)
-	manageRoutes.Register("/game/create", "POST", callCreateGame)
-	manageRoutes.Register("/game/update", "POST", callUpdateGame)
-	manageRoutes.Register("/game/delete", "POST", callDeleteGame)
-	manageRoutes.Register("/game/supplement-bet-records", "POST", callSupplementBetRecords)
+	manageRoutes.Register("/game/list", "GET", manage.CallGetGameList)
+	manageRoutes.Register("/game/detail", "GET", manage.CallGetGameDetail)
+	manageRoutes.Register("/game/create", "POST", manage.CallCreateGame)
+	manageRoutes.Register("/game/update", "POST", manage.CallUpdateGame)
+	manageRoutes.Register("/game/delete", "POST", manage.CallDeleteGame)
+	manageRoutes.Register("/game/supplement-bet-records", "POST", manage.CallSupplementBetRecords)
 
 	// 站点游戏管理接口
-	manageRoutes.Register("/site_game/list", "GET", callGetSiteGameList)
-	manageRoutes.Register("/site_game/update_status", "POST", callUpdateSiteGameStatus)
-	manageRoutes.Register("/site_game/bind", "POST", callBindSiteGame)
-	manageRoutes.Register("/site_game/unbind", "POST", callUnbindSiteGame)
+	manageRoutes.Register("/site_game/list", "GET", manage.CallGetSiteGameList)
+	manageRoutes.Register("/site_game/update_status", "POST", manage.CallUpdateSiteGameStatus)
+	manageRoutes.Register("/site_game/bind", "POST", manage.CallBindSiteGame)
+	manageRoutes.Register("/site_game/unbind", "POST", manage.CallUnbindSiteGame)
 
 	// 选项接口
-	manageRoutes.Register("/options/domain-type", "GET", callGetDomainTypeOptions)
-	manageRoutes.Register("/options/site", "GET", callGetSiteOptions)
-	manageRoutes.Register("/site-domain/list", "GET", callGetSiteDomainList)
-	manageRoutes.Register("/site-domain/create", "POST", callCreateSiteDomain)
-	manageRoutes.Register("/site-domain/update", "POST", callUpdateSiteDomain)
-	manageRoutes.Register("/site-domain/delete", "POST", callDeleteSiteDomain)
+	manageRoutes.Register("/options/domain-type", "GET", manage.CallGetDomainTypeOptions)
+	manageRoutes.Register("/options/site", "GET", manage.CallGetSiteOptions)
+	manageRoutes.Register("/site-domain/list", "GET", manage.CallGetSiteDomainList)
+	manageRoutes.Register("/site-domain/create", "POST", manage.CallCreateSiteDomain)
+	manageRoutes.Register("/site-domain/update", "POST", manage.CallUpdateSiteDomain)
+	manageRoutes.Register("/site-domain/delete", "POST", manage.CallDeleteSiteDomain)
 }
 
 // initFrontendRoutes 初始化前台路由
