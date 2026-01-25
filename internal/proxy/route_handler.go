@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"jh_gateway/internal/proxy/grpc_client/backend"
 	"jh_gateway/internal/proxy/grpc_client/balance"
 	"jh_gateway/internal/proxy/grpc_client/game"
 	"jh_gateway/internal/proxy/grpc_client/manage"
@@ -81,99 +82,99 @@ func initBackendRoutes() {
 	backendRoutes = NewRouteRegistry()
 
 	// 管理员登录
-	backendRoutes.Register("/login", "POST", callAdminLogin)
+	backendRoutes.Register("/login", "POST", backend.CallAdminLogin)
 	// 刷新token
-	backendRoutes.Register("/refresh-token", "GET", callAdminRefreshToken)
+	backendRoutes.Register("/refresh-token", "GET", backend.CallAdminRefreshToken)
 	// 获取管理员信息
-	backendRoutes.Register("/get-info", "GET", callGetInfo)
+	backendRoutes.Register("/get-info", "GET", backend.CallGetInfo)
 	// 获取菜单列表
-	backendRoutes.Register("/menus", "GET", callMenus)
+	backendRoutes.Register("/menus", "GET", backend.CallMenus)
 	// 员工列表
-	backendRoutes.Register("/admins", "GET", callGetAdminList)
+	backendRoutes.Register("/admins", "GET", backend.CallGetAdminList)
 	// 添加员工
-	backendRoutes.Register("/create-admin", "POST", callAdminCreate)
+	backendRoutes.Register("/create-admin", "POST", backend.CallAdminCreate)
 	// 更新员工
-	backendRoutes.Register("/update-admin", "POST", callUpdateAdmin)
+	backendRoutes.Register("/update-admin", "POST", backend.CallUpdateAdmin)
 	// 删除员工
-	backendRoutes.Register("/delete-admin", "POST", callDeleteAdmin)
+	backendRoutes.Register("/delete-admin", "POST", backend.CallDeleteAdmin)
 	// 退出
-	backendRoutes.Register("/logout", "POST", callAdminLogout)
+	backendRoutes.Register("/logout", "POST", backend.CallAdminLogout)
 	// 修改密码
-	backendRoutes.Register("/change-password", "POST", callAdminChangePassword)
+	backendRoutes.Register("/change-password", "POST", backend.CallAdminChangePassword)
 
 	// 站点配置信息
-	backendRoutes.Register("/basic-setting", "GET", callGetBasicSetting)
+	backendRoutes.Register("/basic-setting", "GET", backend.CallGetBasicSetting)
 	// 设置站点配置信息
-	backendRoutes.Register("/update-basic-setting", "POST", callUpdateBasicSetting)
+	backendRoutes.Register("/update-basic-setting", "POST", backend.CallUpdateBasicSetting)
 
 	// 角色列表
-	backendRoutes.Register("/roles", "GET", callGetRoleList)
+	backendRoutes.Register("/roles", "GET", backend.CallGetRoleList)
 	// 创建角色
-	backendRoutes.Register("/create-role", "POST", callCreateRole)
+	backendRoutes.Register("/create-role", "POST", backend.CallCreateRole)
 	// 更新角色
-	backendRoutes.Register("/update-role", "POST", callUpdateRole)
+	backendRoutes.Register("/update-role", "POST", backend.CallUpdateRole)
 	// 删除角色
-	backendRoutes.Register("/delete-role", "POST", callDeleteRole)
+	backendRoutes.Register("/delete-role", "POST", backend.CallDeleteRole)
 	// 角色权限列表
-	backendRoutes.Register("/permissions", "GET", callGetPermissions)
+	backendRoutes.Register("/permissions", "GET", backend.CallGetPermissions)
 	// 保存角色权限
-	backendRoutes.Register("/save-permission", "POST", callSavePermission)
+	backendRoutes.Register("/save-permission", "POST", backend.CallSavePermission)
 
 	// 后台操作日志
-	backendRoutes.Register("/admin-logs", "GET", callGetAdminLogs)
+	backendRoutes.Register("/admin-logs", "GET", backend.CallGetAdminLogs)
 
 	// 会员列表
-	backendRoutes.Register("/users", "GET", callGetUserList)
+	backendRoutes.Register("/users", "GET", backend.CallGetUserList)
 	// 更新会员
-	backendRoutes.Register("/update-user", "POST", callUpdateUser)
+	backendRoutes.Register("/update-user", "POST", backend.CallUpdateUser)
 	// 会员基本信息
-	backendRoutes.Register("/user-basic-info", "GET", callGetUserBasicInfo)
+	backendRoutes.Register("/user-basic-info", "GET", backend.CallGetUserBasicInfo)
 	// 会员等级列表
-	backendRoutes.Register("/user-grades", "GET", callGetUserGrades)
+	backendRoutes.Register("/user-grades", "GET", backend.CallGetUserGrades)
 	// 保存会员等级
-	backendRoutes.Register("/save-user-grades", "POST", callSaveUserGrades)
+	backendRoutes.Register("/save-user-grades", "POST", backend.CallSaveUserGrades)
 	// 删除会员等级
-	backendRoutes.Register("/delete-user-grades", "POST", callDeleteUserGrades)
+	backendRoutes.Register("/delete-user-grades", "POST", backend.CallDeleteUserGrades)
 	//会员登录日志
-	backendRoutes.Register("/user-login-logs", "GET", callGetUserLoginLogs)
+	backendRoutes.Register("/user-login-logs", "GET", backend.CallGetUserLoginLogs)
 
 	// 图片上传
-	backendRoutes.Register("/upload-image", "POST", callUploadImage)
+	backendRoutes.Register("/upload-image", "POST", backend.CallUploadImage)
 
 	// 消息列表
-	backendRoutes.Register("/messages", "GET", callGetMessageList)
+	backendRoutes.Register("/messages", "GET", backend.CallGetMessageList)
 	// 新增消息
-	backendRoutes.Register("/create-message", "POST", callCreateMessage)
+	backendRoutes.Register("/create-message", "POST", backend.CallCreateMessage)
 	// 用户-消息列表(预留前台)
-	backendRoutes.Register("/user-messages", "GET", callGetUserMessages)
+	backendRoutes.Register("/user-messages", "GET", backend.CallGetUserMessages)
 	// 用户-已读消息(预留前台)
-	backendRoutes.Register("/unread-count", "GET", callGetUnreadCount)
+	backendRoutes.Register("/unread-count", "GET", backend.CallGetUnreadCount)
 	// 用户-未读消息(预留前台)
-	backendRoutes.Register("/read-message", "POST", callReadMessage)
+	backendRoutes.Register("/read-message", "POST", backend.CallReadMessage)
 
 	// 广告列表
-	backendRoutes.Register("/ads", "GET", callGetAdList)
+	backendRoutes.Register("/ads", "GET", backend.CallGetAdList)
 	// 新增广告
-	backendRoutes.Register("/create-ad", "POST", callCreateAd)
+	backendRoutes.Register("/create-ad", "POST", backend.CallCreateAd)
 	// 更新广告
-	backendRoutes.Register("/update-ad", "POST", callUpdateAd)
+	backendRoutes.Register("/update-ad", "POST", backend.CallUpdateAd)
 	// 删除广告
-	backendRoutes.Register("/delete-ad", "POST", callDeleteAd)
+	backendRoutes.Register("/delete-ad", "POST", backend.CallDeleteAd)
 
 	// 公告列表
-	backendRoutes.Register("/notices", "GET", callGetNoticeList)
+	backendRoutes.Register("/notices", "GET", backend.CallGetNoticeList)
 	// 新增公告
-	backendRoutes.Register("/create-notice", "POST", callCreateNotice)
+	backendRoutes.Register("/create-notice", "POST", backend.CallCreateNotice)
 	// 更新公告
-	backendRoutes.Register("/update-notice", "POST", callUpdateNotice)
+	backendRoutes.Register("/update-notice", "POST", backend.CallUpdateNotice)
 	// 删除公告
-	backendRoutes.Register("/delete-notice", "POST", callDeleteNotice)
+	backendRoutes.Register("/delete-notice", "POST", backend.CallDeleteNotice)
 
 	// 选项接口
 	// 会员等级列表
-	backendRoutes.Register("/options-user-grade", "GET", callGetUserGradeOptions)
+	backendRoutes.Register("/options-user-grade", "GET", backend.CallGetUserGradeOptions)
 	// 后台角色列表
-	backendRoutes.Register("/options-admin-role", "GET", callGetAdminRoleOptions)
+	backendRoutes.Register("/options-admin-role", "GET", backend.CallGetAdminRoleOptions)
 }
 
 // initBalanceRoutes 初始化余额路由
