@@ -526,3 +526,63 @@ func CallGetGameCategories(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/游戏/游戏管理
+ * @title 获取游戏列表
+ * @description 获取指定站点的游戏列表，支持按平台、热门、新游戏、推荐等条件过滤（站点ID从token中获取）
+ * @method get
+ * @url /api/game/game-list
+ * @param platform 可选 string 平台（ONE、IG_JILI等）
+ * @param hot 可选 int 是否热门（1=是）
+ * @param is_new 可选 int 是否新游戏（1=是）
+ * @param recommend 可选 int 是否推荐（1=是）
+ * @param page 可选 int 页码（默认1）
+ * @param size 可选 int 每页数量（默认20，最大100）
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"site_id":1,"platform":"ONE","vendor":"PP","code":"vs20olympgate","name":"Gates of Olympus","style":"SLOTS","img":"https://example.com/game.png","img1":"","hot":1,"recommend":1,"is_new":0,"status":1,"sort":100}],"total":1235}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.list array 游戏列表
+ * @return_param data.total int 总记录数
+ * @number 6
+ */
+func CallGetFrontendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetGameList (Frontend)")
+
+	platform := r.Get("platform").String()
+	hot := gconv.Int32(r.Get("hot").Int())
+	isNew := gconv.Int32(r.Get("is_new").Int())
+	recommend := gconv.Int32(r.Get("recommend").Int())
+	page := gconv.Int32(r.Get("page").Int())
+	size := gconv.Int32(r.Get("size").Int())
+
+	if page <= 0 {
+		page = 1
+	}
+	if size <= 0 {
+		size = 20
+	}
+
+	req := &v20.GetGameListReq{
+		Platform:  platform,
+		Hot:       hot,
+		IsNew:     isNew,
+		Recommend: recommend,
+		Page:      page,
+		Size:      size,
+	}
+
+	client := v20.NewGameClient(conn)
+	res, err := client.GetGameList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGameList (Frontend) failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "获取游戏列表成功: total=%d, page=%d, size=%d",
+		res.Total, page, size)
+
+	return writeProtobufResponse(ctx, r, res)
+}
