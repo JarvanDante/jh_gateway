@@ -7,6 +7,7 @@ import (
 
 	"jh_gateway/internal/proxy/grpc_client/backend"
 	"jh_gateway/internal/proxy/grpc_client/balance"
+	"jh_gateway/internal/proxy/grpc_client/frontend"
 	"jh_gateway/internal/proxy/grpc_client/game"
 	"jh_gateway/internal/proxy/grpc_client/manage"
 
@@ -296,33 +297,33 @@ func initFrontendRoutes() {
 	frontendRoutes = NewRouteRegistry()
 
 	// 快速注册
-	frontendRoutes.Register("/quickRegister", "POST", callQuickRegister)
+	frontendRoutes.Register("/quickRegister", "POST", frontend.CallQuickRegister)
 	// 用户注册
-	frontendRoutes.Register("/register", "POST", callUserRegister)
+	frontendRoutes.Register("/register", "POST", frontend.CallUserRegister)
 	// 用户登录
-	frontendRoutes.Register("/login", "POST", callUserLogin)
+	frontendRoutes.Register("/login", "POST", frontend.CallUserLogin)
 	// 获取验证码
-	frontendRoutes.Register("/captcha", "GET", callGenerateCaptcha)
+	frontendRoutes.Register("/captcha", "GET", frontend.CallGenerateCaptcha)
 	// 刷新token
-	frontendRoutes.Register("/refresh-token", "POST", callRefreshToken)
+	frontendRoutes.Register("/refresh-token", "POST", frontend.CallRefreshToken)
 	// 获取用户信息
-	frontendRoutes.Register("/user-info", "GET", callGetUserInfo)
+	frontendRoutes.Register("/user-info", "GET", frontend.CallGetUserInfo)
 	// 用户退出
-	frontendRoutes.Register("/logout", "POST", callUserLogout)
+	frontendRoutes.Register("/logout", "POST", frontend.CallUserLogout)
 	// 绑定邮箱
-	frontendRoutes.Register("/bind-email", "POST", callBindEmail)
+	frontendRoutes.Register("/bind-email", "POST", frontend.CallBindEmail)
 	// 绑定手机
-	frontendRoutes.Register("/bind-mobile", "POST", callBindMobile)
+	frontendRoutes.Register("/bind-mobile", "POST", frontend.CallBindMobile)
 	// 修改登录密码
-	frontendRoutes.Register("/change-login-password", "POST", callChangeLoginPassword)
+	frontendRoutes.Register("/change-login-password", "POST", frontend.CallChangeLoginPassword)
 	// 绑定登录密码（针对快速注册用户）
-	frontendRoutes.Register("/bind-login-password", "POST", callBindLoginPassword)
+	frontendRoutes.Register("/bind-login-password", "POST", frontend.CallBindLoginPassword)
 	// 获取会员等级列表
-	frontendRoutes.Register("/grade-list", "GET", callGetAppGradeList)
+	frontendRoutes.Register("/grade-list", "GET", frontend.CallGetAppGradeList)
 	// 获取公告列表
-	frontendRoutes.Register("/notice-list", "GET", callGetAppNoticeList)
+	frontendRoutes.Register("/notice-list", "GET", frontend.CallGetAppNoticeList)
 	// 获取广告列表
-	frontendRoutes.Register("/ad-list", "GET", callGetAppAdList)
+	frontendRoutes.Register("/ad-list", "GET", frontend.CallGetAppAdList)
 	// 获取站点设置
-	frontendRoutes.Register("/setting-site", "GET", callGetSiteSetting)
+	frontendRoutes.Register("/setting-site", "GET", frontend.CallGetSiteSetting)
 }
