@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 
+	"jh_gateway/internal/proxy/grpc_client/game"
+
 	"github.com/gogf/gf/v2/net/ghttp"
 	"google.golang.org/grpc"
 )
@@ -228,18 +230,18 @@ func initBalanceRoutes() {
 func initGameRoutes() {
 	gameRoutes = NewRouteRegistry()
 
-	// 获取游戏列表
-	gameRoutes.Register("/games", "GET", callGetGames)
-	// 修改站点游戏开关
-	gameRoutes.Register("/update-games", "POST", callUpdateGames)
+	// 获取游戏种类列表
+	gameRoutes.Register("/games", "GET", game.CallGetGames)
+	// 修改站点游戏种类开关
+	gameRoutes.Register("/update-games", "POST", game.CallUpdateGames)
 	// 获取游戏记录
-	gameRoutes.Register("/game-record", "POST", callGetGameRecords)
+	gameRoutes.Register("/game-record", "POST", game.CallGetGameRecords)
 	// 进入游戏
-	gameRoutes.Register("/redirect-to-game", "POST", callRedirectToGame)
+	gameRoutes.Register("/redirect-to-game", "POST", game.CallRedirectToGame)
 	// 获取游戏列表（game_list表）
-	gameRoutes.Register("/game-list", "GET", callGetBackendGameList)
+	gameRoutes.Register("/game-list", "GET", game.CallGetBackendGameList)
 	// 更新游戏列表项
-	gameRoutes.Register("/update-game-list-item", "POST", callUpdateBackendGameListItem)
+	gameRoutes.Register("/update-game-list-item", "POST", game.CallUpdateBackendGameListItem)
 }
 
 // initManageRoutes 初始化总后台管理路由
