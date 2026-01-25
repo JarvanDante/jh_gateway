@@ -20,7 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Game_RedirectToGame_FullMethodName = "/front_game.Game/RedirectToGame"
+	Game_RedirectToGame_FullMethodName    = "/front_game.Game/RedirectToGame"
+	Game_GetGameCategories_FullMethodName = "/front_game.Game/GetGameCategories"
 )
 
 // GameClient is the client API for Game service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GameClient interface {
 	RedirectToGame(ctx context.Context, in *RedirectToGameReq, opts ...grpc.CallOption) (*RedirectToGameRes, error)
+	GetGameCategories(ctx context.Context, in *GetGameCategoriesReq, opts ...grpc.CallOption) (*GetGameCategoriesRes, error)
 }
 
 type gameClient struct {
@@ -48,11 +50,22 @@ func (c *gameClient) RedirectToGame(ctx context.Context, in *RedirectToGameReq, 
 	return out, nil
 }
 
+func (c *gameClient) GetGameCategories(ctx context.Context, in *GetGameCategoriesReq, opts ...grpc.CallOption) (*GetGameCategoriesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGameCategoriesRes)
+	err := c.cc.Invoke(ctx, Game_GetGameCategories_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GameServer is the server API for Game service.
 // All implementations must embed UnimplementedGameServer
 // for forward compatibility.
 type GameServer interface {
 	RedirectToGame(context.Context, *RedirectToGameReq) (*RedirectToGameRes, error)
+	GetGameCategories(context.Context, *GetGameCategoriesReq) (*GetGameCategoriesRes, error)
 	mustEmbedUnimplementedGameServer()
 }
 
@@ -65,6 +78,9 @@ type UnimplementedGameServer struct{}
 
 func (UnimplementedGameServer) RedirectToGame(context.Context, *RedirectToGameReq) (*RedirectToGameRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method RedirectToGame not implemented")
+}
+func (UnimplementedGameServer) GetGameCategories(context.Context, *GetGameCategoriesReq) (*GetGameCategoriesRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetGameCategories not implemented")
 }
 func (UnimplementedGameServer) mustEmbedUnimplementedGameServer() {}
 func (UnimplementedGameServer) testEmbeddedByValue()              {}
@@ -105,6 +121,24 @@ func _Game_RedirectToGame_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Game_GetGameCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGameCategoriesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServer).GetGameCategories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Game_GetGameCategories_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServer).GetGameCategories(ctx, req.(*GetGameCategoriesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Game_ServiceDesc is the grpc.ServiceDesc for Game service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,6 +149,10 @@ var Game_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RedirectToGame",
 			Handler:    _Game_RedirectToGame_Handler,
+		},
+		{
+			MethodName: "GetGameCategories",
+			Handler:    _Game_GetGameCategories_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

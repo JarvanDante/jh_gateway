@@ -134,6 +134,194 @@ func (x *RedirectToGameRes) GetUrl() string {
 	return ""
 }
 
+type GetGameCategoriesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          int32                  `protobuf:"varint,1,opt,name=type,proto3" json:"type" dc:"游戏类型（可选）"` // 游戏类型（可选）
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGameCategoriesReq) Reset() {
+	*x = GetGameCategoriesReq{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGameCategoriesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGameCategoriesReq) ProtoMessage() {}
+
+func (x *GetGameCategoriesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGameCategoriesReq.ProtoReflect.Descriptor instead.
+func (*GetGameCategoriesReq) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetGameCategoriesReq) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+type GetGameCategoriesRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Categories    []*GameCategory        `protobuf:"bytes,1,rep,name=categories,proto3" json:"categories" dc:"游戏种类列表"` // 游戏种类列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGameCategoriesRes) Reset() {
+	*x = GetGameCategoriesRes{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGameCategoriesRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGameCategoriesRes) ProtoMessage() {}
+
+func (x *GetGameCategoriesRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGameCategoriesRes.ProtoReflect.Descriptor instead.
+func (*GetGameCategoriesRes) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetGameCategoriesRes) GetCategories() []*GameCategory {
+	if x != nil {
+		return x.Categories
+	}
+	return nil
+}
+
+type GameCategory struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"`         // 游戏ID
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"游戏名称"`                            // 游戏名称
+	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform" dc:"平台"`                      // 平台
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type" dc:"游戏类型"`                           // 游戏类型
+	ImageCode     string                 `protobuf:"bytes,5,opt,name=image_code,json=imageCode,proto3" json:"image_code" dc:"图片代码"` // 图片代码
+	DbName        string                 `protobuf:"bytes,6,opt,name=db_name,json=dbName,proto3" json:"db_name" dc:"数据库名称"`         // 数据库名称
+	Sort          int32                  `protobuf:"varint,7,opt,name=sort,proto3" json:"sort" dc:"排序"`                             // 排序
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态"`                         // 状态
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GameCategory) Reset() {
+	*x = GameCategory{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GameCategory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GameCategory) ProtoMessage() {}
+
+func (x *GameCategory) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GameCategory.ProtoReflect.Descriptor instead.
+func (*GameCategory) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GameCategory) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
+func (x *GameCategory) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GameCategory) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *GameCategory) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *GameCategory) GetImageCode() string {
+	if x != nil {
+		return x.ImageCode
+	}
+	return ""
+}
+
+func (x *GameCategory) GetDbName() string {
+	if x != nil {
+		return x.DbName
+	}
+	return ""
+}
+
+func (x *GameCategory) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+func (x *GameCategory) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
 var File_frontend_game_v1_game_proto protoreflect.FileDescriptor
 
 const file_frontend_game_v1_game_proto_rawDesc = "" +
@@ -146,9 +334,26 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x06mobile\x18\x03 \x01(\x05R\x06mobile\"9\n" +
 	"\x11RedirectToGameRes\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12\x10\n" +
-	"\x03url\x18\x02 \x01(\tR\x03url2X\n" +
+	"\x03url\x18\x02 \x01(\tR\x03url\"*\n" +
+	"\x14GetGameCategoriesReq\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\x05R\x04type\"P\n" +
+	"\x14GetGameCategoriesRes\x128\n" +
+	"\n" +
+	"categories\x18\x01 \x03(\v2\x18.front_game.GameCategoryR\n" +
+	"categories\"\xcf\x01\n" +
+	"\fGameCategory\x12\x17\n" +
+	"\agame_id\x18\x01 \x01(\x05R\x06gameId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bplatform\x18\x03 \x01(\tR\bplatform\x12\x12\n" +
+	"\x04type\x18\x04 \x01(\x05R\x04type\x12\x1d\n" +
+	"\n" +
+	"image_code\x18\x05 \x01(\tR\timageCode\x12\x17\n" +
+	"\adb_name\x18\x06 \x01(\tR\x06dbName\x12\x12\n" +
+	"\x04sort\x18\a \x01(\x05R\x04sort\x12\x16\n" +
+	"\x06status\x18\b \x01(\x05R\x06status2\xb3\x01\n" +
 	"\x04Game\x12P\n" +
-	"\x0eRedirectToGame\x12\x1d.front_game.RedirectToGameReq\x1a\x1d.front_game.RedirectToGameRes\"\x00B&Z$jh_game_service/api/frontend/game/v1b\x06proto3"
+	"\x0eRedirectToGame\x12\x1d.front_game.RedirectToGameReq\x1a\x1d.front_game.RedirectToGameRes\"\x00\x12Y\n" +
+	"\x11GetGameCategories\x12 .front_game.GetGameCategoriesReq\x1a .front_game.GetGameCategoriesRes\"\x00B&Z$jh_game_service/api/frontend/game/v1b\x06proto3"
 
 var (
 	file_frontend_game_v1_game_proto_rawDescOnce sync.Once
@@ -162,19 +367,25 @@ func file_frontend_game_v1_game_proto_rawDescGZIP() []byte {
 	return file_frontend_game_v1_game_proto_rawDescData
 }
 
-var file_frontend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_frontend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_frontend_game_v1_game_proto_goTypes = []any{
-	(*RedirectToGameReq)(nil), // 0: front_game.RedirectToGameReq
-	(*RedirectToGameRes)(nil), // 1: front_game.RedirectToGameRes
+	(*RedirectToGameReq)(nil),    // 0: front_game.RedirectToGameReq
+	(*RedirectToGameRes)(nil),    // 1: front_game.RedirectToGameRes
+	(*GetGameCategoriesReq)(nil), // 2: front_game.GetGameCategoriesReq
+	(*GetGameCategoriesRes)(nil), // 3: front_game.GetGameCategoriesRes
+	(*GameCategory)(nil),         // 4: front_game.GameCategory
 }
 var file_frontend_game_v1_game_proto_depIdxs = []int32{
-	0, // 0: front_game.Game.RedirectToGame:input_type -> front_game.RedirectToGameReq
-	1, // 1: front_game.Game.RedirectToGame:output_type -> front_game.RedirectToGameRes
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4, // 0: front_game.GetGameCategoriesRes.categories:type_name -> front_game.GameCategory
+	0, // 1: front_game.Game.RedirectToGame:input_type -> front_game.RedirectToGameReq
+	2, // 2: front_game.Game.GetGameCategories:input_type -> front_game.GetGameCategoriesReq
+	1, // 3: front_game.Game.RedirectToGame:output_type -> front_game.RedirectToGameRes
+	3, // 4: front_game.Game.GetGameCategories:output_type -> front_game.GetGameCategoriesRes
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_frontend_game_v1_game_proto_init() }
@@ -188,7 +399,7 @@ func file_frontend_game_v1_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_game_v1_game_proto_rawDesc), len(file_frontend_game_v1_game_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

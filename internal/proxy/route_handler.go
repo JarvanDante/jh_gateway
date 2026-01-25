@@ -242,6 +242,8 @@ func initGameRoutes() {
 	gameRoutes.Register("/game-record", "POST", game.CallGetGameRecords)
 	// 进入游戏
 	gameRoutes.Register("/redirect-to-game", "POST", game.CallRedirectToGame)
+	// 获取游戏种类（site_game表）
+	gameRoutes.Register("/game-categories", "GET", game.CallGetGameCategories)
 	// 获取游戏列表（game_list表）
 	gameRoutes.Register("/game-list", "GET", game.CallGetBackendGameList)
 	// 更新游戏列表项

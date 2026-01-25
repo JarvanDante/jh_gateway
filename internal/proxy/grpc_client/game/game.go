@@ -490,3 +490,39 @@ func CallUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/游戏/游戏管理
+ * @title 获取游戏种类
+ * @description 获取指定站点的游戏种类列表，支持按游戏类型过滤（站点ID从token中获取）
+ * @method get
+ * @url /api/game/game-categories
+ * @param type 可选 int 游戏类型（1=体育，2=彩票，3=真人，4=电子，5=棋牌）
+ * @return {"code":0,"msg":"success","data":{"categories":[{"game_id":1,"name":"ONE游戏","platform":"ONE","type":4,"image_code":"one_game","db_name":"one_db","sort":100,"status":1}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.categories array 游戏种类列表
+ * @number 5
+ */
+func CallGetGameCategories(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetGameCategories")
+
+	gameType := gconv.Int32(r.Get("type").Int())
+
+	req := &v20.GetGameCategoriesReq{
+		Type: gameType,
+	}
+
+	client := v20.NewGameClient(conn)
+	res, err := client.GetGameCategories(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGameCategories failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "获取游戏种类成功: count=%d", len(res.Categories))
+
+	return writeProtobufResponse(ctx, r, res)
+}
