@@ -59,8 +59,8 @@ func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage prot
 	return nil
 }
 
-// callAppGRPCMethod 根据 HTTP 路径调用对应的 gRPC 方法
-func callAppGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+// callBackendGRPCMethod 根据 HTTP 路径调用对应的 gRPC 方法
+func callBackendGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	// 统一添加traceId到gRPC上下文 - 只需要在这里添加一次
 	ctx = addTraceToContext(ctx, r)
 
@@ -70,7 +70,7 @@ func callAppGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	util.LogWithTrace(ctx, "info", "calling gRPC method for path: %s, method: %s", r.URL.Path, r.Method)
 
 	// 使用路由注册表处理请求
-	return appRoutes.Handle(ctx, conn, r)
+	return backendRoutes.Handle(ctx, conn, r)
 }
 
 /**

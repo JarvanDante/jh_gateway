@@ -279,7 +279,7 @@ func callServiceWithRouting(ctx context.Context, serviceName string, r *ghttp.Re
 		if strings.HasPrefix(r.URL.Path, "/api/frontend") {
 			return callFrontendGRPCMethod(ctx, conn, r)
 		}
-		return callAppGRPCMethod(ctx, conn, r)
+		return callBackendGRPCMethod(ctx, conn, r)
 	case "jh_balance_service":
 		return callBalanceGRPCMethod(ctx, conn, r)
 	case "jh_game_service":
