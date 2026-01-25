@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"jh_gateway/internal/proxy/grpc_client/balance"
 	"jh_gateway/internal/proxy/grpc_client/game"
 
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -180,50 +181,50 @@ func initBalanceRoutes() {
 
 	// 前台接口
 	// 刷新用户余额
-	balanceRoutes.Register("/refresh-balance", "GET", callRefreshBalance)
+	balanceRoutes.Register("/refresh-balance", "GET", balance.CallRefreshBalance)
 
 	// 后台接口
 	// 账变记录
-	balanceRoutes.Register("/balance-changes", "GET", callGetBalanceChanges)
+	balanceRoutes.Register("/balance-changes", "GET", balance.CallGetBalanceChanges)
 	// 交易类型列表
-	balanceRoutes.Register("/options-change", "GET", callGetChangeOptions)
+	balanceRoutes.Register("/options-change", "GET", balance.CallGetChangeOptions)
 
 	// 充值记录
-	balanceRoutes.Register("/recharge-payment", "GET", callGetRechargePayments)
+	balanceRoutes.Register("/recharge-payment", "GET", balance.CallGetRechargePayments)
 	// 手动充值记录
-	balanceRoutes.Register("/recharge-manual", "GET", callGetRechargeManuals)
+	balanceRoutes.Register("/recharge-manual", "GET", balance.CallGetRechargeManuals)
 	// 确认充值
-	balanceRoutes.Register("/confirm-payment-order", "POST", callConfirmPaymentOrder)
+	balanceRoutes.Register("/confirm-payment-order", "POST", balance.CallConfirmPaymentOrder)
 
 	// 提现记录
-	balanceRoutes.Register("/withdraws", "GET", callGetWithdraws)
+	balanceRoutes.Register("/withdraws", "GET", balance.CallGetWithdraws)
 	// 手动提现记录
-	balanceRoutes.Register("/withdraw-manual", "GET", callGetWithdrawManuals)
+	balanceRoutes.Register("/withdraw-manual", "GET", balance.CallGetWithdrawManuals)
 	// 提现查看审核
-	balanceRoutes.Register("/withdraw-review", "GET", callGetWithdrawReview)
+	balanceRoutes.Register("/withdraw-review", "GET", balance.CallGetWithdrawReview)
 	// 确认提现
-	balanceRoutes.Register("/deal-with-withdraw", "POST", callDealWithWithdraw)
+	balanceRoutes.Register("/deal-with-withdraw", "POST", balance.CallDealWithWithdraw)
 
 	// 用户余额查询
-	balanceRoutes.Register("/query-user-balance", "POST", callQueryUserBalance)
+	balanceRoutes.Register("/query-user-balance", "POST", balance.CallQueryUserBalance)
 	// 用户三方余额查询
-	balanceRoutes.Register("/query-game-balance", "POST", callQueryGameBalance)
+	balanceRoutes.Register("/query-game-balance", "POST", balance.CallQueryGameBalance)
 	// 手动操作用户账户
-	balanceRoutes.Register("/manual-user-balance", "POST", callManualUserBalance)
+	balanceRoutes.Register("/manual-user-balance", "POST", balance.CallManualUserBalance)
 
 	// 支付接口列表
-	balanceRoutes.Register("/payment-accounts", "GET", callGetPaymentAccounts)
+	balanceRoutes.Register("/payment-accounts", "GET", balance.CallGetPaymentAccounts)
 	// 添加支付接口
-	balanceRoutes.Register("/create-payment-account", "POST", callCreatePaymentAccount)
+	balanceRoutes.Register("/create-payment-account", "POST", balance.CallCreatePaymentAccount)
 	// 更新获取支付接口信息
-	balanceRoutes.Register("/update-payment-account", "GET", callGetPaymentAccountUpdate)
+	balanceRoutes.Register("/update-payment-account", "GET", balance.CallGetPaymentAccountUpdate)
 	// 更新支付接口
-	balanceRoutes.Register("/update-payment-account", "POST", callUpdatePaymentAccount)
+	balanceRoutes.Register("/update-payment-account", "POST", balance.CallUpdatePaymentAccount)
 	// 删除支付接口
-	balanceRoutes.Register("/delete-payment-account", "POST", callDeletePaymentAccount)
+	balanceRoutes.Register("/delete-payment-account", "POST", balance.CallDeletePaymentAccount)
 
 	// 操作类型列表
-	balanceRoutes.Register("/options-manual", "GET", callGetManualList)
+	balanceRoutes.Register("/options-manual", "GET", balance.CallGetManualList)
 }
 
 // initGameRoutes 初始化游戏路由
