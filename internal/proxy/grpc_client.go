@@ -6252,3 +6252,122 @@ func callSupplementBetRecords(ctx context.Context, conn *grpc.ClientConn, r *ght
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/*
+ * 获取游戏列表（game_list表 - 后台）
+ * @author kiro
+ * @date 2026-01-25
+ * @number 7
+ */
+func callGetBackendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetGameList")
+
+	// 从URL参数获取查询条件
+	siteId := gconv.Int32(r.Get("site_id").Int())
+	platform := r.Get("platform").String()
+	vendor := r.Get("vendor").String()
+	name := r.Get("name").String()
+	code := r.Get("code").String()
+	style := r.Get("style").String()
+	hot := gconv.Int32(r.Get("hot").Int())
+	recommend := gconv.Int32(r.Get("recommend").Int())
+	isNew := gconv.Int32(r.Get("is_new").Int())
+	status := gconv.Int32(r.Get("status").Int())
+	page := gconv.Int32(r.Get("page").Int())
+	size := gconv.Int32(r.Get("size").Int())
+
+	// 设置默认值
+	if page <= 0 {
+		page = 1
+	}
+	if size <= 0 {
+		size = 20
+	}
+
+	client := v7.NewGameClient(conn)
+	req := &v7.GetGameListReq{
+		SiteId:    siteId,
+		Platform:  platform,
+		Vendor:    vendor,
+		Name:      name,
+		Code:      code,
+		Style:     style,
+		Hot:       hot,
+		Recommend: recommend,
+		IsNew:     isNew,
+		Status:    status,
+		Page:      page,
+		Size:      size,
+	}
+
+	util.LogWithTrace(ctx, "info", "获取游戏列表请求: site_id=%d, platform=%s, page=%d, size=%d",
+		siteId, platform, page, size)
+
+	res, err := client.GetGameList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGameList failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "获取游戏列表成功: total=%d, page=%d, size=%d",
+		res.Total, res.Page, res.Size)
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/*
+ * 更新游戏列表项（后台）
+ * @author kiro
+ * @date 2026-01-25
+ * @number 8
+ */
+func callUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game UpdateGameListItem")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	// 验证必填参数
+	id := gconv.Int32(reqData["id"])
+	if id <= 0 {
+		util.WriteBadRequest(r, "游戏ID不能为空")
+		return fmt.Errorf("id is required")
+	}
+
+	siteId := gconv.Int32(reqData["site_id"])
+	aliasName := gconv.String(reqData["alias_name"])
+	hot := gconv.Int32(reqData["hot"])
+	recommend := gconv.Int32(reqData["recommend"])
+	isNew := gconv.Int32(reqData["is_new"])
+	status := gconv.Int32(reqData["status"])
+	sort := gconv.Int32(reqData["sort"])
+
+	client := v7.NewGameClient(conn)
+	req := &v7.UpdateGameListItemReq{
+		SiteId:    siteId,
+		Id:        id,
+		AliasName: aliasName,
+		Hot:       hot,
+		Recommend: recommend,
+		IsNew:     isNew,
+		Status:    status,
+		Sort:      sort,
+	}
+
+	util.LogWithTrace(ctx, "info", "更新游戏列表项请求: id=%d, site_id=%d, hot=%d, recommend=%d",
+		id, siteId, hot, recommend)
+
+	res, err := client.UpdateGameListItem(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game UpdateGameListItem failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "更新游戏列表项完成: success=%v, message=%s",
+		res.Success, res.Message)
+
+	return writeProtobufResponse(ctx, r, res)
+}
