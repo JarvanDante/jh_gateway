@@ -386,6 +386,7 @@ type GetInfoRes struct {
 	Menus         []*MenuInfo            `protobuf:"bytes,5,rep,name=menus,proto3" json:"menus" dc:"菜单权限"`                       // 菜单权限
 	SiteCode      string                 `protobuf:"bytes,6,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点代码"` // 站点代码
 	SiteName      string                 `protobuf:"bytes,7,opt,name=site_name,json=siteName,proto3" json:"site_name" dc:"站点名称"` // 站点名称
+	SiteId        int64                  `protobuf:"varint,8,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`      // 站点ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -467,6 +468,13 @@ func (x *GetInfoRes) GetSiteName() string {
 		return x.SiteName
 	}
 	return ""
+}
+
+func (x *GetInfoRes) GetSiteId() int64 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
 }
 
 // 获取菜单列表请求
@@ -1537,7 +1545,7 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\x04open\x18\t \x01(\bR\x04open\x12\x18\n" +
 	"\achecked\x18\n" +
 	" \x01(\bR\achecked\x12\x12\n" +
-	"\x04icon\x18\v \x01(\tR\x04icon\"\xd3\x01\n" +
+	"\x04icon\x18\v \x01(\tR\x04icon\"\xec\x01\n" +
 	"\n" +
 	"GetInfoRes\x12\x14\n" +
 	"\x05roles\x18\x01 \x03(\tR\x05roles\x12\x12\n" +
@@ -1546,7 +1554,8 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\fintroduction\x18\x04 \x01(\tR\fintroduction\x12%\n" +
 	"\x05menus\x18\x05 \x03(\v2\x0f.admin.MenuInfoR\x05menus\x12\x1b\n" +
 	"\tsite_code\x18\x06 \x01(\tR\bsiteCode\x12\x1b\n" +
-	"\tsite_name\x18\a \x01(\tR\bsiteName\"\n" +
+	"\tsite_name\x18\a \x01(\tR\bsiteName\x12\x17\n" +
+	"\asite_id\x18\b \x01(\x03R\x06siteId\"\n" +
 	"\n" +
 	"\bMenusReq\"1\n" +
 	"\bMenusRes\x12%\n" +
