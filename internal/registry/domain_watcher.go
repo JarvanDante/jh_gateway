@@ -204,15 +204,16 @@ func (dw *DomainWatcher) processKVChanges(pairs api.KVPairs) {
 		totalDomains := len(config.Domain.API) + len(config.Domain.H5) +
 			len(config.Domain.Admin) + len(config.Domain.Callback)
 
-		log.Printf("更新站点配置: site_code=%s, site_id=%d, 域名数量=%d",
-			siteCode, config.Base.SiteId, totalDomains)
+		// log.Printf("更新站点配置: site_code=%s, site_id=%d, 域名数量=%d",
+		// 	siteCode, config.Base.SiteId, totalDomains)
+		_ = totalDomains // 避免未使用变量警告
 	}
 
 	dw.domainMap = newDomainMap
 	dw.siteConfigs = newSiteConfigs
 
-	log.Printf("域名映射更新完成，共%d个域名映射到%d个站点",
-		len(dw.domainMap), len(dw.siteConfigs))
+	// log.Printf("域名映射更新完成，共%d个域名映射到%d个站点",
+	// 	len(dw.domainMap), len(dw.siteConfigs))
 }
 
 // loadAllDomainConfigs 初始加载所有域名配置
