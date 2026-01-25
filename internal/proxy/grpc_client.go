@@ -3224,9 +3224,9 @@ func callGameGRPCMethod(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
- * @catalog 后台/游戏/游戏管理
- * @title 获取游戏列表
- * @description 获取游戏列表的接口
+ * @catalog 后台/游戏/游戏种类
+ * @title 获取游戏种类列表
+ * @description 获取游戏种类列表的接口
  * @method get
  * @url /api/backend/game/games
  * @param seachBlance 可选 bool 是否查询余额
@@ -3265,7 +3265,7 @@ func callGetGames(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 
 /**
  * showdoc
- * @catalog 后台/游戏/游戏管理
+ * @catalog 后台/游戏/游戏种类
  * @title 修改站点游戏开关
  * @description 修改站点游戏开关的接口
  * @method post
@@ -6253,10 +6253,33 @@ func callSupplementBetRecords(ctx context.Context, conn *grpc.ClientConn, r *ght
 	return writeProtobufResponse(ctx, r, res)
 }
 
-/*
- * 获取游戏列表（game_list表 - 后台）
- * @author kiro
- * @date 2026-01-25
+/**
+ * showdoc
+ * @catalog 后台/游戏/游戏列表
+ * @title 获取游戏资源列表
+ * @description 获取game_list表中的游戏资源列表，支持多条件筛选和分页
+ * @method get
+ * @url /api/backend/game/game-list
+ * @param site_id 可选 int 站点ID
+ * @param platform 可选 string 平台（ONE、IG_JILI等）
+ * @param vendor 可选 string 运营商（PP、PGS、JL、JDB、CG等）
+ * @param name 可选 string 游戏名称（模糊搜索）
+ * @param code 可选 string 游戏代码
+ * @param style 可选 string 游戏类型（SLOTS、LIVE等）
+ * @param hot 可选 int 是否热门（-1=全部 0=否 1=是）
+ * @param recommend 可选 int 是否推荐（-1=全部 0=否 1=是）
+ * @param is_new 可选 int 是否新游戏（-1=全部 0=否 1=是）
+ * @param status 可选 int 状态（-1=全部 0=禁用 1=启用）
+ * @param page 可选 int 页码（默认1）
+ * @param size 可选 int 每页数量（默认20，最大100）
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"site_id":1,"platform":"ONE","code":"vs20olympgate","name":"Gates of Olympus","alias_name":"奥林匹斯之门","style":"SLOTS","img":"https://example.com/game.png","img1":"","language":"en,zh","device":"MOBILE,DESKTOP","currency":"","vendor":"PP","hot":1,"recommend":1,"is_new":0,"status":1,"sort":100,"like_num":0,"created_at":"2026-01-25 17:57:33","updated_at":"2026-01-25 17:57:33"}],"total":1235,"page":1,"size":20}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.list array 游戏列表
+ * @return_param data.total int 总记录数
+ * @return_param data.page int 当前页码
+ * @return_param data.size int 每页数量
  * @number 7
  */
 func callGetBackendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
@@ -6315,10 +6338,28 @@ func callGetBackendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	return writeProtobufResponse(ctx, r, res)
 }
 
-/*
- * 更新游戏列表项（后台）
- * @author kiro
- * @date 2026-01-25
+/**
+ * showdoc
+ * @catalog 后台/游戏/游戏列表
+ * @title 更新游戏资源
+ * @description 更新game_list表中的游戏资源信息（只更新后台管理字段）
+ * @method post
+ * @url /api/backend/game/update-game-list-item
+ * @param id 必选 int 游戏ID
+ * @param site_id 可选 int 站点ID
+ * @param alias_name 可选 string 游戏别名（后台自定义）
+ * @param hot 可选 int 是否热门（-1=不修改 0=否 1=是）
+ * @param recommend 可选 int 是否推荐（-1=不修改 0=否 1=是）
+ * @param is_new 可选 int 是否新游戏（-1=不修改 0=否 1=是）
+ * @param status 可选 int 状态（-1=不修改 0=禁用 1=启用）
+ * @param sort 可选 int 排序（-1=不修改，数值越大越靠前）
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 返回消息
+ * @remark 注意：此接口只更新后台管理字段（alias_name、hot、recommend、is_new、status、sort），不会更新三方同步字段（name、img、vendor等）
  * @number 8
  */
 func callUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
