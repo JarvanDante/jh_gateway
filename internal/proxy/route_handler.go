@@ -245,11 +245,13 @@ func initGameRoutes() {
 	// 获取游戏种类（site_game表）
 	gameRoutes.Register("/game-categories", "GET", game.CallGetGameCategories)
 	// 获取游戏列表（game_list表）- 前台
-	gameRoutes.Register("/front-game-list", "GET", game.CallGetFrontendGameList)
+	gameRoutes.Register("/frontend-game-list", "GET", game.CallGetFrontendGameList)
 	// 获取游戏列表（game_list表）- 后台
 	gameRoutes.Register("/backend-game-list", "GET", game.CallGetBackendGameList)
 	// 更新游戏列表项
 	gameRoutes.Register("/update-game-list-item", "POST", game.CallUpdateBackendGameListItem)
+	// 获取游戏平台列表
+	gameRoutes.Register("/game-platforms", "GET", game.CallGetGamePlatforms)
 }
 
 // initManageRoutes 初始化总后台管理路由

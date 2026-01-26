@@ -586,3 +586,42 @@ func CallGetFrontendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 后台/游戏/游戏平台
+ * @title 获取游戏平台列表
+ * @description 获取游戏平台列表，支持按站点ID和游戏类型过滤
+ * @method get
+ * @url /api/backend/game/game-platforms
+ * @param site_id 可选 int 站点ID（0表示不过滤）
+ * @param type 可选 int 游戏类型（1=体育，2=彩票，3=真人，4=电子，5=棋牌，0表示不过滤）
+ * @return {"code":0,"msg":"success","data":{"platforms":[{"game_id":1,"name":"ONE游戏","platform":"ONE","type":4,"image_code":"one_game","db_name":"one_db","sort":100,"status":1}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.platforms array 游戏平台列表
+ * @number 9
+ */
+func CallGetGamePlatforms(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetGamePlatforms")
+
+	siteId := gconv.Int32(r.Get("site_id").Int())
+	gameType := gconv.Int32(r.Get("type").Int())
+
+	req := &v7.GetGamePlatformsReq{
+		SiteId: siteId,
+		Type:   gameType,
+	}
+
+	client := v7.NewGameClient(conn)
+	res, err := client.GetGamePlatforms(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetGamePlatforms failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "获取游戏平台列表成功: count=%d", len(res.Platforms))
+
+	return writeProtobufResponse(ctx, r, res)
+}

@@ -460,20 +460,21 @@ func (x *GetGameListRes) GetTotal() int32 {
 
 type GameItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                         // ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"` // 站点ID
-	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform" dc:"平台"`              // 平台
-	Vendor        string                 `protobuf:"bytes,4,opt,name=vendor,proto3" json:"vendor" dc:"运营商"`                 // 运营商
-	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code" dc:"游戏代码"`                    // 游戏代码
-	Name          string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name" dc:"游戏名称"`                    // 游戏名称
-	Style         string                 `protobuf:"bytes,7,opt,name=style,proto3" json:"style" dc:"游戏类型"`                  // 游戏类型
-	Img           string                 `protobuf:"bytes,8,opt,name=img,proto3" json:"img" dc:"图片"`                        // 图片
-	Img1          string                 `protobuf:"bytes,9,opt,name=img1,proto3" json:"img1" dc:"图片1"`                     // 图片1
-	Hot           int32                  `protobuf:"varint,10,opt,name=hot,proto3" json:"hot" dc:"是否热门"`                    // 是否热门
-	Recommend     int32                  `protobuf:"varint,11,opt,name=recommend,proto3" json:"recommend" dc:"是否推荐"`        // 是否推荐
-	IsNew         int32                  `protobuf:"varint,12,opt,name=is_new,json=isNew,proto3" json:"is_new" dc:"是否新游戏"`  // 是否新游戏
-	Status        int32                  `protobuf:"varint,13,opt,name=status,proto3" json:"status" dc:"状态"`                // 状态
-	Sort          int32                  `protobuf:"varint,14,opt,name=sort,proto3" json:"sort" dc:"排序"`                    // 排序
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                         // ID
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                 // 站点ID
+	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform" dc:"平台"`                              // 平台
+	Vendor        string                 `protobuf:"bytes,4,opt,name=vendor,proto3" json:"vendor" dc:"运营商"`                                 // 运营商
+	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code" dc:"游戏代码"`                                    // 游戏代码
+	Name          string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name" dc:"游戏名称"`                                    // 游戏名称
+	Style         string                 `protobuf:"bytes,7,opt,name=style,proto3" json:"style" dc:"游戏类型"`                                  // 游戏类型
+	Img           string                 `protobuf:"bytes,8,opt,name=img,proto3" json:"img" dc:"图片"`                                        // 图片
+	Img1          string                 `protobuf:"bytes,9,opt,name=img1,proto3" json:"img1" dc:"图片1"`                                     // 图片1
+	Hot           int32                  `protobuf:"varint,10,opt,name=hot,proto3" json:"hot" dc:"是否热门"`                                    // 是否热门
+	Recommend     int32                  `protobuf:"varint,11,opt,name=recommend,proto3" json:"recommend" dc:"是否推荐"`                        // 是否推荐
+	IsNew         int32                  `protobuf:"varint,12,opt,name=is_new,json=isNew,proto3" json:"is_new" dc:"是否新游戏"`                  // 是否新游戏
+	Status        int32                  `protobuf:"varint,13,opt,name=status,proto3" json:"status" dc:"状态"`                                // 状态
+	Sort          int32                  `protobuf:"varint,14,opt,name=sort,proto3" json:"sort" dc:"排序"`                                    // 排序
+	GameId        int32                  `protobuf:"varint,15,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID（从site_game表获取）"` // 游戏ID（从site_game表获取）
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -606,6 +607,13 @@ func (x *GameItem) GetSort() int32 {
 	return 0
 }
 
+func (x *GameItem) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
 var File_frontend_game_v1_game_proto protoreflect.FileDescriptor
 
 const file_frontend_game_v1_game_proto_rawDesc = "" +
@@ -644,7 +652,7 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x04size\x18\x06 \x01(\x05R\x04size\"P\n" +
 	"\x0eGetGameListRes\x12(\n" +
 	"\x04list\x18\x01 \x03(\v2\x14.front_game.GameItemR\x04list\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x05R\x05total\"\xbe\x02\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\xd7\x02\n" +
 	"\bGameItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
 	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12\x1a\n" +
@@ -660,7 +668,8 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\trecommend\x18\v \x01(\x05R\trecommend\x12\x15\n" +
 	"\x06is_new\x18\f \x01(\x05R\x05isNew\x12\x16\n" +
 	"\x06status\x18\r \x01(\x05R\x06status\x12\x12\n" +
-	"\x04sort\x18\x0e \x01(\x05R\x04sort2\xfc\x01\n" +
+	"\x04sort\x18\x0e \x01(\x05R\x04sort\x12\x17\n" +
+	"\agame_id\x18\x0f \x01(\x05R\x06gameId2\xfc\x01\n" +
 	"\x04Game\x12P\n" +
 	"\x0eRedirectToGame\x12\x1d.front_game.RedirectToGameReq\x1a\x1d.front_game.RedirectToGameRes\"\x00\x12Y\n" +
 	"\x11GetGameCategories\x12 .front_game.GetGameCategoriesReq\x1a .front_game.GetGameCategoriesRes\"\x00\x12G\n" +
