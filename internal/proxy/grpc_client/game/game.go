@@ -138,7 +138,7 @@ func CallUpdateGames(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
  * @description 获取游戏记录的接口
  * @method post
  * @url /api/backend/game/game-record
- * @param platform 必选 string 游戏平台代码
+ * @param platform 可选 string 游戏平台代码（不传则查询所有平台）
  * @param start_date 可选 string 开始时间
  * @param end_date 可选 string 结束时间
  * @param page 可选 int 页码
@@ -169,10 +169,7 @@ func CallGetGameRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 			platform = pStr
 		}
 	}
-	if platform == "" {
-		util.WriteBadRequest(r, "缺少platform参数")
-		return fmt.Errorf("missing platform parameter")
-	}
+	// platform 参数改为可选，不再强制校验
 
 	startDate := ""
 	if sd, exists := reqData["start_date"]; exists {
