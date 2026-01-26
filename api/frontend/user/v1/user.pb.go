@@ -62,16 +62,17 @@ func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
 // 获取用户信息响应
 type GetUserInfoRes struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	Username          string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名"`                                                            // 用户名
-	Realname          string                 `protobuf:"bytes,2,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                                           // 真实姓名
-	Email             string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                                   // 邮箱
-	Mobile            string                 `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                                // 手机号
-	Qq                string                 `protobuf:"bytes,5,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                                        // QQ号
-	Sex               int32                  `protobuf:"varint,6,opt,name=sex,proto3" json:"sex" dc:"性别 0=保密 1=男 2=女"`                                                         // 性别 0=保密 1=男 2=女
-	Birthday          string                 `protobuf:"bytes,7,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                             // 生日
-	LastLoginTime     string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                        // 最后登录时间
-	LastLoginAddress  string                 `protobuf:"bytes,9,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`               // 最后登录地址
-	ShowBeginnerGuide int32                  `protobuf:"varint,10,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"` // 新手引导 0=不显示 1=显示
+	UserId            int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户名"`                                                 // 用户名
+	Username          string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                                            // 用户名
+	Realname          string                 `protobuf:"bytes,3,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                                           // 真实姓名
+	Email             string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                                   // 邮箱
+	Mobile            string                 `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                                // 手机号
+	Qq                string                 `protobuf:"bytes,6,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                                        // QQ号
+	Sex               int32                  `protobuf:"varint,7,opt,name=sex,proto3" json:"sex" dc:"性别 0=保密 1=男 2=女"`                                                         // 性别 0=保密 1=男 2=女
+	Birthday          string                 `protobuf:"bytes,8,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                             // 生日
+	LastLoginTime     string                 `protobuf:"bytes,9,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                        // 最后登录时间
+	LastLoginAddress  string                 `protobuf:"bytes,10,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`              // 最后登录地址
+	ShowBeginnerGuide int32                  `protobuf:"varint,11,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"` // 新手引导 0=不显示 1=显示
 	// 余额相关（先写死默认值）
 	Balance       string `protobuf:"bytes,12,opt,name=balance,proto3" json:"balance" dc:"余额相关（先写死默认值）余额"`                        // 余额
 	BalanceFrozen string `protobuf:"bytes,13,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"` // 冻结余额
@@ -128,6 +129,13 @@ func (x *GetUserInfoRes) ProtoReflect() protoreflect.Message {
 // Deprecated: Use GetUserInfoRes.ProtoReflect.Descriptor instead.
 func (*GetUserInfoRes) Descriptor() ([]byte, []int) {
 	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetUserInfoRes) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
 }
 
 func (x *GetUserInfoRes) GetUsername() string {
@@ -1126,19 +1134,20 @@ var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/user/v1/user.proto\x12\rfrontend_user\"\x10\n" +
-	"\x0eGetUserInfoReq\"\x9e\b\n" +
-	"\x0eGetUserInfoRes\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\brealname\x18\x02 \x01(\tR\brealname\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\x12\x16\n" +
-	"\x06mobile\x18\x04 \x01(\tR\x06mobile\x12\x0e\n" +
-	"\x02qq\x18\x05 \x01(\tR\x02qq\x12\x10\n" +
-	"\x03sex\x18\x06 \x01(\x05R\x03sex\x12\x1a\n" +
-	"\bbirthday\x18\a \x01(\tR\bbirthday\x12&\n" +
-	"\x0flast_login_time\x18\b \x01(\tR\rlastLoginTime\x12,\n" +
-	"\x12last_login_address\x18\t \x01(\tR\x10lastLoginAddress\x12.\n" +
-	"\x13show_beginner_guide\x18\n" +
-	" \x01(\x05R\x11showBeginnerGuide\x12\x18\n" +
+	"\x0eGetUserInfoReq\"\xb7\b\n" +
+	"\x0eGetUserInfoRes\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
+	"\brealname\x18\x03 \x01(\tR\brealname\x12\x14\n" +
+	"\x05email\x18\x04 \x01(\tR\x05email\x12\x16\n" +
+	"\x06mobile\x18\x05 \x01(\tR\x06mobile\x12\x0e\n" +
+	"\x02qq\x18\x06 \x01(\tR\x02qq\x12\x10\n" +
+	"\x03sex\x18\a \x01(\x05R\x03sex\x12\x1a\n" +
+	"\bbirthday\x18\b \x01(\tR\bbirthday\x12&\n" +
+	"\x0flast_login_time\x18\t \x01(\tR\rlastLoginTime\x12,\n" +
+	"\x12last_login_address\x18\n" +
+	" \x01(\tR\x10lastLoginAddress\x12.\n" +
+	"\x13show_beginner_guide\x18\v \x01(\x05R\x11showBeginnerGuide\x12\x18\n" +
 	"\abalance\x18\f \x01(\tR\abalance\x12%\n" +
 	"\x0ebalance_frozen\x18\r \x01(\tR\rbalanceFrozen\x12\x16\n" +
 	"\x06points\x18\x0e \x01(\tR\x06points\x12\x19\n" +
