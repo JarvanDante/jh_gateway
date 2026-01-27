@@ -73,30 +73,26 @@ type GetUserInfoRes struct {
 	LastLoginTime     string                 `protobuf:"bytes,9,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                        // 最后登录时间
 	LastLoginAddress  string                 `protobuf:"bytes,10,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`              // 最后登录地址
 	ShowBeginnerGuide int32                  `protobuf:"varint,11,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"` // 新手引导 0=不显示 1=显示
-	// 余额相关（先写死默认值）
-	Balance       string `protobuf:"bytes,12,opt,name=balance,proto3" json:"balance" dc:"余额相关（先写死默认值）余额"`                        // 余额
-	BalanceFrozen string `protobuf:"bytes,13,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额"` // 冻结余额
-	Points        string `protobuf:"bytes,14,opt,name=points,proto3" json:"points" dc:"积分"`                                      // 积分
 	// 等级相关
-	GradeId   int32  `protobuf:"varint,15,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级相关会员等级ID"`  // 会员等级ID
-	GradeName string `protobuf:"bytes,16,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"会员等级名称"` // 会员等级名称
+	GradeId   int32  `protobuf:"varint,12,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级相关会员等级ID"`  // 会员等级ID
+	GradeName string `protobuf:"bytes,13,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"会员等级名称"` // 会员等级名称
 	// 绑定状态
-	BindSafeQuestion int32 `protobuf:"varint,17,opt,name=bind_safe_question,json=bindSafeQuestion,proto3" json:"bind_safe_question" dc:"绑定状态是否绑定安全问题 0=未绑定 1=已绑定"` // 是否绑定安全问题 0=未绑定 1=已绑定
-	BindPayPassword  int32 `protobuf:"varint,18,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=未绑定 1=已绑定"`        // 是否绑定资金密码 0=未绑定 1=已绑定
-	BindBank         int32 `protobuf:"varint,19,opt,name=bind_bank,json=bindBank,proto3" json:"bind_bank" dc:"是否绑定银行卡 0=未绑定 1=已绑定"`                                // 是否绑定银行卡 0=未绑定 1=已绑定
+	BindSafeQuestion int32 `protobuf:"varint,14,opt,name=bind_safe_question,json=bindSafeQuestion,proto3" json:"bind_safe_question" dc:"绑定状态是否绑定安全问题 0=未绑定 1=已绑定"` // 是否绑定安全问题 0=未绑定 1=已绑定
+	BindPayPassword  int32 `protobuf:"varint,15,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=未绑定 1=已绑定"`        // 是否绑定资金密码 0=未绑定 1=已绑定
+	BindBank         int32 `protobuf:"varint,16,opt,name=bind_bank,json=bindBank,proto3" json:"bind_bank" dc:"是否绑定银行卡 0=未绑定 1=已绑定"`                                // 是否绑定银行卡 0=未绑定 1=已绑定
 	// 其他
-	UnreadMessageCount  int32 `protobuf:"varint,20,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"其他未读消息数量"`                // 未读消息数量
-	SwitchSign          int32 `protobuf:"varint,21,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                                    // 签到开关 0=关闭 1=开启
-	ApplyBirthdayBonus  int32 `protobuf:"varint,22,opt,name=apply_birthday_bonus,json=applyBirthdayBonus,proto3" json:"apply_birthday_bonus" dc:"是否可申请生日礼金 0=不可 1=可以"`     // 是否可申请生日礼金 0=不可 1=可以
-	AutoBindGameBalance int32 `protobuf:"varint,23,opt,name=auto_bind_game_balance,json=autoBindGameBalance,proto3" json:"auto_bind_game_balance" dc:"自动绑定游戏余额 0=关闭 1=开启"` // 自动绑定游戏余额 0=关闭 1=开启
+	UnreadMessageCount  int32 `protobuf:"varint,17,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"其他未读消息数量"`                // 未读消息数量
+	SwitchSign          int32 `protobuf:"varint,18,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                                    // 签到开关 0=关闭 1=开启
+	ApplyBirthdayBonus  int32 `protobuf:"varint,19,opt,name=apply_birthday_bonus,json=applyBirthdayBonus,proto3" json:"apply_birthday_bonus" dc:"是否可申请生日礼金 0=不可 1=可以"`     // 是否可申请生日礼金 0=不可 1=可以
+	AutoBindGameBalance int32 `protobuf:"varint,20,opt,name=auto_bind_game_balance,json=autoBindGameBalance,proto3" json:"auto_bind_game_balance" dc:"自动绑定游戏余额 0=关闭 1=开启"` // 自动绑定游戏余额 0=关闭 1=开启
 	// 统计数据（先写死默认值）
-	TotalBet    string `protobuf:"bytes,24,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"统计数据（先写死默认值）总投注"` // 总投注
-	TotalBonus  string `protobuf:"bytes,25,opt,name=total_bonus,json=totalBonus,proto3" json:"total_bonus" dc:"总彩金"`       // 总彩金
-	TotalRebate string `protobuf:"bytes,26,opt,name=total_rebate,json=totalRebate,proto3" json:"total_rebate" dc:"总返水"`    // 总返水
+	TotalBet    string `protobuf:"bytes,21,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"统计数据（先写死默认值）总投注"` // 总投注
+	TotalBonus  string `protobuf:"bytes,22,opt,name=total_bonus,json=totalBonus,proto3" json:"total_bonus" dc:"总彩金"`       // 总彩金
+	TotalRebate string `protobuf:"bytes,23,opt,name=total_rebate,json=totalRebate,proto3" json:"total_rebate" dc:"总返水"`    // 总返水
 	// 最后记录（先写死默认值）
-	LastRecharge  []*LastRecord  `protobuf:"bytes,27,rep,name=last_recharge,json=lastRecharge,proto3" json:"last_recharge" dc:"最后记录（先写死默认值）最后充值记录"` // 最后充值记录
-	LastWithdraw  []*LastRecord  `protobuf:"bytes,28,rep,name=last_withdraw,json=lastWithdraw,proto3" json:"last_withdraw" dc:"最后提现记录"`             // 最后提现记录
-	LastMessage   []*LastMessage `protobuf:"bytes,29,rep,name=last_message,json=lastMessage,proto3" json:"last_message" dc:"最后消息"`                  // 最后消息
+	LastRecharge  []*LastRecord  `protobuf:"bytes,24,rep,name=last_recharge,json=lastRecharge,proto3" json:"last_recharge" dc:"最后记录（先写死默认值）最后充值记录"` // 最后充值记录
+	LastWithdraw  []*LastRecord  `protobuf:"bytes,25,rep,name=last_withdraw,json=lastWithdraw,proto3" json:"last_withdraw" dc:"最后提现记录"`             // 最后提现记录
+	LastMessage   []*LastMessage `protobuf:"bytes,26,rep,name=last_message,json=lastMessage,proto3" json:"last_message" dc:"最后消息"`                  // 最后消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -206,27 +202,6 @@ func (x *GetUserInfoRes) GetShowBeginnerGuide() int32 {
 		return x.ShowBeginnerGuide
 	}
 	return 0
-}
-
-func (x *GetUserInfoRes) GetBalance() string {
-	if x != nil {
-		return x.Balance
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetBalanceFrozen() string {
-	if x != nil {
-		return x.BalanceFrozen
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetPoints() string {
-	if x != nil {
-		return x.Points
-	}
-	return ""
 }
 
 func (x *GetUserInfoRes) GetGradeId() int32 {
@@ -1134,7 +1109,7 @@ var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/user/v1/user.proto\x12\rfrontend_user\"\x10\n" +
-	"\x0eGetUserInfoReq\"\xb7\b\n" +
+	"\x0eGetUserInfoReq\"\xde\a\n" +
 	"\x0eGetUserInfoRes\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
@@ -1147,28 +1122,25 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x0flast_login_time\x18\t \x01(\tR\rlastLoginTime\x12,\n" +
 	"\x12last_login_address\x18\n" +
 	" \x01(\tR\x10lastLoginAddress\x12.\n" +
-	"\x13show_beginner_guide\x18\v \x01(\x05R\x11showBeginnerGuide\x12\x18\n" +
-	"\abalance\x18\f \x01(\tR\abalance\x12%\n" +
-	"\x0ebalance_frozen\x18\r \x01(\tR\rbalanceFrozen\x12\x16\n" +
-	"\x06points\x18\x0e \x01(\tR\x06points\x12\x19\n" +
-	"\bgrade_id\x18\x0f \x01(\x05R\agradeId\x12\x1d\n" +
+	"\x13show_beginner_guide\x18\v \x01(\x05R\x11showBeginnerGuide\x12\x19\n" +
+	"\bgrade_id\x18\f \x01(\x05R\agradeId\x12\x1d\n" +
 	"\n" +
-	"grade_name\x18\x10 \x01(\tR\tgradeName\x12,\n" +
-	"\x12bind_safe_question\x18\x11 \x01(\x05R\x10bindSafeQuestion\x12*\n" +
-	"\x11bind_pay_password\x18\x12 \x01(\x05R\x0fbindPayPassword\x12\x1b\n" +
-	"\tbind_bank\x18\x13 \x01(\x05R\bbindBank\x120\n" +
-	"\x14unread_message_count\x18\x14 \x01(\x05R\x12unreadMessageCount\x12\x1f\n" +
-	"\vswitch_sign\x18\x15 \x01(\x05R\n" +
+	"grade_name\x18\r \x01(\tR\tgradeName\x12,\n" +
+	"\x12bind_safe_question\x18\x0e \x01(\x05R\x10bindSafeQuestion\x12*\n" +
+	"\x11bind_pay_password\x18\x0f \x01(\x05R\x0fbindPayPassword\x12\x1b\n" +
+	"\tbind_bank\x18\x10 \x01(\x05R\bbindBank\x120\n" +
+	"\x14unread_message_count\x18\x11 \x01(\x05R\x12unreadMessageCount\x12\x1f\n" +
+	"\vswitch_sign\x18\x12 \x01(\x05R\n" +
 	"switchSign\x120\n" +
-	"\x14apply_birthday_bonus\x18\x16 \x01(\x05R\x12applyBirthdayBonus\x123\n" +
-	"\x16auto_bind_game_balance\x18\x17 \x01(\x05R\x13autoBindGameBalance\x12\x1b\n" +
-	"\ttotal_bet\x18\x18 \x01(\tR\btotalBet\x12\x1f\n" +
-	"\vtotal_bonus\x18\x19 \x01(\tR\n" +
+	"\x14apply_birthday_bonus\x18\x13 \x01(\x05R\x12applyBirthdayBonus\x123\n" +
+	"\x16auto_bind_game_balance\x18\x14 \x01(\x05R\x13autoBindGameBalance\x12\x1b\n" +
+	"\ttotal_bet\x18\x15 \x01(\tR\btotalBet\x12\x1f\n" +
+	"\vtotal_bonus\x18\x16 \x01(\tR\n" +
 	"totalBonus\x12!\n" +
-	"\ftotal_rebate\x18\x1a \x01(\tR\vtotalRebate\x12>\n" +
-	"\rlast_recharge\x18\x1b \x03(\v2\x19.frontend_user.LastRecordR\flastRecharge\x12>\n" +
-	"\rlast_withdraw\x18\x1c \x03(\v2\x19.frontend_user.LastRecordR\flastWithdraw\x12=\n" +
-	"\flast_message\x18\x1d \x03(\v2\x1a.frontend_user.LastMessageR\vlastMessage\"S\n" +
+	"\ftotal_rebate\x18\x17 \x01(\tR\vtotalRebate\x12>\n" +
+	"\rlast_recharge\x18\x18 \x03(\v2\x19.frontend_user.LastRecordR\flastRecharge\x12>\n" +
+	"\rlast_withdraw\x18\x19 \x03(\v2\x19.frontend_user.LastRecordR\flastWithdraw\x12=\n" +
+	"\flast_message\x18\x1a \x03(\v2\x1a.frontend_user.LastMessageR\vlastMessage\"S\n" +
 	"\n" +
 	"LastRecord\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
