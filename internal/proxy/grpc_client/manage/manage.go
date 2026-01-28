@@ -931,6 +931,58 @@ func CallSupplementBetRecords(ctx context.Context, conn *grpc.ClientConn, r *ght
 
 /**
  * showdoc
+ * @catalog 总后台/游戏管理
+ * @title 获取同步任务列表
+ * @description 获取游戏注单同步任务列表的接口
+ * @method get
+ * @url /api/manage/game/sync-tasks
+ * @param site_id 可选 int 站点ID，0表示不过滤
+ * @param site_code 可选 string 站点代码
+ * @param platform 可选 string 游戏平台
+ * @param task_type 可选 int 任务类型，0表示不过滤，1=定时拉单，2=手动补单
+ * @param status 可选 int 任务状态，0表示不过滤，1=进行中，2=已完成，3=失败
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认20
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0,"page":1,"size":20}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.list array 任务列表
+ * @return_param data.total int 总记录数
+ * @return_param data.page int 当前页码
+ * @return_param data.size int 每页数量
+ * @number 7
+ */
+func CallManageGetSyncTasks(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageGame ManageGetSyncTasks")
+
+	client := v18.NewManageGameClient(conn)
+	req := &v18.ManageGetSyncTasksReq{
+		SiteId:   r.Get("site_id").Int32(),
+		SiteCode: r.Get("site_code").String(),
+		Platform: r.Get("platform").String(),
+		TaskType: r.Get("task_type").Int32(),
+		Status:   r.Get("status").Int32(),
+		Page:     r.Get("page", 1).Int32(),
+		Size:     r.Get("size", 20).Int32(),
+	}
+
+	util.LogWithTrace(ctx, "info", "获取同步任务列表: site_id=%d, site_code=%s, platform=%s, task_type=%d, status=%d, page=%d, size=%d",
+		req.SiteId, req.SiteCode, req.Platform, req.TaskType, req.Status, req.Page, req.Size)
+
+	res, err := client.ManageGetSyncTasks(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageGame ManageGetSyncTasks failed: %v", err)
+		return err
+	}
+
+	util.LogWithTrace(ctx, "info", "获取同步任务列表成功: total=%d, page=%d, size=%d", res.Total, res.Page, res.Size)
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 总后台/站点游戏管理
  * @title 获取站点游戏列表
  * @description 获取指定站点的游戏列表

@@ -282,6 +282,7 @@ func initManageRoutes() {
 	manageRoutes.Register("/game/update", "POST", manage.CallUpdateGame)
 	manageRoutes.Register("/game/delete", "POST", manage.CallDeleteGame)
 	manageRoutes.Register("/game/supplement-bet-records", "POST", manage.CallSupplementBetRecords)
+	manageRoutes.Register("/game/sync-tasks", "GET", manage.CallManageGetSyncTasks)
 
 	// 站点游戏管理接口
 	manageRoutes.Register("/site_game/list", "GET", manage.CallGetSiteGameList)

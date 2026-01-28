@@ -26,6 +26,9 @@ const (
 	ManageGame_UpdateGame_FullMethodName           = "/manage_game.ManageGame/UpdateGame"
 	ManageGame_DeleteGame_FullMethodName           = "/manage_game.ManageGame/DeleteGame"
 	ManageGame_SupplementBetRecords_FullMethodName = "/manage_game.ManageGame/SupplementBetRecords"
+	ManageGame_GetManageGameList_FullMethodName    = "/manage_game.ManageGame/GetManageGameList"
+	ManageGame_UpdateGameListItem_FullMethodName   = "/manage_game.ManageGame/UpdateGameListItem"
+	ManageGame_ManageGetSyncTasks_FullMethodName   = "/manage_game.ManageGame/ManageGetSyncTasks"
 )
 
 // ManageGameClient is the client API for ManageGame service.
@@ -38,6 +41,9 @@ type ManageGameClient interface {
 	UpdateGame(ctx context.Context, in *UpdateGameReq, opts ...grpc.CallOption) (*UpdateGameRes, error)
 	DeleteGame(ctx context.Context, in *DeleteGameReq, opts ...grpc.CallOption) (*DeleteGameRes, error)
 	SupplementBetRecords(ctx context.Context, in *SupplementBetRecordsReq, opts ...grpc.CallOption) (*SupplementBetRecordsRes, error)
+	GetManageGameList(ctx context.Context, in *GetManageGameListReq, opts ...grpc.CallOption) (*GetManageGameListRes, error)
+	UpdateGameListItem(ctx context.Context, in *UpdateGameListItemReq, opts ...grpc.CallOption) (*UpdateGameListItemRes, error)
+	ManageGetSyncTasks(ctx context.Context, in *ManageGetSyncTasksReq, opts ...grpc.CallOption) (*ManageGetSyncTasksRes, error)
 }
 
 type manageGameClient struct {
@@ -108,6 +114,36 @@ func (c *manageGameClient) SupplementBetRecords(ctx context.Context, in *Supplem
 	return out, nil
 }
 
+func (c *manageGameClient) GetManageGameList(ctx context.Context, in *GetManageGameListReq, opts ...grpc.CallOption) (*GetManageGameListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetManageGameListRes)
+	err := c.cc.Invoke(ctx, ManageGame_GetManageGameList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageGameClient) UpdateGameListItem(ctx context.Context, in *UpdateGameListItemReq, opts ...grpc.CallOption) (*UpdateGameListItemRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateGameListItemRes)
+	err := c.cc.Invoke(ctx, ManageGame_UpdateGameListItem_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *manageGameClient) ManageGetSyncTasks(ctx context.Context, in *ManageGetSyncTasksReq, opts ...grpc.CallOption) (*ManageGetSyncTasksRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManageGetSyncTasksRes)
+	err := c.cc.Invoke(ctx, ManageGame_ManageGetSyncTasks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ManageGameServer is the server API for ManageGame service.
 // All implementations must embed UnimplementedManageGameServer
 // for forward compatibility.
@@ -118,6 +154,9 @@ type ManageGameServer interface {
 	UpdateGame(context.Context, *UpdateGameReq) (*UpdateGameRes, error)
 	DeleteGame(context.Context, *DeleteGameReq) (*DeleteGameRes, error)
 	SupplementBetRecords(context.Context, *SupplementBetRecordsReq) (*SupplementBetRecordsRes, error)
+	GetManageGameList(context.Context, *GetManageGameListReq) (*GetManageGameListRes, error)
+	UpdateGameListItem(context.Context, *UpdateGameListItemReq) (*UpdateGameListItemRes, error)
+	ManageGetSyncTasks(context.Context, *ManageGetSyncTasksReq) (*ManageGetSyncTasksRes, error)
 	mustEmbedUnimplementedManageGameServer()
 }
 
@@ -145,6 +184,15 @@ func (UnimplementedManageGameServer) DeleteGame(context.Context, *DeleteGameReq)
 }
 func (UnimplementedManageGameServer) SupplementBetRecords(context.Context, *SupplementBetRecordsReq) (*SupplementBetRecordsRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method SupplementBetRecords not implemented")
+}
+func (UnimplementedManageGameServer) GetManageGameList(context.Context, *GetManageGameListReq) (*GetManageGameListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetManageGameList not implemented")
+}
+func (UnimplementedManageGameServer) UpdateGameListItem(context.Context, *UpdateGameListItemReq) (*UpdateGameListItemRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateGameListItem not implemented")
+}
+func (UnimplementedManageGameServer) ManageGetSyncTasks(context.Context, *ManageGetSyncTasksReq) (*ManageGetSyncTasksRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method ManageGetSyncTasks not implemented")
 }
 func (UnimplementedManageGameServer) mustEmbedUnimplementedManageGameServer() {}
 func (UnimplementedManageGameServer) testEmbeddedByValue()                    {}
@@ -275,6 +323,60 @@ func _ManageGame_SupplementBetRecords_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ManageGame_GetManageGameList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetManageGameListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageGameServer).GetManageGameList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageGame_GetManageGameList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageGameServer).GetManageGameList(ctx, req.(*GetManageGameListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ManageGame_UpdateGameListItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGameListItemReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageGameServer).UpdateGameListItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageGame_UpdateGameListItem_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageGameServer).UpdateGameListItem(ctx, req.(*UpdateGameListItemReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ManageGame_ManageGetSyncTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManageGetSyncTasksReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManageGameServer).ManageGetSyncTasks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ManageGame_ManageGetSyncTasks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManageGameServer).ManageGetSyncTasks(ctx, req.(*ManageGetSyncTasksReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ManageGame_ServiceDesc is the grpc.ServiceDesc for ManageGame service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -305,6 +407,18 @@ var ManageGame_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SupplementBetRecords",
 			Handler:    _ManageGame_SupplementBetRecords_Handler,
+		},
+		{
+			MethodName: "GetManageGameList",
+			Handler:    _ManageGame_GetManageGameList_Handler,
+		},
+		{
+			MethodName: "UpdateGameListItem",
+			Handler:    _ManageGame_UpdateGameListItem_Handler,
+		},
+		{
+			MethodName: "ManageGetSyncTasks",
+			Handler:    _ManageGame_ManageGetSyncTasks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
