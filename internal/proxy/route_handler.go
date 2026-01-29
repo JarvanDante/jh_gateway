@@ -291,6 +291,13 @@ func initManageRoutes() {
 	manageRoutes.Register("/payment/update", "POST", manage.CallUpdatePayment)
 	manageRoutes.Register("/payment/delete", "POST", manage.CallDeletePayment)
 
+	// 提现管理接口
+	manageRoutes.Register("/withdraw/list", "GET", manage.CallGetWithdrawList)
+	manageRoutes.Register("/withdraw/detail", "GET", manage.CallGetWithdrawDetail)
+	manageRoutes.Register("/withdraw/create", "POST", manage.CallCreateWithdraw)
+	manageRoutes.Register("/withdraw/update", "POST", manage.CallUpdateWithdraw)
+	manageRoutes.Register("/withdraw/delete", "POST", manage.CallDeleteWithdraw)
+
 	// 站点游戏管理接口
 	manageRoutes.Register("/site_game/list", "GET", manage.CallGetSiteGameList)
 	manageRoutes.Register("/site_game/update_status", "POST", manage.CallUpdateSiteGameStatus)
@@ -302,6 +309,12 @@ func initManageRoutes() {
 	manageRoutes.Register("/site_payment/update_status", "POST", manage.CallUpdateSitePaymentStatus)
 	manageRoutes.Register("/site_payment/bind", "POST", manage.CallBindSitePayment)
 	manageRoutes.Register("/site_payment/unbind", "POST", manage.CallUnbindSitePayment)
+
+	// 站点提现管理接口
+	manageRoutes.Register("/site_withdraw/list", "GET", manage.CallGetSiteWithdrawList)
+	manageRoutes.Register("/site_withdraw/update_status", "POST", manage.CallUpdateSiteWithdrawStatus)
+	manageRoutes.Register("/site_withdraw/bind", "POST", manage.CallBindSiteWithdraw)
+	manageRoutes.Register("/site_withdraw/unbind", "POST", manage.CallUnbindSiteWithdraw)
 
 	// 选项接口
 	manageRoutes.Register("/options/domain-type", "GET", manage.CallGetDomainTypeOptions)

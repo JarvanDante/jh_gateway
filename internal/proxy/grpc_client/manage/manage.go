@@ -10,6 +10,8 @@ import (
 	v20 "jh_gateway/api/manage/payment/v1"
 	v19 "jh_gateway/api/manage/site_game/v1"
 	v21 "jh_gateway/api/manage/site_payment/v1"
+	v23 "jh_gateway/api/manage/site_withdraw/v1"
+	v22 "jh_gateway/api/manage/withdraw/v1"
 	"strings"
 
 	v13 "jh_gateway/api/manage/admin/v1"
@@ -1740,6 +1742,414 @@ func CallUnbindSitePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	res, err := client.UnbindSitePayment(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC SitePayment UnbindSitePayment failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/提现管理
+ * @title 获取提现列表
+ * @description 获取提现列表的接口，支持分页和筛选
+ * @method get
+ * @url /api/manage/withdraw/list
+ * @param gateway 可选 int 提现网关筛选 1=在线支付 2=银行
+ * @param status 可选 int 状态筛选 -1=全部 0=禁用 1=启用
+ * @param name 可选 string 名称搜索
+ * @param page 可选 int 页码 默认1
+ * @param size 可选 int 每页数量 默认20
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.list array 提现列表
+ * @return_param data.total int 总数
+ * @number 1
+ */
+func CallGetWithdrawList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageWithdraw GetWithdrawList")
+
+	client := v22.NewManageWithdrawClient(conn)
+	req := &v22.GetWithdrawListReq{
+		Gateway: r.Get("gateway", 0).Int32(),
+		Status:  r.Get("status", -1).Int32(),
+		Name:    r.Get("name", "").String(),
+		Page:    r.Get("page", 1).Int32(),
+		Size:    r.Get("size", 20).Int32(),
+	}
+
+	res, err := client.GetWithdrawList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Withdraw GetWithdrawList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/提现管理
+ * @title 获取提现详情
+ * @description 获取指定提现详情的接口
+ * @method get
+ * @url /api/manage/withdraw/detail/{id}
+ * @param id 必选 int 提现ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 提现详情数据
+ * @number 2
+ */
+func CallGetWithdrawDetail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageWithdraw GetWithdrawDetail")
+
+	idStr := r.Get("id").String()
+	if idStr == "" {
+		util.WriteBadRequest(r, "提现ID不能为空")
+		return fmt.Errorf("提现ID不能为空")
+	}
+
+	id := r.Get("id").Int32()
+	if id <= 0 {
+		util.WriteBadRequest(r, "提现ID必须大于0")
+		return fmt.Errorf("提现ID必须大于0")
+	}
+
+	client := v22.NewManageWithdrawClient(conn)
+	req := &v22.GetWithdrawDetailReq{
+		Id: id,
+	}
+
+	res, err := client.GetWithdrawDetail(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Withdraw GetWithdrawDetail failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/提现管理
+ * @title 创建提现
+ * @description 创建提现的接口
+ * @method post
+ * @url /api/manage/withdraw/create
+ * @param name 必选 string 提现名称
+ * @param code 必选 string 提现代码
+ * @param gateway 必选 int 提现网关 1=在线支付 2=银行
+ * @param api_url 可选 string 提现域名
+ * @param merchant_no 可选 string 商户号
+ * @param md5_key 可选 string MD5密钥
+ * @param each_min 可选 float 单笔最低
+ * @param each_max 可选 float 单笔最高
+ * @param sort 可选 int 排序
+ * @param money_list 可选 string 可选金额数组
+ * @param is_input 可选 int 是否输入金额 0=否 1=是
+ * @param remark 可选 string 描述
+ * @param logo 可选 string logo地址
+ * @param status 可选 int 状态 0=禁用 1=启用
+ * @return {"code":0,"msg":"success","data":{"id":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.id int 创建的提现ID
+ * @number 3
+ */
+func CallCreateWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageWithdraw CreateWithdraw")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v22.NewManageWithdrawClient(conn)
+	req := &v22.CreateWithdrawReq{
+		Name:       getStringFromMap(reqData, "name"),
+		Code:       getStringFromMap(reqData, "code"),
+		Gateway:    getInt32FromMap(reqData, "gateway"),
+		ApiUrl:     getStringFromMap(reqData, "api_url"),
+		MerchantNo: getStringFromMap(reqData, "merchant_no"),
+		Md5Key:     getStringFromMap(reqData, "md5_key"),
+		EachMin:    gconv.Float64(reqData["each_min"]),
+		EachMax:    gconv.Float64(reqData["each_max"]),
+		Sort:       getInt32FromMap(reqData, "sort"),
+		MoneyList:  getStringFromMap(reqData, "money_list"),
+		IsInput:    getInt32FromMap(reqData, "is_input"),
+		Remark:     getStringFromMap(reqData, "remark"),
+		Logo:       getStringFromMap(reqData, "logo"),
+		Status:     getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.CreateWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Withdraw CreateWithdraw failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/提现管理
+ * @title 更新提现
+ * @description 更新提现信息的接口
+ * @method post
+ * @url /api/manage/withdraw/update
+ * @param id 必选 int 提现ID
+ * @param name 可选 string 提现名称
+ * @param code 可选 string 提现代码
+ * @param gateway 可选 int 提现网关
+ * @param api_url 可选 string 提现域名
+ * @param merchant_no 可选 string 商户号
+ * @param md5_key 可选 string MD5密钥
+ * @param each_min 可选 float 单笔最低
+ * @param each_max 可选 float 单笔最高
+ * @param sort 可选 int 排序
+ * @param money_list 可选 string 可选金额数组
+ * @param is_input 可选 int 是否输入金额
+ * @param remark 可选 string 描述
+ * @param logo 可选 string logo地址
+ * @param status 可选 int 状态
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func CallUpdateWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageWithdraw UpdateWithdraw")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v22.NewManageWithdrawClient(conn)
+	req := &v22.UpdateWithdrawReq{
+		Id:         getInt32FromMap(reqData, "id"),
+		Name:       getStringFromMap(reqData, "name"),
+		Code:       getStringFromMap(reqData, "code"),
+		Gateway:    getInt32FromMap(reqData, "gateway"),
+		ApiUrl:     getStringFromMap(reqData, "api_url"),
+		MerchantNo: getStringFromMap(reqData, "merchant_no"),
+		Md5Key:     getStringFromMap(reqData, "md5_key"),
+		EachMin:    gconv.Float64(reqData["each_min"]),
+		EachMax:    gconv.Float64(reqData["each_max"]),
+		Sort:       getInt32FromMap(reqData, "sort"),
+		MoneyList:  getStringFromMap(reqData, "money_list"),
+		IsInput:    getInt32FromMap(reqData, "is_input"),
+		Remark:     getStringFromMap(reqData, "remark"),
+		Logo:       getStringFromMap(reqData, "logo"),
+		Status:     getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.UpdateWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Withdraw UpdateWithdraw failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/提现管理
+ * @title 删除提现
+ * @description 删除提现的接口
+ * @method post
+ * @url /api/manage/withdraw/delete
+ * @param id 必选 int 提现ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 5
+ */
+func CallDeleteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageWithdraw DeleteWithdraw")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	id := getInt32FromMap(reqData, "id")
+	if id <= 0 {
+		util.WriteBadRequest(r, "提现ID必须大于0")
+		return fmt.Errorf("提现ID必须大于0")
+	}
+
+	client := v22.NewManageWithdrawClient(conn)
+	req := &v22.DeleteWithdrawReq{
+		Id: id,
+	}
+
+	res, err := client.DeleteWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Withdraw DeleteWithdraw failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点提现管理
+ * @title 获取站点提现列表
+ * @description 获取指定站点的提现列表
+ * @method get
+ * @url /api/manage/site_withdraw/list
+ * @param site_code 必选 string 站点编码
+ * @return {"code":0,"msg":"success","data":{"list":[]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func CallGetSiteWithdrawList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteWithdraw GetSiteWithdrawList")
+
+	siteCode := r.Get("site_code").String()
+	if siteCode == "" {
+		util.WriteBadRequest(r, "站点编码不能为空")
+		return fmt.Errorf("站点编码不能为空")
+	}
+
+	client := v23.NewManageSiteWithdrawClient(conn)
+	req := &v23.GetSiteWithdrawListReq{
+		SiteCode: siteCode,
+	}
+
+	res, err := client.GetSiteWithdrawList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteWithdraw GetSiteWithdrawList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点提现管理
+ * @title 更新站点提现状态
+ * @description 更新站点提现的启用/禁用状态
+ * @method post
+ * @url /api/manage/site_withdraw/update_status
+ * @param id 必选 int 站点提现ID
+ * @param status 必选 int 状态 0=禁用 1=启用
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func CallUpdateSiteWithdrawStatus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteWithdraw UpdateSiteWithdrawStatus")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v23.NewManageSiteWithdrawClient(conn)
+	req := &v23.UpdateSiteWithdrawStatusReq{
+		Id:     getInt32FromMap(reqData, "id"),
+		Status: getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.UpdateSiteWithdrawStatus(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteWithdraw UpdateSiteWithdrawStatus failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点提现管理
+ * @title 绑定提现到站点
+ * @description 将提现方式绑定到指定站点
+ * @method post
+ * @url /api/manage/site_withdraw/bind
+ * @param site_code 必选 string 站点编码
+ * @param withdraw_id 必选 int 提现ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func CallBindSiteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteWithdraw BindSiteWithdraw")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v23.NewManageSiteWithdrawClient(conn)
+	req := &v23.BindSiteWithdrawReq{
+		SiteCode:   getStringFromMap(reqData, "site_code"),
+		WithdrawId: getInt32FromMap(reqData, "withdraw_id"),
+	}
+
+	res, err := client.BindSiteWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteWithdraw BindSiteWithdraw failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点提现管理
+ * @title 取消绑定提现
+ * @description 取消站点与提现方式的绑定
+ * @method post
+ * @url /api/manage/site_withdraw/unbind
+ * @param id 必选 int 站点提现ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func CallUnbindSiteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteWithdraw UnbindSiteWithdraw")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v23.NewManageSiteWithdrawClient(conn)
+	req := &v23.UnbindSiteWithdrawReq{
+		Id: getInt32FromMap(reqData, "id"),
+	}
+
+	res, err := client.UnbindSiteWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SiteWithdraw UnbindSiteWithdraw failed: %v", err)
 		return err
 	}
 
