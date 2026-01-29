@@ -9,6 +9,7 @@ import (
 	v14 "jh_gateway/api/manage/option/v1"
 	v20 "jh_gateway/api/manage/payment/v1"
 	v19 "jh_gateway/api/manage/site_game/v1"
+	v21 "jh_gateway/api/manage/site_payment/v1"
 	"strings"
 
 	v13 "jh_gateway/api/manage/admin/v1"
@@ -1587,6 +1588,158 @@ func CallDeletePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	res, err := client.DeletePayment(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Payment DeletePayment failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点支付管理
+ * @title 获取站点支付列表
+ * @description 获取指定站点的支付列表
+ * @method get
+ * @url /api/manage/site_payment/list
+ * @param site_code 必选 string 站点编码
+ * @return {"code":0,"msg":"success","data":{"list":[]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func CallGetSitePaymentList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSitePayment GetSitePaymentList")
+
+	siteCode := r.Get("site_code").String()
+	if siteCode == "" {
+		util.WriteBadRequest(r, "站点编码不能为空")
+		return fmt.Errorf("站点编码不能为空")
+	}
+
+	client := v21.NewManageSitePaymentClient(conn)
+	req := &v21.GetSitePaymentListReq{
+		SiteCode: siteCode,
+	}
+
+	res, err := client.GetSitePaymentList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SitePayment GetSitePaymentList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点支付管理
+ * @title 更新站点支付状态
+ * @description 更新站点支付的启用/禁用状态
+ * @method post
+ * @url /api/manage/site_payment/update_status
+ * @param id 必选 int 站点支付ID
+ * @param status 必选 int 状态 0=禁用 1=启用
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func CallUpdateSitePaymentStatus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSitePayment UpdateSitePaymentStatus")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v21.NewManageSitePaymentClient(conn)
+	req := &v21.UpdateSitePaymentStatusReq{
+		Id:     getInt32FromMap(reqData, "id"),
+		Status: getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.UpdateSitePaymentStatus(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SitePayment UpdateSitePaymentStatus failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点支付管理
+ * @title 绑定支付到站点
+ * @description 将支付方式绑定到指定站点
+ * @method post
+ * @url /api/manage/site_payment/bind
+ * @param site_code 必选 string 站点编码
+ * @param payment_id 必选 int 支付ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func CallBindSitePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSitePayment BindSitePayment")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v21.NewManageSitePaymentClient(conn)
+	req := &v21.BindSitePaymentReq{
+		SiteCode:  getStringFromMap(reqData, "site_code"),
+		PaymentId: getInt32FromMap(reqData, "payment_id"),
+	}
+
+	res, err := client.BindSitePayment(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SitePayment BindSitePayment failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点支付管理
+ * @title 取消绑定支付
+ * @description 取消站点与支付方式的绑定
+ * @method post
+ * @url /api/manage/site_payment/unbind
+ * @param id 必选 int 站点支付ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func CallUnbindSitePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSitePayment UnbindSitePayment")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v21.NewManageSitePaymentClient(conn)
+	req := &v21.UnbindSitePaymentReq{
+		Id: getInt32FromMap(reqData, "id"),
+	}
+
+	res, err := client.UnbindSitePayment(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC SitePayment UnbindSitePayment failed: %v", err)
 		return err
 	}
 

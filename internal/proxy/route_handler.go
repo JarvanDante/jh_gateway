@@ -297,6 +297,12 @@ func initManageRoutes() {
 	manageRoutes.Register("/site_game/bind", "POST", manage.CallBindSiteGame)
 	manageRoutes.Register("/site_game/unbind", "POST", manage.CallUnbindSiteGame)
 
+	// 站点支付管理接口
+	manageRoutes.Register("/site_payment/list", "GET", manage.CallGetSitePaymentList)
+	manageRoutes.Register("/site_payment/update_status", "POST", manage.CallUpdateSitePaymentStatus)
+	manageRoutes.Register("/site_payment/bind", "POST", manage.CallBindSitePayment)
+	manageRoutes.Register("/site_payment/unbind", "POST", manage.CallUnbindSitePayment)
+
 	// 选项接口
 	manageRoutes.Register("/options/domain-type", "GET", manage.CallGetDomainTypeOptions)
 	manageRoutes.Register("/options/site", "GET", manage.CallGetSiteOptions)
