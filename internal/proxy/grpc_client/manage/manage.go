@@ -7,6 +7,7 @@ import (
 	v12 "jh_gateway/api/manage/customer/v1"
 	v18 "jh_gateway/api/manage/game/v1"
 	v14 "jh_gateway/api/manage/option/v1"
+	v20 "jh_gateway/api/manage/payment/v1"
 	v19 "jh_gateway/api/manage/site_game/v1"
 	"strings"
 
@@ -1332,6 +1333,260 @@ func CallDeleteSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	res, err := client.DeleteSiteDomain(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC ManageOption DeleteSiteDomain failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/支付管理
+ * @title 获取支付列表
+ * @description 获取支付列表的接口
+ * @method get
+ * @url /api/manage/payment/list
+ * @param gateway 可选 int 支付网关 1=在线支付 2=银行
+ * @param status 可选 int 状态 1=启用 0=禁用
+ * @param name 可选 string 名称搜索
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认20
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func CallGetPaymentList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManagePayment GetPaymentList")
+
+	client := v20.NewManagePaymentClient(conn)
+	req := &v20.GetPaymentListReq{
+		Gateway: r.Get("gateway", 0).Int32(),
+		Status:  r.Get("status", -1).Int32(),
+		Name:    r.Get("name", "").String(),
+		Page:    r.Get("page", 1).Int32(),
+		Size:    r.Get("size", 20).Int32(),
+	}
+
+	res, err := client.GetPaymentList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Payment GetPaymentList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/支付管理
+ * @title 获取支付详情
+ * @description 获取指定支付详情的接口
+ * @method get
+ * @url /api/manage/payment/detail/{id}
+ * @param id 必选 int 支付ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 支付详情数据
+ * @number 2
+ */
+func CallGetPaymentDetail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManagePayment GetPaymentDetail")
+
+	idStr := r.Get("id").String()
+	if idStr == "" {
+		util.WriteBadRequest(r, "支付ID不能为空")
+		return fmt.Errorf("支付ID不能为空")
+	}
+
+	id := r.Get("id").Int32()
+	if id <= 0 {
+		util.WriteBadRequest(r, "支付ID必须大于0")
+		return fmt.Errorf("支付ID必须大于0")
+	}
+
+	client := v20.NewManagePaymentClient(conn)
+	req := &v20.GetPaymentDetailReq{
+		Id: id,
+	}
+
+	res, err := client.GetPaymentDetail(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Payment GetPaymentDetail failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/支付管理
+ * @title 创建支付
+ * @description 创建支付的接口
+ * @method post
+ * @url /api/manage/payment/create
+ * @param name 必选 string 支付名称
+ * @param code 必选 string 支付代码
+ * @param gateway 必选 int 支付网关 1=在线支付 2=银行
+ * @param api_url 可选 string 支付域名
+ * @param merchant_no 可选 string 商户号
+ * @param md5_key 可选 string MD5密钥
+ * @param each_min 可选 float 单笔最低
+ * @param each_max 可选 float 单笔最高
+ * @param sort 可选 int 排序
+ * @param money_list 可选 string 可选金额数组
+ * @param is_input 可选 int 是否输入金额 0=否 1=是
+ * @param remark 可选 string 描述
+ * @param logo 可选 string logo地址
+ * @param status 可选 int 状态 0=禁用 1=启用
+ * @return {"code":0,"msg":"success","data":{"id":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.id int 创建的支付ID
+ * @number 3
+ */
+func CallCreatePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManagePayment CreatePayment")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v20.NewManagePaymentClient(conn)
+	req := &v20.CreatePaymentReq{
+		Name:       getStringFromMap(reqData, "name"),
+		Code:       getStringFromMap(reqData, "code"),
+		Gateway:    getInt32FromMap(reqData, "gateway"),
+		ApiUrl:     getStringFromMap(reqData, "api_url"),
+		MerchantNo: getStringFromMap(reqData, "merchant_no"),
+		Md5Key:     getStringFromMap(reqData, "md5_key"),
+		EachMin:    gconv.Float64(reqData["each_min"]),
+		EachMax:    gconv.Float64(reqData["each_max"]),
+		Sort:       getInt32FromMap(reqData, "sort"),
+		MoneyList:  getStringFromMap(reqData, "money_list"),
+		IsInput:    getInt32FromMap(reqData, "is_input"),
+		Remark:     getStringFromMap(reqData, "remark"),
+		Logo:       getStringFromMap(reqData, "logo"),
+		Status:     getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.CreatePayment(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Payment CreatePayment failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/支付管理
+ * @title 更新支付
+ * @description 更新支付信息的接口
+ * @method post
+ * @url /api/manage/payment/update
+ * @param id 必选 int 支付ID
+ * @param name 可选 string 支付名称
+ * @param code 可选 string 支付代码
+ * @param gateway 可选 int 支付网关
+ * @param api_url 可选 string 支付域名
+ * @param merchant_no 可选 string 商户号
+ * @param md5_key 可选 string MD5密钥
+ * @param each_min 可选 float 单笔最低
+ * @param each_max 可选 float 单笔最高
+ * @param sort 可选 int 排序
+ * @param money_list 可选 string 可选金额数组
+ * @param is_input 可选 int 是否输入金额
+ * @param remark 可选 string 描述
+ * @param logo 可选 string logo地址
+ * @param status 可选 int 状态
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func CallUpdatePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManagePayment UpdatePayment")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v20.NewManagePaymentClient(conn)
+	req := &v20.UpdatePaymentReq{
+		Id:         getInt32FromMap(reqData, "id"),
+		Name:       getStringFromMap(reqData, "name"),
+		Code:       getStringFromMap(reqData, "code"),
+		Gateway:    getInt32FromMap(reqData, "gateway"),
+		ApiUrl:     getStringFromMap(reqData, "api_url"),
+		MerchantNo: getStringFromMap(reqData, "merchant_no"),
+		Md5Key:     getStringFromMap(reqData, "md5_key"),
+		EachMin:    gconv.Float64(reqData["each_min"]),
+		EachMax:    gconv.Float64(reqData["each_max"]),
+		Sort:       getInt32FromMap(reqData, "sort"),
+		MoneyList:  getStringFromMap(reqData, "money_list"),
+		IsInput:    getInt32FromMap(reqData, "is_input"),
+		Remark:     getStringFromMap(reqData, "remark"),
+		Logo:       getStringFromMap(reqData, "logo"),
+		Status:     getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.UpdatePayment(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Payment UpdatePayment failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/支付管理
+ * @title 删除支付
+ * @description 删除支付的接口
+ * @method post
+ * @url /api/manage/payment/delete
+ * @param id 必选 int 支付ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 5
+ */
+func CallDeletePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManagePayment DeletePayment")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	id := getInt32FromMap(reqData, "id")
+	if id <= 0 {
+		util.WriteBadRequest(r, "支付ID必须大于0")
+		return fmt.Errorf("支付ID必须大于0")
+	}
+
+	client := v20.NewManagePaymentClient(conn)
+	req := &v20.DeletePaymentReq{
+		Id: id,
+	}
+
+	res, err := client.DeletePayment(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Payment DeletePayment failed: %v", err)
 		return err
 	}
 
