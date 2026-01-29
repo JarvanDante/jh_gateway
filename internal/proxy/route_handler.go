@@ -215,17 +215,6 @@ func initBalanceRoutes() {
 	// 手动操作用户账户
 	balanceRoutes.Register("/manual-user-balance", "POST", balance.CallManualUserBalance)
 
-	// 支付接口列表
-	balanceRoutes.Register("/payment-accounts", "GET", balance.CallGetPaymentAccounts)
-	// 添加支付接口
-	balanceRoutes.Register("/create-payment-account", "POST", balance.CallCreatePaymentAccount)
-	// 更新获取支付接口信息
-	balanceRoutes.Register("/update-payment-account", "GET", balance.CallGetPaymentAccountUpdate)
-	// 更新支付接口
-	balanceRoutes.Register("/update-payment-account", "POST", balance.CallUpdatePaymentAccount)
-	// 删除支付接口
-	balanceRoutes.Register("/delete-payment-account", "POST", balance.CallDeletePaymentAccount)
-
 	// 操作类型列表
 	balanceRoutes.Register("/options-manual", "GET", balance.CallGetManualList)
 }
