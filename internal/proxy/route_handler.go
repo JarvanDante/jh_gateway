@@ -217,6 +217,14 @@ func initBalanceRoutes() {
 
 	// 操作类型列表
 	balanceRoutes.Register("/options-manual", "GET", balance.CallGetManualList)
+
+	// 站点支付管理
+	balanceRoutes.Register("/site-payments", "GET", balance.CallGetSitePayments)
+	balanceRoutes.Register("/update-site-payment", "POST", balance.CallUpdateSitePayment)
+
+	// 站点提现管理
+	balanceRoutes.Register("/site-withdraws", "GET", balance.CallGetSiteWithdraws)
+	balanceRoutes.Register("/update-site-withdraw", "POST", balance.CallUpdateSiteWithdraw)
 }
 
 // initGameRoutes 初始化游戏路由

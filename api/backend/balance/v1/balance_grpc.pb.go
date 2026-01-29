@@ -32,6 +32,10 @@ const (
 	Balance_QueryUserBalance_FullMethodName    = "/balance.Balance/QueryUserBalance"
 	Balance_QueryGameBalance_FullMethodName    = "/balance.Balance/QueryGameBalance"
 	Balance_ManualUserBalance_FullMethodName   = "/balance.Balance/ManualUserBalance"
+	Balance_GetSitePayments_FullMethodName     = "/balance.Balance/GetSitePayments"
+	Balance_UpdateSitePayment_FullMethodName   = "/balance.Balance/UpdateSitePayment"
+	Balance_GetSiteWithdraws_FullMethodName    = "/balance.Balance/GetSiteWithdraws"
+	Balance_UpdateSiteWithdraw_FullMethodName  = "/balance.Balance/UpdateSiteWithdraw"
 	Balance_GetManualList_FullMethodName       = "/balance.Balance/GetManualList"
 )
 
@@ -56,6 +60,12 @@ type BalanceClient interface {
 	QueryUserBalance(ctx context.Context, in *QueryUserBalanceReq, opts ...grpc.CallOption) (*QueryUserBalanceRes, error)
 	QueryGameBalance(ctx context.Context, in *QueryGameBalanceReq, opts ...grpc.CallOption) (*QueryGameBalanceRes, error)
 	ManualUserBalance(ctx context.Context, in *ManualUserBalanceReq, opts ...grpc.CallOption) (*ManualUserBalanceRes, error)
+	// 站点支付管理相关
+	GetSitePayments(ctx context.Context, in *GetSitePaymentsReq, opts ...grpc.CallOption) (*GetSitePaymentsRes, error)
+	UpdateSitePayment(ctx context.Context, in *UpdateSitePaymentReq, opts ...grpc.CallOption) (*UpdateSitePaymentRes, error)
+	// 站点提现管理相关
+	GetSiteWithdraws(ctx context.Context, in *GetSiteWithdrawsReq, opts ...grpc.CallOption) (*GetSiteWithdrawsRes, error)
+	UpdateSiteWithdraw(ctx context.Context, in *UpdateSiteWithdrawReq, opts ...grpc.CallOption) (*UpdateSiteWithdrawRes, error)
 	// 操作类型选项
 	GetManualList(ctx context.Context, in *GetManualListReq, opts ...grpc.CallOption) (*GetManualListRes, error)
 }
@@ -188,6 +198,46 @@ func (c *balanceClient) ManualUserBalance(ctx context.Context, in *ManualUserBal
 	return out, nil
 }
 
+func (c *balanceClient) GetSitePayments(ctx context.Context, in *GetSitePaymentsReq, opts ...grpc.CallOption) (*GetSitePaymentsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSitePaymentsRes)
+	err := c.cc.Invoke(ctx, Balance_GetSitePayments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) UpdateSitePayment(ctx context.Context, in *UpdateSitePaymentReq, opts ...grpc.CallOption) (*UpdateSitePaymentRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSitePaymentRes)
+	err := c.cc.Invoke(ctx, Balance_UpdateSitePayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetSiteWithdraws(ctx context.Context, in *GetSiteWithdrawsReq, opts ...grpc.CallOption) (*GetSiteWithdrawsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSiteWithdrawsRes)
+	err := c.cc.Invoke(ctx, Balance_GetSiteWithdraws_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) UpdateSiteWithdraw(ctx context.Context, in *UpdateSiteWithdrawReq, opts ...grpc.CallOption) (*UpdateSiteWithdrawRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSiteWithdrawRes)
+	err := c.cc.Invoke(ctx, Balance_UpdateSiteWithdraw_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *balanceClient) GetManualList(ctx context.Context, in *GetManualListReq, opts ...grpc.CallOption) (*GetManualListRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetManualListRes)
@@ -219,6 +269,12 @@ type BalanceServer interface {
 	QueryUserBalance(context.Context, *QueryUserBalanceReq) (*QueryUserBalanceRes, error)
 	QueryGameBalance(context.Context, *QueryGameBalanceReq) (*QueryGameBalanceRes, error)
 	ManualUserBalance(context.Context, *ManualUserBalanceReq) (*ManualUserBalanceRes, error)
+	// 站点支付管理相关
+	GetSitePayments(context.Context, *GetSitePaymentsReq) (*GetSitePaymentsRes, error)
+	UpdateSitePayment(context.Context, *UpdateSitePaymentReq) (*UpdateSitePaymentRes, error)
+	// 站点提现管理相关
+	GetSiteWithdraws(context.Context, *GetSiteWithdrawsReq) (*GetSiteWithdrawsRes, error)
+	UpdateSiteWithdraw(context.Context, *UpdateSiteWithdrawReq) (*UpdateSiteWithdrawRes, error)
 	// 操作类型选项
 	GetManualList(context.Context, *GetManualListReq) (*GetManualListRes, error)
 	mustEmbedUnimplementedBalanceServer()
@@ -266,6 +322,18 @@ func (UnimplementedBalanceServer) QueryGameBalance(context.Context, *QueryGameBa
 }
 func (UnimplementedBalanceServer) ManualUserBalance(context.Context, *ManualUserBalanceReq) (*ManualUserBalanceRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method ManualUserBalance not implemented")
+}
+func (UnimplementedBalanceServer) GetSitePayments(context.Context, *GetSitePaymentsReq) (*GetSitePaymentsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSitePayments not implemented")
+}
+func (UnimplementedBalanceServer) UpdateSitePayment(context.Context, *UpdateSitePaymentReq) (*UpdateSitePaymentRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSitePayment not implemented")
+}
+func (UnimplementedBalanceServer) GetSiteWithdraws(context.Context, *GetSiteWithdrawsReq) (*GetSiteWithdrawsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSiteWithdraws not implemented")
+}
+func (UnimplementedBalanceServer) UpdateSiteWithdraw(context.Context, *UpdateSiteWithdrawReq) (*UpdateSiteWithdrawRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSiteWithdraw not implemented")
 }
 func (UnimplementedBalanceServer) GetManualList(context.Context, *GetManualListReq) (*GetManualListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetManualList not implemented")
@@ -507,6 +575,78 @@ func _Balance_ManualUserBalance_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetSitePayments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSitePaymentsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetSitePayments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetSitePayments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetSitePayments(ctx, req.(*GetSitePaymentsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_UpdateSitePayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSitePaymentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).UpdateSitePayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_UpdateSitePayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).UpdateSitePayment(ctx, req.(*UpdateSitePaymentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetSiteWithdraws_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSiteWithdrawsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetSiteWithdraws(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetSiteWithdraws_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetSiteWithdraws(ctx, req.(*GetSiteWithdrawsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_UpdateSiteWithdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSiteWithdrawReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).UpdateSiteWithdraw(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_UpdateSiteWithdraw_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).UpdateSiteWithdraw(ctx, req.(*UpdateSiteWithdrawReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Balance_GetManualList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetManualListReq)
 	if err := dec(in); err != nil {
@@ -579,6 +719,22 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ManualUserBalance",
 			Handler:    _Balance_ManualUserBalance_Handler,
+		},
+		{
+			MethodName: "GetSitePayments",
+			Handler:    _Balance_GetSitePayments_Handler,
+		},
+		{
+			MethodName: "UpdateSitePayment",
+			Handler:    _Balance_UpdateSitePayment_Handler,
+		},
+		{
+			MethodName: "GetSiteWithdraws",
+			Handler:    _Balance_GetSiteWithdraws_Handler,
+		},
+		{
+			MethodName: "UpdateSiteWithdraw",
+			Handler:    _Balance_UpdateSiteWithdraw_Handler,
 		},
 		{
 			MethodName: "GetManualList",

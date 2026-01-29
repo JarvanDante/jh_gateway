@@ -896,3 +896,257 @@ func CallGetManualList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	// 使用统一的protobuf响应序列化
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 后台/财务/站点支付
+ * @title 获取站点支付列表
+ * @description 获取站点支付配置列表
+ * @method get
+ * @url /api/backend/balance/site-payments
+ * @param payment_id 可选 int 支付ID
+ * @param status 可选 int 状态
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 站点支付列表
+ * @return_param data.count int 总数量
+ * @remark 获取站点支付配置列表
+ * @number 18
+ */
+func CallGetSitePayments(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetSitePayments")
+
+	// 获取查询参数
+	paymentId := r.Get("payment_id", 0).Int32()
+	status := r.Get("status", -1).Int32()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetSitePaymentsReq{
+		PaymentId: paymentId,
+		Status:    status,
+		Page:      page,
+		Size:      size,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.GetSitePayments(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取站点支付列表失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/站点支付
+ * @title 更新站点支付
+ * @description 更新站点支付配置
+ * @method post
+ * @url /api/backend/balance/update-site-payment
+ * @param id 必选 int 站点支付ID
+ * @param status 可选 int 状态
+ * @param sort 可选 int 排序
+ * @param each_min 可选 float 单笔最低
+ * @param each_max 可选 float 单笔最高
+ * @param money_list 可选 string 可选金额数组
+ * @param is_input 可选 int 是否输入金额
+ * @param remark 可选 string 备注
+ * @param logo 可选 string logo地址
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 更新站点支付配置
+ * @number 19
+ */
+func CallUpdateSitePayment(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance UpdateSitePayment")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt32FromMap(reqData, "id")
+	status := getInt32FromMap(reqData, "status")
+	sort := getInt32FromMap(reqData, "sort")
+	eachMin := getFloat64FromMap(reqData, "each_min")
+	eachMax := getFloat64FromMap(reqData, "each_max")
+	moneyList := getStringFromMap(reqData, "money_list")
+	isInput := getInt32FromMap(reqData, "is_input")
+	remark := getStringFromMap(reqData, "remark")
+	logo := getStringFromMap(reqData, "logo")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "站点支付ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.UpdateSitePaymentReq{
+		Id:        id,
+		Status:    status,
+		Sort:      sort,
+		EachMin:   eachMin,
+		EachMax:   eachMax,
+		MoneyList: moneyList,
+		IsInput:   isInput,
+		Remark:    remark,
+		Logo:      logo,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.UpdateSitePayment(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "更新站点支付失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/站点提现
+ * @title 获取站点提现列表
+ * @description 获取站点提现配置列表
+ * @method get
+ * @url /api/backend/balance/site-withdraws
+ * @param withdraw_id 可选 int 提现ID
+ * @param status 可选 int 状态
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.list array 站点提现列表
+ * @return_param data.count int 总数量
+ * @remark 获取站点提现配置列表
+ * @number 20
+ */
+func CallGetSiteWithdraws(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetSiteWithdraws")
+
+	// 获取查询参数
+	withdrawId := r.Get("withdraw_id", 0).Int32()
+	status := r.Get("status", -1).Int32()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetSiteWithdrawsReq{
+		WithdrawId: withdrawId,
+		Status:     status,
+		Page:       page,
+		Size:       size,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.GetSiteWithdraws(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取站点提现列表失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/站点提现
+ * @title 更新站点提现
+ * @description 更新站点提现配置
+ * @method post
+ * @url /api/backend/balance/update-site-withdraw
+ * @param id 必选 int 站点提现ID
+ * @param status 可选 int 状态
+ * @param sort 可选 int 排序
+ * @param each_min 可选 float 单笔最低
+ * @param each_max 可选 float 单笔最高
+ * @param money_list 可选 string 可选金额数组
+ * @param is_input 可选 int 是否输入金额
+ * @param remark 可选 string 备注
+ * @param logo 可选 string logo地址
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 数据对象
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 响应消息
+ * @remark 更新站点提现配置
+ * @number 21
+ */
+func CallUpdateSiteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance UpdateSiteWithdraw")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt32FromMap(reqData, "id")
+	status := getInt32FromMap(reqData, "status")
+	sort := getInt32FromMap(reqData, "sort")
+	eachMin := getFloat64FromMap(reqData, "each_min")
+	eachMax := getFloat64FromMap(reqData, "each_max")
+	moneyList := getStringFromMap(reqData, "money_list")
+	isInput := getInt32FromMap(reqData, "is_input")
+	remark := getStringFromMap(reqData, "remark")
+	logo := getStringFromMap(reqData, "logo")
+
+	if id <= 0 {
+		util.WriteBadRequest(r, "站点提现ID不能为空")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v6.NewBalanceClient(conn)
+	req := &v6.UpdateSiteWithdrawReq{
+		Id:        id,
+		Status:    status,
+		Sort:      sort,
+		EachMin:   eachMin,
+		EachMax:   eachMax,
+		MoneyList: moneyList,
+		IsInput:   isInput,
+		Remark:    remark,
+		Logo:      logo,
+	}
+
+	// 调用 gRPC 服务
+	res, err := client.UpdateSiteWithdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "更新站点提现失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, res)
+}
