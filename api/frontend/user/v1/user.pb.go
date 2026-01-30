@@ -1112,6 +1112,194 @@ func (x *GradeItem) GetMoneyLimit() string {
 	return ""
 }
 
+// 设置支付密码请求
+type SetPayPasswordReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PayPassword   string                 `protobuf:"bytes,1,opt,name=pay_password,json=payPassword,proto3" json:"pay_password" dc:"支付密码（6位数字）"` // 支付密码（6位数字）
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetPayPasswordReq) Reset() {
+	*x = SetPayPasswordReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetPayPasswordReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetPayPasswordReq) ProtoMessage() {}
+
+func (x *SetPayPasswordReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetPayPasswordReq.ProtoReflect.Descriptor instead.
+func (*SetPayPasswordReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *SetPayPasswordReq) GetPayPassword() string {
+	if x != nil {
+		return x.PayPassword
+	}
+	return ""
+}
+
+// 设置支付密码响应
+type SetPayPasswordRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"提示消息"` // 提示消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetPayPasswordRes) Reset() {
+	*x = SetPayPasswordRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetPayPasswordRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetPayPasswordRes) ProtoMessage() {}
+
+func (x *SetPayPasswordRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetPayPasswordRes.ProtoReflect.Descriptor instead.
+func (*SetPayPasswordRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SetPayPasswordRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 验证支付密码请求
+type VerifyPayPasswordReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PayPassword   string                 `protobuf:"bytes,1,opt,name=pay_password,json=payPassword,proto3" json:"pay_password" dc:"支付密码"` // 支付密码
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyPayPasswordReq) Reset() {
+	*x = VerifyPayPasswordReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyPayPasswordReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyPayPasswordReq) ProtoMessage() {}
+
+func (x *VerifyPayPasswordReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyPayPasswordReq.ProtoReflect.Descriptor instead.
+func (*VerifyPayPasswordReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *VerifyPayPasswordReq) GetPayPassword() string {
+	if x != nil {
+		return x.PayPassword
+	}
+	return ""
+}
+
+// 验证支付密码响应
+type VerifyPayPasswordRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsValid       bool                   `protobuf:"varint,1,opt,name=is_valid,json=isValid,proto3" json:"is_valid" dc:"是否正确"` // 是否正确
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"提示消息"`                 // 提示消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyPayPasswordRes) Reset() {
+	*x = VerifyPayPasswordRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyPayPasswordRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyPayPasswordRes) ProtoMessage() {}
+
+func (x *VerifyPayPasswordRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyPayPasswordRes.ProtoReflect.Descriptor instead.
+func (*VerifyPayPasswordRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *VerifyPayPasswordRes) GetIsValid() bool {
+	if x != nil {
+		return x.IsValid
+	}
+	return false
+}
+
+func (x *VerifyPayPasswordRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_frontend_user_v1_user_proto_rawDesc = "" +
@@ -1199,7 +1387,16 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\rpayment_limit\x18\v \x01(\tR\fpaymentLimit\x12\x1b\n" +
 	"\tbet_limit\x18\f \x01(\tR\bbetLimit\x12\x1f\n" +
 	"\vmoney_limit\x18\r \x01(\tR\n" +
-	"moneyLimit2\xc4\x04\n" +
+	"moneyLimit\"6\n" +
+	"\x11SetPayPasswordReq\x12!\n" +
+	"\fpay_password\x18\x01 \x01(\tR\vpayPassword\"-\n" +
+	"\x11SetPayPasswordRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"9\n" +
+	"\x14VerifyPayPasswordReq\x12!\n" +
+	"\fpay_password\x18\x01 \x01(\tR\vpayPassword\"K\n" +
+	"\x14VerifyPayPasswordRes\x12\x19\n" +
+	"\bis_valid\x18\x01 \x01(\bR\aisValid\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xfd\x05\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
 	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
@@ -1208,7 +1405,9 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"BindMobile\x12\x1c.frontend_user.BindMobileReq\x1a\x1c.frontend_user.BindMobileRes\"\x00\x12e\n" +
 	"\x13ChangeLoginPassword\x12%.frontend_user.ChangeLoginPasswordReq\x1a%.frontend_user.ChangeLoginPasswordRes\"\x00\x12_\n" +
 	"\x11BindLoginPassword\x12#.frontend_user.BindLoginPasswordReq\x1a#.frontend_user.BindLoginPasswordRes\"\x00\x12P\n" +
-	"\fGetGradeList\x12\x1e.frontend_user.GetGradeListReq\x1a\x1e.frontend_user.GetGradeListRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\fGetGradeList\x12\x1e.frontend_user.GetGradeListReq\x1a\x1e.frontend_user.GetGradeListRes\"\x00\x12V\n" +
+	"\x0eSetPayPassword\x12 .frontend_user.SetPayPasswordReq\x1a .frontend_user.SetPayPasswordRes\"\x00\x12_\n" +
+	"\x11VerifyPayPassword\x12#.frontend_user.VerifyPayPasswordReq\x1a#.frontend_user.VerifyPayPasswordRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -1222,7 +1421,7 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil),         // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil),         // 1: frontend_user.GetUserInfoRes
@@ -1241,6 +1440,10 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetGradeListReq)(nil),        // 14: frontend_user.GetGradeListReq
 	(*GetGradeListRes)(nil),        // 15: frontend_user.GetGradeListRes
 	(*GradeItem)(nil),              // 16: frontend_user.GradeItem
+	(*SetPayPasswordReq)(nil),      // 17: frontend_user.SetPayPasswordReq
+	(*SetPayPasswordRes)(nil),      // 18: frontend_user.SetPayPasswordRes
+	(*VerifyPayPasswordReq)(nil),   // 19: frontend_user.VerifyPayPasswordReq
+	(*VerifyPayPasswordRes)(nil),   // 20: frontend_user.VerifyPayPasswordRes
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	2,  // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
@@ -1254,15 +1457,19 @@ var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	10, // 8: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
 	12, // 9: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
 	14, // 10: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
-	1,  // 11: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5,  // 12: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	7,  // 13: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
-	9,  // 14: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
-	11, // 15: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
-	13, // 16: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
-	15, // 17: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
-	11, // [11:18] is the sub-list for method output_type
-	4,  // [4:11] is the sub-list for method input_type
+	17, // 11: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
+	19, // 12: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
+	1,  // 13: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5,  // 14: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7,  // 15: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9,  // 16: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	11, // 17: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
+	13, // 18: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
+	15, // 19: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
+	18, // 20: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
+	20, // 21: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
+	13, // [13:22] is the sub-list for method output_type
+	4,  // [4:13] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -1279,7 +1486,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

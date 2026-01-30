@@ -805,3 +805,105 @@ func CallGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	// 使用统一的protobuf JSON序列化函数
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title OK设置支付密码
+ * @description 设置支付密码接口
+ * @method post
+ * @url /api/frontend/app/set-pay-password
+ * @header Authorization 必选 string Bearer {token}
+ * @param pay_password 必选 string 支付密码（6位数字）
+ * @return {"code":0,"msg":"success","data":{"message":"设置支付密码成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.message string 提示消息
+ * @remark 支付密码必须是6位数字
+ * @number 120
+ */
+func CallSetPayPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC SetPayPassword")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v16.NewUserClient(conn)
+	req := &v16.SetPayPasswordReq{
+		PayPassword: gconv.String(reqData["pay_password"]),
+	}
+
+	res, err := client.SetPayPassword(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "未登录") {
+			util.WriteUnauthorized(r, "请先登录")
+		} else if strings.Contains(err.Error(), "6位数字") {
+			util.WriteBadRequest(r, "支付密码必须是6位数字")
+		} else {
+			util.WriteInternalError(r, "设置支付密码失败")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": res.Message,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title OK验证支付密码
+ * @description 验证支付密码是否正确
+ * @method post
+ * @url /api/frontend/app/verify-pay-password
+ * @header Authorization 必选 string Bearer {token}
+ * @param pay_password 必选 string 支付密码
+ * @return {"code":0,"msg":"success","data":{"is_valid":true,"message":"验证成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.is_valid bool 是否正确
+ * @return_param data.message string 提示消息
+ * @remark 用于提现等操作前验证支付密码
+ * @number 121
+ */
+func CallVerifyPayPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC VerifyPayPassword")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v16.NewUserClient(conn)
+	req := &v16.VerifyPayPasswordReq{
+		PayPassword: gconv.String(reqData["pay_password"]),
+	}
+
+	res, err := client.VerifyPayPassword(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "未登录") {
+			util.WriteUnauthorized(r, "请先登录")
+		} else {
+			util.WriteInternalError(r, "验证支付密码失败")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"is_valid": res.IsValid,
+		"message":  res.Message,
+	})
+	return nil
+}

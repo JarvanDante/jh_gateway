@@ -350,6 +350,10 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/bind-login-password", "POST", frontend.CallBindLoginPassword)
 	// 获取会员等级列表
 	frontendRoutes.Register("/grade-list", "GET", frontend.CallGetAppGradeList)
+	// 设置支付密码
+	frontendRoutes.Register("/set-pay-password", "POST", frontend.CallSetPayPassword)
+	// 验证支付密码
+	frontendRoutes.Register("/verify-pay-password", "POST", frontend.CallVerifyPayPassword)
 	// 获取公告列表
 	frontendRoutes.Register("/notice-list", "GET", frontend.CallGetAppNoticeList)
 	// 获取广告列表
