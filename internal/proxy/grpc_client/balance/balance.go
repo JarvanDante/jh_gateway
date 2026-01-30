@@ -1150,3 +1150,95 @@ func CallUpdateSiteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	// 使用统一的protobuf响应序列化
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title OK获取支付渠道列表
+ * @description 获取可用的支付渠道列表
+ * @method get
+ * @url /api/frontend/balance/payment-list
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"site_id":1,"payment_id":1,"name":"在线支付","code":"online","gateway":1,"each_min":10,"each_max":50000,"sort":100,"money_list":["100","500","1000","5000"],"is_input":1,"remark":"支持多种支付方式","logo":"https://example.com/logo.png","status":1}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 支付渠道列表
+ * @return_param data.list.id int 渠道ID
+ * @return_param data.list.site_id int 站点ID
+ * @return_param data.list.payment_id int 总站支付ID
+ * @return_param data.list.name string 渠道名称
+ * @return_param data.list.code string 渠道代码
+ * @return_param data.list.gateway int 支付网关：1=在线支付 2=银行
+ * @return_param data.list.each_min float 单笔最低金额
+ * @return_param data.list.each_max float 单笔最高金额
+ * @return_param data.list.sort int 排序（从大到小）
+ * @return_param data.list.money_list array 可选金额数组
+ * @return_param data.list.is_input int 是否支持输入金额：0=不支持 1=支持
+ * @return_param data.list.remark string 描述
+ * @return_param data.list.logo string logo地址
+ * @return_param data.list.status int 状态
+ * @remark 只返回status=1的可用渠道，按sort从大到小排序
+ * @number 200
+ */
+func CallGetPaymentList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetPaymentList")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetPaymentListReq{}
+
+	res, err := client.GetPaymentList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取支付渠道列表失败")
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title OK获取提现渠道列表
+ * @description 获取可用的提现渠道列表
+ * @method get
+ * @url /api/frontend/balance/withdraw-list
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"site_id":1,"withdraw_id":1,"name":"银行卡提现","code":"bank","gateway":2,"each_min":100,"each_max":50000,"sort":100,"money_list":["100","500","1000","5000"],"is_input":1,"remark":"支持多家银行","logo":"https://example.com/logo.png","status":1}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 提现渠道列表
+ * @return_param data.list.id int 渠道ID
+ * @return_param data.list.site_id int 站点ID
+ * @return_param data.list.withdraw_id int 总站提现ID
+ * @return_param data.list.name string 渠道名称
+ * @return_param data.list.code string 渠道代码
+ * @return_param data.list.gateway int 提现网关：1=在线支付 2=银行
+ * @return_param data.list.each_min float 单笔最低金额
+ * @return_param data.list.each_max float 单笔最高金额
+ * @return_param data.list.sort int 排序（从大到小）
+ * @return_param data.list.money_list array 可选金额数组
+ * @return_param data.list.is_input int 是否支持输入金额：0=不支持 1=支持
+ * @return_param data.list.remark string 描述
+ * @return_param data.list.logo string logo地址
+ * @return_param data.list.status int 状态
+ * @remark 只返回status=1的可用渠道，按sort从大到小排序
+ * @number 201
+ */
+func CallGetWithdrawList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetWithdrawList")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetWithdrawListReq{}
+
+	res, err := client.GetWithdrawList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取提现渠道列表失败")
+		return nil
+	}
+
+	// 使用统一的protobuf JSON序列化函数
+	return writeProtobufResponse(ctx, r, res)
+}

@@ -20,8 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Balance_InitBalanceUser_FullMethodName = "/frontend_balance.Balance/InitBalanceUser"
-	Balance_RefreshBalance_FullMethodName  = "/frontend_balance.Balance/RefreshBalance"
+	Balance_InitBalanceUser_FullMethodName       = "/frontend_balance.Balance/InitBalanceUser"
+	Balance_RefreshBalance_FullMethodName        = "/frontend_balance.Balance/RefreshBalance"
+	Balance_AdjustBalance_FullMethodName         = "/frontend_balance.Balance/AdjustBalance"
+	Balance_UpdateTransferStatus_FullMethodName  = "/frontend_balance.Balance/UpdateTransferStatus"
+	Balance_CompensateBalance_FullMethodName     = "/frontend_balance.Balance/CompensateBalance"
+	Balance_GetLastBalanceLogGame_FullMethodName = "/frontend_balance.Balance/GetLastBalanceLogGame"
+	Balance_GetPaymentList_FullMethodName        = "/frontend_balance.Balance/GetPaymentList"
+	Balance_GetWithdrawList_FullMethodName       = "/frontend_balance.Balance/GetWithdrawList"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -32,6 +38,18 @@ type BalanceClient interface {
 	InitBalanceUser(ctx context.Context, in *InitBalanceUserReq, opts ...grpc.CallOption) (*InitBalanceUserRes, error)
 	// 刷新用户余额
 	RefreshBalance(ctx context.Context, in *RefreshBalanceReq, opts ...grpc.CallOption) (*RefreshBalanceRes, error)
+	// 调整用户余额（加款/扣款）
+	AdjustBalance(ctx context.Context, in *AdjustBalanceReq, opts ...grpc.CallOption) (*AdjustBalanceRes, error)
+	// 更新转账状态（游戏转账成功后调用）
+	UpdateTransferStatus(ctx context.Context, in *UpdateTransferStatusReq, opts ...grpc.CallOption) (*UpdateTransferStatusRes, error)
+	// 补偿余额（游戏转账失败后调用）
+	CompensateBalance(ctx context.Context, in *CompensateBalanceReq, opts ...grpc.CallOption) (*CompensateBalanceRes, error)
+	// 最后一次进入游戏
+	GetLastBalanceLogGame(ctx context.Context, in *GetLastBalanceLogGameReq, opts ...grpc.CallOption) (*GetLastBalanceLogGameRes, error)
+	// 获取支付渠道列表
+	GetPaymentList(ctx context.Context, in *GetPaymentListReq, opts ...grpc.CallOption) (*GetPaymentListRes, error)
+	// 获取提现渠道列表
+	GetWithdrawList(ctx context.Context, in *GetWithdrawListReq, opts ...grpc.CallOption) (*GetWithdrawListRes, error)
 }
 
 type balanceClient struct {
@@ -62,6 +80,66 @@ func (c *balanceClient) RefreshBalance(ctx context.Context, in *RefreshBalanceRe
 	return out, nil
 }
 
+func (c *balanceClient) AdjustBalance(ctx context.Context, in *AdjustBalanceReq, opts ...grpc.CallOption) (*AdjustBalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdjustBalanceRes)
+	err := c.cc.Invoke(ctx, Balance_AdjustBalance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) UpdateTransferStatus(ctx context.Context, in *UpdateTransferStatusReq, opts ...grpc.CallOption) (*UpdateTransferStatusRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateTransferStatusRes)
+	err := c.cc.Invoke(ctx, Balance_UpdateTransferStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) CompensateBalance(ctx context.Context, in *CompensateBalanceReq, opts ...grpc.CallOption) (*CompensateBalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompensateBalanceRes)
+	err := c.cc.Invoke(ctx, Balance_CompensateBalance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetLastBalanceLogGame(ctx context.Context, in *GetLastBalanceLogGameReq, opts ...grpc.CallOption) (*GetLastBalanceLogGameRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLastBalanceLogGameRes)
+	err := c.cc.Invoke(ctx, Balance_GetLastBalanceLogGame_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetPaymentList(ctx context.Context, in *GetPaymentListReq, opts ...grpc.CallOption) (*GetPaymentListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPaymentListRes)
+	err := c.cc.Invoke(ctx, Balance_GetPaymentList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetWithdrawList(ctx context.Context, in *GetWithdrawListReq, opts ...grpc.CallOption) (*GetWithdrawListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWithdrawListRes)
+	err := c.cc.Invoke(ctx, Balance_GetWithdrawList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -70,6 +148,18 @@ type BalanceServer interface {
 	InitBalanceUser(context.Context, *InitBalanceUserReq) (*InitBalanceUserRes, error)
 	// 刷新用户余额
 	RefreshBalance(context.Context, *RefreshBalanceReq) (*RefreshBalanceRes, error)
+	// 调整用户余额（加款/扣款）
+	AdjustBalance(context.Context, *AdjustBalanceReq) (*AdjustBalanceRes, error)
+	// 更新转账状态（游戏转账成功后调用）
+	UpdateTransferStatus(context.Context, *UpdateTransferStatusReq) (*UpdateTransferStatusRes, error)
+	// 补偿余额（游戏转账失败后调用）
+	CompensateBalance(context.Context, *CompensateBalanceReq) (*CompensateBalanceRes, error)
+	// 最后一次进入游戏
+	GetLastBalanceLogGame(context.Context, *GetLastBalanceLogGameReq) (*GetLastBalanceLogGameRes, error)
+	// 获取支付渠道列表
+	GetPaymentList(context.Context, *GetPaymentListReq) (*GetPaymentListRes, error)
+	// 获取提现渠道列表
+	GetWithdrawList(context.Context, *GetWithdrawListReq) (*GetWithdrawListRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -85,6 +175,24 @@ func (UnimplementedBalanceServer) InitBalanceUser(context.Context, *InitBalanceU
 }
 func (UnimplementedBalanceServer) RefreshBalance(context.Context, *RefreshBalanceReq) (*RefreshBalanceRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method RefreshBalance not implemented")
+}
+func (UnimplementedBalanceServer) AdjustBalance(context.Context, *AdjustBalanceReq) (*AdjustBalanceRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method AdjustBalance not implemented")
+}
+func (UnimplementedBalanceServer) UpdateTransferStatus(context.Context, *UpdateTransferStatusReq) (*UpdateTransferStatusRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateTransferStatus not implemented")
+}
+func (UnimplementedBalanceServer) CompensateBalance(context.Context, *CompensateBalanceReq) (*CompensateBalanceRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method CompensateBalance not implemented")
+}
+func (UnimplementedBalanceServer) GetLastBalanceLogGame(context.Context, *GetLastBalanceLogGameReq) (*GetLastBalanceLogGameRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetLastBalanceLogGame not implemented")
+}
+func (UnimplementedBalanceServer) GetPaymentList(context.Context, *GetPaymentListReq) (*GetPaymentListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetPaymentList not implemented")
+}
+func (UnimplementedBalanceServer) GetWithdrawList(context.Context, *GetWithdrawListReq) (*GetWithdrawListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetWithdrawList not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -143,6 +251,114 @@ func _Balance_RefreshBalance_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_AdjustBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdjustBalanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).AdjustBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_AdjustBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).AdjustBalance(ctx, req.(*AdjustBalanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_UpdateTransferStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTransferStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).UpdateTransferStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_UpdateTransferStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).UpdateTransferStatus(ctx, req.(*UpdateTransferStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_CompensateBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompensateBalanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).CompensateBalance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_CompensateBalance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).CompensateBalance(ctx, req.(*CompensateBalanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetLastBalanceLogGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLastBalanceLogGameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetLastBalanceLogGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetLastBalanceLogGame_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetLastBalanceLogGame(ctx, req.(*GetLastBalanceLogGameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetPaymentList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPaymentListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetPaymentList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetPaymentList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetPaymentList(ctx, req.(*GetPaymentListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetWithdrawList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWithdrawListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetWithdrawList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetWithdrawList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetWithdrawList(ctx, req.(*GetWithdrawListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -157,6 +373,30 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshBalance",
 			Handler:    _Balance_RefreshBalance_Handler,
+		},
+		{
+			MethodName: "AdjustBalance",
+			Handler:    _Balance_AdjustBalance_Handler,
+		},
+		{
+			MethodName: "UpdateTransferStatus",
+			Handler:    _Balance_UpdateTransferStatus_Handler,
+		},
+		{
+			MethodName: "CompensateBalance",
+			Handler:    _Balance_CompensateBalance_Handler,
+		},
+		{
+			MethodName: "GetLastBalanceLogGame",
+			Handler:    _Balance_GetLastBalanceLogGame_Handler,
+		},
+		{
+			MethodName: "GetPaymentList",
+			Handler:    _Balance_GetPaymentList_Handler,
+		},
+		{
+			MethodName: "GetWithdrawList",
+			Handler:    _Balance_GetWithdrawList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

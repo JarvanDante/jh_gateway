@@ -185,6 +185,10 @@ func initBalanceRoutes() {
 	// 前台接口
 	// 刷新用户余额
 	balanceRoutes.Register("/refresh-balance", "GET", balance.CallRefreshBalance)
+	// 获取支付渠道列表
+	balanceRoutes.Register("/payment-list", "GET", balance.CallGetPaymentList)
+	// 获取提现渠道列表
+	balanceRoutes.Register("/withdraw-list", "GET", balance.CallGetWithdrawList)
 
 	// 后台接口
 	// 账变记录
