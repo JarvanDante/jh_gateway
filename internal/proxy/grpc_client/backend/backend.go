@@ -1763,7 +1763,7 @@ func CallGetUserLoginLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
  * @return_param data object 主要数据
  * @return_param data.image string 图片访问URL
  * @return_param msg string 提示说明
- * @remark 支持jpg、jpeg、gif、png格式，默认最大500KB，mobile_logo类型支持svg格式最大100KB
+ * @remark 支持jpg、jpeg、gif、png格式，默认最大2MB，mobile_logo类型支持svg格式最大100KB
  * @number 10
  */
 func CallUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
