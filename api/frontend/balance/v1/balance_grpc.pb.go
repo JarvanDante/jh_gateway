@@ -28,6 +28,10 @@ const (
 	Balance_GetLastBalanceLogGame_FullMethodName = "/frontend_balance.Balance/GetLastBalanceLogGame"
 	Balance_GetPaymentList_FullMethodName        = "/frontend_balance.Balance/GetPaymentList"
 	Balance_GetWithdrawList_FullMethodName       = "/frontend_balance.Balance/GetWithdrawList"
+	Balance_AddBankCard_FullMethodName           = "/frontend_balance.Balance/AddBankCard"
+	Balance_GetBankCardList_FullMethodName       = "/frontend_balance.Balance/GetBankCardList"
+	Balance_DeleteBankCard_FullMethodName        = "/frontend_balance.Balance/DeleteBankCard"
+	Balance_SetDefaultBankCard_FullMethodName    = "/frontend_balance.Balance/SetDefaultBankCard"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -50,6 +54,14 @@ type BalanceClient interface {
 	GetPaymentList(ctx context.Context, in *GetPaymentListReq, opts ...grpc.CallOption) (*GetPaymentListRes, error)
 	// 获取提现渠道列表
 	GetWithdrawList(ctx context.Context, in *GetWithdrawListReq, opts ...grpc.CallOption) (*GetWithdrawListRes, error)
+	// 添加银行卡
+	AddBankCard(ctx context.Context, in *AddBankCardReq, opts ...grpc.CallOption) (*AddBankCardRes, error)
+	// 查询银行卡列表
+	GetBankCardList(ctx context.Context, in *GetBankCardListReq, opts ...grpc.CallOption) (*GetBankCardListRes, error)
+	// 删除银行卡
+	DeleteBankCard(ctx context.Context, in *DeleteBankCardReq, opts ...grpc.CallOption) (*DeleteBankCardRes, error)
+	// 设置默认银行卡
+	SetDefaultBankCard(ctx context.Context, in *SetDefaultBankCardReq, opts ...grpc.CallOption) (*SetDefaultBankCardRes, error)
 }
 
 type balanceClient struct {
@@ -140,6 +152,46 @@ func (c *balanceClient) GetWithdrawList(ctx context.Context, in *GetWithdrawList
 	return out, nil
 }
 
+func (c *balanceClient) AddBankCard(ctx context.Context, in *AddBankCardReq, opts ...grpc.CallOption) (*AddBankCardRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddBankCardRes)
+	err := c.cc.Invoke(ctx, Balance_AddBankCard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetBankCardList(ctx context.Context, in *GetBankCardListReq, opts ...grpc.CallOption) (*GetBankCardListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBankCardListRes)
+	err := c.cc.Invoke(ctx, Balance_GetBankCardList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) DeleteBankCard(ctx context.Context, in *DeleteBankCardReq, opts ...grpc.CallOption) (*DeleteBankCardRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteBankCardRes)
+	err := c.cc.Invoke(ctx, Balance_DeleteBankCard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) SetDefaultBankCard(ctx context.Context, in *SetDefaultBankCardReq, opts ...grpc.CallOption) (*SetDefaultBankCardRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetDefaultBankCardRes)
+	err := c.cc.Invoke(ctx, Balance_SetDefaultBankCard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -160,6 +212,14 @@ type BalanceServer interface {
 	GetPaymentList(context.Context, *GetPaymentListReq) (*GetPaymentListRes, error)
 	// 获取提现渠道列表
 	GetWithdrawList(context.Context, *GetWithdrawListReq) (*GetWithdrawListRes, error)
+	// 添加银行卡
+	AddBankCard(context.Context, *AddBankCardReq) (*AddBankCardRes, error)
+	// 查询银行卡列表
+	GetBankCardList(context.Context, *GetBankCardListReq) (*GetBankCardListRes, error)
+	// 删除银行卡
+	DeleteBankCard(context.Context, *DeleteBankCardReq) (*DeleteBankCardRes, error)
+	// 设置默认银行卡
+	SetDefaultBankCard(context.Context, *SetDefaultBankCardReq) (*SetDefaultBankCardRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -193,6 +253,18 @@ func (UnimplementedBalanceServer) GetPaymentList(context.Context, *GetPaymentLis
 }
 func (UnimplementedBalanceServer) GetWithdrawList(context.Context, *GetWithdrawListReq) (*GetWithdrawListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetWithdrawList not implemented")
+}
+func (UnimplementedBalanceServer) AddBankCard(context.Context, *AddBankCardReq) (*AddBankCardRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method AddBankCard not implemented")
+}
+func (UnimplementedBalanceServer) GetBankCardList(context.Context, *GetBankCardListReq) (*GetBankCardListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetBankCardList not implemented")
+}
+func (UnimplementedBalanceServer) DeleteBankCard(context.Context, *DeleteBankCardReq) (*DeleteBankCardRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteBankCard not implemented")
+}
+func (UnimplementedBalanceServer) SetDefaultBankCard(context.Context, *SetDefaultBankCardReq) (*SetDefaultBankCardRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetDefaultBankCard not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -359,6 +431,78 @@ func _Balance_GetWithdrawList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_AddBankCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddBankCardReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).AddBankCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_AddBankCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).AddBankCard(ctx, req.(*AddBankCardReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetBankCardList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBankCardListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetBankCardList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetBankCardList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetBankCardList(ctx, req.(*GetBankCardListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_DeleteBankCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteBankCardReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).DeleteBankCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_DeleteBankCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).DeleteBankCard(ctx, req.(*DeleteBankCardReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_SetDefaultBankCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultBankCardReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).SetDefaultBankCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_SetDefaultBankCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).SetDefaultBankCard(ctx, req.(*SetDefaultBankCardReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -397,6 +541,22 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWithdrawList",
 			Handler:    _Balance_GetWithdrawList_Handler,
+		},
+		{
+			MethodName: "AddBankCard",
+			Handler:    _Balance_AddBankCard_Handler,
+		},
+		{
+			MethodName: "GetBankCardList",
+			Handler:    _Balance_GetBankCardList_Handler,
+		},
+		{
+			MethodName: "DeleteBankCard",
+			Handler:    _Balance_DeleteBankCard_Handler,
+		},
+		{
+			MethodName: "SetDefaultBankCard",
+			Handler:    _Balance_SetDefaultBankCard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -189,6 +189,11 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/payment-list", "GET", balance.CallGetPaymentList)
 	// 获取提现渠道列表
 	balanceRoutes.Register("/withdraw-list", "GET", balance.CallGetWithdrawList)
+	// 银行卡管理
+	balanceRoutes.Register("/add-bank-card", "POST", balance.CallAddBankCard)
+	balanceRoutes.Register("/bank-card-list", "GET", balance.CallGetBankCardList)
+	balanceRoutes.Register("/delete-bank-card", "POST", balance.CallDeleteBankCard)
+	balanceRoutes.Register("/set-default-bank-card", "POST", balance.CallSetDefaultBankCard)
 
 	// 后台接口
 	// 账变记录

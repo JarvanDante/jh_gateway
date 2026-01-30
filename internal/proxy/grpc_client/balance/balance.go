@@ -1242,3 +1242,189 @@ func CallGetWithdrawList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	// 使用统一的protobuf JSON序列化函数
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/银行卡
+ * @title 添加银行卡
+ * @description 添加银行卡接口
+ * @method post
+ * @url /api/frontend/balance/add-bank-card
+ * @param type 必选 int 类型 1=GCASH 2=Maya
+ * @param card_account 必选 string 账户名
+ * @param card_no 必选 string 卡号
+ * @param is_default 可选 int 是否默认 0=否 1=是
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"添加成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 消息
+ * @number 110
+ */
+func CallAddBankCard(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC AddBankCard")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	cardType := getInt32FromMap(reqData, "type")
+	cardAccount := getStringFromMap(reqData, "card_account")
+	cardNo := getStringFromMap(reqData, "card_no")
+	isDefault := getInt32FromMapWithDefault(reqData, "is_default", 0)
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.AddBankCardReq{
+		Type:        cardType,
+		CardAccount: cardAccount,
+		CardNo:      cardNo,
+		IsDefault:   isDefault,
+	}
+
+	res, err := client.AddBankCard(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"success": res.Success,
+		"message": res.Message,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/银行卡
+ * @title 查询银行卡列表
+ * @description 查询用户的银行卡列表
+ * @method get
+ * @url /api/frontend/balance/bank-card-list
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"type":1,"card_account":"John Doe","card_no":"09123456789","is_default":1,"created_at":"2024-01-01 10:00:00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 银行卡列表
+ * @number 111
+ */
+func CallGetBankCardList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetBankCardList")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetBankCardListReq{}
+
+	res, err := client.GetBankCardList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"list": res.List,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/银行卡
+ * @title 删除银行卡
+ * @description 删除银行卡接口
+ * @method post
+ * @url /api/frontend/balance/delete-bank-card
+ * @param id 必选 int 银行卡ID
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"删除成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 消息
+ * @number 112
+ */
+func CallDeleteBankCard(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC DeleteBankCard")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt32FromMap(reqData, "id")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.DeleteBankCardReq{
+		Id: id,
+	}
+
+	res, err := client.DeleteBankCard(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"success": res.Success,
+		"message": res.Message,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/银行卡
+ * @title 设置默认银行卡
+ * @description 设置默认银行卡接口
+ * @method post
+ * @url /api/frontend/balance/set-default-bank-card
+ * @param id 必选 int 银行卡ID
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"设置成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 消息
+ * @number 113
+ */
+func CallSetDefaultBankCard(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC SetDefaultBankCard")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	id := getInt32FromMap(reqData, "id")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.SetDefaultBankCardReq{
+		Id: id,
+	}
+
+	res, err := client.SetDefaultBankCard(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"success": res.Success,
+		"message": res.Message,
+	})
+	return nil
+}

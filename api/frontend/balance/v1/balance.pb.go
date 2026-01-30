@@ -1184,6 +1184,491 @@ func (x *GetWithdrawListRes) GetList() []*WithdrawInfo {
 	return nil
 }
 
+// 添加银行卡请求
+type AddBankCardReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          int32                  `protobuf:"varint,1,opt,name=type,proto3" json:"type" dc:"类型 1=GCASH 2=Maya"`                       // 类型 1=GCASH 2=Maya
+	CardAccount   string                 `protobuf:"bytes,2,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"账户名"`     // 账户名
+	CardNo        string                 `protobuf:"bytes,3,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号"`                     // 卡号
+	IsDefault     int32                  `protobuf:"varint,4,opt,name=is_default,json=isDefault,proto3" json:"is_default" dc:"是否默认 0=否 1=是"` // 是否默认 0=否 1=是
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddBankCardReq) Reset() {
+	*x = AddBankCardReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddBankCardReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddBankCardReq) ProtoMessage() {}
+
+func (x *AddBankCardReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddBankCardReq.ProtoReflect.Descriptor instead.
+func (*AddBankCardReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *AddBankCardReq) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *AddBankCardReq) GetCardAccount() string {
+	if x != nil {
+		return x.CardAccount
+	}
+	return ""
+}
+
+func (x *AddBankCardReq) GetCardNo() string {
+	if x != nil {
+		return x.CardNo
+	}
+	return ""
+}
+
+func (x *AddBankCardReq) GetIsDefault() int32 {
+	if x != nil {
+		return x.IsDefault
+	}
+	return 0
+}
+
+// 添加银行卡响应
+type AddBankCardRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`    // 消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddBankCardRes) Reset() {
+	*x = AddBankCardRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddBankCardRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddBankCardRes) ProtoMessage() {}
+
+func (x *AddBankCardRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddBankCardRes.ProtoReflect.Descriptor instead.
+func (*AddBankCardRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *AddBankCardRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *AddBankCardRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 查询银行卡列表请求
+type GetBankCardListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBankCardListReq) Reset() {
+	*x = GetBankCardListReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBankCardListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBankCardListReq) ProtoMessage() {}
+
+func (x *GetBankCardListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBankCardListReq.ProtoReflect.Descriptor instead.
+func (*GetBankCardListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{20}
+}
+
+// 银行卡信息
+type BankCardInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                          // ID
+	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type" dc:"类型 1=GCASH 2=Maya"`                       // 类型 1=GCASH 2=Maya
+	CardAccount   string                 `protobuf:"bytes,3,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"账户名"`     // 账户名
+	CardNo        string                 `protobuf:"bytes,4,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号"`                     // 卡号
+	IsDefault     int32                  `protobuf:"varint,5,opt,name=is_default,json=isDefault,proto3" json:"is_default" dc:"是否默认 0=否 1=是"` // 是否默认 0=否 1=是
+	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`          // 创建时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BankCardInfo) Reset() {
+	*x = BankCardInfo{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BankCardInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BankCardInfo) ProtoMessage() {}
+
+func (x *BankCardInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BankCardInfo.ProtoReflect.Descriptor instead.
+func (*BankCardInfo) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *BankCardInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *BankCardInfo) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *BankCardInfo) GetCardAccount() string {
+	if x != nil {
+		return x.CardAccount
+	}
+	return ""
+}
+
+func (x *BankCardInfo) GetCardNo() string {
+	if x != nil {
+		return x.CardNo
+	}
+	return ""
+}
+
+func (x *BankCardInfo) GetIsDefault() int32 {
+	if x != nil {
+		return x.IsDefault
+	}
+	return 0
+}
+
+func (x *BankCardInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 查询银行卡列表响应
+type GetBankCardListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*BankCardInfo        `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"银行卡列表"` // 银行卡列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetBankCardListRes) Reset() {
+	*x = GetBankCardListRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetBankCardListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetBankCardListRes) ProtoMessage() {}
+
+func (x *GetBankCardListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetBankCardListRes.ProtoReflect.Descriptor instead.
+func (*GetBankCardListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *GetBankCardListRes) GetList() []*BankCardInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+// 删除银行卡请求
+type DeleteBankCardReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"银行卡ID"` // 银行卡ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteBankCardReq) Reset() {
+	*x = DeleteBankCardReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteBankCardReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteBankCardReq) ProtoMessage() {}
+
+func (x *DeleteBankCardReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteBankCardReq.ProtoReflect.Descriptor instead.
+func (*DeleteBankCardReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *DeleteBankCardReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 删除银行卡响应
+type DeleteBankCardRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`    // 消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteBankCardRes) Reset() {
+	*x = DeleteBankCardRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteBankCardRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteBankCardRes) ProtoMessage() {}
+
+func (x *DeleteBankCardRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteBankCardRes.ProtoReflect.Descriptor instead.
+func (*DeleteBankCardRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *DeleteBankCardRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteBankCardRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// 设置默认银行卡请求
+type SetDefaultBankCardReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"银行卡ID"` // 银行卡ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetDefaultBankCardReq) Reset() {
+	*x = SetDefaultBankCardReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetDefaultBankCardReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetDefaultBankCardReq) ProtoMessage() {}
+
+func (x *SetDefaultBankCardReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetDefaultBankCardReq.ProtoReflect.Descriptor instead.
+func (*SetDefaultBankCardReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *SetDefaultBankCardReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 设置默认银行卡响应
+type SetDefaultBankCardRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`    // 消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetDefaultBankCardRes) Reset() {
+	*x = SetDefaultBankCardRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetDefaultBankCardRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetDefaultBankCardRes) ProtoMessage() {}
+
+func (x *SetDefaultBankCardRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetDefaultBankCardRes.ProtoReflect.Descriptor instead.
+func (*SetDefaultBankCardRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *SetDefaultBankCardRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SetDefaultBankCardRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_frontend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_frontend_balance_v1_balance_proto_rawDesc = "" +
@@ -1274,7 +1759,38 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x04logo\x18\r \x01(\tR\x04logo\x12\x16\n" +
 	"\x06status\x18\x0e \x01(\x05R\x06status\"H\n" +
 	"\x12GetWithdrawListRes\x122\n" +
-	"\x04list\x18\x01 \x03(\v2\x1e.frontend_balance.WithdrawInfoR\x04list2\xac\x06\n" +
+	"\x04list\x18\x01 \x03(\v2\x1e.frontend_balance.WithdrawInfoR\x04list\"\x7f\n" +
+	"\x0eAddBankCardReq\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\x05R\x04type\x12!\n" +
+	"\fcard_account\x18\x02 \x01(\tR\vcardAccount\x12\x17\n" +
+	"\acard_no\x18\x03 \x01(\tR\x06cardNo\x12\x1d\n" +
+	"\n" +
+	"is_default\x18\x04 \x01(\x05R\tisDefault\"D\n" +
+	"\x0eAddBankCardRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x14\n" +
+	"\x12GetBankCardListReq\"\xac\x01\n" +
+	"\fBankCardInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\x05R\x04type\x12!\n" +
+	"\fcard_account\x18\x03 \x01(\tR\vcardAccount\x12\x17\n" +
+	"\acard_no\x18\x04 \x01(\tR\x06cardNo\x12\x1d\n" +
+	"\n" +
+	"is_default\x18\x05 \x01(\x05R\tisDefault\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\"H\n" +
+	"\x12GetBankCardListRes\x122\n" +
+	"\x04list\x18\x01 \x03(\v2\x1e.frontend_balance.BankCardInfoR\x04list\"#\n" +
+	"\x11DeleteBankCardReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"G\n" +
+	"\x11DeleteBankCardRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"'\n" +
+	"\x15SetDefaultBankCardReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"K\n" +
+	"\x15SetDefaultBankCardRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xaa\t\n" +
 	"\aBalance\x12_\n" +
 	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
 	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00\x12Y\n" +
@@ -1283,7 +1799,11 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x11CompensateBalance\x12&.frontend_balance.CompensateBalanceReq\x1a&.frontend_balance.CompensateBalanceRes\"\x00\x12q\n" +
 	"\x15GetLastBalanceLogGame\x12*.frontend_balance.GetLastBalanceLogGameReq\x1a*.frontend_balance.GetLastBalanceLogGameRes\"\x00\x12\\\n" +
 	"\x0eGetPaymentList\x12#.frontend_balance.GetPaymentListReq\x1a#.frontend_balance.GetPaymentListRes\"\x00\x12_\n" +
-	"\x0fGetWithdrawList\x12$.frontend_balance.GetWithdrawListReq\x1a$.frontend_balance.GetWithdrawListRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
+	"\x0fGetWithdrawList\x12$.frontend_balance.GetWithdrawListReq\x1a$.frontend_balance.GetWithdrawListRes\"\x00\x12S\n" +
+	"\vAddBankCard\x12 .frontend_balance.AddBankCardReq\x1a .frontend_balance.AddBankCardRes\"\x00\x12_\n" +
+	"\x0fGetBankCardList\x12$.frontend_balance.GetBankCardListReq\x1a$.frontend_balance.GetBankCardListRes\"\x00\x12\\\n" +
+	"\x0eDeleteBankCard\x12#.frontend_balance.DeleteBankCardReq\x1a#.frontend_balance.DeleteBankCardRes\"\x00\x12h\n" +
+	"\x12SetDefaultBankCard\x12'.frontend_balance.SetDefaultBankCardReq\x1a'.frontend_balance.SetDefaultBankCardRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
 var (
 	file_frontend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -1297,7 +1817,7 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*InitBalanceUserReq)(nil),       // 0: frontend_balance.InitBalanceUserReq
 	(*InitBalanceUserRes)(nil),       // 1: frontend_balance.InitBalanceUserRes
@@ -1317,31 +1837,49 @@ var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*GetWithdrawListReq)(nil),       // 15: frontend_balance.GetWithdrawListReq
 	(*WithdrawInfo)(nil),             // 16: frontend_balance.WithdrawInfo
 	(*GetWithdrawListRes)(nil),       // 17: frontend_balance.GetWithdrawListRes
+	(*AddBankCardReq)(nil),           // 18: frontend_balance.AddBankCardReq
+	(*AddBankCardRes)(nil),           // 19: frontend_balance.AddBankCardRes
+	(*GetBankCardListReq)(nil),       // 20: frontend_balance.GetBankCardListReq
+	(*BankCardInfo)(nil),             // 21: frontend_balance.BankCardInfo
+	(*GetBankCardListRes)(nil),       // 22: frontend_balance.GetBankCardListRes
+	(*DeleteBankCardReq)(nil),        // 23: frontend_balance.DeleteBankCardReq
+	(*DeleteBankCardRes)(nil),        // 24: frontend_balance.DeleteBankCardRes
+	(*SetDefaultBankCardReq)(nil),    // 25: frontend_balance.SetDefaultBankCardReq
+	(*SetDefaultBankCardRes)(nil),    // 26: frontend_balance.SetDefaultBankCardRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	13, // 0: frontend_balance.GetPaymentListRes.list:type_name -> frontend_balance.PaymentInfo
 	16, // 1: frontend_balance.GetWithdrawListRes.list:type_name -> frontend_balance.WithdrawInfo
-	0,  // 2: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
-	2,  // 3: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
-	4,  // 4: frontend_balance.Balance.AdjustBalance:input_type -> frontend_balance.AdjustBalanceReq
-	6,  // 5: frontend_balance.Balance.UpdateTransferStatus:input_type -> frontend_balance.UpdateTransferStatusReq
-	8,  // 6: frontend_balance.Balance.CompensateBalance:input_type -> frontend_balance.CompensateBalanceReq
-	10, // 7: frontend_balance.Balance.GetLastBalanceLogGame:input_type -> frontend_balance.GetLastBalanceLogGameReq
-	12, // 8: frontend_balance.Balance.GetPaymentList:input_type -> frontend_balance.GetPaymentListReq
-	15, // 9: frontend_balance.Balance.GetWithdrawList:input_type -> frontend_balance.GetWithdrawListReq
-	1,  // 10: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	3,  // 11: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
-	5,  // 12: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
-	7,  // 13: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
-	9,  // 14: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
-	11, // 15: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
-	14, // 16: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
-	17, // 17: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
-	10, // [10:18] is the sub-list for method output_type
-	2,  // [2:10] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	21, // 2: frontend_balance.GetBankCardListRes.list:type_name -> frontend_balance.BankCardInfo
+	0,  // 3: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
+	2,  // 4: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
+	4,  // 5: frontend_balance.Balance.AdjustBalance:input_type -> frontend_balance.AdjustBalanceReq
+	6,  // 6: frontend_balance.Balance.UpdateTransferStatus:input_type -> frontend_balance.UpdateTransferStatusReq
+	8,  // 7: frontend_balance.Balance.CompensateBalance:input_type -> frontend_balance.CompensateBalanceReq
+	10, // 8: frontend_balance.Balance.GetLastBalanceLogGame:input_type -> frontend_balance.GetLastBalanceLogGameReq
+	12, // 9: frontend_balance.Balance.GetPaymentList:input_type -> frontend_balance.GetPaymentListReq
+	15, // 10: frontend_balance.Balance.GetWithdrawList:input_type -> frontend_balance.GetWithdrawListReq
+	18, // 11: frontend_balance.Balance.AddBankCard:input_type -> frontend_balance.AddBankCardReq
+	20, // 12: frontend_balance.Balance.GetBankCardList:input_type -> frontend_balance.GetBankCardListReq
+	23, // 13: frontend_balance.Balance.DeleteBankCard:input_type -> frontend_balance.DeleteBankCardReq
+	25, // 14: frontend_balance.Balance.SetDefaultBankCard:input_type -> frontend_balance.SetDefaultBankCardReq
+	1,  // 15: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3,  // 16: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	5,  // 17: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
+	7,  // 18: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
+	9,  // 19: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
+	11, // 20: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
+	14, // 21: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
+	17, // 22: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
+	19, // 23: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
+	22, // 24: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
+	24, // 25: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
+	26, // 26: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
+	15, // [15:27] is the sub-list for method output_type
+	3,  // [3:15] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_frontend_balance_v1_balance_proto_init() }
@@ -1355,7 +1893,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
