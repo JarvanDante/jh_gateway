@@ -197,6 +197,8 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/deposit-nonce", "GET", balance.CallGetDepositNonce)
 	balanceRoutes.Register("/withdraw-nonce", "GET", balance.CallGetWithdrawNonce)
 	balanceRoutes.Register("/deposit-order", "POST", balance.CallCreateDepositOrder)
+	// 账户明细
+	balanceRoutes.Register("/balance-log", "GET", balance.CallGetBalanceLog)
 
 	// 后台接口
 	// 账变记录

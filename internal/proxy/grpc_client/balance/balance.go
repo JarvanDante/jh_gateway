@@ -1576,3 +1576,91 @@ func CallCreateDepositOrder(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	})
 	return nil
 }
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title 获取账户明细
+ * @description 获取账户明细列表
+ * @method get
+ * @url /api/frontend/balance/balance-log
+ * @header Authorization 必选 string Bearer {token}
+ * @param start 必选 string 开始时间(格式:2024-01-01 00:00:00)
+ * @param end 必选 string 结束时间(格式:2024-01-01 23:59:59)
+ * @param type 可选 int 类型(0=全部,1=充值,2=提款,3=红利,4=返水,5=转账)
+ * @param status 可选 int 状态(0=全部,1=待处理,2=成功,3=失败)
+ * @param page 可选 int 页码(默认1)
+ * @param size 可选 int 每页数量(默认20)
+ * @return {"code":0,"msg":"success","data":{"total_recharge":1000.00,"total_withdraw":200.00,"total_bonus":50.00,"total_rebate":10.50,"list":[{"channel":"KBZ","change_type":1,"trade_no":"ZF0131220145123456","money":100.00,"remark":"充值","type":1,"symbol":"+","status":2,"time":"2024-01-01 12:00:00"}],"count":10}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.total_recharge float 充值总计
+ * @return_param data.total_withdraw float 提现总计
+ * @return_param data.total_bonus float 红利总计
+ * @return_param data.total_rebate float 返水总计
+ * @return_param data.list array 明细列表
+ * @return_param data.list.channel string 渠道名称
+ * @return_param data.list.change_type int 交易类型(1=转入,2=转出)
+ * @return_param data.list.trade_no string 订单号
+ * @return_param data.list.money float 金额
+ * @return_param data.list.remark string 备注
+ * @return_param data.list.type int 类型(1=充值,2=提款,3=红利,4=返水,5=转账)
+ * @return_param data.list.symbol string 符号(+或-)
+ * @return_param data.list.status int 状态(1=待处理,2=成功,3=失败)
+ * @return_param data.list.time string 时间
+ * @return_param data.count int 总数
+ * @remark 查询用户账户明细记录
+ * @number 117
+ */
+func CallGetBalanceLog(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetBalanceLog")
+
+	client := v17.NewBalanceClient(conn)
+
+	var req v17.GetBalanceLogReq
+	if err := r.Parse(&req); err != nil {
+		util.LogWithTrace(ctx, "error", "参数解析失败: %v", err)
+		util.WriteInternalError(r, "参数解析失败")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "GetBalanceLog request: start=%s, end=%s, type=%d, status=%d, page=%d, size=%d",
+		req.Start, req.End, req.Type, req.Status, req.Page, req.Size)
+
+	res, err := client.GetBalanceLog(ctx, &req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "GetBalanceLog failed: %v", err)
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "GetBalanceLog response: count=%d", res.Count)
+
+	// 转换列表数据
+	list := make([]map[string]interface{}, 0, len(res.List))
+	for _, item := range res.List {
+		list = append(list, map[string]interface{}{
+			"channel":     item.Channel,
+			"change_type": item.ChangeType,
+			"trade_no":    item.TradeNo,
+			"money":       item.Money,
+			"remark":      item.Remark,
+			"type":        item.Type,
+			"symbol":      item.Symbol,
+			"status":      item.Status,
+			"time":        item.Time,
+		})
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"total_recharge": res.TotalRecharge,
+		"total_withdraw": res.TotalWithdraw,
+		"total_bonus":    res.TotalBonus,
+		"total_rebate":   res.TotalRebate,
+		"list":           list,
+		"count":          res.Count,
+	})
+	return nil
+}
