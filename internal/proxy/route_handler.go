@@ -196,6 +196,7 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/set-default-bank-card", "POST", balance.CallSetDefaultBankCard)
 	balanceRoutes.Register("/deposit-nonce", "GET", balance.CallGetDepositNonce)
 	balanceRoutes.Register("/withdraw-nonce", "GET", balance.CallGetWithdrawNonce)
+	balanceRoutes.Register("/deposit-order", "POST", balance.CallCreateDepositOrder)
 
 	// 后台接口
 	// 账变记录

@@ -8,7 +8,6 @@ package v1
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -34,6 +33,7 @@ const (
 	Balance_SetDefaultBankCard_FullMethodName    = "/frontend_balance.Balance/SetDefaultBankCard"
 	Balance_GetDepositNonce_FullMethodName       = "/frontend_balance.Balance/GetDepositNonce"
 	Balance_GetWithdrawNonce_FullMethodName      = "/frontend_balance.Balance/GetWithdrawNonce"
+	Balance_CreateDepositOrder_FullMethodName    = "/frontend_balance.Balance/CreateDepositOrder"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -68,6 +68,8 @@ type BalanceClient interface {
 	GetDepositNonce(ctx context.Context, in *GetDepositNonceReq, opts ...grpc.CallOption) (*GetDepositNonceRes, error)
 	// 获取提现 nonce
 	GetWithdrawNonce(ctx context.Context, in *GetWithdrawNonceReq, opts ...grpc.CallOption) (*GetWithdrawNonceRes, error)
+	// 创建充值订单
+	CreateDepositOrder(ctx context.Context, in *CreateDepositOrderReq, opts ...grpc.CallOption) (*CreateDepositOrderRes, error)
 }
 
 type balanceClient struct {
@@ -218,6 +220,16 @@ func (c *balanceClient) GetWithdrawNonce(ctx context.Context, in *GetWithdrawNon
 	return out, nil
 }
 
+func (c *balanceClient) CreateDepositOrder(ctx context.Context, in *CreateDepositOrderReq, opts ...grpc.CallOption) (*CreateDepositOrderRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateDepositOrderRes)
+	err := c.cc.Invoke(ctx, Balance_CreateDepositOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -250,6 +262,8 @@ type BalanceServer interface {
 	GetDepositNonce(context.Context, *GetDepositNonceReq) (*GetDepositNonceRes, error)
 	// 获取提现 nonce
 	GetWithdrawNonce(context.Context, *GetWithdrawNonceReq) (*GetWithdrawNonceRes, error)
+	// 创建充值订单
+	CreateDepositOrder(context.Context, *CreateDepositOrderReq) (*CreateDepositOrderRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -301,6 +315,9 @@ func (UnimplementedBalanceServer) GetDepositNonce(context.Context, *GetDepositNo
 }
 func (UnimplementedBalanceServer) GetWithdrawNonce(context.Context, *GetWithdrawNonceReq) (*GetWithdrawNonceRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetWithdrawNonce not implemented")
+}
+func (UnimplementedBalanceServer) CreateDepositOrder(context.Context, *CreateDepositOrderReq) (*CreateDepositOrderRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateDepositOrder not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -575,6 +592,24 @@ func _Balance_GetWithdrawNonce_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_CreateDepositOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDepositOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).CreateDepositOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_CreateDepositOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).CreateDepositOrder(ctx, req.(*CreateDepositOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -637,6 +672,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWithdrawNonce",
 			Handler:    _Balance_GetWithdrawNonce_Handler,
+		},
+		{
+			MethodName: "CreateDepositOrder",
+			Handler:    _Balance_CreateDepositOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

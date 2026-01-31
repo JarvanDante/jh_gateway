@@ -1510,3 +1510,69 @@ func CallGetWithdrawNonce(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	})
 	return nil
 }
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title 创建充值订单
+ * @description 创建充值订单接口
+ * @method post
+ * @url /api/frontend/balance/deposit-order
+ * @header Authorization 必选 string Bearer {token}
+ * @param payment_id 必选 int 支付方式ID
+ * @param money 必选 float 充值金额
+ * @param order_type 可选 string 订单类型(deposit=充值,withdraw=提现),默认deposit
+ * @param user_card_no 可选 string 用户银行卡号
+ * @param user_card_name 可选 string 用户银行卡姓名
+ * @param nonce 必选 string 防重放随机数
+ * @param bank_code 可选 string 银行代码
+ * @param mobile 可选 int 是否手机端(1=是,0=否)
+ * @return {"code":0,"msg":"success","data":{"order_sn":"ZF0131220145123456","sys_trade_no":"sys_7255ac6c-a38f-40f5-bf2f-f9f19745d877","channel_card_no":"09678682672","channel_name":"KBZ","image_url":"https://img.okszckoo.com/upload/images/202502/c18cd50f-1025-48dd-af55-c5d49a819cc5.jpg","result":"ok"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.order_sn string 系统订单号
+ * @return_param data.sys_trade_no string 平台交易流水号
+ * @return_param data.channel_card_no string 收款卡号
+ * @return_param data.channel_name string 渠道名称
+ * @return_param data.image_url string 支付引导图
+ * @return_param data.result string 返回信息
+ * @remark 创建充值订单，需要先调用deposit-nonce获取nonce
+ * @number 116
+ */
+func CallCreateDepositOrder(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC CreateDepositOrder")
+
+	client := v17.NewBalanceClient(conn)
+
+	var req v17.CreateDepositOrderReq
+	if err := r.Parse(&req); err != nil {
+		util.LogWithTrace(ctx, "error", "参数解析失败: %v", err)
+		util.WriteInternalError(r, "参数解析失败")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "CreateDepositOrder request: payment_id=%d, money=%.2f, nonce=%s",
+		req.PaymentId, req.Money, req.Nonce)
+
+	res, err := client.CreateDepositOrder(ctx, &req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "CreateDepositOrder failed: %v", err)
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "CreateDepositOrder response: order_sn=%s, sys_trade_no=%s",
+		res.OrderSn, res.SysTradeNo)
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"order_sn":        res.OrderSn,
+		"sys_trade_no":    res.SysTradeNo,
+		"channel_card_no": res.ChannelCardNo,
+		"channel_name":    res.ChannelName,
+		"image_url":       res.ImageUrl,
+		"result":          res.Result,
+	})
+	return nil
+}
