@@ -1618,11 +1618,14 @@ func CallGetBalanceLog(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 
 	client := v17.NewBalanceClient(conn)
 
-	var req v17.GetBalanceLogReq
-	if err := r.Parse(&req); err != nil {
-		util.LogWithTrace(ctx, "error", "参数解析失败: %v", err)
-		util.WriteInternalError(r, "参数解析失败")
-		return nil
+	// 从 query 参数中获取数据
+	req := v17.GetBalanceLogReq{
+		Start:  r.Get("start").String(),
+		End:    r.Get("end").String(),
+		Type:   r.Get("type").Int32(),
+		Status: r.Get("status").Int32(),
+		Page:   r.Get("page").Int32(),
+		Size:   r.Get("size").Int32(),
 	}
 
 	util.LogWithTrace(ctx, "info", "GetBalanceLog request: start=%s, end=%s, type=%d, status=%d, page=%d, size=%d",
