@@ -1428,3 +1428,85 @@ func CallSetDefaultBankCard(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	})
 	return nil
 }
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title 获取充值 nonce
+ * @description 获取充值防重放攻击的随机数
+ * @method get
+ * @url /api/frontend/balance/deposit-nonce
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"nonce":"550e8400-e29b-41d4-a716-446655440000","timestamp":1640000000,"expires_in":60}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.nonce string 随机数（UUID格式）
+ * @return_param data.timestamp int 时间戳
+ * @return_param data.expires_in int 过期时间（秒）
+ * @remark 用于防止充值请求的重复提交和重放攻击，nonce有效期60秒
+ * @number 114
+ */
+func CallGetDepositNonce(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetDepositNonce")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetDepositNonceReq{}
+
+	res, err := client.GetDepositNonce(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "GetDepositNonce response: nonce=%s, timestamp=%d, expires_in=%d", res.Nonce, res.Timestamp, res.ExpiresIn)
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"nonce":      res.Nonce,
+		"timestamp":  res.Timestamp,
+		"expires_in": res.ExpiresIn,
+	})
+	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title 获取提现 nonce
+ * @description 获取提现防重放攻击的随机数
+ * @method get
+ * @url /api/frontend/balance/withdraw-nonce
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"nonce":"550e8400-e29b-41d4-a716-446655440000","timestamp":1640000000,"expires_in":60}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.nonce string 随机数（UUID格式）
+ * @return_param data.timestamp int 时间戳
+ * @return_param data.expires_in int 过期时间（秒）
+ * @remark 用于防止提现请求的重复提交和重放攻击，nonce有效期60秒
+ * @number 115
+ */
+func CallGetWithdrawNonce(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetWithdrawNonce")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetWithdrawNonceReq{}
+
+	res, err := client.GetWithdrawNonce(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "GetWithdrawNonce response: nonce=%s, timestamp=%d, expires_in=%d", res.Nonce, res.Timestamp, res.ExpiresIn)
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"nonce":      res.Nonce,
+		"timestamp":  res.Timestamp,
+		"expires_in": res.ExpiresIn,
+	})
+	return nil
+}
