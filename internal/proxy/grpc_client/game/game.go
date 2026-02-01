@@ -622,3 +622,40 @@ func CallGetGamePlatforms(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/游戏/游戏管理
+ * @title 一键回收游戏余额
+ * @description 一键回收三方游戏余额到中心钱包（站点ID和用户ID从token中获取）
+ * @method post
+ * @url /api/game/recall-balance
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"回收成功","recalled_amount":100.50,"game_id":1,"game_name":"ONE游戏"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 返回消息
+ * @return_param data.recalled_amount float 回收的金额
+ * @return_param data.game_id int 回收的游戏ID
+ * @return_param data.game_name string 回收的游戏名称
+ * @number 10
+ */
+func CallRecallGameBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game RecallGameBalance")
+
+	req := &v20.RecallGameBalanceReq{}
+
+	client := v20.NewGameClient(conn)
+	res, err := client.RecallGameBalance(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game RecallGameBalance failed: %v", err)
+		util.WriteInternalError(r, "回收游戏余额失败，请稍后重试")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "一键回收游戏余额完成: success=%v, message=%s, amount=%.2f, game_id=%d",
+		res.Success, res.Message, res.RecalledAmount, res.GameId)
+
+	return writeProtobufResponse(ctx, r, res)
+}

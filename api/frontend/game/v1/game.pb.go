@@ -614,6 +614,222 @@ func (x *GameItem) GetGameId() int32 {
 	return 0
 }
 
+type GetGameBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"` // 游戏ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGameBalanceReq) Reset() {
+	*x = GetGameBalanceReq{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGameBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGameBalanceReq) ProtoMessage() {}
+
+func (x *GetGameBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGameBalanceReq.ProtoReflect.Descriptor instead.
+func (*GetGameBalanceReq) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetGameBalanceReq) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
+type GetGameBalanceRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Balance       float64                `protobuf:"fixed64,1,opt,name=balance,proto3" json:"balance" dc:"游戏余额（使用double保持精度）"` // 游戏余额（使用double保持精度）
+	Success       bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success" dc:"是否成功"`                // 是否成功
+	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message" dc:"消息"`                   // 消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGameBalanceRes) Reset() {
+	*x = GetGameBalanceRes{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGameBalanceRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGameBalanceRes) ProtoMessage() {}
+
+func (x *GetGameBalanceRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGameBalanceRes.ProtoReflect.Descriptor instead.
+func (*GetGameBalanceRes) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetGameBalanceRes) GetBalance() float64 {
+	if x != nil {
+		return x.Balance
+	}
+	return 0
+}
+
+func (x *GetGameBalanceRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetGameBalanceRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type RecallGameBalanceReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RecallGameBalanceReq) Reset() {
+	*x = RecallGameBalanceReq{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecallGameBalanceReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecallGameBalanceReq) ProtoMessage() {}
+
+func (x *RecallGameBalanceReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecallGameBalanceReq.ProtoReflect.Descriptor instead.
+func (*RecallGameBalanceReq) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{10}
+}
+
+type RecallGameBalanceRes struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                                     // 是否成功
+	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                                        // 消息
+	RecalledAmount float64                `protobuf:"fixed64,3,opt,name=recalled_amount,json=recalledAmount,proto3" json:"recalled_amount" dc:"回收的金额（使用double保持精度）"` // 回收的金额（使用double保持精度）
+	GameId         int32                  `protobuf:"varint,4,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"回收的游戏ID"`                                      // 回收的游戏ID
+	GameName       string                 `protobuf:"bytes,5,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"回收的游戏名称"`                                 // 回收的游戏名称
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RecallGameBalanceRes) Reset() {
+	*x = RecallGameBalanceRes{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecallGameBalanceRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecallGameBalanceRes) ProtoMessage() {}
+
+func (x *RecallGameBalanceRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecallGameBalanceRes.ProtoReflect.Descriptor instead.
+func (*RecallGameBalanceRes) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RecallGameBalanceRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *RecallGameBalanceRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *RecallGameBalanceRes) GetRecalledAmount() float64 {
+	if x != nil {
+		return x.RecalledAmount
+	}
+	return 0
+}
+
+func (x *RecallGameBalanceRes) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
+func (x *RecallGameBalanceRes) GetGameName() string {
+	if x != nil {
+		return x.GameName
+	}
+	return ""
+}
+
 var File_frontend_game_v1_game_proto protoreflect.FileDescriptor
 
 const file_frontend_game_v1_game_proto_rawDesc = "" +
@@ -669,11 +885,26 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x06is_new\x18\f \x01(\x05R\x05isNew\x12\x16\n" +
 	"\x06status\x18\r \x01(\x05R\x06status\x12\x12\n" +
 	"\x04sort\x18\x0e \x01(\x05R\x04sort\x12\x17\n" +
-	"\agame_id\x18\x0f \x01(\x05R\x06gameId2\xfc\x01\n" +
+	"\agame_id\x18\x0f \x01(\x05R\x06gameId\",\n" +
+	"\x11GetGameBalanceReq\x12\x17\n" +
+	"\agame_id\x18\x01 \x01(\x05R\x06gameId\"a\n" +
+	"\x11GetGameBalanceRes\x12\x18\n" +
+	"\abalance\x18\x01 \x01(\x01R\abalance\x12\x18\n" +
+	"\asuccess\x18\x02 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\"\x16\n" +
+	"\x14RecallGameBalanceReq\"\xa9\x01\n" +
+	"\x14RecallGameBalanceRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12'\n" +
+	"\x0frecalled_amount\x18\x03 \x01(\x01R\x0erecalledAmount\x12\x17\n" +
+	"\agame_id\x18\x04 \x01(\x05R\x06gameId\x12\x1b\n" +
+	"\tgame_name\x18\x05 \x01(\tR\bgameName2\xa9\x03\n" +
 	"\x04Game\x12P\n" +
 	"\x0eRedirectToGame\x12\x1d.front_game.RedirectToGameReq\x1a\x1d.front_game.RedirectToGameRes\"\x00\x12Y\n" +
 	"\x11GetGameCategories\x12 .front_game.GetGameCategoriesReq\x1a .front_game.GetGameCategoriesRes\"\x00\x12G\n" +
-	"\vGetGameList\x12\x1a.front_game.GetGameListReq\x1a\x1a.front_game.GetGameListRes\"\x00B&Z$jh_game_service/api/frontend/game/v1b\x06proto3"
+	"\vGetGameList\x12\x1a.front_game.GetGameListReq\x1a\x1a.front_game.GetGameListRes\"\x00\x12P\n" +
+	"\x0eGetGameBalance\x12\x1d.front_game.GetGameBalanceReq\x1a\x1d.front_game.GetGameBalanceRes\"\x00\x12Y\n" +
+	"\x11RecallGameBalance\x12 .front_game.RecallGameBalanceReq\x1a .front_game.RecallGameBalanceRes\"\x00B&Z$jh_game_service/api/frontend/game/v1b\x06proto3"
 
 var (
 	file_frontend_game_v1_game_proto_rawDescOnce sync.Once
@@ -687,7 +918,7 @@ func file_frontend_game_v1_game_proto_rawDescGZIP() []byte {
 	return file_frontend_game_v1_game_proto_rawDescData
 }
 
-var file_frontend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_frontend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_frontend_game_v1_game_proto_goTypes = []any{
 	(*RedirectToGameReq)(nil),    // 0: front_game.RedirectToGameReq
 	(*RedirectToGameRes)(nil),    // 1: front_game.RedirectToGameRes
@@ -697,21 +928,29 @@ var file_frontend_game_v1_game_proto_goTypes = []any{
 	(*GetGameListReq)(nil),       // 5: front_game.GetGameListReq
 	(*GetGameListRes)(nil),       // 6: front_game.GetGameListRes
 	(*GameItem)(nil),             // 7: front_game.GameItem
+	(*GetGameBalanceReq)(nil),    // 8: front_game.GetGameBalanceReq
+	(*GetGameBalanceRes)(nil),    // 9: front_game.GetGameBalanceRes
+	(*RecallGameBalanceReq)(nil), // 10: front_game.RecallGameBalanceReq
+	(*RecallGameBalanceRes)(nil), // 11: front_game.RecallGameBalanceRes
 }
 var file_frontend_game_v1_game_proto_depIdxs = []int32{
-	4, // 0: front_game.GetGameCategoriesRes.categories:type_name -> front_game.GameCategory
-	7, // 1: front_game.GetGameListRes.list:type_name -> front_game.GameItem
-	0, // 2: front_game.Game.RedirectToGame:input_type -> front_game.RedirectToGameReq
-	2, // 3: front_game.Game.GetGameCategories:input_type -> front_game.GetGameCategoriesReq
-	5, // 4: front_game.Game.GetGameList:input_type -> front_game.GetGameListReq
-	1, // 5: front_game.Game.RedirectToGame:output_type -> front_game.RedirectToGameRes
-	3, // 6: front_game.Game.GetGameCategories:output_type -> front_game.GetGameCategoriesRes
-	6, // 7: front_game.Game.GetGameList:output_type -> front_game.GetGameListRes
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	4,  // 0: front_game.GetGameCategoriesRes.categories:type_name -> front_game.GameCategory
+	7,  // 1: front_game.GetGameListRes.list:type_name -> front_game.GameItem
+	0,  // 2: front_game.Game.RedirectToGame:input_type -> front_game.RedirectToGameReq
+	2,  // 3: front_game.Game.GetGameCategories:input_type -> front_game.GetGameCategoriesReq
+	5,  // 4: front_game.Game.GetGameList:input_type -> front_game.GetGameListReq
+	8,  // 5: front_game.Game.GetGameBalance:input_type -> front_game.GetGameBalanceReq
+	10, // 6: front_game.Game.RecallGameBalance:input_type -> front_game.RecallGameBalanceReq
+	1,  // 7: front_game.Game.RedirectToGame:output_type -> front_game.RedirectToGameRes
+	3,  // 8: front_game.Game.GetGameCategories:output_type -> front_game.GetGameCategoriesRes
+	6,  // 9: front_game.Game.GetGameList:output_type -> front_game.GetGameListRes
+	9,  // 10: front_game.Game.GetGameBalance:output_type -> front_game.GetGameBalanceRes
+	11, // 11: front_game.Game.RecallGameBalance:output_type -> front_game.RecallGameBalanceRes
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_frontend_game_v1_game_proto_init() }
@@ -725,7 +964,7 @@ func file_frontend_game_v1_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_game_v1_game_proto_rawDesc), len(file_frontend_game_v1_game_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

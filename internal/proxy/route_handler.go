@@ -267,6 +267,8 @@ func initGameRoutes() {
 	gameRoutes.Register("/update-game-list-item", "POST", game.CallUpdateBackendGameListItem)
 	// 获取游戏平台列表
 	gameRoutes.Register("/game-platforms", "GET", game.CallGetGamePlatforms)
+	// 一键回收游戏余额
+	gameRoutes.Register("/recall-balance", "POST", game.CallRecallGameBalance)
 }
 
 // initManageRoutes 初始化总后台管理路由
