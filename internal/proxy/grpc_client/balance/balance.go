@@ -1733,8 +1733,9 @@ func CallWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 	// 获取参数
 	money := getFloat64FromMap(reqData, "money")
 	withdrawId := getInt32FromMap(reqData, "withdraw_id")
+	nonce := getStringFromMap(reqData, "nonce")
 
-	util.LogWithTrace(ctx, "info", "解析参数 - money: %.2f, withdraw_id: %d, reqData: %+v", money, withdrawId, reqData)
+	util.LogWithTrace(ctx, "info", "解析参数 - money: %.2f, withdraw_id: %d, nonce: %s, reqData: %+v", money, withdrawId, nonce, reqData)
 
 	if money <= 0 {
 		util.LogWithTrace(ctx, "error", "提现金额无效: %.2f", money)
@@ -1752,9 +1753,10 @@ func CallWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 	req := &v17.WithdrawReq{
 		Money:      money,
 		WithdrawId: withdrawId,
+		Nonce:      nonce,
 	}
 
-	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Money: %.2f, WithdrawId: %d", req.Money, req.WithdrawId)
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Money: %.2f, WithdrawId: %d, Nonce: %s", req.Money, req.WithdrawId, req.Nonce)
 
 	// 调用 gRPC 服务
 	resp, err := client.Withdraw(ctx, req)

@@ -2465,6 +2465,7 @@ type WithdrawReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Money         float64                `protobuf:"fixed64,1,opt,name=money,proto3" json:"money" dc:"提现金额"`                              // 提现金额
 	WithdrawId    int32                  `protobuf:"varint,2,opt,name=withdraw_id,json=withdrawId,proto3" json:"withdraw_id" dc:"提现渠道ID"` // 提现渠道ID
+	Nonce         string                 `protobuf:"bytes,3,opt,name=nonce,proto3" json:"nonce" dc:"防重放随机数"`                              // 防重放随机数
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2511,6 +2512,13 @@ func (x *WithdrawReq) GetWithdrawId() int32 {
 		return x.WithdrawId
 	}
 	return 0
+}
+
+func (x *WithdrawReq) GetNonce() string {
+	if x != nil {
+		return x.Nonce
+	}
+	return ""
 }
 
 // 申请提现响应
@@ -2762,11 +2770,12 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x04sign\x18\x04 \x01(\tR\x04sign\"H\n" +
 	"\x12DepositCallbackRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"D\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"Z\n" +
 	"\vWithdrawReq\x12\x14\n" +
 	"\x05money\x18\x01 \x01(\x01R\x05money\x12\x1f\n" +
 	"\vwithdraw_id\x18\x02 \x01(\x05R\n" +
-	"withdrawId\"\\\n" +
+	"withdrawId\x12\x14\n" +
+	"\x05nonce\x18\x03 \x01(\tR\x05nonce\"\\\n" +
 	"\vWithdrawRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
