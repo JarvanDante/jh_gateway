@@ -251,6 +251,7 @@ type AdjustBalanceReq struct {
 	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type" dc:"类型：0=转出(从中心账户转账到游戏账户) 1=转入(从游戏账户转账到中心账户)"` // 类型：0=转出(从中心账户转账到游戏账户) 1=转入(从游戏账户转账到中心账户)
 	GameName      string                 `protobuf:"bytes,5,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"游戏名称"`              // 游戏名称
 	GameId        string                 `protobuf:"bytes,6,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"`                    // 游戏ID
+	GameKey       string                 `protobuf:"bytes,7,opt,name=game_key,json=gameKey,proto3" json:"game_key" dc:"游戏key（进入游戏时的key）"`     // 游戏key（进入游戏时的key）
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -323,6 +324,13 @@ func (x *AdjustBalanceReq) GetGameName() string {
 func (x *AdjustBalanceReq) GetGameId() string {
 	if x != nil {
 		return x.GameId
+	}
+	return ""
+}
+
+func (x *AdjustBalanceReq) GetGameKey() string {
+	if x != nil {
+		return x.GameKey
 	}
 	return ""
 }
@@ -2452,6 +2460,120 @@ func (x *DepositCallbackRes) GetMessage() string {
 	return ""
 }
 
+// 申请提现请求
+type WithdrawReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Money         float64                `protobuf:"fixed64,1,opt,name=money,proto3" json:"money" dc:"提现金额"`                              // 提现金额
+	WithdrawId    int32                  `protobuf:"varint,2,opt,name=withdraw_id,json=withdrawId,proto3" json:"withdraw_id" dc:"提现渠道ID"` // 提现渠道ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WithdrawReq) Reset() {
+	*x = WithdrawReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WithdrawReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WithdrawReq) ProtoMessage() {}
+
+func (x *WithdrawReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WithdrawReq.ProtoReflect.Descriptor instead.
+func (*WithdrawReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *WithdrawReq) GetMoney() float64 {
+	if x != nil {
+		return x.Money
+	}
+	return 0
+}
+
+func (x *WithdrawReq) GetWithdrawId() int32 {
+	if x != nil {
+		return x.WithdrawId
+	}
+	return 0
+}
+
+// 申请提现响应
+type WithdrawRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`              // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                 // 消息
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"订单号"` // 订单号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WithdrawRes) Reset() {
+	*x = WithdrawRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WithdrawRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WithdrawRes) ProtoMessage() {}
+
+func (x *WithdrawRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WithdrawRes.ProtoReflect.Descriptor instead.
+func (*WithdrawRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *WithdrawRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *WithdrawRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *WithdrawRes) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
 var File_frontend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_frontend_balance_v1_balance_proto_rawDesc = "" +
@@ -2469,14 +2591,15 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x11RefreshBalanceRes\x12\x18\n" +
 	"\abalance\x18\x01 \x01(\tR\abalance\x12%\n" +
 	"\x0ebalance_frozen\x18\x02 \x01(\tR\rbalanceFrozen\x12\x16\n" +
-	"\x06points\x18\x03 \x01(\x03R\x06points\"\xa6\x01\n" +
+	"\x06points\x18\x03 \x01(\x03R\x06points\"\xc1\x01\n" +
 	"\x10AdjustBalanceReq\x12\x17\n" +
 	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x16\n" +
 	"\x06amount\x18\x03 \x01(\x02R\x06amount\x12\x12\n" +
 	"\x04type\x18\x04 \x01(\x05R\x04type\x12\x1b\n" +
 	"\tgame_name\x18\x05 \x01(\tR\bgameName\x12\x17\n" +
-	"\agame_id\x18\x06 \x01(\tR\x06gameId\"{\n" +
+	"\agame_id\x18\x06 \x01(\tR\x06gameId\x12\x19\n" +
+	"\bgame_key\x18\a \x01(\tR\agameKey\"{\n" +
 	"\x10AdjustBalanceRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\x18\n" +
@@ -2639,7 +2762,15 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x04sign\x18\x04 \x01(\tR\x04sign\"H\n" +
 	"\x12DepositCallbackRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\x95\r\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"D\n" +
+	"\vWithdrawReq\x12\x14\n" +
+	"\x05money\x18\x01 \x01(\x01R\x05money\x12\x1f\n" +
+	"\vwithdraw_id\x18\x02 \x01(\x05R\n" +
+	"withdrawId\"\\\n" +
+	"\vWithdrawRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo2\xe1\r\n" +
 	"\aBalance\x12_\n" +
 	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
 	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00\x12Y\n" +
@@ -2657,7 +2788,8 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x10GetWithdrawNonce\x12%.frontend_balance.GetWithdrawNonceReq\x1a%.frontend_balance.GetWithdrawNonceRes\"\x00\x12h\n" +
 	"\x12CreateDepositOrder\x12'.frontend_balance.CreateDepositOrderReq\x1a'.frontend_balance.CreateDepositOrderRes\"\x00\x12Y\n" +
 	"\rGetBalanceLog\x12\".frontend_balance.GetBalanceLogReq\x1a\".frontend_balance.GetBalanceLogRes\"\x00\x12_\n" +
-	"\x0fDepositCallback\x12$.frontend_balance.DepositCallbackReq\x1a$.frontend_balance.DepositCallbackRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
+	"\x0fDepositCallback\x12$.frontend_balance.DepositCallbackReq\x1a$.frontend_balance.DepositCallbackRes\"\x00\x12J\n" +
+	"\bWithdraw\x12\x1d.frontend_balance.WithdrawReq\x1a\x1d.frontend_balance.WithdrawRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
 var (
 	file_frontend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -2671,7 +2803,7 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*InitBalanceUserReq)(nil),       // 0: frontend_balance.InitBalanceUserReq
 	(*InitBalanceUserRes)(nil),       // 1: frontend_balance.InitBalanceUserRes
@@ -2711,6 +2843,8 @@ var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*GetBalanceLogRes)(nil),         // 35: frontend_balance.GetBalanceLogRes
 	(*DepositCallbackReq)(nil),       // 36: frontend_balance.DepositCallbackReq
 	(*DepositCallbackRes)(nil),       // 37: frontend_balance.DepositCallbackRes
+	(*WithdrawReq)(nil),              // 38: frontend_balance.WithdrawReq
+	(*WithdrawRes)(nil),              // 39: frontend_balance.WithdrawRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	13, // 0: frontend_balance.GetPaymentListRes.list:type_name -> frontend_balance.PaymentInfo
@@ -2734,25 +2868,27 @@ var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	31, // 18: frontend_balance.Balance.CreateDepositOrder:input_type -> frontend_balance.CreateDepositOrderReq
 	33, // 19: frontend_balance.Balance.GetBalanceLog:input_type -> frontend_balance.GetBalanceLogReq
 	36, // 20: frontend_balance.Balance.DepositCallback:input_type -> frontend_balance.DepositCallbackReq
-	1,  // 21: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	3,  // 22: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
-	5,  // 23: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
-	7,  // 24: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
-	9,  // 25: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
-	11, // 26: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
-	14, // 27: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
-	17, // 28: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
-	19, // 29: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
-	22, // 30: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
-	24, // 31: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
-	26, // 32: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
-	28, // 33: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
-	30, // 34: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
-	32, // 35: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
-	35, // 36: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
-	37, // 37: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
-	21, // [21:38] is the sub-list for method output_type
-	4,  // [4:21] is the sub-list for method input_type
+	38, // 21: frontend_balance.Balance.Withdraw:input_type -> frontend_balance.WithdrawReq
+	1,  // 22: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3,  // 23: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	5,  // 24: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
+	7,  // 25: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
+	9,  // 26: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
+	11, // 27: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
+	14, // 28: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
+	17, // 29: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
+	19, // 30: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
+	22, // 31: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
+	24, // 32: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
+	26, // 33: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
+	28, // 34: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
+	30, // 35: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
+	32, // 36: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
+	35, // 37: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
+	37, // 38: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
+	39, // 39: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
+	22, // [22:40] is the sub-list for method output_type
+	4,  // [4:22] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -2769,7 +2905,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   38,
+			NumMessages:   40,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

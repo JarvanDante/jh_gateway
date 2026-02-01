@@ -201,6 +201,8 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/balance-log", "GET", balance.CallGetBalanceLog)
 	// 充值异步回调
 	balanceRoutes.Register("/deposit-callback", "POST", balance.CallDepositCallback)
+	// 申请提现
+	balanceRoutes.Register("/withdraw", "POST", balance.CallWithdraw)
 
 	// 后台接口
 	// 账变记录

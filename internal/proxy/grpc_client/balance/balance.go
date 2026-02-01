@@ -1718,3 +1718,52 @@ func CallDepositCallback(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	})
 	return nil
 }
+
+// CallWithdraw 申请提现
+func CallWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Withdraw")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	// 获取参数
+	money := getFloat64FromMap(reqData, "money")
+	withdrawId := getInt32FromMap(reqData, "withdraw_id")
+
+	util.LogWithTrace(ctx, "info", "解析参数 - money: %.2f, withdraw_id: %d, reqData: %+v", money, withdrawId, reqData)
+
+	if money <= 0 {
+		util.LogWithTrace(ctx, "error", "提现金额无效: %.2f", money)
+		util.WriteBadRequest(r, "提现金额必须大于0")
+		return nil
+	}
+
+	if withdrawId <= 0 {
+		util.WriteBadRequest(r, "请选择提现渠道")
+		return nil
+	}
+
+	// 创建 gRPC 客户端
+	client := v17.NewBalanceClient(conn)
+	req := &v17.WithdrawReq{
+		Money:      money,
+		WithdrawId: withdrawId,
+	}
+
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - Money: %.2f, WithdrawId: %d", req.Money, req.WithdrawId)
+
+	// 调用 gRPC 服务
+	resp, err := client.Withdraw(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "申请提现失败，请稍后重试")
+		return nil
+	}
+
+	// 使用统一的protobuf响应序列化
+	return writeProtobufResponse(ctx, r, resp)
+}
