@@ -1667,3 +1667,54 @@ func CallGetBalanceLog(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	})
 	return nil
 }
+
+/**
+ * @catalog 前台接口/余额模块
+ * @title 充值异步回调
+ * @description 充值异步回调接口
+ * @method post
+ * @url /api/frontend/balance/deposit-callback
+ * @param trade_status 必选 string 交易状态(success:成功,failed:失败,wait:处理中,cancel:取消)
+ * @param order_sn 必选 string 订单号
+ * @param actual_amount 必选 number 实际支付金额
+ * @param sign 可选 string 签名
+ * @return {"code":200,"msg":"success","data":{"success":true,"message":"支付成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示信息
+ * @return_param data object 返回数据
+ * @return_param data.success bool 是否成功
+ * @return_param data.message string 消息
+ * @remark 此接口用于第三方支付平台异步通知充值结果
+ * @number 99
+ */
+func CallDepositCallback(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC DepositCallback")
+
+	client := v17.NewBalanceClient(conn)
+
+	var req v17.DepositCallbackReq
+	if err := r.Parse(&req); err != nil {
+		util.LogWithTrace(ctx, "error", "参数解析失败: %v", err)
+		util.WriteInternalError(r, "参数解析失败")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "DepositCallback request: trade_status=%s, order_sn=%s, actual_amount=%.2f",
+		req.TradeStatus, req.OrderSn, req.ActualAmount)
+
+	res, err := client.DepositCallback(ctx, &req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "DepositCallback failed: %v", err)
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "DepositCallback response: success=%v, message=%s", res.Success, res.Message)
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"success": res.Success,
+		"message": res.Message,
+	})
+	return nil
+}

@@ -36,6 +36,7 @@ const (
 	Balance_GetWithdrawNonce_FullMethodName      = "/frontend_balance.Balance/GetWithdrawNonce"
 	Balance_CreateDepositOrder_FullMethodName    = "/frontend_balance.Balance/CreateDepositOrder"
 	Balance_GetBalanceLog_FullMethodName         = "/frontend_balance.Balance/GetBalanceLog"
+	Balance_DepositCallback_FullMethodName       = "/frontend_balance.Balance/DepositCallback"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -74,6 +75,8 @@ type BalanceClient interface {
 	CreateDepositOrder(ctx context.Context, in *CreateDepositOrderReq, opts ...grpc.CallOption) (*CreateDepositOrderRes, error)
 	// 获取账户明细
 	GetBalanceLog(ctx context.Context, in *GetBalanceLogReq, opts ...grpc.CallOption) (*GetBalanceLogRes, error)
+	// 充值异步回调
+	DepositCallback(ctx context.Context, in *DepositCallbackReq, opts ...grpc.CallOption) (*DepositCallbackRes, error)
 }
 
 type balanceClient struct {
@@ -244,6 +247,16 @@ func (c *balanceClient) GetBalanceLog(ctx context.Context, in *GetBalanceLogReq,
 	return out, nil
 }
 
+func (c *balanceClient) DepositCallback(ctx context.Context, in *DepositCallbackReq, opts ...grpc.CallOption) (*DepositCallbackRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DepositCallbackRes)
+	err := c.cc.Invoke(ctx, Balance_DepositCallback_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -280,6 +293,8 @@ type BalanceServer interface {
 	CreateDepositOrder(context.Context, *CreateDepositOrderReq) (*CreateDepositOrderRes, error)
 	// 获取账户明细
 	GetBalanceLog(context.Context, *GetBalanceLogReq) (*GetBalanceLogRes, error)
+	// 充值异步回调
+	DepositCallback(context.Context, *DepositCallbackReq) (*DepositCallbackRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -337,6 +352,9 @@ func (UnimplementedBalanceServer) CreateDepositOrder(context.Context, *CreateDep
 }
 func (UnimplementedBalanceServer) GetBalanceLog(context.Context, *GetBalanceLogReq) (*GetBalanceLogRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBalanceLog not implemented")
+}
+func (UnimplementedBalanceServer) DepositCallback(context.Context, *DepositCallbackReq) (*DepositCallbackRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method DepositCallback not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -647,6 +665,24 @@ func _Balance_GetBalanceLog_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_DepositCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DepositCallbackReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).DepositCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_DepositCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).DepositCallback(ctx, req.(*DepositCallbackReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -717,6 +753,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBalanceLog",
 			Handler:    _Balance_GetBalanceLog_Handler,
+		},
+		{
+			MethodName: "DepositCallback",
+			Handler:    _Balance_DepositCallback_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
