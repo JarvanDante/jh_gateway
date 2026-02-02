@@ -1796,29 +1796,39 @@ func (x *GetWithdrawReviewReq) GetId() int64 {
 
 // 提现审核信息
 type WithdrawReviewInfo struct {
-	state       protoimpl.MessageState `protogen:"open.v1"`
-	Id          int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                       // ID
-	UserId      int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`               // 用户ID
-	Username    string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                           // 用户名
-	TradeNo     string                 `protobuf:"bytes,4,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`              // 流水号
-	Money       float64                `protobuf:"fixed64,5,opt,name=money,proto3" json:"money" dc:"提现金额"`                              // 提现金额
-	Fee         float64                `protobuf:"fixed64,6,opt,name=fee,proto3" json:"fee" dc:"手续费"`                                   // 手续费
-	BankName    string                 `protobuf:"bytes,7,opt,name=bank_name,json=bankName,proto3" json:"bank_name" dc:"银行名称"`          // 银行名称
-	CardAccount string                 `protobuf:"bytes,8,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"银行户名"` // 银行户名
-	CardNo      string                 `protobuf:"bytes,9,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"卡号"`                  // 卡号
-	DepositBank string                 `protobuf:"bytes,10,opt,name=deposit_bank,json=depositBank,proto3" json:"deposit_bank" dc:"开户行"` // 开户行
-	Status      int32                  `protobuf:"varint,11,opt,name=status,proto3" json:"status" dc:"状态"`                              // 状态
-	Remark      string                 `protobuf:"bytes,12,opt,name=remark,proto3" json:"remark" dc:"备注"`                               // 备注
-	CreatedAt   string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`      // 创建时间
-	// 用户信息
-	UserRealname      string  `protobuf:"bytes,14,opt,name=user_realname,json=userRealname,proto3" json:"user_realname" dc:"用户信息用户真实姓名"`                // 用户真实姓名
-	UserMobile        string  `protobuf:"bytes,15,opt,name=user_mobile,json=userMobile,proto3" json:"user_mobile" dc:"用户手机号"`                           // 用户手机号
-	UserBalance       float64 `protobuf:"fixed64,16,opt,name=user_balance,json=userBalance,proto3" json:"user_balance" dc:"用户余额"`                       // 用户余额
-	UserBalanceFrozen float64 `protobuf:"fixed64,17,opt,name=user_balance_frozen,json=userBalanceFrozen,proto3" json:"user_balance_frozen" dc:"用户冻结余额"` // 用户冻结余额
-	// 统计信息
-	TotalRecharge float64 `protobuf:"fixed64,18,opt,name=total_recharge,json=totalRecharge,proto3" json:"total_recharge" dc:"统计信息总充值"` // 总充值
-	TotalWithdraw float64 `protobuf:"fixed64,19,opt,name=total_withdraw,json=totalWithdraw,proto3" json:"total_withdraw" dc:"总提现"`     // 总提现
-	WithdrawCount int32   `protobuf:"varint,20,opt,name=withdraw_count,json=withdrawCount,proto3" json:"withdraw_count" dc:"提现次数"`     // 提现次数
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ========== 第一块：提现核心信息 ==========
+	UserId         int32   `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"========== 第一块：提现核心信息 ==========用户ID"` // 用户ID
+	Username       string  `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                             // 用户名
+	WithdrawAmount float64 `protobuf:"fixed64,3,opt,name=withdraw_amount,json=withdrawAmount,proto3" json:"withdraw_amount" dc:"本次提现金额"`      // 本次提现金额
+	BankCardMasked string  `protobuf:"bytes,4,opt,name=bank_card_masked,json=bankCardMasked,proto3" json:"bank_card_masked" dc:"银行卡（脱敏）"`     // 银行卡（脱敏）
+	ApplyTime      string  `protobuf:"bytes,5,opt,name=apply_time,json=applyTime,proto3" json:"apply_time" dc:"申请时间"`                         // 申请时间
+	CurrentBalance float64 `protobuf:"fixed64,6,opt,name=current_balance,json=currentBalance,proto3" json:"current_balance" dc:"当前余额"`        // 当前余额
+	FrozenBalance  float64 `protobuf:"fixed64,7,opt,name=frozen_balance,json=frozenBalance,proto3" json:"frozen_balance" dc:"冻结余额"`           // 冻结余额
+	// ========== 第二块：资金合规与流水 ==========
+	TotalRecharge float64 `protobuf:"fixed64,8,opt,name=total_recharge,json=totalRecharge,proto3" json:"total_recharge" dc:"========== 第二块：资金合规与流水 ==========总充值"` // 总充值
+	ValidBet      float64 `protobuf:"fixed64,9,opt,name=valid_bet,json=validBet,proto3" json:"valid_bet" dc:"有效投注"`                                                // 有效投注
+	// double required_flow = 10;       // 所需流水（待实现）
+	// double remaining_flow = 11;      // 还需流水（待实现）
+	TodayRecharge float64 `protobuf:"fixed64,12,opt,name=today_recharge,json=todayRecharge,proto3" json:"today_recharge" dc:"double required_flow = 10;       // 所需流水（待实现）double remaining_flow = 11;      // 还需流水（待实现）今日充值"` // 今日充值
+	TodayWithdraw float64 `protobuf:"fixed64,13,opt,name=today_withdraw,json=todayWithdraw,proto3" json:"today_withdraw" dc:"今日提现"`                                                                                           // 今日提现
+	// ========== 第三块：风险信息 ==========
+	RegisterTime       string  `protobuf:"bytes,14,opt,name=register_time,json=registerTime,proto3" json:"register_time" dc:"========== 第三块：风险信息 ==========注册时间"` // 注册时间
+	RegisterIp         string  `protobuf:"bytes,15,opt,name=register_ip,json=registerIp,proto3" json:"register_ip" dc:"注册IP"`                                     // 注册IP
+	VipLevel           int32   `protobuf:"varint,16,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level" dc:"VIP等级"`                                         // VIP等级
+	TotalWithdrawCount int32   `protobuf:"varint,17,opt,name=total_withdraw_count,json=totalWithdrawCount,proto3" json:"total_withdraw_count" dc:"总提现次数"`         // 总提现次数
+	TotalWinLose       float64 `protobuf:"fixed64,18,opt,name=total_win_lose,json=totalWinLose,proto3" json:"total_win_lose" dc:"总输赢"`                            // 总输赢
+	TotalBetMultiple   float64 `protobuf:"fixed64,19,opt,name=total_bet_multiple,json=totalBetMultiple,proto3" json:"total_bet_multiple" dc:"总打码倍数"`              // 总打码倍数
+	// ========== 其他信息（用于后续处理） ==========
+	WithdrawId    int64   `protobuf:"varint,20,opt,name=withdraw_id,json=withdrawId,proto3" json:"withdraw_id" dc:"========== 其他信息（用于后续处理） ==========提现记录ID"` // 提现记录ID
+	TradeNo       string  `protobuf:"bytes,21,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                                                // 流水号
+	BankName      string  `protobuf:"bytes,22,opt,name=bank_name,json=bankName,proto3" json:"bank_name" dc:"银行名称"`                                            // 银行名称
+	CardAccount   string  `protobuf:"bytes,23,opt,name=card_account,json=cardAccount,proto3" json:"card_account" dc:"银行户名"`                                   // 银行户名
+	CardNo        string  `protobuf:"bytes,24,opt,name=card_no,json=cardNo,proto3" json:"card_no" dc:"完整卡号（仅后台使用）"`                                           // 完整卡号（仅后台使用）
+	DepositBank   string  `protobuf:"bytes,25,opt,name=deposit_bank,json=depositBank,proto3" json:"deposit_bank" dc:"开户行"`                                    // 开户行
+	Status        int32   `protobuf:"varint,26,opt,name=status,proto3" json:"status" dc:"状态"`                                                                 // 状态
+	Fee           float64 `protobuf:"fixed64,27,opt,name=fee,proto3" json:"fee" dc:"手续费"`                                                                     // 手续费
+	Remark        string  `protobuf:"bytes,28,opt,name=remark,proto3" json:"remark" dc:"备注"`                                                                  // 备注
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1853,13 +1863,6 @@ func (*WithdrawReviewInfo) Descriptor() ([]byte, []int) {
 	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *WithdrawReviewInfo) GetId() int64 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
 func (x *WithdrawReviewInfo) GetUserId() int32 {
 	if x != nil {
 		return x.UserId
@@ -1874,25 +1877,123 @@ func (x *WithdrawReviewInfo) GetUsername() string {
 	return ""
 }
 
+func (x *WithdrawReviewInfo) GetWithdrawAmount() float64 {
+	if x != nil {
+		return x.WithdrawAmount
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetBankCardMasked() string {
+	if x != nil {
+		return x.BankCardMasked
+	}
+	return ""
+}
+
+func (x *WithdrawReviewInfo) GetApplyTime() string {
+	if x != nil {
+		return x.ApplyTime
+	}
+	return ""
+}
+
+func (x *WithdrawReviewInfo) GetCurrentBalance() float64 {
+	if x != nil {
+		return x.CurrentBalance
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetFrozenBalance() float64 {
+	if x != nil {
+		return x.FrozenBalance
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetTotalRecharge() float64 {
+	if x != nil {
+		return x.TotalRecharge
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetValidBet() float64 {
+	if x != nil {
+		return x.ValidBet
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetTodayRecharge() float64 {
+	if x != nil {
+		return x.TodayRecharge
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetTodayWithdraw() float64 {
+	if x != nil {
+		return x.TodayWithdraw
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetRegisterTime() string {
+	if x != nil {
+		return x.RegisterTime
+	}
+	return ""
+}
+
+func (x *WithdrawReviewInfo) GetRegisterIp() string {
+	if x != nil {
+		return x.RegisterIp
+	}
+	return ""
+}
+
+func (x *WithdrawReviewInfo) GetVipLevel() int32 {
+	if x != nil {
+		return x.VipLevel
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetTotalWithdrawCount() int32 {
+	if x != nil {
+		return x.TotalWithdrawCount
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetTotalWinLose() float64 {
+	if x != nil {
+		return x.TotalWinLose
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetTotalBetMultiple() float64 {
+	if x != nil {
+		return x.TotalBetMultiple
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetWithdrawId() int64 {
+	if x != nil {
+		return x.WithdrawId
+	}
+	return 0
+}
+
 func (x *WithdrawReviewInfo) GetTradeNo() string {
 	if x != nil {
 		return x.TradeNo
 	}
 	return ""
-}
-
-func (x *WithdrawReviewInfo) GetMoney() float64 {
-	if x != nil {
-		return x.Money
-	}
-	return 0
-}
-
-func (x *WithdrawReviewInfo) GetFee() float64 {
-	if x != nil {
-		return x.Fee
-	}
-	return 0
 }
 
 func (x *WithdrawReviewInfo) GetBankName() string {
@@ -1930,67 +2031,18 @@ func (x *WithdrawReviewInfo) GetStatus() int32 {
 	return 0
 }
 
+func (x *WithdrawReviewInfo) GetFee() float64 {
+	if x != nil {
+		return x.Fee
+	}
+	return 0
+}
+
 func (x *WithdrawReviewInfo) GetRemark() string {
 	if x != nil {
 		return x.Remark
 	}
 	return ""
-}
-
-func (x *WithdrawReviewInfo) GetCreatedAt() string {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return ""
-}
-
-func (x *WithdrawReviewInfo) GetUserRealname() string {
-	if x != nil {
-		return x.UserRealname
-	}
-	return ""
-}
-
-func (x *WithdrawReviewInfo) GetUserMobile() string {
-	if x != nil {
-		return x.UserMobile
-	}
-	return ""
-}
-
-func (x *WithdrawReviewInfo) GetUserBalance() float64 {
-	if x != nil {
-		return x.UserBalance
-	}
-	return 0
-}
-
-func (x *WithdrawReviewInfo) GetUserBalanceFrozen() float64 {
-	if x != nil {
-		return x.UserBalanceFrozen
-	}
-	return 0
-}
-
-func (x *WithdrawReviewInfo) GetTotalRecharge() float64 {
-	if x != nil {
-		return x.TotalRecharge
-	}
-	return 0
-}
-
-func (x *WithdrawReviewInfo) GetTotalWithdraw() float64 {
-	if x != nil {
-		return x.TotalWithdraw
-	}
-	return 0
-}
-
-func (x *WithdrawReviewInfo) GetWithdrawCount() int32 {
-	if x != nil {
-		return x.WithdrawCount
-	}
-	return 0
 }
 
 // 获取提现审核信息响应
@@ -3861,31 +3913,37 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x04list\x18\x01 \x03(\v2\x1b.balance.WithdrawManualInfoR\x04list\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x05R\x05count\"&\n" +
 	"\x14GetWithdrawReviewReq\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"\xf5\x04\n" +
-	"\x12WithdrawReviewInfo\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n" +
-	"\busername\x18\x03 \x01(\tR\busername\x12\x19\n" +
-	"\btrade_no\x18\x04 \x01(\tR\atradeNo\x12\x14\n" +
-	"\x05money\x18\x05 \x01(\x01R\x05money\x12\x10\n" +
-	"\x03fee\x18\x06 \x01(\x01R\x03fee\x12\x1b\n" +
-	"\tbank_name\x18\a \x01(\tR\bbankName\x12!\n" +
-	"\fcard_account\x18\b \x01(\tR\vcardAccount\x12\x17\n" +
-	"\acard_no\x18\t \x01(\tR\x06cardNo\x12!\n" +
-	"\fdeposit_bank\x18\n" +
-	" \x01(\tR\vdepositBank\x12\x16\n" +
-	"\x06status\x18\v \x01(\x05R\x06status\x12\x16\n" +
-	"\x06remark\x18\f \x01(\tR\x06remark\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\x80\a\n" +
+	"\x12WithdrawReviewInfo\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12'\n" +
+	"\x0fwithdraw_amount\x18\x03 \x01(\x01R\x0ewithdrawAmount\x12(\n" +
+	"\x10bank_card_masked\x18\x04 \x01(\tR\x0ebankCardMasked\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\r \x01(\tR\tcreatedAt\x12#\n" +
-	"\ruser_realname\x18\x0e \x01(\tR\fuserRealname\x12\x1f\n" +
-	"\vuser_mobile\x18\x0f \x01(\tR\n" +
-	"userMobile\x12!\n" +
-	"\fuser_balance\x18\x10 \x01(\x01R\vuserBalance\x12.\n" +
-	"\x13user_balance_frozen\x18\x11 \x01(\x01R\x11userBalanceFrozen\x12%\n" +
-	"\x0etotal_recharge\x18\x12 \x01(\x01R\rtotalRecharge\x12%\n" +
-	"\x0etotal_withdraw\x18\x13 \x01(\x01R\rtotalWithdraw\x12%\n" +
-	"\x0ewithdraw_count\x18\x14 \x01(\x05R\rwithdrawCount\"G\n" +
+	"apply_time\x18\x05 \x01(\tR\tapplyTime\x12'\n" +
+	"\x0fcurrent_balance\x18\x06 \x01(\x01R\x0ecurrentBalance\x12%\n" +
+	"\x0efrozen_balance\x18\a \x01(\x01R\rfrozenBalance\x12%\n" +
+	"\x0etotal_recharge\x18\b \x01(\x01R\rtotalRecharge\x12\x1b\n" +
+	"\tvalid_bet\x18\t \x01(\x01R\bvalidBet\x12%\n" +
+	"\x0etoday_recharge\x18\f \x01(\x01R\rtodayRecharge\x12%\n" +
+	"\x0etoday_withdraw\x18\r \x01(\x01R\rtodayWithdraw\x12#\n" +
+	"\rregister_time\x18\x0e \x01(\tR\fregisterTime\x12\x1f\n" +
+	"\vregister_ip\x18\x0f \x01(\tR\n" +
+	"registerIp\x12\x1b\n" +
+	"\tvip_level\x18\x10 \x01(\x05R\bvipLevel\x120\n" +
+	"\x14total_withdraw_count\x18\x11 \x01(\x05R\x12totalWithdrawCount\x12$\n" +
+	"\x0etotal_win_lose\x18\x12 \x01(\x01R\ftotalWinLose\x12,\n" +
+	"\x12total_bet_multiple\x18\x13 \x01(\x01R\x10totalBetMultiple\x12\x1f\n" +
+	"\vwithdraw_id\x18\x14 \x01(\x03R\n" +
+	"withdrawId\x12\x19\n" +
+	"\btrade_no\x18\x15 \x01(\tR\atradeNo\x12\x1b\n" +
+	"\tbank_name\x18\x16 \x01(\tR\bbankName\x12!\n" +
+	"\fcard_account\x18\x17 \x01(\tR\vcardAccount\x12\x17\n" +
+	"\acard_no\x18\x18 \x01(\tR\x06cardNo\x12!\n" +
+	"\fdeposit_bank\x18\x19 \x01(\tR\vdepositBank\x12\x16\n" +
+	"\x06status\x18\x1a \x01(\x05R\x06status\x12\x10\n" +
+	"\x03fee\x18\x1b \x01(\x01R\x03fee\x12\x16\n" +
+	"\x06remark\x18\x1c \x01(\tR\x06remark\"G\n" +
 	"\x14GetWithdrawReviewRes\x12/\n" +
 	"\x04data\x18\x01 \x01(\v2\x1b.balance.WithdrawReviewInfoR\x04data\"c\n" +
 	"\x13DealWithWithdrawReq\x12\x0e\n" +
