@@ -34,7 +34,7 @@ rateLimit:
 #    - pathPrefix: "/api/frontend/balance/withdraw"
 #      requestsPerMinute: 20
     - exactPath: "/api/frontend/balance/withdraw"
-      requestsPerMinute: 15
+      requestsPerMinute: 20
 
 # 日志配置 - JSON格式
 logger:
