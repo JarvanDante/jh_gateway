@@ -20,8 +20,21 @@ jwt:
   manageSecret: "d0RegRQwDAeCZlvM4pGRn8eUhSs99Cag+FSZACaj8Fo="
 
 rateLimit:
-  # 每个 IP 每分钟最多请求次数
+  # 默认每分钟最多请求次数（优先按 user_id/admin_id，否则按 IP）
   requestsPerMinute: 120
+  # 按接口精确路径或前缀覆盖默认阈值（精确匹配优先，其次最长前缀匹配）
+  # requestsPerMinute: 0 表示该接口禁用限流
+  routes:
+    # 登录类接口收紧
+    - exactPath: "/api/frontend/app/login"
+      requestsPerMinute: 20
+    - exactPath: "/api/backend/app/login"
+      requestsPerMinute: 5
+    # 支付类接口更严格
+#    - pathPrefix: "/api/frontend/balance/withdraw"
+#      requestsPerMinute: 20
+    - exactPath: "/api/frontend/balance/withdraw"
+      requestsPerMinute: 2
 
 # 日志配置 - JSON格式
 logger:
