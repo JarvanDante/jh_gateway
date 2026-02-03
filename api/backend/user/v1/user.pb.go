@@ -791,7 +791,6 @@ type UserBasicInfo struct {
 	Status           int32                  `protobuf:"varint,22,opt,name=status,proto3" json:"status" dc:"状态"`                                                  // 状态
 	Device           string                 `protobuf:"bytes,23,opt,name=device,proto3" json:"device" dc:"最后登录设备"`                                               // 最后登录设备
 	IsOnline         int32                  `protobuf:"varint,24,opt,name=is_online,json=isOnline,proto3" json:"is_online" dc:"是否在线"`                            // 是否在线
-	Banks            []*BankInfo            `protobuf:"bytes,25,rep,name=banks,proto3" json:"banks" dc:"银行卡列表"`                                                  // 银行卡列表
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -992,13 +991,6 @@ func (x *UserBasicInfo) GetIsOnline() int32 {
 		return x.IsOnline
 	}
 	return 0
-}
-
-func (x *UserBasicInfo) GetBanks() []*BankInfo {
-	if x != nil {
-		return x.Banks
-	}
-	return nil
 }
 
 // 银行卡信息
@@ -1979,7 +1971,7 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"%\n" +
 	"\x13GetUserBasicInfoReq\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\"\xe8\x05\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xc2\x05\n" +
 	"\rUserBasicInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
@@ -2010,8 +2002,7 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\x06remark\x18\x15 \x01(\tR\x06remark\x12\x16\n" +
 	"\x06status\x18\x16 \x01(\x05R\x06status\x12\x16\n" +
 	"\x06device\x18\x17 \x01(\tR\x06device\x12\x1b\n" +
-	"\tis_online\x18\x18 \x01(\x05R\bisOnline\x12$\n" +
-	"\x05banks\x18\x19 \x03(\v2\x0e.user.BankInfoR\x05banks\"@\n" +
+	"\tis_online\x18\x18 \x01(\x05R\bisOnline\"@\n" +
 	"\bBankInfo\x12\x1b\n" +
 	"\tbank_name\x18\x01 \x01(\tR\bbankName\x12\x17\n" +
 	"\acard_no\x18\x02 \x01(\tR\x06cardNo\">\n" +
@@ -2135,30 +2126,29 @@ var file_backend_user_v1_user_proto_goTypes = []any{
 }
 var file_backend_user_v1_user_proto_depIdxs = []int32{
 	1,  // 0: user.GetUserListRes.list:type_name -> user.UserInfo
-	7,  // 1: user.UserBasicInfo.banks:type_name -> user.BankInfo
-	6,  // 2: user.GetUserBasicInfoRes.user:type_name -> user.UserBasicInfo
-	10, // 3: user.GetUserGradesRes.data:type_name -> user.UserGradeInfo
-	10, // 4: user.SaveUserGradesReq.data:type_name -> user.UserGradeInfo
-	17, // 5: user.GetUserLoginLogsRes.list:type_name -> user.UserLoginLogInfo
-	0,  // 6: user.User.GetUserList:input_type -> user.GetUserListReq
-	3,  // 7: user.User.UpdateUser:input_type -> user.UpdateUserReq
-	5,  // 8: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
-	9,  // 9: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
-	12, // 10: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
-	14, // 11: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
-	16, // 12: user.User.GetUserLoginLogs:input_type -> user.GetUserLoginLogsReq
-	2,  // 13: user.User.GetUserList:output_type -> user.GetUserListRes
-	4,  // 14: user.User.UpdateUser:output_type -> user.UpdateUserRes
-	8,  // 15: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
-	11, // 16: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
-	13, // 17: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
-	15, // 18: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
-	18, // 19: user.User.GetUserLoginLogs:output_type -> user.GetUserLoginLogsRes
-	13, // [13:20] is the sub-list for method output_type
-	6,  // [6:13] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	6,  // 1: user.GetUserBasicInfoRes.user:type_name -> user.UserBasicInfo
+	10, // 2: user.GetUserGradesRes.data:type_name -> user.UserGradeInfo
+	10, // 3: user.SaveUserGradesReq.data:type_name -> user.UserGradeInfo
+	17, // 4: user.GetUserLoginLogsRes.list:type_name -> user.UserLoginLogInfo
+	0,  // 5: user.User.GetUserList:input_type -> user.GetUserListReq
+	3,  // 6: user.User.UpdateUser:input_type -> user.UpdateUserReq
+	5,  // 7: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
+	9,  // 8: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
+	12, // 9: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
+	14, // 10: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
+	16, // 11: user.User.GetUserLoginLogs:input_type -> user.GetUserLoginLogsReq
+	2,  // 12: user.User.GetUserList:output_type -> user.GetUserListRes
+	4,  // 13: user.User.UpdateUser:output_type -> user.UpdateUserRes
+	8,  // 14: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
+	11, // 15: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
+	13, // 16: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
+	15, // 17: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
+	18, // 18: user.User.GetUserLoginLogs:output_type -> user.GetUserLoginLogsRes
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_backend_user_v1_user_proto_init() }

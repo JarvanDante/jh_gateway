@@ -743,36 +743,36 @@ func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
 
 // 获取用户信息响应
 type GetUserInfoRes struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	Username            string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名"`                                                                     // 用户名
-	Realname            string                 `protobuf:"bytes,2,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                                                    // 真实姓名
-	Email               string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                                            // 邮箱
-	Mobile              string                 `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                                         // 手机号
-	Qq                  string                 `protobuf:"bytes,5,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                                                 // QQ号
-	Sex                 int32                  `protobuf:"varint,6,opt,name=sex,proto3" json:"sex" dc:"性别 0=未知 1=男 2=女"`                                                                  // 性别 0=未知 1=男 2=女
-	Birthday            string                 `protobuf:"bytes,7,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                                      // 生日
-	LastLoginTime       string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                                 // 最后登录时间
-	LastLoginAddress    string                 `protobuf:"bytes,9,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`                        // 最后登录地址
-	ShowBeginnerGuide   int32                  `protobuf:"varint,10,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"`          // 新手引导 0=不显示 1=显示
-	Gpwd                string                 `protobuf:"bytes,11,opt,name=gpwd,proto3" json:"gpwd" dc:"游戏密码(base64)"`                                                                   // 游戏密码(base64)
-	Balance             string                 `protobuf:"bytes,12,opt,name=balance,proto3" json:"balance" dc:"余额(默认值)"`                                                                  // 余额(默认值)
-	BalanceFrozen       string                 `protobuf:"bytes,13,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额(默认值)"`                               // 冻结余额(默认值)
-	Points              string                 `protobuf:"bytes,14,opt,name=points,proto3" json:"points" dc:"积分(默认值)"`                                                                    // 积分(默认值)
-	GradeId             int32                  `protobuf:"varint,15,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"会员等级ID"`                                                   // 会员等级ID
-	GradeName           string                 `protobuf:"bytes,16,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"会员等级名称"`                                              // 会员等级名称
-	BindSafeQuestion    int32                  `protobuf:"varint,17,opt,name=bind_safe_question,json=bindSafeQuestion,proto3" json:"bind_safe_question" dc:"是否绑定安全问题 0=否 1=是"`            // 是否绑定安全问题 0=否 1=是
-	BindPayPassword     int32                  `protobuf:"varint,18,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=否 1=是"`               // 是否绑定资金密码 0=否 1=是
-	UnreadMessageCount  int32                  `protobuf:"varint,19,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"未读消息数量(默认值)"`           // 未读消息数量(默认值)
-	SwitchSign          int32                  `protobuf:"varint,20,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                                  // 签到开关 0=关闭 1=开启
-	BindBank            int32                  `protobuf:"varint,21,opt,name=bind_bank,json=bindBank,proto3" json:"bind_bank" dc:"是否绑定银行卡 0=否 1=是"`                                       // 是否绑定银行卡 0=否 1=是
-	ApplyBirthdayBonus  int32                  `protobuf:"varint,22,opt,name=apply_birthday_bonus,json=applyBirthdayBonus,proto3" json:"apply_birthday_bonus" dc:"是否可申请生日礼金 0=否 1=是"`     // 是否可申请生日礼金 0=否 1=是
-	AutoBindGameBalance int32                  `protobuf:"varint,23,opt,name=auto_bind_game_balance,json=autoBindGameBalance,proto3" json:"auto_bind_game_balance" dc:"自动绑定游戏余额 0=否 1=是"` // 自动绑定游戏余额 0=否 1=是
-	TotalBet            string                 `protobuf:"bytes,24,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"总投注(默认值)"`                                               // 总投注(默认值)
-	TotalBonus          string                 `protobuf:"bytes,25,opt,name=total_bonus,json=totalBonus,proto3" json:"total_bonus" dc:"总彩金(默认值)"`                                         // 总彩金(默认值)
-	TotalRebate         string                 `protobuf:"bytes,26,opt,name=total_rebate,json=totalRebate,proto3" json:"total_rebate" dc:"总返水(默认值)"`                                      // 总返水(默认值)
-	LastRecharge        []*LastRecord          `protobuf:"bytes,27,rep,name=last_recharge,json=lastRecharge,proto3" json:"last_recharge" dc:"最后充值记录(默认值)"`                                // 最后充值记录(默认值)
-	LastWithdraw        []*LastRecord          `protobuf:"bytes,28,rep,name=last_withdraw,json=lastWithdraw,proto3" json:"last_withdraw" dc:"最后提现记录(默认值)"`                                // 最后提现记录(默认值)
-	LastMessage         []*LastMessage         `protobuf:"bytes,29,rep,name=last_message,json=lastMessage,proto3" json:"last_message" dc:"最后消息(默认值)"`                                     // 最后消息(默认值)
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Username           string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" dc:"用户名"`                                                            // 用户名
+	Realname           string                 `protobuf:"bytes,2,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                                           // 真实姓名
+	Email              string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                                   // 邮箱
+	Mobile             string                 `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                                // 手机号
+	Qq                 string                 `protobuf:"bytes,5,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                                        // QQ号
+	Sex                int32                  `protobuf:"varint,6,opt,name=sex,proto3" json:"sex" dc:"性别 0=未知 1=男 2=女"`                                                         // 性别 0=未知 1=男 2=女
+	Birthday           string                 `protobuf:"bytes,7,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                             // 生日
+	LastLoginTime      string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                        // 最后登录时间
+	LastLoginAddress   string                 `protobuf:"bytes,9,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`               // 最后登录地址
+	ShowBeginnerGuide  int32                  `protobuf:"varint,10,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"` // 新手引导 0=不显示 1=显示
+	Gpwd               string                 `protobuf:"bytes,11,opt,name=gpwd,proto3" json:"gpwd" dc:"游戏密码(base64)"`                                                          // 游戏密码(base64)
+	Balance            string                 `protobuf:"bytes,12,opt,name=balance,proto3" json:"balance" dc:"余额(默认值)"`                                                         // 余额(默认值)
+	BalanceFrozen      string                 `protobuf:"bytes,13,opt,name=balance_frozen,json=balanceFrozen,proto3" json:"balance_frozen" dc:"冻结余额(默认值)"`                      // 冻结余额(默认值)
+	Points             string                 `protobuf:"bytes,14,opt,name=points,proto3" json:"points" dc:"积分(默认值)"`                                                           // 积分(默认值)
+	GradeId            int32                  `protobuf:"varint,15,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"会员等级ID"`                                          // 会员等级ID
+	GradeName          string                 `protobuf:"bytes,16,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"会员等级名称"`                                     // 会员等级名称
+	BindSafeQuestion   int32                  `protobuf:"varint,17,opt,name=bind_safe_question,json=bindSafeQuestion,proto3" json:"bind_safe_question" dc:"是否绑定安全问题 0=否 1=是"`   // 是否绑定安全问题 0=否 1=是
+	BindPayPassword    int32                  `protobuf:"varint,18,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=否 1=是"`      // 是否绑定资金密码 0=否 1=是
+	UnreadMessageCount int32                  `protobuf:"varint,19,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"未读消息数量(默认值)"`  // 未读消息数量(默认值)
+	SwitchSign         int32                  `protobuf:"varint,20,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                         // 签到开关 0=关闭 1=开启
+	// int32 bind_bank = 21;             // 是否绑定银行卡 0=否 1=是 (已移至balance服务)
+	ApplyBirthdayBonus  int32          `protobuf:"varint,22,opt,name=apply_birthday_bonus,json=applyBirthdayBonus,proto3" json:"apply_birthday_bonus" dc:"int32 bind_bank = 21;             // 是否绑定银行卡 0=否 1=是 (已移至balance服务)是否可申请生日礼金 0=否 1=是"` // 是否可申请生日礼金 0=否 1=是
+	AutoBindGameBalance int32          `protobuf:"varint,23,opt,name=auto_bind_game_balance,json=autoBindGameBalance,proto3" json:"auto_bind_game_balance" dc:"自动绑定游戏余额 0=否 1=是"`                                                                // 自动绑定游戏余额 0=否 1=是
+	TotalBet            string         `protobuf:"bytes,24,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"总投注(默认值)"`                                                                                                              // 总投注(默认值)
+	TotalBonus          string         `protobuf:"bytes,25,opt,name=total_bonus,json=totalBonus,proto3" json:"total_bonus" dc:"总彩金(默认值)"`                                                                                                        // 总彩金(默认值)
+	TotalRebate         string         `protobuf:"bytes,26,opt,name=total_rebate,json=totalRebate,proto3" json:"total_rebate" dc:"总返水(默认值)"`                                                                                                     // 总返水(默认值)
+	LastRecharge        []*LastRecord  `protobuf:"bytes,27,rep,name=last_recharge,json=lastRecharge,proto3" json:"last_recharge" dc:"最后充值记录(默认值)"`                                                                                               // 最后充值记录(默认值)
+	LastWithdraw        []*LastRecord  `protobuf:"bytes,28,rep,name=last_withdraw,json=lastWithdraw,proto3" json:"last_withdraw" dc:"最后提现记录(默认值)"`                                                                                               // 最后提现记录(默认值)
+	LastMessage         []*LastMessage `protobuf:"bytes,29,rep,name=last_message,json=lastMessage,proto3" json:"last_message" dc:"最后消息(默认值)"`                                                                                                    // 最后消息(默认值)
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -943,13 +943,6 @@ func (x *GetUserInfoRes) GetUnreadMessageCount() int32 {
 func (x *GetUserInfoRes) GetSwitchSign() int32 {
 	if x != nil {
 		return x.SwitchSign
-	}
-	return 0
-}
-
-func (x *GetUserInfoRes) GetBindBank() int32 {
-	if x != nil {
-		return x.BindBank
 	}
 	return 0
 }
@@ -1697,7 +1690,7 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\n" +
 	"expires_in\x18\x03 \x01(\x03R\texpiresIn\x12,\n" +
 	"\x12refresh_expires_in\x18\x04 \x01(\x03R\x10refreshExpiresIn\"\x10\n" +
-	"\x0eGetUserInfoReq\"\x9d\b\n" +
+	"\x0eGetUserInfoReq\"\x80\b\n" +
 	"\x0eGetUserInfoRes\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\brealname\x18\x02 \x01(\tR\brealname\x12\x14\n" +
@@ -1721,8 +1714,7 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x11bind_pay_password\x18\x12 \x01(\x05R\x0fbindPayPassword\x120\n" +
 	"\x14unread_message_count\x18\x13 \x01(\x05R\x12unreadMessageCount\x12\x1f\n" +
 	"\vswitch_sign\x18\x14 \x01(\x05R\n" +
-	"switchSign\x12\x1b\n" +
-	"\tbind_bank\x18\x15 \x01(\x05R\bbindBank\x120\n" +
+	"switchSign\x120\n" +
 	"\x14apply_birthday_bonus\x18\x16 \x01(\x05R\x12applyBirthdayBonus\x123\n" +
 	"\x16auto_bind_game_balance\x18\x17 \x01(\x05R\x13autoBindGameBalance\x12\x1b\n" +
 	"\ttotal_bet\x18\x18 \x01(\tR\btotalBet\x12\x1f\n" +
