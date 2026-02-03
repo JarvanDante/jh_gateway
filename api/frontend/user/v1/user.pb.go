@@ -81,6 +81,7 @@ type GetUserInfoRes struct {
 	BindPayPassword  int32 `protobuf:"varint,15,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=未绑定 1=已绑定"`        // 是否绑定资金密码 0=未绑定 1=已绑定
 	// int32 bind_bank = 16;          // 已废弃：银行卡信息已移至 balance 服务
 	IsPayPassword int32 `protobuf:"varint,27,opt,name=is_pay_password,json=isPayPassword,proto3" json:"is_pay_password" dc:"int32 bind_bank = 16;          // 已废弃：银行卡信息已移至 balance 服务是否设置资金密码 0=未设置 1=已设置"` // 是否设置资金密码 0=未设置 1=已设置
+	IsPassword    int32 `protobuf:"varint,28,opt,name=is_password,json=isPassword,proto3" json:"is_password" dc:"是否设置登录密码 0=未设置 1=已设置"`                                                                     // 是否设置登录密码 0=未设置 1=已设置
 	// 其他
 	UnreadMessageCount  int32 `protobuf:"varint,17,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"其他未读消息数量"`                // 未读消息数量
 	SwitchSign          int32 `protobuf:"varint,18,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                                    // 签到开关 0=关闭 1=开启
@@ -236,6 +237,13 @@ func (x *GetUserInfoRes) GetBindPayPassword() int32 {
 func (x *GetUserInfoRes) GetIsPayPassword() int32 {
 	if x != nil {
 		return x.IsPayPassword
+	}
+	return 0
+}
+
+func (x *GetUserInfoRes) GetIsPassword() int32 {
+	if x != nil {
+		return x.IsPassword
 	}
 	return 0
 }
@@ -1396,7 +1404,7 @@ var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/user/v1/user.proto\x12\rfrontend_user\"\x10\n" +
-	"\x0eGetUserInfoReq\"\xe9\a\n" +
+	"\x0eGetUserInfoReq\"\x8a\b\n" +
 	"\x0eGetUserInfoRes\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
@@ -1415,7 +1423,9 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"grade_name\x18\r \x01(\tR\tgradeName\x12,\n" +
 	"\x12bind_safe_question\x18\x0e \x01(\x05R\x10bindSafeQuestion\x12*\n" +
 	"\x11bind_pay_password\x18\x0f \x01(\x05R\x0fbindPayPassword\x12&\n" +
-	"\x0fis_pay_password\x18\x1b \x01(\x05R\risPayPassword\x120\n" +
+	"\x0fis_pay_password\x18\x1b \x01(\x05R\risPayPassword\x12\x1f\n" +
+	"\vis_password\x18\x1c \x01(\x05R\n" +
+	"isPassword\x120\n" +
 	"\x14unread_message_count\x18\x11 \x01(\x05R\x12unreadMessageCount\x12\x1f\n" +
 	"\vswitch_sign\x18\x12 \x01(\x05R\n" +
 	"switchSign\x120\n" +
