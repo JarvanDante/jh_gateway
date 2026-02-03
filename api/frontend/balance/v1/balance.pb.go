@@ -2062,12 +2062,12 @@ func (x *CreateDepositOrderRes) GetResult() string {
 // 获取账户明细请求
 type GetBalanceLogReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Start         string                 `protobuf:"bytes,1,opt,name=start,proto3" json:"start" dc:"开始时间 格式: 2024-01-01 00:00:00"`    // 开始时间 格式: 2024-01-01 00:00:00
-	End           string                 `protobuf:"bytes,2,opt,name=end,proto3" json:"end" dc:"结束时间 格式: 2024-01-01 23:59:59"`        // 结束时间 格式: 2024-01-01 23:59:59
-	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type" dc:"类型 0=全部 1=充值 2=提款 3=红利 4=返水 5=转账"` // 类型 0=全部 1=充值 2=提款 3=红利 4=返水 5=转账
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" dc:"状态 0=全部 1=待处理 2=成功 3=失败"`      // 状态 0=全部 1=待处理 2=成功 3=失败
-	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                               // 页码
-	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                             // 每页数量
+	Start         string                 `protobuf:"bytes,1,opt,name=start,proto3" json:"start" dc:"开始时间 格式: 2024-01-01 00:00:00"`     // 开始时间 格式: 2024-01-01 00:00:00
+	End           string                 `protobuf:"bytes,2,opt,name=end,proto3" json:"end" dc:"结束时间 格式: 2024-01-01 23:59:59"`         // 结束时间 格式: 2024-01-01 23:59:59
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type" dc:"类型 0=全部 1=充值 2=提款 3=红利 4=返水 5=转账"`  // 类型 0=全部 1=充值 2=提款 3=红利 4=返水 5=转账
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" dc:"状态0=初始化，1=待处理；2=处理中；3=成功；4=失败"` // 状态0=初始化，1=待处理；2=处理中；3=成功；4=失败
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                                // 页码
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                              // 每页数量
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2154,7 +2154,7 @@ type BalanceLogItem struct {
 	Remark        string                 `protobuf:"bytes,5,opt,name=remark,proto3" json:"remark" dc:"备注"`                                        // 备注
 	Type          int32                  `protobuf:"varint,6,opt,name=type,proto3" json:"type" dc:"类型 1=充值 2=提款 3=红利 4=返水 5=转账"`                  // 类型 1=充值 2=提款 3=红利 4=返水 5=转账
 	Symbol        string                 `protobuf:"bytes,7,opt,name=symbol,proto3" json:"symbol" dc:"符号 + 或 -"`                                  // 符号 + 或 -
-	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态 1=待处理 2=成功 3=失败"`                       // 状态 1=待处理 2=成功 3=失败
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态0=初始化，1=待处理；2=处理中；3=成功；4=失败"`            // 状态0=初始化，1=待处理；2=处理中；3=成功；4=失败
 	Time          string                 `protobuf:"bytes,9,opt,name=time,proto3" json:"time" dc:"时间"`                                            // 时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

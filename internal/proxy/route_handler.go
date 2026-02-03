@@ -269,6 +269,8 @@ func initGameRoutes() {
 	gameRoutes.Register("/game-platforms", "GET", game.CallGetGamePlatforms)
 	// 一键回收游戏余额
 	gameRoutes.Register("/recall-balance", "POST", game.CallRecallGameBalance)
+	// 历史投注列表（前台）
+	gameRoutes.Register("/bet-history", "GET", game.CallGetUserBetHistory)
 }
 
 // initManageRoutes 初始化总后台管理路由

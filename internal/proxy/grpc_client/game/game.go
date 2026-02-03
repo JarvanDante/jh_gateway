@@ -659,3 +659,47 @@ func CallRecallGameBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/游戏/游戏记录
+ * @title 获取历史投注列表
+ * @description 获取当前用户的历史投注列表（按时间倒序）
+ * @method get
+ * @url /api/game/bet-history
+ * @param start_time 可选 string 开始时间（默认当天 00:00:00）
+ * @param end_time 可选 string 结束时间（默认当天 23:59:59）
+ * @param page 可选 int 页码（默认1）
+ * @param size 可选 int 每页数量（默认5，最大100）
+ * @return {"code":0,"msg":"success","data":{"list":[{"game_name":"XXX","valid_amount":10.23,"bet_time":"2026-02-03 12:00:00","win_amount":5.12,"status":1,"order_no":"ORD123","net_amount":-5.11}],"total":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.list array 列表
+ * @return_param data.total int 总数
+ * @number 11
+ */
+func CallGetUserBetHistory(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetUserBetHistory (Frontend)")
+
+	startTime := r.Get("start_time").String()
+	endTime := r.Get("end_time").String()
+	page := gconv.Int32(r.Get("page").Int())
+	size := gconv.Int32(r.Get("size").Int())
+
+	req := &v20.GetUserBetHistoryReq{
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+	}
+
+	client := v20.NewGameClient(conn)
+	res, err := client.GetUserBetHistory(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetUserBetHistory failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}

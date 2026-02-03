@@ -25,6 +25,7 @@ const (
 	Game_GetGameList_FullMethodName       = "/front_game.Game/GetGameList"
 	Game_GetGameBalance_FullMethodName    = "/front_game.Game/GetGameBalance"
 	Game_RecallGameBalance_FullMethodName = "/front_game.Game/RecallGameBalance"
+	Game_GetUserBetHistory_FullMethodName = "/front_game.Game/GetUserBetHistory"
 )
 
 // GameClient is the client API for Game service.
@@ -36,6 +37,7 @@ type GameClient interface {
 	GetGameList(ctx context.Context, in *GetGameListReq, opts ...grpc.CallOption) (*GetGameListRes, error)
 	GetGameBalance(ctx context.Context, in *GetGameBalanceReq, opts ...grpc.CallOption) (*GetGameBalanceRes, error)
 	RecallGameBalance(ctx context.Context, in *RecallGameBalanceReq, opts ...grpc.CallOption) (*RecallGameBalanceRes, error)
+	GetUserBetHistory(ctx context.Context, in *GetUserBetHistoryReq, opts ...grpc.CallOption) (*GetUserBetHistoryRes, error)
 }
 
 type gameClient struct {
@@ -96,6 +98,16 @@ func (c *gameClient) RecallGameBalance(ctx context.Context, in *RecallGameBalanc
 	return out, nil
 }
 
+func (c *gameClient) GetUserBetHistory(ctx context.Context, in *GetUserBetHistoryReq, opts ...grpc.CallOption) (*GetUserBetHistoryRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserBetHistoryRes)
+	err := c.cc.Invoke(ctx, Game_GetUserBetHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GameServer is the server API for Game service.
 // All implementations must embed UnimplementedGameServer
 // for forward compatibility.
@@ -105,6 +117,7 @@ type GameServer interface {
 	GetGameList(context.Context, *GetGameListReq) (*GetGameListRes, error)
 	GetGameBalance(context.Context, *GetGameBalanceReq) (*GetGameBalanceRes, error)
 	RecallGameBalance(context.Context, *RecallGameBalanceReq) (*RecallGameBalanceRes, error)
+	GetUserBetHistory(context.Context, *GetUserBetHistoryReq) (*GetUserBetHistoryRes, error)
 	mustEmbedUnimplementedGameServer()
 }
 
@@ -129,6 +142,9 @@ func (UnimplementedGameServer) GetGameBalance(context.Context, *GetGameBalanceRe
 }
 func (UnimplementedGameServer) RecallGameBalance(context.Context, *RecallGameBalanceReq) (*RecallGameBalanceRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method RecallGameBalance not implemented")
+}
+func (UnimplementedGameServer) GetUserBetHistory(context.Context, *GetUserBetHistoryReq) (*GetUserBetHistoryRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserBetHistory not implemented")
 }
 func (UnimplementedGameServer) mustEmbedUnimplementedGameServer() {}
 func (UnimplementedGameServer) testEmbeddedByValue()              {}
@@ -241,6 +257,24 @@ func _Game_RecallGameBalance_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Game_GetUserBetHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserBetHistoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServer).GetUserBetHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Game_GetUserBetHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServer).GetUserBetHistory(ctx, req.(*GetUserBetHistoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Game_ServiceDesc is the grpc.ServiceDesc for Game service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +301,10 @@ var Game_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RecallGameBalance",
 			Handler:    _Game_RecallGameBalance_Handler,
+		},
+		{
+			MethodName: "GetUserBetHistory",
+			Handler:    _Game_GetUserBetHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

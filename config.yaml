@@ -29,7 +29,7 @@ rateLimit:
     - exactPath: "/api/frontend/app/login"
       requestsPerMinute: 20
     - exactPath: "/api/backend/app/login"
-      requestsPerMinute: 5
+      requestsPerMinute: 20
     # 支付类接口更严格
 #    - pathPrefix: "/api/frontend/balance/withdraw"
 #      requestsPerMinute: 20
