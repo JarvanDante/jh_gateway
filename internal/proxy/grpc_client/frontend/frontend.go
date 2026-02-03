@@ -907,3 +907,62 @@ func CallVerifyPayPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	})
 	return nil
 }
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title OK修改支付密码
+ * @description 修改支付密码
+ * @method post
+ * @url /api/frontend/app/change-pay-password
+ * @header Authorization 必选 string Bearer {token}
+ * @param old_pay_password 必选 string 原支付密码
+ * @param new_pay_password 必选 string 新支付密码
+ * @return {"code":0,"msg":"success","data":{"message":"修改支付密码成功"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.message string 提示消息
+ * @remark 支付密码必须是6位数字，新旧密码不能相同
+ * @number 122
+ */
+func CallChangePayPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ChangePayPassword")
+
+	// 使用中间件解析的请求数据
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v16.NewUserClient(conn)
+	req := &v16.ChangePayPasswordReq{
+		OldPayPassword: gconv.String(reqData["old_pay_password"]),
+		NewPayPassword: gconv.String(reqData["new_pay_password"]),
+	}
+
+	res, err := client.ChangePayPassword(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "未登录") {
+			util.WriteUnauthorized(r, "请先登录")
+		} else if strings.Contains(err.Error(), "6位数字") {
+			util.WriteBadRequest(r, err.Error())
+		} else if strings.Contains(err.Error(), "不能相同") {
+			util.WriteBadRequest(r, err.Error())
+		} else if strings.Contains(err.Error(), "原支付密码错误") {
+			util.WriteBadRequest(r, "原支付密码错误")
+		} else if strings.Contains(err.Error(), "未设置支付密码") {
+			util.WriteBadRequest(r, "未设置支付密码，请先设置支付密码")
+		} else {
+			util.WriteInternalError(r, "修改支付密码失败")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": res.Message,
+	})
+	return nil
+}

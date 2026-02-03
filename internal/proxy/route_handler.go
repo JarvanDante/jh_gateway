@@ -243,6 +243,13 @@ func initBalanceRoutes() {
 	// 站点提现管理
 	balanceRoutes.Register("/site-withdraws", "GET", balance.CallGetSiteWithdraws)
 	balanceRoutes.Register("/update-site-withdraw", "POST", balance.CallUpdateSiteWithdraw)
+
+	// 流水规则管理
+	balanceRoutes.Register("/flow-rules", "GET", balance.CallGetFlowRules)
+	balanceRoutes.Register("/flow-rule", "GET", balance.CallGetFlowRule)
+	balanceRoutes.Register("/flow-rule/create", "POST", balance.CallCreateFlowRule)
+	balanceRoutes.Register("/flow-rule/update", "POST", balance.CallUpdateFlowRule)
+	balanceRoutes.Register("/flow-rule/delete", "POST", balance.CallDeleteFlowRule)
 }
 
 // initGameRoutes 初始化游戏路由
@@ -376,6 +383,8 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/set-pay-password", "POST", frontend.CallSetPayPassword)
 	// 验证支付密码
 	frontendRoutes.Register("/verify-pay-password", "POST", frontend.CallVerifyPayPassword)
+	// 修改支付密码
+	frontendRoutes.Register("/change-pay-password", "POST", frontend.CallChangePayPassword)
 	// 获取公告列表
 	frontendRoutes.Register("/notice-list", "GET", frontend.CallGetAppNoticeList)
 	// 获取广告列表

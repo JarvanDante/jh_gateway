@@ -1153,6 +1153,216 @@ func CallUpdateSiteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 
 /**
  * showdoc
+ * @catalog 后台/财务/流水规则
+ * @title 获取流水规则列表
+ * @description 获取流水规则列表
+ * @method get
+ * @url /api/backend/balance/flow-rules
+ * @param site_id 可选 int 站点ID
+ * @param rule_type 可选 int 规则类型
+ * @param status 可选 int 状态（-1=不筛选）
+ * @param rule_name 可选 string 规则名称（模糊搜索）
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 21
+ */
+func CallGetFlowRules(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetFlowRules")
+
+	siteId := r.Get("site_id", 0).Int32()
+	ruleType := r.Get("rule_type", 0).Int32()
+	status := r.Get("status", -1).Int32()
+	ruleName := r.Get("rule_name", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetFlowRulesReq{
+		SiteId:   siteId,
+		RuleType: ruleType,
+		Status:   status,
+		RuleName: ruleName,
+		Page:     page,
+		Size:     size,
+	}
+
+	res, err := client.GetFlowRules(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取流水规则列表失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/流水规则
+ * @title 获取流水规则详情
+ * @description 获取流水规则详情
+ * @method get
+ * @url /api/backend/balance/flow-rule
+ * @param id 必选 int 规则ID
+ * @return {"code":0,"msg":"success","data":{"info":{}}}
+ * @number 22
+ */
+func CallGetFlowRule(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetFlowRule")
+
+	id := r.Get("id", 0).Int32()
+	if id <= 0 {
+		util.WriteBadRequest(r, "规则ID不能为空")
+		return nil
+	}
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetFlowRuleReq{Id: id}
+
+	res, err := client.GetFlowRule(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取流水规则详情失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/流水规则
+ * @title 创建流水规则
+ * @description 创建流水规则
+ * @method post
+ * @url /api/backend/balance/flow-rule/create
+ * @param rule_name 必选 string 规则名称
+ * @param rule_type 必选 int 规则类型
+ * @param flow_multiple 必选 float 流水倍数
+ * @param expire_days 可选 int 有效天数
+ * @param status 可选 int 状态
+ * @param sort 可选 int 排序
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"创建成功","id":1}}
+ * @number 23
+ */
+func CallCreateFlowRule(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance CreateFlowRule")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	req := &v6.CreateFlowRuleReq{
+		RuleName:     getStringFromMap(reqData, "rule_name"),
+		RuleType:     getInt32FromMap(reqData, "rule_type"),
+		FlowMultiple: getFloat64FromMap(reqData, "flow_multiple"),
+		ExpireDays:   getInt32FromMap(reqData, "expire_days"),
+		Status:       getInt32FromMap(reqData, "status"),
+		Sort:         getInt32FromMap(reqData, "sort"),
+		Remark:       getStringFromMap(reqData, "remark"),
+	}
+
+	client := v6.NewBalanceClient(conn)
+	res, err := client.CreateFlowRule(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "创建流水规则失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/流水规则
+ * @title 更新流水规则
+ * @description 更新流水规则
+ * @method post
+ * @url /api/backend/balance/flow-rule/update
+ * @param id 必选 int 规则ID
+ * @param rule_name 必选 string 规则名称
+ * @param rule_type 必选 int 规则类型
+ * @param flow_multiple 必选 float 流水倍数
+ * @param expire_days 可选 int 有效天数
+ * @param status 可选 int 状态
+ * @param sort 可选 int 排序
+ * @param remark 可选 string 备注
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
+ * @number 24
+ */
+func CallUpdateFlowRule(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance UpdateFlowRule")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	req := &v6.UpdateFlowRuleReq{
+		Id:           getInt32FromMap(reqData, "id"),
+		RuleName:     getStringFromMap(reqData, "rule_name"),
+		RuleType:     getInt32FromMap(reqData, "rule_type"),
+		FlowMultiple: getFloat64FromMap(reqData, "flow_multiple"),
+		ExpireDays:   getInt32FromMap(reqData, "expire_days"),
+		Status:       getInt32FromMap(reqData, "status"),
+		Sort:         getInt32FromMap(reqData, "sort"),
+		Remark:       getStringFromMap(reqData, "remark"),
+	}
+
+	client := v6.NewBalanceClient(conn)
+	res, err := client.UpdateFlowRule(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "更新流水规则失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/流水规则
+ * @title 删除流水规则
+ * @description 删除流水规则
+ * @method post
+ * @url /api/backend/balance/flow-rule/delete
+ * @param id 必选 int 规则ID
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"删除成功"}}
+ * @number 25
+ */
+func CallDeleteFlowRule(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance DeleteFlowRule")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	req := &v6.DeleteFlowRuleReq{
+		Id: getInt32FromMap(reqData, "id"),
+	}
+
+	client := v6.NewBalanceClient(conn)
+	res, err := client.DeleteFlowRule(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "删除流水规则失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 前台/资金
  * @title OK获取支付渠道列表
  * @description 获取可用的支付渠道列表
