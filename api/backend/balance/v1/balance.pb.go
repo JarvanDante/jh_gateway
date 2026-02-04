@@ -1943,10 +1943,10 @@ type WithdrawReviewInfo struct {
 	// ========== 第二块：资金合规与流水 ==========
 	TotalRecharge float64 `protobuf:"fixed64,8,opt,name=total_recharge,json=totalRecharge,proto3" json:"total_recharge" dc:"========== 第二块：资金合规与流水 ==========总充值"` // 总充值
 	ValidBet      float64 `protobuf:"fixed64,9,opt,name=valid_bet,json=validBet,proto3" json:"valid_bet" dc:"有效投注"`                                                // 有效投注
-	// double required_flow = 10;       // 所需流水（待实现）
-	// double remaining_flow = 11;      // 还需流水（待实现）
-	TodayRecharge float64 `protobuf:"fixed64,12,opt,name=today_recharge,json=todayRecharge,proto3" json:"today_recharge" dc:"double required_flow = 10;       // 所需流水（待实现）double remaining_flow = 11;      // 还需流水（待实现）今日充值"` // 今日充值
-	TodayWithdraw float64 `protobuf:"fixed64,13,opt,name=today_withdraw,json=todayWithdraw,proto3" json:"today_withdraw" dc:"今日提现"`                                                                                           // 今日提现
+	RequiredFlow  float64 `protobuf:"fixed64,10,opt,name=required_flow,json=requiredFlow,proto3" json:"required_flow" dc:"所需流水"`                                   // 所需流水
+	RemainingFlow float64 `protobuf:"fixed64,11,opt,name=remaining_flow,json=remainingFlow,proto3" json:"remaining_flow" dc:"还需流水"`                                // 还需流水
+	TodayRecharge float64 `protobuf:"fixed64,12,opt,name=today_recharge,json=todayRecharge,proto3" json:"today_recharge" dc:"今日充值"`                                // 今日充值
+	TodayWithdraw float64 `protobuf:"fixed64,13,opt,name=today_withdraw,json=todayWithdraw,proto3" json:"today_withdraw" dc:"今日提现"`                                // 今日提现
 	// ========== 第三块：风险信息 ==========
 	RegisterTime       string  `protobuf:"bytes,14,opt,name=register_time,json=registerTime,proto3" json:"register_time" dc:"========== 第三块：风险信息 ==========注册时间"` // 注册时间
 	RegisterIp         string  `protobuf:"bytes,15,opt,name=register_ip,json=registerIp,proto3" json:"register_ip" dc:"注册IP"`                                     // 注册IP
@@ -2057,6 +2057,20 @@ func (x *WithdrawReviewInfo) GetTotalRecharge() float64 {
 func (x *WithdrawReviewInfo) GetValidBet() float64 {
 	if x != nil {
 		return x.ValidBet
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetRequiredFlow() float64 {
+	if x != nil {
+		return x.RequiredFlow
+	}
+	return 0
+}
+
+func (x *WithdrawReviewInfo) GetRemainingFlow() float64 {
+	if x != nil {
+		return x.RemainingFlow
 	}
 	return 0
 }
@@ -5302,7 +5316,7 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x04list\x18\x01 \x03(\v2\x1b.balance.WithdrawManualInfoR\x04list\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x05R\x05count\"&\n" +
 	"\x14GetWithdrawReviewReq\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"\x80\a\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\xcc\a\n" +
 	"\x12WithdrawReviewInfo\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12'\n" +
@@ -5313,7 +5327,10 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x0fcurrent_balance\x18\x06 \x01(\x01R\x0ecurrentBalance\x12%\n" +
 	"\x0efrozen_balance\x18\a \x01(\x01R\rfrozenBalance\x12%\n" +
 	"\x0etotal_recharge\x18\b \x01(\x01R\rtotalRecharge\x12\x1b\n" +
-	"\tvalid_bet\x18\t \x01(\x01R\bvalidBet\x12%\n" +
+	"\tvalid_bet\x18\t \x01(\x01R\bvalidBet\x12#\n" +
+	"\rrequired_flow\x18\n" +
+	" \x01(\x01R\frequiredFlow\x12%\n" +
+	"\x0eremaining_flow\x18\v \x01(\x01R\rremainingFlow\x12%\n" +
 	"\x0etoday_recharge\x18\f \x01(\x01R\rtodayRecharge\x12%\n" +
 	"\x0etoday_withdraw\x18\r \x01(\x01R\rtodayWithdraw\x12#\n" +
 	"\rregister_time\x18\x0e \x01(\tR\fregisterTime\x12\x1f\n" +

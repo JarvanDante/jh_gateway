@@ -256,6 +256,7 @@ func translateMessage(msg string) string {
 
 	mapping := map[string]string{
 		"success":             "success",
+		"申请提现成功":              "Withdraw success",
 		"成功":                  "success",
 		"失败":                  "failed",
 		"验证码错误":               "Incorrect captcha",
