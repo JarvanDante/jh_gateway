@@ -40,6 +40,13 @@ func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage prot
 		return nil
 	}
 
+	if msg, ok := responseData["msg"].(string); ok {
+		responseData["msg"] = util.NormalizeMessage(msg)
+	}
+	if message, ok := responseData["message"].(string); ok {
+		responseData["message"] = util.NormalizeMessage(message)
+	}
+
 	util.WriteSuccess(r, responseData)
 	return nil
 }

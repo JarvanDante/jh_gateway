@@ -78,6 +78,7 @@ func WriteError(r *ghttp.Request, code int, msg string) {
 	if msg == "" {
 		msg = ErrorMessages[code]
 	}
+	msg = cleanGRPCErrorMessage(msg)
 	// 不设置HTTP状态码，始终返回200，错误信息在JSON中体现
 	r.Response.WriteJsonExit(Response{
 		Code: code,
@@ -115,6 +116,11 @@ func WriteInternalError(r *ghttp.Request, msg string) {
 	// 清理gRPC错误前缀
 	cleanMsg := cleanGRPCErrorMessage(msg)
 	WriteError(r, CodeInternalError, cleanMsg)
+}
+
+// NormalizeMessage 清理gRPC错误消息中的前缀
+func NormalizeMessage(msg string) string {
+	return cleanGRPCErrorMessage(msg)
 }
 
 // cleanGRPCErrorMessage 清理gRPC错误消息中的前缀
