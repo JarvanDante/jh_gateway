@@ -2338,6 +2338,285 @@ func (x *GetBalanceLogRes) GetCount() int32 {
 	return 0
 }
 
+// 获取用户流水要求列表请求
+type GetUserFlowRequirementsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        int32                  `protobuf:"varint,1,opt,name=status,proto3" json:"status" dc:"-1=全部"` // -1=全部
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserFlowRequirementsReq) Reset() {
+	*x = GetUserFlowRequirementsReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserFlowRequirementsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserFlowRequirementsReq) ProtoMessage() {}
+
+func (x *GetUserFlowRequirementsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserFlowRequirementsReq.ProtoReflect.Descriptor instead.
+func (*GetUserFlowRequirementsReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *GetUserFlowRequirementsReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *GetUserFlowRequirementsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetUserFlowRequirementsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 用户流水要求信息
+type UserFlowRequirementInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	SourceType    int32                  `protobuf:"varint,2,opt,name=source_type,json=sourceType,proto3" json:"source_type"`
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no"`
+	Amount        float64                `protobuf:"fixed64,4,opt,name=amount,proto3" json:"amount"`
+	BonusAmount   float64                `protobuf:"fixed64,5,opt,name=bonus_amount,json=bonusAmount,proto3" json:"bonus_amount"`
+	FlowMultiple  float64                `protobuf:"fixed64,6,opt,name=flow_multiple,json=flowMultiple,proto3" json:"flow_multiple"`
+	RequiredFlow  float64                `protobuf:"fixed64,7,opt,name=required_flow,json=requiredFlow,proto3" json:"required_flow"`
+	CompletedFlow float64                `protobuf:"fixed64,8,opt,name=completed_flow,json=completedFlow,proto3" json:"completed_flow"`
+	RemainingFlow float64                `protobuf:"fixed64,9,opt,name=remaining_flow,json=remainingFlow,proto3" json:"remaining_flow"`
+	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status"`
+	Progress      float64                `protobuf:"fixed64,11,opt,name=progress,proto3" json:"progress"`
+	StartTime     string                 `protobuf:"bytes,12,opt,name=start_time,json=startTime,proto3" json:"start_time"`
+	ExpireTime    string                 `protobuf:"bytes,13,opt,name=expire_time,json=expireTime,proto3" json:"expire_time"`
+	CompleteTime  string                 `protobuf:"bytes,14,opt,name=complete_time,json=completeTime,proto3" json:"complete_time"`
+	Remark        string                 `protobuf:"bytes,15,opt,name=remark,proto3" json:"remark"`
+	CreatedAt     string                 `protobuf:"bytes,16,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserFlowRequirementInfo) Reset() {
+	*x = UserFlowRequirementInfo{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserFlowRequirementInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserFlowRequirementInfo) ProtoMessage() {}
+
+func (x *UserFlowRequirementInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserFlowRequirementInfo.ProtoReflect.Descriptor instead.
+func (*UserFlowRequirementInfo) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *UserFlowRequirementInfo) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetSourceType() int32 {
+	if x != nil {
+		return x.SourceType
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *UserFlowRequirementInfo) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetBonusAmount() float64 {
+	if x != nil {
+		return x.BonusAmount
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetFlowMultiple() float64 {
+	if x != nil {
+		return x.FlowMultiple
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetRequiredFlow() float64 {
+	if x != nil {
+		return x.RequiredFlow
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetCompletedFlow() float64 {
+	if x != nil {
+		return x.CompletedFlow
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetRemainingFlow() float64 {
+	if x != nil {
+		return x.RemainingFlow
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+func (x *UserFlowRequirementInfo) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *UserFlowRequirementInfo) GetExpireTime() string {
+	if x != nil {
+		return x.ExpireTime
+	}
+	return ""
+}
+
+func (x *UserFlowRequirementInfo) GetCompleteTime() string {
+	if x != nil {
+		return x.CompleteTime
+	}
+	return ""
+}
+
+func (x *UserFlowRequirementInfo) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+func (x *UserFlowRequirementInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取用户流水要求列表响应
+type GetUserFlowRequirementsRes struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	List          []*UserFlowRequirementInfo `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Count         int32                      `protobuf:"varint,2,opt,name=count,proto3" json:"count"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserFlowRequirementsRes) Reset() {
+	*x = GetUserFlowRequirementsRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserFlowRequirementsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserFlowRequirementsRes) ProtoMessage() {}
+
+func (x *GetUserFlowRequirementsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserFlowRequirementsRes.ProtoReflect.Descriptor instead.
+func (*GetUserFlowRequirementsRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *GetUserFlowRequirementsRes) GetList() []*UserFlowRequirementInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetUserFlowRequirementsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
 // 充值异步回调请求
 type DepositCallbackReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -2351,7 +2630,7 @@ type DepositCallbackReq struct {
 
 func (x *DepositCallbackReq) Reset() {
 	*x = DepositCallbackReq{}
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[36]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2363,7 +2642,7 @@ func (x *DepositCallbackReq) String() string {
 func (*DepositCallbackReq) ProtoMessage() {}
 
 func (x *DepositCallbackReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[36]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2376,7 +2655,7 @@ func (x *DepositCallbackReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepositCallbackReq.ProtoReflect.Descriptor instead.
 func (*DepositCallbackReq) Descriptor() ([]byte, []int) {
-	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{36}
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *DepositCallbackReq) GetTradeStatus() string {
@@ -2418,7 +2697,7 @@ type DepositCallbackRes struct {
 
 func (x *DepositCallbackRes) Reset() {
 	*x = DepositCallbackRes{}
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[37]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2430,7 +2709,7 @@ func (x *DepositCallbackRes) String() string {
 func (*DepositCallbackRes) ProtoMessage() {}
 
 func (x *DepositCallbackRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[37]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2443,7 +2722,7 @@ func (x *DepositCallbackRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepositCallbackRes.ProtoReflect.Descriptor instead.
 func (*DepositCallbackRes) Descriptor() ([]byte, []int) {
-	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{37}
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *DepositCallbackRes) GetSuccess() bool {
@@ -2472,7 +2751,7 @@ type WithdrawReq struct {
 
 func (x *WithdrawReq) Reset() {
 	*x = WithdrawReq{}
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[38]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2484,7 +2763,7 @@ func (x *WithdrawReq) String() string {
 func (*WithdrawReq) ProtoMessage() {}
 
 func (x *WithdrawReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[38]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2497,7 +2776,7 @@ func (x *WithdrawReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawReq.ProtoReflect.Descriptor instead.
 func (*WithdrawReq) Descriptor() ([]byte, []int) {
-	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{38}
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *WithdrawReq) GetMoney() float64 {
@@ -2533,7 +2812,7 @@ type WithdrawRes struct {
 
 func (x *WithdrawRes) Reset() {
 	*x = WithdrawRes{}
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[39]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2545,7 +2824,7 @@ func (x *WithdrawRes) String() string {
 func (*WithdrawRes) ProtoMessage() {}
 
 func (x *WithdrawRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[39]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2558,7 +2837,7 @@ func (x *WithdrawRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawRes.ProtoReflect.Descriptor instead.
 func (*WithdrawRes) Descriptor() ([]byte, []int) {
-	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{39}
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *WithdrawRes) GetSuccess() bool {
@@ -2762,7 +3041,36 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"totalBonus\x12!\n" +
 	"\ftotal_rebate\x18\x04 \x01(\x01R\vtotalRebate\x124\n" +
 	"\x04list\x18\x05 \x03(\v2 .frontend_balance.BalanceLogItemR\x04list\x12\x14\n" +
-	"\x05count\x18\x06 \x01(\x05R\x05count\"\x8b\x01\n" +
+	"\x05count\x18\x06 \x01(\x05R\x05count\"\\\n" +
+	"\x1aGetUserFlowRequirementsReq\x12\x16\n" +
+	"\x06status\x18\x01 \x01(\x05R\x06status\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x03 \x01(\x05R\x04size\"\x88\x04\n" +
+	"\x17UserFlowRequirementInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1f\n" +
+	"\vsource_type\x18\x02 \x01(\x05R\n" +
+	"sourceType\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12\x16\n" +
+	"\x06amount\x18\x04 \x01(\x01R\x06amount\x12!\n" +
+	"\fbonus_amount\x18\x05 \x01(\x01R\vbonusAmount\x12#\n" +
+	"\rflow_multiple\x18\x06 \x01(\x01R\fflowMultiple\x12#\n" +
+	"\rrequired_flow\x18\a \x01(\x01R\frequiredFlow\x12%\n" +
+	"\x0ecompleted_flow\x18\b \x01(\x01R\rcompletedFlow\x12%\n" +
+	"\x0eremaining_flow\x18\t \x01(\x01R\rremainingFlow\x12\x16\n" +
+	"\x06status\x18\n" +
+	" \x01(\x05R\x06status\x12\x1a\n" +
+	"\bprogress\x18\v \x01(\x01R\bprogress\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\f \x01(\tR\tstartTime\x12\x1f\n" +
+	"\vexpire_time\x18\r \x01(\tR\n" +
+	"expireTime\x12#\n" +
+	"\rcomplete_time\x18\x0e \x01(\tR\fcompleteTime\x12\x16\n" +
+	"\x06remark\x18\x0f \x01(\tR\x06remark\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x10 \x01(\tR\tcreatedAt\"q\n" +
+	"\x1aGetUserFlowRequirementsRes\x12=\n" +
+	"\x04list\x18\x01 \x03(\v2).frontend_balance.UserFlowRequirementInfoR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\x8b\x01\n" +
 	"\x12DepositCallbackReq\x12!\n" +
 	"\ftrade_status\x18\x01 \x01(\tR\vtradeStatus\x12\x19\n" +
 	"\border_sn\x18\x02 \x01(\tR\aorderSn\x12#\n" +
@@ -2779,7 +3087,7 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\vWithdrawRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
-	"\btrade_no\x18\x03 \x01(\tR\atradeNo2\xe1\r\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo2\xda\x0e\n" +
 	"\aBalance\x12_\n" +
 	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
 	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00\x12Y\n" +
@@ -2796,7 +3104,8 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x0fGetDepositNonce\x12$.frontend_balance.GetDepositNonceReq\x1a$.frontend_balance.GetDepositNonceRes\"\x00\x12b\n" +
 	"\x10GetWithdrawNonce\x12%.frontend_balance.GetWithdrawNonceReq\x1a%.frontend_balance.GetWithdrawNonceRes\"\x00\x12h\n" +
 	"\x12CreateDepositOrder\x12'.frontend_balance.CreateDepositOrderReq\x1a'.frontend_balance.CreateDepositOrderRes\"\x00\x12Y\n" +
-	"\rGetBalanceLog\x12\".frontend_balance.GetBalanceLogReq\x1a\".frontend_balance.GetBalanceLogRes\"\x00\x12_\n" +
+	"\rGetBalanceLog\x12\".frontend_balance.GetBalanceLogReq\x1a\".frontend_balance.GetBalanceLogRes\"\x00\x12w\n" +
+	"\x17GetUserFlowRequirements\x12,.frontend_balance.GetUserFlowRequirementsReq\x1a,.frontend_balance.GetUserFlowRequirementsRes\"\x00\x12_\n" +
 	"\x0fDepositCallback\x12$.frontend_balance.DepositCallbackReq\x1a$.frontend_balance.DepositCallbackRes\"\x00\x12J\n" +
 	"\bWithdraw\x12\x1d.frontend_balance.WithdrawReq\x1a\x1d.frontend_balance.WithdrawRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
@@ -2812,95 +3121,101 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
-	(*InitBalanceUserReq)(nil),       // 0: frontend_balance.InitBalanceUserReq
-	(*InitBalanceUserRes)(nil),       // 1: frontend_balance.InitBalanceUserRes
-	(*RefreshBalanceReq)(nil),        // 2: frontend_balance.RefreshBalanceReq
-	(*RefreshBalanceRes)(nil),        // 3: frontend_balance.RefreshBalanceRes
-	(*AdjustBalanceReq)(nil),         // 4: frontend_balance.AdjustBalanceReq
-	(*AdjustBalanceRes)(nil),         // 5: frontend_balance.AdjustBalanceRes
-	(*UpdateTransferStatusReq)(nil),  // 6: frontend_balance.UpdateTransferStatusReq
-	(*UpdateTransferStatusRes)(nil),  // 7: frontend_balance.UpdateTransferStatusRes
-	(*CompensateBalanceReq)(nil),     // 8: frontend_balance.CompensateBalanceReq
-	(*CompensateBalanceRes)(nil),     // 9: frontend_balance.CompensateBalanceRes
-	(*GetLastBalanceLogGameReq)(nil), // 10: frontend_balance.GetLastBalanceLogGameReq
-	(*GetLastBalanceLogGameRes)(nil), // 11: frontend_balance.GetLastBalanceLogGameRes
-	(*GetPaymentListReq)(nil),        // 12: frontend_balance.GetPaymentListReq
-	(*PaymentInfo)(nil),              // 13: frontend_balance.PaymentInfo
-	(*GetPaymentListRes)(nil),        // 14: frontend_balance.GetPaymentListRes
-	(*GetWithdrawListReq)(nil),       // 15: frontend_balance.GetWithdrawListReq
-	(*WithdrawInfo)(nil),             // 16: frontend_balance.WithdrawInfo
-	(*GetWithdrawListRes)(nil),       // 17: frontend_balance.GetWithdrawListRes
-	(*AddBankCardReq)(nil),           // 18: frontend_balance.AddBankCardReq
-	(*AddBankCardRes)(nil),           // 19: frontend_balance.AddBankCardRes
-	(*GetBankCardListReq)(nil),       // 20: frontend_balance.GetBankCardListReq
-	(*BankCardInfo)(nil),             // 21: frontend_balance.BankCardInfo
-	(*GetBankCardListRes)(nil),       // 22: frontend_balance.GetBankCardListRes
-	(*DeleteBankCardReq)(nil),        // 23: frontend_balance.DeleteBankCardReq
-	(*DeleteBankCardRes)(nil),        // 24: frontend_balance.DeleteBankCardRes
-	(*SetDefaultBankCardReq)(nil),    // 25: frontend_balance.SetDefaultBankCardReq
-	(*SetDefaultBankCardRes)(nil),    // 26: frontend_balance.SetDefaultBankCardRes
-	(*GetDepositNonceReq)(nil),       // 27: frontend_balance.GetDepositNonceReq
-	(*GetDepositNonceRes)(nil),       // 28: frontend_balance.GetDepositNonceRes
-	(*GetWithdrawNonceReq)(nil),      // 29: frontend_balance.GetWithdrawNonceReq
-	(*GetWithdrawNonceRes)(nil),      // 30: frontend_balance.GetWithdrawNonceRes
-	(*CreateDepositOrderReq)(nil),    // 31: frontend_balance.CreateDepositOrderReq
-	(*CreateDepositOrderRes)(nil),    // 32: frontend_balance.CreateDepositOrderRes
-	(*GetBalanceLogReq)(nil),         // 33: frontend_balance.GetBalanceLogReq
-	(*BalanceLogItem)(nil),           // 34: frontend_balance.BalanceLogItem
-	(*GetBalanceLogRes)(nil),         // 35: frontend_balance.GetBalanceLogRes
-	(*DepositCallbackReq)(nil),       // 36: frontend_balance.DepositCallbackReq
-	(*DepositCallbackRes)(nil),       // 37: frontend_balance.DepositCallbackRes
-	(*WithdrawReq)(nil),              // 38: frontend_balance.WithdrawReq
-	(*WithdrawRes)(nil),              // 39: frontend_balance.WithdrawRes
+	(*InitBalanceUserReq)(nil),         // 0: frontend_balance.InitBalanceUserReq
+	(*InitBalanceUserRes)(nil),         // 1: frontend_balance.InitBalanceUserRes
+	(*RefreshBalanceReq)(nil),          // 2: frontend_balance.RefreshBalanceReq
+	(*RefreshBalanceRes)(nil),          // 3: frontend_balance.RefreshBalanceRes
+	(*AdjustBalanceReq)(nil),           // 4: frontend_balance.AdjustBalanceReq
+	(*AdjustBalanceRes)(nil),           // 5: frontend_balance.AdjustBalanceRes
+	(*UpdateTransferStatusReq)(nil),    // 6: frontend_balance.UpdateTransferStatusReq
+	(*UpdateTransferStatusRes)(nil),    // 7: frontend_balance.UpdateTransferStatusRes
+	(*CompensateBalanceReq)(nil),       // 8: frontend_balance.CompensateBalanceReq
+	(*CompensateBalanceRes)(nil),       // 9: frontend_balance.CompensateBalanceRes
+	(*GetLastBalanceLogGameReq)(nil),   // 10: frontend_balance.GetLastBalanceLogGameReq
+	(*GetLastBalanceLogGameRes)(nil),   // 11: frontend_balance.GetLastBalanceLogGameRes
+	(*GetPaymentListReq)(nil),          // 12: frontend_balance.GetPaymentListReq
+	(*PaymentInfo)(nil),                // 13: frontend_balance.PaymentInfo
+	(*GetPaymentListRes)(nil),          // 14: frontend_balance.GetPaymentListRes
+	(*GetWithdrawListReq)(nil),         // 15: frontend_balance.GetWithdrawListReq
+	(*WithdrawInfo)(nil),               // 16: frontend_balance.WithdrawInfo
+	(*GetWithdrawListRes)(nil),         // 17: frontend_balance.GetWithdrawListRes
+	(*AddBankCardReq)(nil),             // 18: frontend_balance.AddBankCardReq
+	(*AddBankCardRes)(nil),             // 19: frontend_balance.AddBankCardRes
+	(*GetBankCardListReq)(nil),         // 20: frontend_balance.GetBankCardListReq
+	(*BankCardInfo)(nil),               // 21: frontend_balance.BankCardInfo
+	(*GetBankCardListRes)(nil),         // 22: frontend_balance.GetBankCardListRes
+	(*DeleteBankCardReq)(nil),          // 23: frontend_balance.DeleteBankCardReq
+	(*DeleteBankCardRes)(nil),          // 24: frontend_balance.DeleteBankCardRes
+	(*SetDefaultBankCardReq)(nil),      // 25: frontend_balance.SetDefaultBankCardReq
+	(*SetDefaultBankCardRes)(nil),      // 26: frontend_balance.SetDefaultBankCardRes
+	(*GetDepositNonceReq)(nil),         // 27: frontend_balance.GetDepositNonceReq
+	(*GetDepositNonceRes)(nil),         // 28: frontend_balance.GetDepositNonceRes
+	(*GetWithdrawNonceReq)(nil),        // 29: frontend_balance.GetWithdrawNonceReq
+	(*GetWithdrawNonceRes)(nil),        // 30: frontend_balance.GetWithdrawNonceRes
+	(*CreateDepositOrderReq)(nil),      // 31: frontend_balance.CreateDepositOrderReq
+	(*CreateDepositOrderRes)(nil),      // 32: frontend_balance.CreateDepositOrderRes
+	(*GetBalanceLogReq)(nil),           // 33: frontend_balance.GetBalanceLogReq
+	(*BalanceLogItem)(nil),             // 34: frontend_balance.BalanceLogItem
+	(*GetBalanceLogRes)(nil),           // 35: frontend_balance.GetBalanceLogRes
+	(*GetUserFlowRequirementsReq)(nil), // 36: frontend_balance.GetUserFlowRequirementsReq
+	(*UserFlowRequirementInfo)(nil),    // 37: frontend_balance.UserFlowRequirementInfo
+	(*GetUserFlowRequirementsRes)(nil), // 38: frontend_balance.GetUserFlowRequirementsRes
+	(*DepositCallbackReq)(nil),         // 39: frontend_balance.DepositCallbackReq
+	(*DepositCallbackRes)(nil),         // 40: frontend_balance.DepositCallbackRes
+	(*WithdrawReq)(nil),                // 41: frontend_balance.WithdrawReq
+	(*WithdrawRes)(nil),                // 42: frontend_balance.WithdrawRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	13, // 0: frontend_balance.GetPaymentListRes.list:type_name -> frontend_balance.PaymentInfo
 	16, // 1: frontend_balance.GetWithdrawListRes.list:type_name -> frontend_balance.WithdrawInfo
 	21, // 2: frontend_balance.GetBankCardListRes.list:type_name -> frontend_balance.BankCardInfo
 	34, // 3: frontend_balance.GetBalanceLogRes.list:type_name -> frontend_balance.BalanceLogItem
-	0,  // 4: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
-	2,  // 5: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
-	4,  // 6: frontend_balance.Balance.AdjustBalance:input_type -> frontend_balance.AdjustBalanceReq
-	6,  // 7: frontend_balance.Balance.UpdateTransferStatus:input_type -> frontend_balance.UpdateTransferStatusReq
-	8,  // 8: frontend_balance.Balance.CompensateBalance:input_type -> frontend_balance.CompensateBalanceReq
-	10, // 9: frontend_balance.Balance.GetLastBalanceLogGame:input_type -> frontend_balance.GetLastBalanceLogGameReq
-	12, // 10: frontend_balance.Balance.GetPaymentList:input_type -> frontend_balance.GetPaymentListReq
-	15, // 11: frontend_balance.Balance.GetWithdrawList:input_type -> frontend_balance.GetWithdrawListReq
-	18, // 12: frontend_balance.Balance.AddBankCard:input_type -> frontend_balance.AddBankCardReq
-	20, // 13: frontend_balance.Balance.GetBankCardList:input_type -> frontend_balance.GetBankCardListReq
-	23, // 14: frontend_balance.Balance.DeleteBankCard:input_type -> frontend_balance.DeleteBankCardReq
-	25, // 15: frontend_balance.Balance.SetDefaultBankCard:input_type -> frontend_balance.SetDefaultBankCardReq
-	27, // 16: frontend_balance.Balance.GetDepositNonce:input_type -> frontend_balance.GetDepositNonceReq
-	29, // 17: frontend_balance.Balance.GetWithdrawNonce:input_type -> frontend_balance.GetWithdrawNonceReq
-	31, // 18: frontend_balance.Balance.CreateDepositOrder:input_type -> frontend_balance.CreateDepositOrderReq
-	33, // 19: frontend_balance.Balance.GetBalanceLog:input_type -> frontend_balance.GetBalanceLogReq
-	36, // 20: frontend_balance.Balance.DepositCallback:input_type -> frontend_balance.DepositCallbackReq
-	38, // 21: frontend_balance.Balance.Withdraw:input_type -> frontend_balance.WithdrawReq
-	1,  // 22: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	3,  // 23: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
-	5,  // 24: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
-	7,  // 25: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
-	9,  // 26: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
-	11, // 27: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
-	14, // 28: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
-	17, // 29: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
-	19, // 30: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
-	22, // 31: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
-	24, // 32: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
-	26, // 33: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
-	28, // 34: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
-	30, // 35: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
-	32, // 36: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
-	35, // 37: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
-	37, // 38: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
-	39, // 39: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
-	22, // [22:40] is the sub-list for method output_type
-	4,  // [4:22] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	37, // 4: frontend_balance.GetUserFlowRequirementsRes.list:type_name -> frontend_balance.UserFlowRequirementInfo
+	0,  // 5: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
+	2,  // 6: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
+	4,  // 7: frontend_balance.Balance.AdjustBalance:input_type -> frontend_balance.AdjustBalanceReq
+	6,  // 8: frontend_balance.Balance.UpdateTransferStatus:input_type -> frontend_balance.UpdateTransferStatusReq
+	8,  // 9: frontend_balance.Balance.CompensateBalance:input_type -> frontend_balance.CompensateBalanceReq
+	10, // 10: frontend_balance.Balance.GetLastBalanceLogGame:input_type -> frontend_balance.GetLastBalanceLogGameReq
+	12, // 11: frontend_balance.Balance.GetPaymentList:input_type -> frontend_balance.GetPaymentListReq
+	15, // 12: frontend_balance.Balance.GetWithdrawList:input_type -> frontend_balance.GetWithdrawListReq
+	18, // 13: frontend_balance.Balance.AddBankCard:input_type -> frontend_balance.AddBankCardReq
+	20, // 14: frontend_balance.Balance.GetBankCardList:input_type -> frontend_balance.GetBankCardListReq
+	23, // 15: frontend_balance.Balance.DeleteBankCard:input_type -> frontend_balance.DeleteBankCardReq
+	25, // 16: frontend_balance.Balance.SetDefaultBankCard:input_type -> frontend_balance.SetDefaultBankCardReq
+	27, // 17: frontend_balance.Balance.GetDepositNonce:input_type -> frontend_balance.GetDepositNonceReq
+	29, // 18: frontend_balance.Balance.GetWithdrawNonce:input_type -> frontend_balance.GetWithdrawNonceReq
+	31, // 19: frontend_balance.Balance.CreateDepositOrder:input_type -> frontend_balance.CreateDepositOrderReq
+	33, // 20: frontend_balance.Balance.GetBalanceLog:input_type -> frontend_balance.GetBalanceLogReq
+	36, // 21: frontend_balance.Balance.GetUserFlowRequirements:input_type -> frontend_balance.GetUserFlowRequirementsReq
+	39, // 22: frontend_balance.Balance.DepositCallback:input_type -> frontend_balance.DepositCallbackReq
+	41, // 23: frontend_balance.Balance.Withdraw:input_type -> frontend_balance.WithdrawReq
+	1,  // 24: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3,  // 25: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	5,  // 26: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
+	7,  // 27: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
+	9,  // 28: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
+	11, // 29: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
+	14, // 30: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
+	17, // 31: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
+	19, // 32: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
+	22, // 33: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
+	24, // 34: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
+	26, // 35: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
+	28, // 36: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
+	30, // 37: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
+	32, // 38: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
+	35, // 39: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
+	38, // 40: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
+	40, // 41: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
+	42, // 42: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
+	24, // [24:43] is the sub-list for method output_type
+	5,  // [5:24] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_frontend_balance_v1_balance_proto_init() }
@@ -2914,7 +3229,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   40,
+			NumMessages:   43,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

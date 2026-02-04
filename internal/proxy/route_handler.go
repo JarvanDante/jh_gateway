@@ -199,6 +199,8 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/deposit-order", "POST", balance.CallCreateDepositOrder)
 	// 账户明细
 	balanceRoutes.Register("/balance-log", "GET", balance.CallGetBalanceLog)
+	// 用户流水要求列表
+	balanceRoutes.Register("/my-flow-requirements", "GET", balance.CallGetUserFlowRequirements)
 	// 充值异步回调
 	balanceRoutes.Register("/deposit-callback", "POST", balance.CallDepositCallback)
 	// 申请提现
@@ -250,6 +252,9 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/flow-rule/create", "POST", balance.CallCreateFlowRule)
 	balanceRoutes.Register("/flow-rule/update", "POST", balance.CallUpdateFlowRule)
 	balanceRoutes.Register("/flow-rule/delete", "POST", balance.CallDeleteFlowRule)
+	// 流水要求管理
+	balanceRoutes.Register("/flow-requirements", "GET", balance.CallGetFlowRequirements)
+	balanceRoutes.Register("/flow-requirement/update", "POST", balance.CallUpdateFlowRequirement)
 }
 
 // initGameRoutes 初始化游戏路由

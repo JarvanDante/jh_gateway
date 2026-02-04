@@ -20,24 +20,25 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Balance_InitBalanceUser_FullMethodName       = "/frontend_balance.Balance/InitBalanceUser"
-	Balance_RefreshBalance_FullMethodName        = "/frontend_balance.Balance/RefreshBalance"
-	Balance_AdjustBalance_FullMethodName         = "/frontend_balance.Balance/AdjustBalance"
-	Balance_UpdateTransferStatus_FullMethodName  = "/frontend_balance.Balance/UpdateTransferStatus"
-	Balance_CompensateBalance_FullMethodName     = "/frontend_balance.Balance/CompensateBalance"
-	Balance_GetLastBalanceLogGame_FullMethodName = "/frontend_balance.Balance/GetLastBalanceLogGame"
-	Balance_GetPaymentList_FullMethodName        = "/frontend_balance.Balance/GetPaymentList"
-	Balance_GetWithdrawList_FullMethodName       = "/frontend_balance.Balance/GetWithdrawList"
-	Balance_AddBankCard_FullMethodName           = "/frontend_balance.Balance/AddBankCard"
-	Balance_GetBankCardList_FullMethodName       = "/frontend_balance.Balance/GetBankCardList"
-	Balance_DeleteBankCard_FullMethodName        = "/frontend_balance.Balance/DeleteBankCard"
-	Balance_SetDefaultBankCard_FullMethodName    = "/frontend_balance.Balance/SetDefaultBankCard"
-	Balance_GetDepositNonce_FullMethodName       = "/frontend_balance.Balance/GetDepositNonce"
-	Balance_GetWithdrawNonce_FullMethodName      = "/frontend_balance.Balance/GetWithdrawNonce"
-	Balance_CreateDepositOrder_FullMethodName    = "/frontend_balance.Balance/CreateDepositOrder"
-	Balance_GetBalanceLog_FullMethodName         = "/frontend_balance.Balance/GetBalanceLog"
-	Balance_DepositCallback_FullMethodName       = "/frontend_balance.Balance/DepositCallback"
-	Balance_Withdraw_FullMethodName              = "/frontend_balance.Balance/Withdraw"
+	Balance_InitBalanceUser_FullMethodName         = "/frontend_balance.Balance/InitBalanceUser"
+	Balance_RefreshBalance_FullMethodName          = "/frontend_balance.Balance/RefreshBalance"
+	Balance_AdjustBalance_FullMethodName           = "/frontend_balance.Balance/AdjustBalance"
+	Balance_UpdateTransferStatus_FullMethodName    = "/frontend_balance.Balance/UpdateTransferStatus"
+	Balance_CompensateBalance_FullMethodName       = "/frontend_balance.Balance/CompensateBalance"
+	Balance_GetLastBalanceLogGame_FullMethodName   = "/frontend_balance.Balance/GetLastBalanceLogGame"
+	Balance_GetPaymentList_FullMethodName          = "/frontend_balance.Balance/GetPaymentList"
+	Balance_GetWithdrawList_FullMethodName         = "/frontend_balance.Balance/GetWithdrawList"
+	Balance_AddBankCard_FullMethodName             = "/frontend_balance.Balance/AddBankCard"
+	Balance_GetBankCardList_FullMethodName         = "/frontend_balance.Balance/GetBankCardList"
+	Balance_DeleteBankCard_FullMethodName          = "/frontend_balance.Balance/DeleteBankCard"
+	Balance_SetDefaultBankCard_FullMethodName      = "/frontend_balance.Balance/SetDefaultBankCard"
+	Balance_GetDepositNonce_FullMethodName         = "/frontend_balance.Balance/GetDepositNonce"
+	Balance_GetWithdrawNonce_FullMethodName        = "/frontend_balance.Balance/GetWithdrawNonce"
+	Balance_CreateDepositOrder_FullMethodName      = "/frontend_balance.Balance/CreateDepositOrder"
+	Balance_GetBalanceLog_FullMethodName           = "/frontend_balance.Balance/GetBalanceLog"
+	Balance_GetUserFlowRequirements_FullMethodName = "/frontend_balance.Balance/GetUserFlowRequirements"
+	Balance_DepositCallback_FullMethodName         = "/frontend_balance.Balance/DepositCallback"
+	Balance_Withdraw_FullMethodName                = "/frontend_balance.Balance/Withdraw"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -76,6 +77,8 @@ type BalanceClient interface {
 	CreateDepositOrder(ctx context.Context, in *CreateDepositOrderReq, opts ...grpc.CallOption) (*CreateDepositOrderRes, error)
 	// 获取账户明细
 	GetBalanceLog(ctx context.Context, in *GetBalanceLogReq, opts ...grpc.CallOption) (*GetBalanceLogRes, error)
+	// 获取用户流水要求列表
+	GetUserFlowRequirements(ctx context.Context, in *GetUserFlowRequirementsReq, opts ...grpc.CallOption) (*GetUserFlowRequirementsRes, error)
 	// 充值异步回调
 	DepositCallback(ctx context.Context, in *DepositCallbackReq, opts ...grpc.CallOption) (*DepositCallbackRes, error)
 	// 申请提现
@@ -250,6 +253,16 @@ func (c *balanceClient) GetBalanceLog(ctx context.Context, in *GetBalanceLogReq,
 	return out, nil
 }
 
+func (c *balanceClient) GetUserFlowRequirements(ctx context.Context, in *GetUserFlowRequirementsReq, opts ...grpc.CallOption) (*GetUserFlowRequirementsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserFlowRequirementsRes)
+	err := c.cc.Invoke(ctx, Balance_GetUserFlowRequirements_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *balanceClient) DepositCallback(ctx context.Context, in *DepositCallbackReq, opts ...grpc.CallOption) (*DepositCallbackRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DepositCallbackRes)
@@ -306,6 +319,8 @@ type BalanceServer interface {
 	CreateDepositOrder(context.Context, *CreateDepositOrderReq) (*CreateDepositOrderRes, error)
 	// 获取账户明细
 	GetBalanceLog(context.Context, *GetBalanceLogReq) (*GetBalanceLogRes, error)
+	// 获取用户流水要求列表
+	GetUserFlowRequirements(context.Context, *GetUserFlowRequirementsReq) (*GetUserFlowRequirementsRes, error)
 	// 充值异步回调
 	DepositCallback(context.Context, *DepositCallbackReq) (*DepositCallbackRes, error)
 	// 申请提现
@@ -367,6 +382,9 @@ func (UnimplementedBalanceServer) CreateDepositOrder(context.Context, *CreateDep
 }
 func (UnimplementedBalanceServer) GetBalanceLog(context.Context, *GetBalanceLogReq) (*GetBalanceLogRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBalanceLog not implemented")
+}
+func (UnimplementedBalanceServer) GetUserFlowRequirements(context.Context, *GetUserFlowRequirementsReq) (*GetUserFlowRequirementsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserFlowRequirements not implemented")
 }
 func (UnimplementedBalanceServer) DepositCallback(context.Context, *DepositCallbackReq) (*DepositCallbackRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DepositCallback not implemented")
@@ -683,6 +701,24 @@ func _Balance_GetBalanceLog_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetUserFlowRequirements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserFlowRequirementsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetUserFlowRequirements(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetUserFlowRequirements_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetUserFlowRequirements(ctx, req.(*GetUserFlowRequirementsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Balance_DepositCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DepositCallbackReq)
 	if err := dec(in); err != nil {
@@ -789,6 +825,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBalanceLog",
 			Handler:    _Balance_GetBalanceLog_Handler,
+		},
+		{
+			MethodName: "GetUserFlowRequirements",
+			Handler:    _Balance_GetUserFlowRequirements_Handler,
 		},
 		{
 			MethodName: "DepositCallback",

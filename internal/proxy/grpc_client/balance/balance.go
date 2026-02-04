@@ -99,6 +99,9 @@ func getInt64FromMap(data map[string]interface{}, key string) int64 {
 			return int64(v)
 		case float64:
 			return int64(v)
+		case string:
+			// 处理字符串类型的数字（来自 GET 查询参数或 form-data）
+			return gconv.Int64(v)
 		}
 	}
 	return 0
@@ -1363,6 +1366,97 @@ func CallDeleteFlowRule(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
+ * @catalog 后台/财务/流水要求
+ * @title 获取流水要求列表
+ * @description 获取流水要求列表
+ * @method get
+ * @url /api/backend/balance/flow-requirements
+ * @param site_id 可选 int 站点ID
+ * @param user_id 可选 int 用户ID
+ * @param username 可选 string 用户名
+ * @param status 可选 int 状态（-1=不筛选）
+ * @param source_type 可选 int 来源类型（0=不筛选）
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 26
+ */
+func CallGetFlowRequirements(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetFlowRequirements")
+
+	req := &v6.GetFlowRequirementsReq{
+		UserId:     r.Get("user_id", 0).Int64(),
+		Username:   r.Get("username", "").String(),
+		Status:     r.Get("status", -1).Int32(),
+		SourceType: r.Get("source_type", 0).Int32(),
+		StartTime:  r.Get("start_time", "").String(),
+		EndTime:    r.Get("end_time", "").String(),
+		Page:       r.Get("page", 1).Int32(),
+		Size:       r.Get("size", 50).Int32(),
+	}
+
+	client := v6.NewBalanceClient(conn)
+	res, err := client.GetFlowRequirements(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取流水要求列表失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/流水要求
+ * @title 更新流水要求
+ * @description 更新流水要求
+ * @method post
+ * @url /api/backend/balance/flow-requirement/update
+ * @param id 必选 int 流水要求ID
+ * @param status 必选 int 状态 1=进行中 2=已完成 3=已过期 4=已取消
+ * @param remark 可选 string 备注
+ * @param expire_time 可选 string 过期时间（YYYY-MM-DD HH:MM:SS）
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
+ * @number 27
+ */
+func CallUpdateFlowRequirement(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance UpdateFlowRequirement")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求参数解析失败")
+		return nil
+	}
+
+	id := getInt64FromMap(reqData, "id")
+	if id <= 0 {
+		util.WriteBadRequest(r, "流水要求ID不能为空")
+		return nil
+	}
+
+	req := &v6.UpdateFlowRequirementReq{
+		Id:         id,
+		Status:     getInt32FromMap(reqData, "status"),
+		Remark:     getStringFromMap(reqData, "remark"),
+		ExpireTime: getStringFromMap(reqData, "expire_time"),
+	}
+
+	client := v6.NewBalanceClient(conn)
+	res, err := client.UpdateFlowRequirement(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "更新流水要求失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 前台/资金
  * @title OK获取支付渠道列表
  * @description 获取可用的支付渠道列表
@@ -1978,4 +2072,37 @@ func CallWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 
 	// 使用统一的protobuf响应序列化
 	return writeProtobufResponse(ctx, r, resp)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/资金
+ * @title 获取用户流水要求列表
+ * @description 获取用户流水要求列表
+ * @method get
+ * @url /api/frontend/balance/flow-requirements
+ * @param status 可选 int 状态（-1=不筛选）
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 106
+ */
+func CallGetUserFlowRequirements(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetUserFlowRequirements")
+
+	req := &v17.GetUserFlowRequirementsReq{
+		Status: r.Get("status", -1).Int32(),
+		Page:   r.Get("page", 1).Int32(),
+		Size:   r.Get("size", 50).Int32(),
+	}
+
+	client := v17.NewBalanceClient(conn)
+	res, err := client.GetUserFlowRequirements(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取流水要求失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
 }
