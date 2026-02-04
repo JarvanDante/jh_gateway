@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gogf/gf/v2/util/gconv"
 	v16 "jh_gateway/api/frontend/user/v1"
+	"regexp"
 	"strings"
 
 	v15 "jh_gateway/api/frontend/public/v1"
@@ -161,6 +162,18 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	}
 	if password == "" {
 		util.WriteBadRequest(r, "密码必填")
+		return nil
+	}
+	if usernameLen := len(strings.TrimSpace(username)); usernameLen < 6 || usernameLen > 16 {
+		util.WriteBadRequest(r, "用户名长度需为6-16位")
+		return nil
+	}
+	if passwordLen := len(password); passwordLen < 6 || passwordLen > 20 {
+		util.WriteBadRequest(r, "密码长度需为6-20位")
+		return nil
+	}
+	if !regexp.MustCompile(`^[A-Za-z0-9]+$`).MatchString(username) {
+		util.WriteBadRequest(r, "用户名仅允许字母和数字")
 		return nil
 	}
 	if time == "" {
