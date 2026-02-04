@@ -247,6 +247,7 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/update-site-withdraw", "POST", balance.CallUpdateSiteWithdraw)
 
 	// 流水规则管理
+	balanceRoutes.Register("/flow-options", "GET", balance.CallGetFlowOptions)
 	balanceRoutes.Register("/flow-rules", "GET", balance.CallGetFlowRules)
 	balanceRoutes.Register("/flow-rule", "GET", balance.CallGetFlowRule)
 	balanceRoutes.Register("/flow-rule/create", "POST", balance.CallCreateFlowRule)
@@ -361,7 +362,7 @@ func initFrontendRoutes() {
 	frontendRoutes = NewRouteRegistry()
 
 	// 快速注册
-	frontendRoutes.Register("/quickRegister", "POST", frontend.CallQuickRegister)
+	//frontendRoutes.Register("/quickRegister", "POST", frontend.CallQuickRegister)
 	// 用户注册
 	frontendRoutes.Register("/register", "POST", frontend.CallUserRegister)
 	// 用户登录

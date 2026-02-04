@@ -42,6 +42,7 @@ const (
 	Balance_CreateFlowRule_FullMethodName        = "/balance.Balance/CreateFlowRule"
 	Balance_UpdateFlowRule_FullMethodName        = "/balance.Balance/UpdateFlowRule"
 	Balance_DeleteFlowRule_FullMethodName        = "/balance.Balance/DeleteFlowRule"
+	Balance_GetFlowOptions_FullMethodName        = "/balance.Balance/GetFlowOptions"
 	Balance_GetFlowRequirements_FullMethodName   = "/balance.Balance/GetFlowRequirements"
 	Balance_UpdateFlowRequirement_FullMethodName = "/balance.Balance/UpdateFlowRequirement"
 )
@@ -81,6 +82,8 @@ type BalanceClient interface {
 	CreateFlowRule(ctx context.Context, in *CreateFlowRuleReq, opts ...grpc.CallOption) (*CreateFlowRuleRes, error)
 	UpdateFlowRule(ctx context.Context, in *UpdateFlowRuleReq, opts ...grpc.CallOption) (*UpdateFlowRuleRes, error)
 	DeleteFlowRule(ctx context.Context, in *DeleteFlowRuleReq, opts ...grpc.CallOption) (*DeleteFlowRuleRes, error)
+	// 流水规则类型选项
+	GetFlowOptions(ctx context.Context, in *GetFlowOptionsReq, opts ...grpc.CallOption) (*GetFlowOptionsRes, error)
 	// 流水要求管理
 	GetFlowRequirements(ctx context.Context, in *GetFlowRequirementsReq, opts ...grpc.CallOption) (*GetFlowRequirementsRes, error)
 	UpdateFlowRequirement(ctx context.Context, in *UpdateFlowRequirementReq, opts ...grpc.CallOption) (*UpdateFlowRequirementRes, error)
@@ -314,6 +317,16 @@ func (c *balanceClient) DeleteFlowRule(ctx context.Context, in *DeleteFlowRuleRe
 	return out, nil
 }
 
+func (c *balanceClient) GetFlowOptions(ctx context.Context, in *GetFlowOptionsReq, opts ...grpc.CallOption) (*GetFlowOptionsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFlowOptionsRes)
+	err := c.cc.Invoke(ctx, Balance_GetFlowOptions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *balanceClient) GetFlowRequirements(ctx context.Context, in *GetFlowRequirementsReq, opts ...grpc.CallOption) (*GetFlowRequirementsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetFlowRequirementsRes)
@@ -369,6 +382,8 @@ type BalanceServer interface {
 	CreateFlowRule(context.Context, *CreateFlowRuleReq) (*CreateFlowRuleRes, error)
 	UpdateFlowRule(context.Context, *UpdateFlowRuleReq) (*UpdateFlowRuleRes, error)
 	DeleteFlowRule(context.Context, *DeleteFlowRuleReq) (*DeleteFlowRuleRes, error)
+	// 流水规则类型选项
+	GetFlowOptions(context.Context, *GetFlowOptionsReq) (*GetFlowOptionsRes, error)
 	// 流水要求管理
 	GetFlowRequirements(context.Context, *GetFlowRequirementsReq) (*GetFlowRequirementsRes, error)
 	UpdateFlowRequirement(context.Context, *UpdateFlowRequirementReq) (*UpdateFlowRequirementRes, error)
@@ -447,6 +462,9 @@ func (UnimplementedBalanceServer) UpdateFlowRule(context.Context, *UpdateFlowRul
 }
 func (UnimplementedBalanceServer) DeleteFlowRule(context.Context, *DeleteFlowRuleReq) (*DeleteFlowRuleRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteFlowRule not implemented")
+}
+func (UnimplementedBalanceServer) GetFlowOptions(context.Context, *GetFlowOptionsReq) (*GetFlowOptionsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetFlowOptions not implemented")
 }
 func (UnimplementedBalanceServer) GetFlowRequirements(context.Context, *GetFlowRequirementsReq) (*GetFlowRequirementsRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetFlowRequirements not implemented")
@@ -871,6 +889,24 @@ func _Balance_DeleteFlowRule_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetFlowOptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFlowOptionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetFlowOptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetFlowOptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetFlowOptions(ctx, req.(*GetFlowOptionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Balance_GetFlowRequirements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetFlowRequirementsReq)
 	if err := dec(in); err != nil {
@@ -1001,6 +1037,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteFlowRule",
 			Handler:    _Balance_DeleteFlowRule_Handler,
+		},
+		{
+			MethodName: "GetFlowOptions",
+			Handler:    _Balance_GetFlowOptions_Handler,
 		},
 		{
 			MethodName: "GetFlowRequirements",

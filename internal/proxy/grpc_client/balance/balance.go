@@ -258,6 +258,36 @@ func CallGetChangeOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 
 /**
  * showdoc
+ * @catalog 后台/财务/流水
+ * @title 获取流水规则类型选项
+ * @description 获取流水规则类型选项列表
+ * @method get
+ * @url /api/backend/balance/flow-options
+ * @return {"code":0,"msg":"success","data":{"list":[{"value":1,"label":"充值流水"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 数据对象
+ * @return_param data.list array 选项列表
+ * @number 27
+ */
+func CallGetFlowOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetFlowOptions")
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetFlowOptionsReq{}
+
+	res, err := client.GetFlowOptions(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetFlowOptions failed: %v", err)
+		util.WriteInternalError(r, "获取流水类型选项失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 后台/财务/充值记录
  * @title 获取充值记录
  * @description 获取在线支付充值记录列表
