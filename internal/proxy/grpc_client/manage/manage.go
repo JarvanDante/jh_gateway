@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	v24 "jh_gateway/api/manage/activity/v1"
 	v12 "jh_gateway/api/manage/customer/v1"
 	v18 "jh_gateway/api/manage/game/v1"
 	v14 "jh_gateway/api/manage/option/v1"
@@ -1336,6 +1337,260 @@ func CallDeleteSiteDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	res, err := client.DeleteSiteDomain(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC ManageOption DeleteSiteDomain failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/活动管理
+ * @title 获取活动列表
+ * @description 获取活动列表的接口
+ * @method get
+ * @url /api/manage/activity/list
+ * @param code 可选 string 模板编码
+ * @param name 可选 string 模板名称
+ * @param activity_type 可选 string 活动类型
+ * @param status 可选 int 状态 1=启用 0=禁用
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认20
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func CallGetActivityList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageActivity GetActivityList")
+
+	client := v24.NewManageActivityClient(conn)
+	req := &v24.GetActivityListReq{
+		Code:         r.Get("code", "").String(),
+		Name:         r.Get("name", "").String(),
+		ActivityType: r.Get("activity_type", "").String(),
+		Status:       r.Get("status", -1).Int32(),
+		Page:         r.Get("page", 1).Int32(),
+		Size:         r.Get("size", 20).Int32(),
+	}
+
+	res, err := client.GetActivityList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageActivity GetActivityList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/活动管理
+ * @title 获取活动详情
+ * @description 获取指定活动详情的接口
+ * @method get
+ * @url /api/manage/activity/detail/{id}
+ * @param id 必选 int 活动ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 活动详情数据
+ * @number 2
+ */
+func CallGetActivityDetail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageActivity GetActivityDetail")
+
+	idStr := r.Get("id").String()
+	if idStr == "" {
+		util.WriteBadRequest(r, "活动ID不能为空")
+		return fmt.Errorf("活动ID不能为空")
+	}
+
+	id := r.Get("id").Int32()
+	if id <= 0 {
+		util.WriteBadRequest(r, "活动ID必须大于0")
+		return fmt.Errorf("活动ID必须大于0")
+	}
+
+	client := v24.NewManageActivityClient(conn)
+	req := &v24.GetActivityDetailReq{
+		Id: id,
+	}
+
+	res, err := client.GetActivityDetail(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageActivity GetActivityDetail failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/活动管理
+ * @title 创建活动
+ * @description 创建活动的接口
+ * @method post
+ * @url /api/manage/activity/create
+ * @param name 必选 string 模板名称
+ * @param code 必选 string 模板编码
+ * @param activity_type 必选 string 活动类型
+ * @param description 可选 string 模板描述
+ * @param start_time 可选 string 开始时间 2006-01-02 15:04:05
+ * @param end_time 可选 string 结束时间 2006-01-02 15:04:05
+ * @param fixed_params 可选 string 固定参数(JSON)
+ * @param status 可选 int 状态 0=禁用 1=启用
+ * @param table 可选 string 表名定义不同属性
+ * @return {"code":0,"msg":"success","data":{"id":1}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @return_param data.id int 创建的活动ID
+ * @number 3
+ */
+func CallCreateActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageActivity CreateActivity")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	fixedParams := getStringFromMap(reqData, "fixed_params")
+	if fixedParams == "" {
+		if raw, ok := reqData["fixed_params"]; ok && raw != nil {
+			if bytes, marshalErr := json.Marshal(raw); marshalErr == nil {
+				fixedParams = string(bytes)
+			}
+		}
+	}
+
+	client := v24.NewManageActivityClient(conn)
+	req := &v24.CreateActivityReq{
+		Name:         getStringFromMap(reqData, "name"),
+		Code:         getStringFromMap(reqData, "code"),
+		ActivityType: getStringFromMap(reqData, "activity_type"),
+		Description:  getStringFromMap(reqData, "description"),
+		StartTime:    getStringFromMap(reqData, "start_time"),
+		EndTime:      getStringFromMap(reqData, "end_time"),
+		FixedParams:  fixedParams,
+		Status:       getInt32FromMap(reqData, "status"),
+		Table:        getStringFromMap(reqData, "table"),
+	}
+
+	res, err := client.CreateActivity(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageActivity CreateActivity failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/活动管理
+ * @title 更新活动
+ * @description 更新活动信息的接口
+ * @method post
+ * @url /api/manage/activity/update
+ * @param id 必选 int 活动ID
+ * @param name 可选 string 模板名称
+ * @param code 可选 string 模板编码
+ * @param activity_type 可选 string 活动类型
+ * @param description 可选 string 模板描述
+ * @param start_time 可选 string 开始时间 2006-01-02 15:04:05
+ * @param end_time 可选 string 结束时间 2006-01-02 15:04:05
+ * @param fixed_params 可选 string 固定参数(JSON)
+ * @param status 可选 int 状态
+ * @param table 可选 string 表名定义不同属性
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func CallUpdateActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageActivity UpdateActivity")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	fixedParams := getStringFromMap(reqData, "fixed_params")
+	if fixedParams == "" {
+		if raw, ok := reqData["fixed_params"]; ok && raw != nil {
+			if bytes, marshalErr := json.Marshal(raw); marshalErr == nil {
+				fixedParams = string(bytes)
+			}
+		}
+	}
+
+	client := v24.NewManageActivityClient(conn)
+	req := &v24.UpdateActivityReq{
+		Id:           getInt32FromMap(reqData, "id"),
+		Name:         getStringFromMap(reqData, "name"),
+		Code:         getStringFromMap(reqData, "code"),
+		ActivityType: getStringFromMap(reqData, "activity_type"),
+		Description:  getStringFromMap(reqData, "description"),
+		StartTime:    getStringFromMap(reqData, "start_time"),
+		EndTime:      getStringFromMap(reqData, "end_time"),
+		FixedParams:  fixedParams,
+		Status:       getInt32FromMap(reqData, "status"),
+		Table:        getStringFromMap(reqData, "table"),
+	}
+
+	res, err := client.UpdateActivity(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageActivity UpdateActivity failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/活动管理
+ * @title 删除活动
+ * @description 删除活动的接口
+ * @method post
+ * @url /api/manage/activity/delete
+ * @param id 必选 int 活动ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 5
+ */
+func CallDeleteActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageActivity DeleteActivity")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	id := getInt32FromMap(reqData, "id")
+	if id <= 0 {
+		util.WriteBadRequest(r, "活动ID必须大于0")
+		return fmt.Errorf("活动ID必须大于0")
+	}
+
+	client := v24.NewManageActivityClient(conn)
+	req := &v24.DeleteActivityReq{
+		Id: id,
+	}
+
+	res, err := client.DeleteActivity(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageActivity DeleteActivity failed: %v", err)
 		return err
 	}
 

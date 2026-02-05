@@ -316,6 +316,13 @@ func initManageRoutes() {
 	manageRoutes.Register("/game/supplement-bet-records", "POST", manage.CallSupplementBetRecords)
 	manageRoutes.Register("/game/sync-tasks", "GET", manage.CallManageGetSyncTasks)
 
+	// 活动管理接口
+	manageRoutes.Register("/activity/list", "GET", manage.CallGetActivityList)
+	manageRoutes.Register("/activity/detail", "GET", manage.CallGetActivityDetail)
+	manageRoutes.Register("/activity/create", "POST", manage.CallCreateActivity)
+	manageRoutes.Register("/activity/update", "POST", manage.CallUpdateActivity)
+	manageRoutes.Register("/activity/delete", "POST", manage.CallDeleteActivity)
+
 	// 支付管理接口
 	manageRoutes.Register("/payment/list", "GET", manage.CallGetPaymentList)
 	manageRoutes.Register("/payment/detail", "GET", manage.CallGetPaymentDetail)
