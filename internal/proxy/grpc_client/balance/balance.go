@@ -39,16 +39,31 @@ func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage prot
 		return nil
 	}
 
-	if msg, ok := responseData["msg"].(string); ok {
-		responseData["msg"] = util.NormalizeMessageWithPath(msg, r.URL.Path)
-	}
-	if message, ok := responseData["message"].(string); ok {
-		responseData["message"] = util.NormalizeMessageWithPath(message, r.URL.Path)
-	}
+	normalizeMessageFields(responseData, r.URL.Path)
 
 	// 返回成功响应
 	util.WriteSuccess(r, responseData)
 	return nil
+}
+
+// normalizeMessageFields 递归翻译 msg/message 字段（仅前台路径生效）
+func normalizeMessageFields(value interface{}, path string) {
+	switch v := value.(type) {
+	case map[string]interface{}:
+		for key, val := range v {
+			if key == "msg" || key == "message" {
+				if s, ok := val.(string); ok {
+					v[key] = util.NormalizeMessageWithPath(s, path)
+					continue
+				}
+			}
+			normalizeMessageFields(val, path)
+		}
+	case []interface{}:
+		for i := range v {
+			normalizeMessageFields(v[i], path)
+		}
+	}
 }
 
 // 辅助函数：从 map 中安全获取各种类型的值
