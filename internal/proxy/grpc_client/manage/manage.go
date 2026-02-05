@@ -9,6 +9,7 @@ import (
 	v18 "jh_gateway/api/manage/game/v1"
 	v14 "jh_gateway/api/manage/option/v1"
 	v20 "jh_gateway/api/manage/payment/v1"
+	v25 "jh_gateway/api/manage/site_activity/v1"
 	v19 "jh_gateway/api/manage/site_game/v1"
 	v21 "jh_gateway/api/manage/site_payment/v1"
 	v23 "jh_gateway/api/manage/site_withdraw/v1"
@@ -2253,6 +2254,164 @@ func CallDeleteWithdraw(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	res, err := client.DeleteWithdraw(ctx, req)
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Withdraw DeleteWithdraw failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点活动管理
+ * @title 获取站点活动列表
+ * @description 获取指定站点的活动列表
+ * @method get
+ * @url /api/manage/site_activity/list
+ * @param site_code 必选 string 站点编码
+ * @return {"code":0,"msg":"success","data":{"list":[]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 1
+ */
+func CallGetSiteActivityList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteActivity GetSiteActivityList")
+
+	siteCode := r.Get("site_code").String()
+	if siteCode == "" {
+		util.WriteBadRequest(r, "站点编码不能为空")
+		return fmt.Errorf("站点编码不能为空")
+	}
+
+	client := v25.NewManageSiteActivityClient(conn)
+	req := &v25.GetSiteActivityListReq{
+		SiteCode: siteCode,
+	}
+
+	res, err := client.GetSiteActivityList(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageSiteActivity GetSiteActivityList failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点活动管理
+ * @title 更新站点活动状态
+ * @description 更新站点活动状态
+ * @method post
+ * @url /api/manage/site_activity/update_status
+ * @param id 必选 int 站点活动ID
+ * @param status 必选 int 状态 0=禁用 1=启用
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 2
+ */
+func CallUpdateSiteActivityStatus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteActivity UpdateSiteActivityStatus")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v25.NewManageSiteActivityClient(conn)
+	req := &v25.UpdateSiteActivityStatusReq{
+		Id:     getInt32FromMap(reqData, "id"),
+		Status: getInt32FromMap(reqData, "status"),
+	}
+
+	res, err := client.UpdateSiteActivityStatus(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageSiteActivity UpdateSiteActivityStatus failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点活动管理
+ * @title 绑定站点活动
+ * @description 绑定活动到站点
+ * @method post
+ * @url /api/manage/site_activity/bind
+ * @param site_code 必选 string 站点编码
+ * @param activity_id 必选 int 活动ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 3
+ */
+func CallBindSiteActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteActivity BindSiteActivity")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	client := v25.NewManageSiteActivityClient(conn)
+	req := &v25.BindSiteActivityReq{
+		SiteCode:   getStringFromMap(reqData, "site_code"),
+		ActivityId: getInt32FromMap(reqData, "activity_id"),
+	}
+
+	res, err := client.BindSiteActivity(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageSiteActivity BindSiteActivity failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 总后台/站点活动管理
+ * @title 取消绑定站点活动
+ * @description 取消绑定站点活动
+ * @method post
+ * @url /api/manage/site_activity/unbind
+ * @param id 必选 int 站点活动ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 4
+ */
+func CallUnbindSiteActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC ManageSiteActivity UnbindSiteActivity")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return err
+	}
+
+	id := getInt32FromMap(reqData, "id")
+	if id <= 0 {
+		util.WriteBadRequest(r, "站点活动ID必须大于0")
+		return fmt.Errorf("站点活动ID必须大于0")
+	}
+
+	client := v25.NewManageSiteActivityClient(conn)
+	req := &v25.UnbindSiteActivityReq{
+		Id: id,
+	}
+
+	res, err := client.UnbindSiteActivity(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC ManageSiteActivity UnbindSiteActivity failed: %v", err)
 		return err
 	}
 

@@ -349,6 +349,12 @@ func initManageRoutes() {
 	manageRoutes.Register("/site_payment/bind", "POST", manage.CallBindSitePayment)
 	manageRoutes.Register("/site_payment/unbind", "POST", manage.CallUnbindSitePayment)
 
+	// 站点活动管理接口
+	manageRoutes.Register("/site_activity/list", "GET", manage.CallGetSiteActivityList)
+	manageRoutes.Register("/site_activity/update_status", "POST", manage.CallUpdateSiteActivityStatus)
+	manageRoutes.Register("/site_activity/bind", "POST", manage.CallBindSiteActivity)
+	manageRoutes.Register("/site_activity/unbind", "POST", manage.CallUnbindSiteActivity)
+
 	// 站点提现管理接口
 	manageRoutes.Register("/site_withdraw/list", "GET", manage.CallGetSiteWithdrawList)
 	manageRoutes.Register("/site_withdraw/update_status", "POST", manage.CallUpdateSiteWithdrawStatus)
