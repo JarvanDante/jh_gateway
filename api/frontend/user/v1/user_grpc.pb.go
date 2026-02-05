@@ -30,6 +30,8 @@ const (
 	User_SetPayPassword_FullMethodName      = "/frontend_user.User/SetPayPassword"
 	User_VerifyPayPassword_FullMethodName   = "/frontend_user.User/VerifyPayPassword"
 	User_ChangePayPassword_FullMethodName   = "/frontend_user.User/ChangePayPassword"
+	User_GetInviteInfo_FullMethodName       = "/frontend_user.User/GetInviteInfo"
+	User_GetInviteList_FullMethodName       = "/frontend_user.User/GetInviteList"
 )
 
 // UserClient is the client API for User service.
@@ -46,6 +48,9 @@ type UserClient interface {
 	SetPayPassword(ctx context.Context, in *SetPayPasswordReq, opts ...grpc.CallOption) (*SetPayPasswordRes, error)
 	VerifyPayPassword(ctx context.Context, in *VerifyPayPasswordReq, opts ...grpc.CallOption) (*VerifyPayPasswordRes, error)
 	ChangePayPassword(ctx context.Context, in *ChangePayPasswordReq, opts ...grpc.CallOption) (*ChangePayPasswordRes, error)
+	// 邀请相关接口
+	GetInviteInfo(ctx context.Context, in *GetInviteInfoReq, opts ...grpc.CallOption) (*GetInviteInfoRes, error)
+	GetInviteList(ctx context.Context, in *GetInviteListReq, opts ...grpc.CallOption) (*GetInviteListRes, error)
 }
 
 type userClient struct {
@@ -156,6 +161,26 @@ func (c *userClient) ChangePayPassword(ctx context.Context, in *ChangePayPasswor
 	return out, nil
 }
 
+func (c *userClient) GetInviteInfo(ctx context.Context, in *GetInviteInfoReq, opts ...grpc.CallOption) (*GetInviteInfoRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetInviteInfoRes)
+	err := c.cc.Invoke(ctx, User_GetInviteInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) GetInviteList(ctx context.Context, in *GetInviteListReq, opts ...grpc.CallOption) (*GetInviteListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetInviteListRes)
+	err := c.cc.Invoke(ctx, User_GetInviteList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -170,6 +195,9 @@ type UserServer interface {
 	SetPayPassword(context.Context, *SetPayPasswordReq) (*SetPayPasswordRes, error)
 	VerifyPayPassword(context.Context, *VerifyPayPasswordReq) (*VerifyPayPasswordRes, error)
 	ChangePayPassword(context.Context, *ChangePayPasswordReq) (*ChangePayPasswordRes, error)
+	// 邀请相关接口
+	GetInviteInfo(context.Context, *GetInviteInfoReq) (*GetInviteInfoRes, error)
+	GetInviteList(context.Context, *GetInviteListReq) (*GetInviteListRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -209,6 +237,12 @@ func (UnimplementedUserServer) VerifyPayPassword(context.Context, *VerifyPayPass
 }
 func (UnimplementedUserServer) ChangePayPassword(context.Context, *ChangePayPasswordReq) (*ChangePayPasswordRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method ChangePayPassword not implemented")
+}
+func (UnimplementedUserServer) GetInviteInfo(context.Context, *GetInviteInfoReq) (*GetInviteInfoRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetInviteInfo not implemented")
+}
+func (UnimplementedUserServer) GetInviteList(context.Context, *GetInviteListReq) (*GetInviteListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetInviteList not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -411,6 +445,42 @@ func _User_ChangePayPassword_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetInviteInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInviteInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetInviteInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetInviteInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetInviteInfo(ctx, req.(*GetInviteInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetInviteList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInviteListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetInviteList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetInviteList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetInviteList(ctx, req.(*GetInviteListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -457,6 +527,14 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangePayPassword",
 			Handler:    _User_ChangePayPassword_Handler,
+		},
+		{
+			MethodName: "GetInviteInfo",
+			Handler:    _User_GetInviteInfo_Handler,
+		},
+		{
+			MethodName: "GetInviteList",
+			Handler:    _User_GetInviteList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

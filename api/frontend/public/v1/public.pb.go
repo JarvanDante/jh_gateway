@@ -517,6 +517,7 @@ type RegisterReq struct {
 	Birthday      string                 `protobuf:"bytes,10,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                           // 生日
 	AgentSalt     string                 `protobuf:"bytes,11,opt,name=agent_salt,json=agentSalt,proto3" json:"agent_salt" dc:"代理码"`       // 代理码
 	Domain        string                 `protobuf:"bytes,12,opt,name=domain,proto3" json:"domain" dc:"注册域名"`                             // 注册域名
+	InviteCode    string                 `protobuf:"bytes,13,opt,name=invite_code,json=inviteCode,proto3" json:"invite_code" dc:"邀请码"`    // 邀请码
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -631,6 +632,13 @@ func (x *RegisterReq) GetAgentSalt() string {
 func (x *RegisterReq) GetDomain() string {
 	if x != nil {
 		return x.Domain
+	}
+	return ""
+}
+
+func (x *RegisterReq) GetInviteCode() string {
+	if x != nil {
+		return x.InviteCode
 	}
 	return ""
 }
@@ -1667,7 +1675,7 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x1d\n" +
 	"\n" +
 	"expires_in\x18\x03 \x01(\x03R\texpiresIn\x12,\n" +
-	"\x12refresh_expires_in\x18\x04 \x01(\x03R\x10refreshExpiresIn\"\xcc\x02\n" +
+	"\x12refresh_expires_in\x18\x04 \x01(\x03R\x10refreshExpiresIn\"\xed\x02\n" +
 	"\vRegisterReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x16\n" +
@@ -1683,7 +1691,9 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	" \x01(\tR\bbirthday\x12\x1d\n" +
 	"\n" +
 	"agent_salt\x18\v \x01(\tR\tagentSalt\x12\x16\n" +
-	"\x06domain\x18\f \x01(\tR\x06domain\"\x95\x01\n" +
+	"\x06domain\x18\f \x01(\tR\x06domain\x12\x1f\n" +
+	"\vinvite_code\x18\r \x01(\tR\n" +
+	"inviteCode\"\x95\x01\n" +
 	"\vRegisterRes\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12#\n" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x1d\n" +

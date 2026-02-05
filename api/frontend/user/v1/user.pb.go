@@ -1399,6 +1399,327 @@ func (x *ChangePayPasswordRes) GetMessage() string {
 	return ""
 }
 
+// 获取邀请信息请求
+type GetInviteInfoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInviteInfoReq) Reset() {
+	*x = GetInviteInfoReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteInfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteInfoReq) ProtoMessage() {}
+
+func (x *GetInviteInfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteInfoReq.ProtoReflect.Descriptor instead.
+func (*GetInviteInfoReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{23}
+}
+
+// 获取邀请信息响应
+type GetInviteInfoRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InviteCode    string                 `protobuf:"bytes,1,opt,name=invite_code,json=inviteCode,proto3" json:"invite_code" dc:"我的邀请码"`         // 我的邀请码
+	InviteUrl     string                 `protobuf:"bytes,2,opt,name=invite_url,json=inviteUrl,proto3" json:"invite_url" dc:"邀请链接"`             // 邀请链接
+	TotalInvites  int32                  `protobuf:"varint,3,opt,name=total_invites,json=totalInvites,proto3" json:"total_invites" dc:"总邀请人数"`  // 总邀请人数
+	TodayInvites  int32                  `protobuf:"varint,4,opt,name=today_invites,json=todayInvites,proto3" json:"today_invites" dc:"今日邀请人数"` // 今日邀请人数
+	TotalReward   string                 `protobuf:"bytes,5,opt,name=total_reward,json=totalReward,proto3" json:"total_reward" dc:"总奖励金额"`      // 总奖励金额
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInviteInfoRes) Reset() {
+	*x = GetInviteInfoRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteInfoRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteInfoRes) ProtoMessage() {}
+
+func (x *GetInviteInfoRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteInfoRes.ProtoReflect.Descriptor instead.
+func (*GetInviteInfoRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *GetInviteInfoRes) GetInviteCode() string {
+	if x != nil {
+		return x.InviteCode
+	}
+	return ""
+}
+
+func (x *GetInviteInfoRes) GetInviteUrl() string {
+	if x != nil {
+		return x.InviteUrl
+	}
+	return ""
+}
+
+func (x *GetInviteInfoRes) GetTotalInvites() int32 {
+	if x != nil {
+		return x.TotalInvites
+	}
+	return 0
+}
+
+func (x *GetInviteInfoRes) GetTodayInvites() int32 {
+	if x != nil {
+		return x.TodayInvites
+	}
+	return 0
+}
+
+func (x *GetInviteInfoRes) GetTotalReward() string {
+	if x != nil {
+		return x.TotalReward
+	}
+	return ""
+}
+
+// 获取邀请列表请求
+type GetInviteListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page" dc:"页码"`                           // 页码
+	PageSize      int32                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size" dc:"每页数量"` // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInviteListReq) Reset() {
+	*x = GetInviteListReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteListReq) ProtoMessage() {}
+
+func (x *GetInviteListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteListReq.ProtoReflect.Descriptor instead.
+func (*GetInviteListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GetInviteListReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetInviteListReq) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+// 获取邀请列表响应
+type GetInviteListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*InviteItem          `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"邀请列表"`                          // 邀请列表
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total" dc:"总数"`                         // 总数
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page" dc:"当前页"`                          // 当前页
+	PageSize      int32                  `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size" dc:"每页数量"` // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInviteListRes) Reset() {
+	*x = GetInviteListRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteListRes) ProtoMessage() {}
+
+func (x *GetInviteListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteListRes.ProtoReflect.Descriptor instead.
+func (*GetInviteListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetInviteListRes) GetList() []*InviteItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetInviteListRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *GetInviteListRes) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetInviteListRes) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+// 邀请项
+type InviteItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                    // 用户ID
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                // 用户名
+	RegisterTime  string                 `protobuf:"bytes,3,opt,name=register_time,json=registerTime,proto3" json:"register_time" dc:"注册时间"`   // 注册时间
+	TotalBet      string                 `protobuf:"bytes,4,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"总投注"`                // 总投注
+	TotalRecharge string                 `protobuf:"bytes,5,opt,name=total_recharge,json=totalRecharge,proto3" json:"total_recharge" dc:"总充值"` // 总充值
+	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态：1=正常，0=禁用"`                          // 状态：1=正常，0=禁用
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InviteItem) Reset() {
+	*x = InviteItem{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InviteItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InviteItem) ProtoMessage() {}
+
+func (x *InviteItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InviteItem.ProtoReflect.Descriptor instead.
+func (*InviteItem) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *InviteItem) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *InviteItem) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *InviteItem) GetRegisterTime() string {
+	if x != nil {
+		return x.RegisterTime
+	}
+	return ""
+}
+
+func (x *InviteItem) GetTotalBet() string {
+	if x != nil {
+		return x.TotalBet
+	}
+	return ""
+}
+
+func (x *InviteItem) GetTotalRecharge() string {
+	if x != nil {
+		return x.TotalRecharge
+	}
+	return ""
+}
+
+func (x *InviteItem) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
 var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_frontend_user_v1_user_proto_rawDesc = "" +
@@ -1501,7 +1822,32 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x10old_pay_password\x18\x01 \x01(\tR\x0eoldPayPassword\x12(\n" +
 	"\x10new_pay_password\x18\x02 \x01(\tR\x0enewPayPassword\"0\n" +
 	"\x14ChangePayPasswordRes\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xde\x06\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\x12\n" +
+	"\x10GetInviteInfoReq\"\xbf\x01\n" +
+	"\x10GetInviteInfoRes\x12\x1f\n" +
+	"\vinvite_code\x18\x01 \x01(\tR\n" +
+	"inviteCode\x12\x1d\n" +
+	"\n" +
+	"invite_url\x18\x02 \x01(\tR\tinviteUrl\x12#\n" +
+	"\rtotal_invites\x18\x03 \x01(\x05R\ftotalInvites\x12#\n" +
+	"\rtoday_invites\x18\x04 \x01(\x05R\ftodayInvites\x12!\n" +
+	"\ftotal_reward\x18\x05 \x01(\tR\vtotalReward\"C\n" +
+	"\x10GetInviteListReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\"\x88\x01\n" +
+	"\x10GetInviteListRes\x12-\n" +
+	"\x04list\x18\x01 \x03(\v2\x19.frontend_user.InviteItemR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\xc2\x01\n" +
+	"\n" +
+	"InviteItem\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12#\n" +
+	"\rregister_time\x18\x03 \x01(\tR\fregisterTime\x12\x1b\n" +
+	"\ttotal_bet\x18\x04 \x01(\tR\btotalBet\x12%\n" +
+	"\x0etotal_recharge\x18\x05 \x01(\tR\rtotalRecharge\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\x05R\x06status2\x88\b\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
 	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
@@ -1513,7 +1859,9 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\fGetGradeList\x12\x1e.frontend_user.GetGradeListReq\x1a\x1e.frontend_user.GetGradeListRes\"\x00\x12V\n" +
 	"\x0eSetPayPassword\x12 .frontend_user.SetPayPasswordReq\x1a .frontend_user.SetPayPasswordRes\"\x00\x12_\n" +
 	"\x11VerifyPayPassword\x12#.frontend_user.VerifyPayPasswordReq\x1a#.frontend_user.VerifyPayPasswordRes\"\x00\x12_\n" +
-	"\x11ChangePayPassword\x12#.frontend_user.ChangePayPasswordReq\x1a#.frontend_user.ChangePayPasswordRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\x11ChangePayPassword\x12#.frontend_user.ChangePayPasswordReq\x1a#.frontend_user.ChangePayPasswordRes\"\x00\x12S\n" +
+	"\rGetInviteInfo\x12\x1f.frontend_user.GetInviteInfoReq\x1a\x1f.frontend_user.GetInviteInfoRes\"\x00\x12S\n" +
+	"\rGetInviteList\x12\x1f.frontend_user.GetInviteListReq\x1a\x1f.frontend_user.GetInviteListRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -1527,7 +1875,7 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil),         // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil),         // 1: frontend_user.GetUserInfoRes
@@ -1552,37 +1900,47 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*VerifyPayPasswordRes)(nil),   // 20: frontend_user.VerifyPayPasswordRes
 	(*ChangePayPasswordReq)(nil),   // 21: frontend_user.ChangePayPasswordReq
 	(*ChangePayPasswordRes)(nil),   // 22: frontend_user.ChangePayPasswordRes
+	(*GetInviteInfoReq)(nil),       // 23: frontend_user.GetInviteInfoReq
+	(*GetInviteInfoRes)(nil),       // 24: frontend_user.GetInviteInfoRes
+	(*GetInviteListReq)(nil),       // 25: frontend_user.GetInviteListReq
+	(*GetInviteListRes)(nil),       // 26: frontend_user.GetInviteListRes
+	(*InviteItem)(nil),             // 27: frontend_user.InviteItem
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	2,  // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
 	2,  // 1: frontend_user.GetUserInfoRes.last_withdraw:type_name -> frontend_user.LastRecord
 	3,  // 2: frontend_user.GetUserInfoRes.last_message:type_name -> frontend_user.LastMessage
 	16, // 3: frontend_user.GetGradeListRes.list:type_name -> frontend_user.GradeItem
-	0,  // 4: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
-	4,  // 5: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
-	6,  // 6: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
-	8,  // 7: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
-	10, // 8: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
-	12, // 9: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
-	14, // 10: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
-	17, // 11: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
-	19, // 12: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
-	21, // 13: frontend_user.User.ChangePayPassword:input_type -> frontend_user.ChangePayPasswordReq
-	1,  // 14: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5,  // 15: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	7,  // 16: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
-	9,  // 17: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
-	11, // 18: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
-	13, // 19: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
-	15, // 20: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
-	18, // 21: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
-	20, // 22: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
-	22, // 23: frontend_user.User.ChangePayPassword:output_type -> frontend_user.ChangePayPasswordRes
-	14, // [14:24] is the sub-list for method output_type
-	4,  // [4:14] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	27, // 4: frontend_user.GetInviteListRes.list:type_name -> frontend_user.InviteItem
+	0,  // 5: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
+	4,  // 6: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
+	6,  // 7: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
+	8,  // 8: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
+	10, // 9: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
+	12, // 10: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
+	14, // 11: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
+	17, // 12: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
+	19, // 13: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
+	21, // 14: frontend_user.User.ChangePayPassword:input_type -> frontend_user.ChangePayPasswordReq
+	23, // 15: frontend_user.User.GetInviteInfo:input_type -> frontend_user.GetInviteInfoReq
+	25, // 16: frontend_user.User.GetInviteList:input_type -> frontend_user.GetInviteListReq
+	1,  // 17: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5,  // 18: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7,  // 19: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9,  // 20: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	11, // 21: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
+	13, // 22: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
+	15, // 23: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
+	18, // 24: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
+	20, // 25: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
+	22, // 26: frontend_user.User.ChangePayPassword:output_type -> frontend_user.ChangePayPasswordRes
+	24, // 27: frontend_user.User.GetInviteInfo:output_type -> frontend_user.GetInviteInfoRes
+	26, // 28: frontend_user.User.GetInviteList:output_type -> frontend_user.GetInviteListRes
+	17, // [17:29] is the sub-list for method output_type
+	5,  // [5:17] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_frontend_user_v1_user_proto_init() }
@@ -1596,7 +1954,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

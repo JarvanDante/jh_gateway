@@ -41,10 +41,10 @@ func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage prot
 	}
 
 	if msg, ok := responseData["msg"].(string); ok {
-		responseData["msg"] = util.NormalizeMessage(msg)
+		responseData["msg"] = util.NormalizeMessageWithPath(msg, r.URL.Path)
 	}
 	if message, ok := responseData["message"].(string); ok {
-		responseData["message"] = util.NormalizeMessage(message)
+		responseData["message"] = util.NormalizeMessageWithPath(message, r.URL.Path)
 	}
 
 	util.WriteSuccess(r, responseData)
@@ -162,6 +162,7 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	birthday, _ := reqData["birthday"].(string)
 	agentSalt, _ := reqData["agent_salt"].(string)
 	domain, _ := reqData["domain"].(string)
+	inviteCode, _ := reqData["invite_code"].(string)
 
 	if username == "" {
 		util.WriteBadRequest(r, "用户名必填")
@@ -205,6 +206,7 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		Birthday:    birthday,
 		AgentSalt:   agentSalt,
 		Domain:      domain,
+		InviteCode:  inviteCode,
 	}
 
 	// 调用 gRPC 服务
@@ -985,4 +987,94 @@ func CallChangePayPassword(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 		"message": res.Message,
 	})
 	return nil
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title OK获取邀请信息
+ * @description 获取我的邀请码、邀请链接、邀请统计信息
+ * @method get
+ * @url /api/frontend/app/invite-info
+ * @header Authorization 必选 string Bearer {token}
+ * @return {"code":0,"msg":"success","data":{"invite_code":"123","invite_url":"https://example.com/register?invite_code=123","total_invites":10,"today_invites":2,"total_reward":"100.00"}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.invite_code string 邀请码
+ * @return_param data.invite_url string 邀请链接
+ * @return_param data.total_invites int 总邀请人数
+ * @return_param data.today_invites int 今日邀请人数
+ * @return_param data.total_reward string 总奖励金额
+ * @remark 需要登录后访问
+ * @number 123
+ */
+func CallGetInviteInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetInviteInfo")
+
+	client := v16.NewUserClient(conn)
+	req := &v16.GetInviteInfoReq{}
+
+	res, err := client.GetInviteInfo(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "未登录") {
+			util.WriteUnauthorized(r, "请先登录")
+		} else {
+			util.WriteInternalError(r, "获取邀请信息失败")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title OK获取邀请列表
+ * @description 获取我邀请的用户列表
+ * @method get
+ * @url /api/frontend/app/invite-list?page=1&page_size=20
+ * @header Authorization 必选 string Bearer {token}
+ * @param page 可选 int 页码，默认1
+ * @param page_size 可选 int 每页数量，默认20，最大100
+ * @return {"code":0,"msg":"success","data":{"list":[{"user_id":123,"username":"test001","register_time":"2025-01-19 10:00:00","total_bet":"1000.00","total_recharge":"500.00","status":1}],"total":10,"page":1,"page_size":20}}
+ * @return_param code int 状态码
+ * @return_param msg string 提示说明
+ * @return_param data object 主要数据
+ * @return_param data.list array 邀请用户列表
+ * @return_param data.list.user_id int 用户ID
+ * @return_param data.list.username string 用户名
+ * @return_param data.list.register_time string 注册时间
+ * @return_param data.list.total_bet string 总投注额
+ * @return_param data.list.total_recharge string 总充值额
+ * @return_param data.list.status int 状态 1=正常 2=禁用
+ * @return_param data.total int 总数
+ * @return_param data.page int 当前页码
+ * @return_param data.page_size int 每页数量
+ * @remark 需要登录后访问
+ * @number 124
+ */
+func CallGetInviteList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC GetInviteList")
+
+	client := v16.NewUserClient(conn)
+	req := &v16.GetInviteListReq{
+		Page:     r.Get("page", 1).Int32(),
+		PageSize: r.Get("page_size", 20).Int32(),
+	}
+
+	res, err := client.GetInviteList(ctx, req)
+	if err != nil {
+		if strings.Contains(err.Error(), "未登录") {
+			util.WriteUnauthorized(r, "请先登录")
+		} else {
+			util.WriteInternalError(r, "获取邀请列表失败")
+		}
+		return nil
+	}
+
+	// 返回成功响应
+	return writeProtobufResponse(ctx, r, res)
 }

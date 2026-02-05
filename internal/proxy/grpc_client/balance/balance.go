@@ -40,10 +40,10 @@ func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage prot
 	}
 
 	if msg, ok := responseData["msg"].(string); ok {
-		responseData["msg"] = util.NormalizeMessage(msg)
+		responseData["msg"] = util.NormalizeMessageWithPath(msg, r.URL.Path)
 	}
 	if message, ok := responseData["message"].(string); ok {
-		responseData["message"] = util.NormalizeMessage(message)
+		responseData["message"] = util.NormalizeMessageWithPath(message, r.URL.Path)
 	}
 
 	// 返回成功响应

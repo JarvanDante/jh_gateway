@@ -391,6 +391,10 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/verify-pay-password", "POST", frontend.CallVerifyPayPassword)
 	// 修改支付密码
 	frontendRoutes.Register("/change-pay-password", "POST", frontend.CallChangePayPassword)
+	// 获取邀请信息
+	frontendRoutes.Register("/invite-info", "GET", frontend.CallGetInviteInfo)
+	// 获取邀请列表
+	frontendRoutes.Register("/invite-list", "GET", frontend.CallGetInviteList)
 	// 获取公告列表
 	frontendRoutes.Register("/notice-list", "GET", frontend.CallGetAppNoticeList)
 	// 获取广告列表

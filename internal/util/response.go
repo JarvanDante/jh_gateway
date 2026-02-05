@@ -80,7 +80,7 @@ func WriteError(r *ghttp.Request, code int, msg string) {
 	if msg == "" {
 		msg = ErrorMessages[code]
 	}
-	msg = NormalizeMessage(msg)
+	msg = NormalizeMessageWithPath(msg, r.URL.Path)
 	// 不设置HTTP状态码，始终返回200，错误信息在JSON中体现
 	r.Response.WriteJsonExit(Response{
 		Code: code,
@@ -120,10 +120,23 @@ func WriteInternalError(r *ghttp.Request, msg string) {
 	WriteError(r, CodeInternalError, cleanMsg)
 }
 
-// NormalizeMessage 清理gRPC错误消息中的前缀
+// NormalizeMessage 清理gRPC错误消息中的前缀（不做翻译）
 func NormalizeMessage(msg string) string {
+	return NormalizeMessageWithPath(msg, "")
+}
+
+// NormalizeMessageWithPath 根据路径决定是否翻译
+func NormalizeMessageWithPath(msg string, path string) string {
 	msg = cleanGRPCErrorMessage(msg)
-	return translateMessage(msg)
+	if shouldTranslate(path) {
+		return translateMessage(msg)
+	}
+	return msg
+}
+
+// 仅对前台路径翻译
+func shouldTranslate(path string) bool {
+	return strings.HasPrefix(path, "/front/") || strings.HasPrefix(path, "/api/frontend")
 }
 
 // cleanGRPCErrorMessage 清理gRPC错误消息中的前缀
@@ -247,6 +260,7 @@ func translateMessage(msg string) string {
 		"获取站点信息失败":                "Failed to get site info",
 		"查询公告列表失败":                "Failed to query notice list",
 		"查询广告列表失败":                "Failed to query ad list",
+		"缺少认证token，请先登录":          "First login and invalid token",
 	}
 	for prefix, translated := range prefixMapping {
 		if strings.HasPrefix(trimmed, prefix) || strings.HasPrefix(msg, prefix) {
