@@ -261,6 +261,7 @@ func translateMessage(msg string) string {
 		"查询公告列表失败":                "Failed to query notice list",
 		"查询广告列表失败":                "Failed to query ad list",
 		"缺少认证token，请先登录":          "First login and invalid token",
+		"token无效或已过期，请重新登录":       "Please login and invalid token",
 	}
 	for prefix, translated := range prefixMapping {
 		if strings.HasPrefix(trimmed, prefix) || strings.HasPrefix(msg, prefix) {

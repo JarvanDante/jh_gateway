@@ -1438,14 +1438,18 @@ func (*GetInviteInfoReq) Descriptor() ([]byte, []int) {
 
 // 获取邀请信息响应
 type GetInviteInfoRes struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InviteCode    string                 `protobuf:"bytes,1,opt,name=invite_code,json=inviteCode,proto3" json:"invite_code" dc:"我的邀请码"`         // 我的邀请码
-	InviteUrl     string                 `protobuf:"bytes,2,opt,name=invite_url,json=inviteUrl,proto3" json:"invite_url" dc:"邀请链接"`             // 邀请链接
-	TotalInvites  int32                  `protobuf:"varint,3,opt,name=total_invites,json=totalInvites,proto3" json:"total_invites" dc:"总邀请人数"`  // 总邀请人数
-	TodayInvites  int32                  `protobuf:"varint,4,opt,name=today_invites,json=todayInvites,proto3" json:"today_invites" dc:"今日邀请人数"` // 今日邀请人数
-	TotalReward   string                 `protobuf:"bytes,5,opt,name=total_reward,json=totalReward,proto3" json:"total_reward" dc:"总奖励金额"`      // 总奖励金额
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	InviteCode      string                 `protobuf:"bytes,1,opt,name=invite_code,json=inviteCode,proto3" json:"invite_code" dc:"我的邀请码"`                 // 我的邀请码
+	InviteUrl       string                 `protobuf:"bytes,2,opt,name=invite_url,json=inviteUrl,proto3" json:"invite_url" dc:"邀请链接"`                     // 邀请链接
+	TotalInvites    int32                  `protobuf:"varint,3,opt,name=total_invites,json=totalInvites,proto3" json:"total_invites" dc:"总邀请人数"`          // 总邀请人数
+	TodayInvites    int32                  `protobuf:"varint,4,opt,name=today_invites,json=todayInvites,proto3" json:"today_invites" dc:"今日邀请人数"`         // 今日邀请人数
+	TotalReward     string                 `protobuf:"bytes,5,opt,name=total_reward,json=totalReward,proto3" json:"total_reward" dc:"总奖励金额"`              // 总奖励金额
+	TodayIncome     string                 `protobuf:"bytes,6,opt,name=today_income,json=todayIncome,proto3" json:"today_income" dc:"今日邀请收入"`             // 今日邀请收入
+	YesterdayIncome string                 `protobuf:"bytes,7,opt,name=yesterday_income,json=yesterdayIncome,proto3" json:"yesterday_income" dc:"昨日邀请收入"` // 昨日邀请收入
+	Registers       int32                  `protobuf:"varint,8,opt,name=registers,proto3" json:"registers" dc:"注册人数"`                                     // 注册人数
+	ValidReferral   int32                  `protobuf:"varint,9,opt,name=valid_referral,json=validReferral,proto3" json:"valid_referral" dc:"有效邀请人数"`      // 有效邀请人数
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *GetInviteInfoRes) Reset() {
@@ -1511,6 +1515,34 @@ func (x *GetInviteInfoRes) GetTotalReward() string {
 		return x.TotalReward
 	}
 	return ""
+}
+
+func (x *GetInviteInfoRes) GetTodayIncome() string {
+	if x != nil {
+		return x.TodayIncome
+	}
+	return ""
+}
+
+func (x *GetInviteInfoRes) GetYesterdayIncome() string {
+	if x != nil {
+		return x.YesterdayIncome
+	}
+	return ""
+}
+
+func (x *GetInviteInfoRes) GetRegisters() int32 {
+	if x != nil {
+		return x.Registers
+	}
+	return 0
+}
+
+func (x *GetInviteInfoRes) GetValidReferral() int32 {
+	if x != nil {
+		return x.ValidReferral
+	}
+	return 0
 }
 
 // 获取邀请列表请求
@@ -1823,7 +1855,7 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x10new_pay_password\x18\x02 \x01(\tR\x0enewPayPassword\"0\n" +
 	"\x14ChangePayPasswordRes\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"\x12\n" +
-	"\x10GetInviteInfoReq\"\xbf\x01\n" +
+	"\x10GetInviteInfoReq\"\xd2\x02\n" +
 	"\x10GetInviteInfoRes\x12\x1f\n" +
 	"\vinvite_code\x18\x01 \x01(\tR\n" +
 	"inviteCode\x12\x1d\n" +
@@ -1831,7 +1863,11 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"invite_url\x18\x02 \x01(\tR\tinviteUrl\x12#\n" +
 	"\rtotal_invites\x18\x03 \x01(\x05R\ftotalInvites\x12#\n" +
 	"\rtoday_invites\x18\x04 \x01(\x05R\ftodayInvites\x12!\n" +
-	"\ftotal_reward\x18\x05 \x01(\tR\vtotalReward\"C\n" +
+	"\ftotal_reward\x18\x05 \x01(\tR\vtotalReward\x12!\n" +
+	"\ftoday_income\x18\x06 \x01(\tR\vtodayIncome\x12)\n" +
+	"\x10yesterday_income\x18\a \x01(\tR\x0fyesterdayIncome\x12\x1c\n" +
+	"\tregisters\x18\b \x01(\x05R\tregisters\x12%\n" +
+	"\x0evalid_referral\x18\t \x01(\x05R\rvalidReferral\"C\n" +
 	"\x10GetInviteListReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\"\x88\x01\n" +
