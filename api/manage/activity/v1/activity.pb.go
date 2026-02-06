@@ -172,9 +172,10 @@ type ActivityItem struct {
 	EndTime       string                 `protobuf:"bytes,7,opt,name=end_time,json=endTime,proto3" json:"end_time"`
 	FixedParams   string                 `protobuf:"bytes,8,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params"`
 	Status        int32                  `protobuf:"varint,9,opt,name=status,proto3" json:"status"`
-	Table         string                 `protobuf:"bytes,10,opt,name=table,proto3" json:"table"`
-	CreatedAt     string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
-	UpdatedAt     string                 `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Uri           string                 `protobuf:"bytes,10,opt,name=uri,proto3" json:"uri"`
+	Table         string                 `protobuf:"bytes,11,opt,name=table,proto3" json:"table"`
+	CreatedAt     string                 `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -270,6 +271,13 @@ func (x *ActivityItem) GetStatus() int32 {
 		return x.Status
 	}
 	return 0
+}
+
+func (x *ActivityItem) GetUri() string {
+	if x != nil {
+		return x.Uri
+	}
+	return ""
 }
 
 func (x *ActivityItem) GetTable() string {
@@ -394,7 +402,8 @@ type CreateActivityReq struct {
 	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 2006-01-02 15:04:05"`       // 结束时间 2006-01-02 15:04:05
 	FixedParams   string                 `protobuf:"bytes,7,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params" dc:"固定参数(JSON)"`         // 固定参数(JSON)
 	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态 0=禁用 1=启用"`                                   // 状态 0=禁用 1=启用
-	Table         string                 `protobuf:"bytes,9,opt,name=table,proto3" json:"table" dc:"表名定义不同属性"`                                          // 表名定义不同属性
+	Uri           string                 `protobuf:"bytes,9,opt,name=uri,proto3" json:"uri" dc:"活动uri地址"`                                               // 活动uri地址
+	Table         string                 `protobuf:"bytes,10,opt,name=table,proto3" json:"table" dc:"表名定义不同属性"`                                         // 表名定义不同属性
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -485,6 +494,13 @@ func (x *CreateActivityReq) GetStatus() int32 {
 	return 0
 }
 
+func (x *CreateActivityReq) GetUri() string {
+	if x != nil {
+		return x.Uri
+	}
+	return ""
+}
+
 func (x *CreateActivityReq) GetTable() string {
 	if x != nil {
 		return x.Table
@@ -549,7 +565,8 @@ type UpdateActivityReq struct {
 	EndTime       string                 `protobuf:"bytes,7,opt,name=end_time,json=endTime,proto3" json:"end_time"`
 	FixedParams   string                 `protobuf:"bytes,8,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params"`
 	Status        int32                  `protobuf:"varint,9,opt,name=status,proto3" json:"status"`
-	Table         string                 `protobuf:"bytes,10,opt,name=table,proto3" json:"table"`
+	Uri           string                 `protobuf:"bytes,10,opt,name=uri,proto3" json:"uri"`
+	Table         string                 `protobuf:"bytes,11,opt,name=table,proto3" json:"table"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -645,6 +662,13 @@ func (x *UpdateActivityReq) GetStatus() int32 {
 		return x.Status
 	}
 	return 0
+}
+
+func (x *UpdateActivityReq) GetUri() string {
+	if x != nil {
+		return x.Uri
+	}
+	return ""
 }
 
 func (x *UpdateActivityReq) GetTable() string {
@@ -787,7 +811,7 @@ const file_manage_activity_v1_activity_proto_rawDesc = "" +
 	"\x04size\x18\x06 \x01(\x05R\x04size\"]\n" +
 	"\x12GetActivityListRes\x121\n" +
 	"\x04list\x18\x01 \x03(\v2\x1d.manage_activity.ActivityItemR\x04list\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x05R\x05total\"\xd6\x02\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\xe8\x02\n" +
 	"\fActivityItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -798,17 +822,18 @@ const file_manage_activity_v1_activity_proto_rawDesc = "" +
 	"start_time\x18\x06 \x01(\tR\tstartTime\x12\x19\n" +
 	"\bend_time\x18\a \x01(\tR\aendTime\x12!\n" +
 	"\ffixed_params\x18\b \x01(\tR\vfixedParams\x12\x16\n" +
-	"\x06status\x18\t \x01(\x05R\x06status\x12\x14\n" +
-	"\x05table\x18\n" +
-	" \x01(\tR\x05table\x12\x1d\n" +
+	"\x06status\x18\t \x01(\x05R\x06status\x12\x10\n" +
+	"\x03uri\x18\n" +
+	" \x01(\tR\x03uri\x12\x14\n" +
+	"\x05table\x18\v \x01(\tR\x05table\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\v \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\f \x01(\tR\tupdatedAt\"&\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\"&\n" +
 	"\x14GetActivityDetailReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"I\n" +
 	"\x14GetActivityDetailRes\x121\n" +
-	"\x04data\x18\x01 \x01(\v2\x1d.manage_activity.ActivityItemR\x04data\"\x8d\x02\n" +
+	"\x04data\x18\x01 \x01(\v2\x1d.manage_activity.ActivityItemR\x04data\"\x9f\x02\n" +
 	"\x11CreateActivityReq\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12#\n" +
@@ -818,10 +843,12 @@ const file_manage_activity_v1_activity_proto_rawDesc = "" +
 	"start_time\x18\x05 \x01(\tR\tstartTime\x12\x19\n" +
 	"\bend_time\x18\x06 \x01(\tR\aendTime\x12!\n" +
 	"\ffixed_params\x18\a \x01(\tR\vfixedParams\x12\x16\n" +
-	"\x06status\x18\b \x01(\x05R\x06status\x12\x14\n" +
-	"\x05table\x18\t \x01(\tR\x05table\"#\n" +
+	"\x06status\x18\b \x01(\x05R\x06status\x12\x10\n" +
+	"\x03uri\x18\t \x01(\tR\x03uri\x12\x14\n" +
+	"\x05table\x18\n" +
+	" \x01(\tR\x05table\"#\n" +
 	"\x11CreateActivityRes\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\"\x9d\x02\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xaf\x02\n" +
 	"\x11UpdateActivityReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -832,9 +859,10 @@ const file_manage_activity_v1_activity_proto_rawDesc = "" +
 	"start_time\x18\x06 \x01(\tR\tstartTime\x12\x19\n" +
 	"\bend_time\x18\a \x01(\tR\aendTime\x12!\n" +
 	"\ffixed_params\x18\b \x01(\tR\vfixedParams\x12\x16\n" +
-	"\x06status\x18\t \x01(\x05R\x06status\x12\x14\n" +
-	"\x05table\x18\n" +
-	" \x01(\tR\x05table\"\x13\n" +
+	"\x06status\x18\t \x01(\x05R\x06status\x12\x10\n" +
+	"\x03uri\x18\n" +
+	" \x01(\tR\x03uri\x12\x14\n" +
+	"\x05table\x18\v \x01(\tR\x05table\"\x13\n" +
 	"\x11UpdateActivityRes\"#\n" +
 	"\x11DeleteActivityReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x13\n" +

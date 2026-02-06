@@ -1443,6 +1443,7 @@ func CallGetActivityDetail(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
  * @param end_time 可选 string 结束时间 2006-01-02 15:04:05
  * @param fixed_params 可选 string 固定参数(JSON)
  * @param status 可选 int 状态 0=禁用 1=启用
+ * @param uri 可选 string 活动uri地址
  * @param table 可选 string 表名定义不同属性
  * @return {"code":0,"msg":"success","data":{"id":1}}
  * @return_param code int 状态码
@@ -1479,6 +1480,7 @@ func CallCreateActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		EndTime:      getStringFromMap(reqData, "end_time"),
 		FixedParams:  fixedParams,
 		Status:       getInt32FromMap(reqData, "status"),
+		Uri:          getStringFromMap(reqData, "uri"),
 		Table:        getStringFromMap(reqData, "table"),
 	}
 
@@ -1507,6 +1509,7 @@ func CallCreateActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
  * @param end_time 可选 string 结束时间 2006-01-02 15:04:05
  * @param fixed_params 可选 string 固定参数(JSON)
  * @param status 可选 int 状态
+ * @param uri 可选 string 活动uri地址
  * @param table 可选 string 表名定义不同属性
  * @return {"code":0,"msg":"success","data":{}}
  * @return_param code int 状态码
@@ -1543,6 +1546,7 @@ func CallUpdateActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		EndTime:      getStringFromMap(reqData, "end_time"),
 		FixedParams:  fixedParams,
 		Status:       getInt32FromMap(reqData, "status"),
+		Uri:          getStringFromMap(reqData, "uri"),
 		Table:        getStringFromMap(reqData, "table"),
 	}
 
