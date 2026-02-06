@@ -9,12 +9,11 @@
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -27,7 +26,7 @@ const (
 type GetBasicSettingReq struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// 站点ID，可选，如果不传则使用当前站点
-	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选，如果不传则使用当前站点"`
+	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -71,23 +70,23 @@ func (x *GetBasicSettingReq) GetSiteId() int32 {
 
 type GetBasicSettingRes struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code" dc:"站点代码"`                                                                        // 站点代码
-	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"站点名称"`                                                                        // 站点名称
-	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"是否开放注册"`                           // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close" dc:"是否关闭站点"`                                                // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"关闭原因"`                                       // 关闭原因
-	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service" dc:"客服链接"`                                          // 客服链接
-	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc" dc:"代理链接地址"`                                      // 代理链接地址
-	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile" dc:"手机域名地址"`                                           // 手机域名地址
-	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register" dc:"代理推广地址"`                   // 代理推广地址
-	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最低提现金额"`                                 // 单笔最低提现金额
-	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端Logo"`                                      // 手机端Logo
-	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id" dc:"默认代理ID"`                        // 默认代理ID
-	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name" dc:"默认代理名称"`                   // 默认代理名称
-	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance" dc:"总可用额度"`                                                              // 总可用额度
-	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset" dc:"剩余额度"`                                 // 剩余额度
+	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                                                // 站点代码
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                // 站点名称
+	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
+	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty"`                                  // 客服链接
+	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty"`                                // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty"`                                     // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty"`             // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                             // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                             // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
+	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty"`                  // 默认代理ID
+	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name,omitempty"`             // 默认代理名称
+	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance,omitempty"`                                                       // 总可用额度
+	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset,omitempty"`                         // 剩余额度
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -243,18 +242,18 @@ func (x *GetBasicSettingRes) GetBalanceReset() float64 {
 
 type UpdateBasicSettingReq struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`                                                  // 站点ID，可选
-	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"是否开放注册"`                           // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close" dc:"是否关闭站点"`                                                // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"关闭原因"`                                       // 关闭原因
-	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc" dc:"代理链接地址"`                                      // 代理链接地址
-	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile" dc:"手机域名地址"`                                           // 手机域名地址
-	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register" dc:"代理推广地址"`                    // 代理推广地址
-	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最低提现金额"`                                  // 单笔最低提现金额
-	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端Logo"`                                      // 手机端Logo
-	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service" dc:"客服链接"`                                         // 客服链接
+	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`                                             // 站点ID，可选
+	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
+	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty"`                                // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty"`                                     // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty"`              // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                              // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                             // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
+	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty"`                                 // 客服链接
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -375,7 +374,7 @@ func (x *UpdateBasicSettingReq) GetUrlService() string {
 
 type UpdateBasicSettingRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"响应消息"` // 响应消息
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -419,8 +418,8 @@ func (x *UpdateBasicSettingRes) GetMessage() string {
 
 type GetInviteBonusConfigReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"` // 站点ID，可选
-	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" dc:"活动全局唯一编码（默认 INVITE）"`        // 活动全局唯一编码（默认 INVITE）
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID，可选
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`                    // 活动全局唯一编码（默认 INVITE）
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -471,15 +470,15 @@ func (x *GetInviteBonusConfigReq) GetCode() string {
 
 type GetInviteBonusConfigRes struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	ActivityId          int32                  `protobuf:"varint,1,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID"`                                  // 活动ID
-	Code                string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" dc:"活动编码"`                                                                 // 活动编码
-	Status              int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status" dc:"活动状态"`                                                            // 活动状态
-	Table               string                 `protobuf:"bytes,4,opt,name=table,proto3" json:"table" dc:"活动参数表"`                                                              // 活动参数表
-	TriggerEvent        int32                  `protobuf:"varint,5,opt,name=trigger_event,json=triggerEvent,proto3" json:"trigger_event" dc:"发放触发"`                            // 发放触发
-	RewardType          int32                  `protobuf:"varint,6,opt,name=reward_type,json=rewardType,proto3" json:"reward_type" dc:"奖励类型"`                                  // 奖励类型
-	MinRechargeAmount   float64                `protobuf:"fixed64,7,opt,name=min_recharge_amount,json=minRechargeAmount,proto3" json:"min_recharge_amount" dc:"触发最小充值金额"`      // 触发最小充值金额
-	InviterRewardAmount float64                `protobuf:"fixed64,8,opt,name=inviter_reward_amount,json=inviterRewardAmount,proto3" json:"inviter_reward_amount" dc:"邀请人奖励金额"` // 邀请人奖励金额
-	FixedParams         string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params" dc:"固定参数(JSON)"`                          // 固定参数(JSON)
+	ActivityId          int32                  `protobuf:"varint,1,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`                               // 活动ID
+	Code                string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`                                                              // 活动编码
+	Status              int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`                                                         // 活动状态
+	Table               string                 `protobuf:"bytes,4,opt,name=table,proto3" json:"table,omitempty"`                                                            // 活动参数表
+	TriggerEvent        int32                  `protobuf:"varint,5,opt,name=trigger_event,json=triggerEvent,proto3" json:"trigger_event,omitempty"`                         // 发放触发
+	RewardType          int32                  `protobuf:"varint,6,opt,name=reward_type,json=rewardType,proto3" json:"reward_type,omitempty"`                               // 奖励类型
+	MinRechargeAmount   float64                `protobuf:"fixed64,7,opt,name=min_recharge_amount,json=minRechargeAmount,proto3" json:"min_recharge_amount,omitempty"`       // 触发最小充值金额
+	InviterRewardAmount float64                `protobuf:"fixed64,8,opt,name=inviter_reward_amount,json=inviterRewardAmount,proto3" json:"inviter_reward_amount,omitempty"` // 邀请人奖励金额
+	FixedParams         string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params,omitempty"`                             // 固定参数(JSON)
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -579,9 +578,9 @@ func (x *GetInviteBonusConfigRes) GetFixedParams() string {
 
 type GetSiteActivityListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`              // 站点ID，可选
-	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID(可选)"` // 活动ID(可选)
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"活动编码(可选)"`                                // 活动编码(可选)
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`             // 站点ID，可选
+	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"` // 活动ID(可选)
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`                                // 活动编码(可选)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -639,20 +638,21 @@ func (x *GetSiteActivityListReq) GetCode() string {
 
 type SiteActivityInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code"`
-	ActivityId    int32                  `protobuf:"varint,3,opt,name=activity_id,json=activityId,proto3" json:"activity_id"`
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
-	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code"`
-	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description"`
-	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time"`
-	EndTime       string                 `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time"`
-	FixedParams   string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params"`
-	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status"`
-	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort"`
-	Table         string                 `protobuf:"bytes,12,opt,name=table,proto3" json:"table"`
-	CreatedAt     string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
-	UpdatedAt     string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code,omitempty"`
+	ActivityId    int32                  `protobuf:"varint,3,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code,omitempty"`
+	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
+	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       string                 `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	FixedParams   string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params,omitempty"`
+	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status,omitempty"`
+	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort,omitempty"`
+	Table         string                 `protobuf:"bytes,12,opt,name=table,proto3" json:"table,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Uri           string                 `protobuf:"bytes,15,opt,name=uri,proto3" json:"uri,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -785,9 +785,16 @@ func (x *SiteActivityInfo) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *SiteActivityInfo) GetUri() string {
+	if x != nil {
+		return x.Uri
+	}
+	return ""
+}
+
 type GetSiteActivityListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*SiteActivityInfo    `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	List          []*SiteActivityInfo    `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -831,17 +838,17 @@ func (x *GetSiteActivityListRes) GetList() []*SiteActivityInfo {
 
 type UpdateSiteActivityReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`                  // 站点ID，可选
-	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID(可选，优先)"`  // 活动ID(可选，优先)
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"活动编码(可选)"`                                    // 活动编码(可选)
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description" dc:"活动描述"`                          // 活动描述
-	StartTime     string                 `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间"`             // 开始时间
-	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间"`                   // 结束时间
-	FixedParams   string                 `protobuf:"bytes,7,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params" dc:"固定参数(JSON)"` // 固定参数(JSON)
-	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态"`                                     // 状态
-	Sort          int32                  `protobuf:"varint,9,opt,name=sort,proto3" json:"sort" dc:"排序"`                                         // 排序
-	StatusSet     bool                   `protobuf:"varint,10,opt,name=status_set,json=statusSet,proto3" json:"status_set" dc:"是否更新status"`     // 是否更新status
-	SortSet       bool                   `protobuf:"varint,11,opt,name=sort_set,json=sortSet,proto3" json:"sort_set" dc:"是否更新sort"`             // 是否更新sort
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`               // 站点ID，可选
+	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`   // 活动ID(可选，优先)
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`                                  // 活动编码(可选)
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                    // 活动描述
+	StartTime     string                 `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`       // 开始时间
+	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`             // 结束时间
+	FixedParams   string                 `protobuf:"bytes,7,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params,omitempty"` // 固定参数(JSON)
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status,omitempty"`                             // 状态
+	Sort          int32                  `protobuf:"varint,9,opt,name=sort,proto3" json:"sort,omitempty"`                                 // 排序
+	StatusSet     bool                   `protobuf:"varint,10,opt,name=status_set,json=statusSet,proto3" json:"status_set,omitempty"`     // 是否更新status
+	SortSet       bool                   `protobuf:"varint,11,opt,name=sort_set,json=sortSet,proto3" json:"sort_set,omitempty"`           // 是否更新sort
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -955,8 +962,8 @@ func (x *UpdateSiteActivityReq) GetSortSet() bool {
 
 type UpdateSiteActivityRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1074,7 +1081,7 @@ const file_backend_site_v1_site_proto_rawDesc = "" +
 	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x1f\n" +
 	"\vactivity_id\x18\x02 \x01(\x05R\n" +
 	"activityId\x12\x12\n" +
-	"\x04code\x18\x03 \x01(\tR\x04code\"\x87\x03\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\"\x99\x03\n" +
 	"\x10SiteActivityInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1b\n" +
 	"\tsite_code\x18\x02 \x01(\tR\bsiteCode\x12\x1f\n" +
@@ -1094,7 +1101,8 @@ const file_backend_site_v1_site_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\r \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x0e \x01(\tR\tupdatedAt\"D\n" +
+	"updated_at\x18\x0e \x01(\tR\tupdatedAt\x12\x10\n" +
+	"\x03uri\x18\x0f \x01(\tR\x03uri\"D\n" +
 	"\x16GetSiteActivityListRes\x12*\n" +
 	"\x04list\x18\x01 \x03(\v2\x16.site.SiteActivityInfoR\x04list\"\xca\x02\n" +
 	"\x15UpdateSiteActivityReq\x12\x17\n" +
