@@ -1885,6 +1885,136 @@ func (x *GetUserLoginLogsRes) GetCount() int32 {
 	return 0
 }
 
+// 增加用户充值次数请求
+type IncreasePayTimesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"` // 站点ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"` // 用户ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IncreasePayTimesReq) Reset() {
+	*x = IncreasePayTimesReq{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IncreasePayTimesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IncreasePayTimesReq) ProtoMessage() {}
+
+func (x *IncreasePayTimesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IncreasePayTimesReq.ProtoReflect.Descriptor instead.
+func (*IncreasePayTimesReq) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *IncreasePayTimesReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *IncreasePayTimesReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+// 增加用户充值次数响应
+type IncreasePayTimesRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                               // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                  // 消息
+	OldPayTimes   int32                  `protobuf:"varint,3,opt,name=old_pay_times,json=oldPayTimes,proto3" json:"old_pay_times" dc:"原充值次数"` // 原充值次数
+	NewPayTimes   int32                  `protobuf:"varint,4,opt,name=new_pay_times,json=newPayTimes,proto3" json:"new_pay_times" dc:"新充值次数"` // 新充值次数
+	InviterId     int32                  `protobuf:"varint,5,opt,name=inviter_id,json=inviterId,proto3" json:"inviter_id" dc:"邀请人ID"`         // 邀请人ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IncreasePayTimesRes) Reset() {
+	*x = IncreasePayTimesRes{}
+	mi := &file_backend_user_v1_user_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IncreasePayTimesRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IncreasePayTimesRes) ProtoMessage() {}
+
+func (x *IncreasePayTimesRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_user_v1_user_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IncreasePayTimesRes.ProtoReflect.Descriptor instead.
+func (*IncreasePayTimesRes) Descriptor() ([]byte, []int) {
+	return file_backend_user_v1_user_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *IncreasePayTimesRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *IncreasePayTimesRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *IncreasePayTimesRes) GetOldPayTimes() int32 {
+	if x != nil {
+		return x.OldPayTimes
+	}
+	return 0
+}
+
+func (x *IncreasePayTimesRes) GetNewPayTimes() int32 {
+	if x != nil {
+		return x.NewPayTimes
+	}
+	return 0
+}
+
+func (x *IncreasePayTimesRes) GetInviterId() int32 {
+	if x != nil {
+		return x.InviterId
+	}
+	return 0
+}
+
 var File_backend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_backend_user_v1_user_proto_rawDesc = "" +
@@ -2079,12 +2209,23 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"created_at\x18\x0f \x01(\tR\tcreatedAt\"W\n" +
 	"\x13GetUserLoginLogsRes\x12*\n" +
 	"\x04list\x18\x01 \x03(\v2\x16.user.UserLoginLogInfoR\x04list\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\x05R\x05count2\xea\x03\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"G\n" +
+	"\x13IncreasePayTimesReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\"\xb0\x01\n" +
+	"\x13IncreasePayTimesRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\"\n" +
+	"\rold_pay_times\x18\x03 \x01(\x05R\voldPayTimes\x12\"\n" +
+	"\rnew_pay_times\x18\x04 \x01(\x05R\vnewPayTimes\x12\x1d\n" +
+	"\n" +
+	"inviter_id\x18\x05 \x01(\x05R\tinviterId2\xb6\x04\n" +
 	"\x04User\x12;\n" +
 	"\vGetUserList\x12\x14.user.GetUserListReq\x1a\x14.user.GetUserListRes\"\x00\x128\n" +
 	"\n" +
 	"UpdateUser\x12\x13.user.UpdateUserReq\x1a\x13.user.UpdateUserRes\"\x00\x12J\n" +
-	"\x10GetUserBasicInfo\x12\x19.user.GetUserBasicInfoReq\x1a\x19.user.GetUserBasicInfoRes\"\x00\x12A\n" +
+	"\x10GetUserBasicInfo\x12\x19.user.GetUserBasicInfoReq\x1a\x19.user.GetUserBasicInfoRes\"\x00\x12J\n" +
+	"\x10IncreasePayTimes\x12\x19.user.IncreasePayTimesReq\x1a\x19.user.IncreasePayTimesRes\"\x00\x12A\n" +
 	"\rGetUserGrades\x12\x16.user.GetUserGradesReq\x1a\x16.user.GetUserGradesRes\"\x00\x12D\n" +
 	"\x0eSaveUserGrades\x12\x17.user.SaveUserGradesReq\x1a\x17.user.SaveUserGradesRes\"\x00\x12J\n" +
 	"\x10DeleteUserGrades\x12\x19.user.DeleteUserGradesReq\x1a\x19.user.DeleteUserGradesRes\"\x00\x12J\n" +
@@ -2102,7 +2243,7 @@ func file_backend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_backend_user_v1_user_proto_rawDescData
 }
 
-var file_backend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_backend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_backend_user_v1_user_proto_goTypes = []any{
 	(*GetUserListReq)(nil),      // 0: user.GetUserListReq
 	(*UserInfo)(nil),            // 1: user.UserInfo
@@ -2123,6 +2264,8 @@ var file_backend_user_v1_user_proto_goTypes = []any{
 	(*GetUserLoginLogsReq)(nil), // 16: user.GetUserLoginLogsReq
 	(*UserLoginLogInfo)(nil),    // 17: user.UserLoginLogInfo
 	(*GetUserLoginLogsRes)(nil), // 18: user.GetUserLoginLogsRes
+	(*IncreasePayTimesReq)(nil), // 19: user.IncreasePayTimesReq
+	(*IncreasePayTimesRes)(nil), // 20: user.IncreasePayTimesRes
 }
 var file_backend_user_v1_user_proto_depIdxs = []int32{
 	1,  // 0: user.GetUserListRes.list:type_name -> user.UserInfo
@@ -2133,19 +2276,21 @@ var file_backend_user_v1_user_proto_depIdxs = []int32{
 	0,  // 5: user.User.GetUserList:input_type -> user.GetUserListReq
 	3,  // 6: user.User.UpdateUser:input_type -> user.UpdateUserReq
 	5,  // 7: user.User.GetUserBasicInfo:input_type -> user.GetUserBasicInfoReq
-	9,  // 8: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
-	12, // 9: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
-	14, // 10: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
-	16, // 11: user.User.GetUserLoginLogs:input_type -> user.GetUserLoginLogsReq
-	2,  // 12: user.User.GetUserList:output_type -> user.GetUserListRes
-	4,  // 13: user.User.UpdateUser:output_type -> user.UpdateUserRes
-	8,  // 14: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
-	11, // 15: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
-	13, // 16: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
-	15, // 17: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
-	18, // 18: user.User.GetUserLoginLogs:output_type -> user.GetUserLoginLogsRes
-	12, // [12:19] is the sub-list for method output_type
-	5,  // [5:12] is the sub-list for method input_type
+	19, // 8: user.User.IncreasePayTimes:input_type -> user.IncreasePayTimesReq
+	9,  // 9: user.User.GetUserGrades:input_type -> user.GetUserGradesReq
+	12, // 10: user.User.SaveUserGrades:input_type -> user.SaveUserGradesReq
+	14, // 11: user.User.DeleteUserGrades:input_type -> user.DeleteUserGradesReq
+	16, // 12: user.User.GetUserLoginLogs:input_type -> user.GetUserLoginLogsReq
+	2,  // 13: user.User.GetUserList:output_type -> user.GetUserListRes
+	4,  // 14: user.User.UpdateUser:output_type -> user.UpdateUserRes
+	8,  // 15: user.User.GetUserBasicInfo:output_type -> user.GetUserBasicInfoRes
+	20, // 16: user.User.IncreasePayTimes:output_type -> user.IncreasePayTimesRes
+	11, // 17: user.User.GetUserGrades:output_type -> user.GetUserGradesRes
+	13, // 18: user.User.SaveUserGrades:output_type -> user.SaveUserGradesRes
+	15, // 19: user.User.DeleteUserGrades:output_type -> user.DeleteUserGradesRes
+	18, // 20: user.User.GetUserLoginLogs:output_type -> user.GetUserLoginLogsRes
+	13, // [13:21] is the sub-list for method output_type
+	5,  // [5:13] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -2162,7 +2307,7 @@ func file_backend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_user_v1_user_proto_rawDesc), len(file_backend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

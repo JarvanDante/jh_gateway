@@ -23,6 +23,7 @@ const (
 	User_GetUserList_FullMethodName      = "/user.User/GetUserList"
 	User_UpdateUser_FullMethodName       = "/user.User/UpdateUser"
 	User_GetUserBasicInfo_FullMethodName = "/user.User/GetUserBasicInfo"
+	User_IncreasePayTimes_FullMethodName = "/user.User/IncreasePayTimes"
 	User_GetUserGrades_FullMethodName    = "/user.User/GetUserGrades"
 	User_SaveUserGrades_FullMethodName   = "/user.User/SaveUserGrades"
 	User_DeleteUserGrades_FullMethodName = "/user.User/DeleteUserGrades"
@@ -36,6 +37,7 @@ type UserClient interface {
 	GetUserList(ctx context.Context, in *GetUserListReq, opts ...grpc.CallOption) (*GetUserListRes, error)
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserRes, error)
 	GetUserBasicInfo(ctx context.Context, in *GetUserBasicInfoReq, opts ...grpc.CallOption) (*GetUserBasicInfoRes, error)
+	IncreasePayTimes(ctx context.Context, in *IncreasePayTimesReq, opts ...grpc.CallOption) (*IncreasePayTimesRes, error)
 	// 用户等级相关接口
 	GetUserGrades(ctx context.Context, in *GetUserGradesReq, opts ...grpc.CallOption) (*GetUserGradesRes, error)
 	SaveUserGrades(ctx context.Context, in *SaveUserGradesReq, opts ...grpc.CallOption) (*SaveUserGradesRes, error)
@@ -76,6 +78,16 @@ func (c *userClient) GetUserBasicInfo(ctx context.Context, in *GetUserBasicInfoR
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetUserBasicInfoRes)
 	err := c.cc.Invoke(ctx, User_GetUserBasicInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) IncreasePayTimes(ctx context.Context, in *IncreasePayTimesReq, opts ...grpc.CallOption) (*IncreasePayTimesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IncreasePayTimesRes)
+	err := c.cc.Invoke(ctx, User_IncreasePayTimes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -129,6 +141,7 @@ type UserServer interface {
 	GetUserList(context.Context, *GetUserListReq) (*GetUserListRes, error)
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserRes, error)
 	GetUserBasicInfo(context.Context, *GetUserBasicInfoReq) (*GetUserBasicInfoRes, error)
+	IncreasePayTimes(context.Context, *IncreasePayTimesReq) (*IncreasePayTimesRes, error)
 	// 用户等级相关接口
 	GetUserGrades(context.Context, *GetUserGradesReq) (*GetUserGradesRes, error)
 	SaveUserGrades(context.Context, *SaveUserGradesReq) (*SaveUserGradesRes, error)
@@ -153,6 +166,9 @@ func (UnimplementedUserServer) UpdateUser(context.Context, *UpdateUserReq) (*Upd
 }
 func (UnimplementedUserServer) GetUserBasicInfo(context.Context, *GetUserBasicInfoReq) (*GetUserBasicInfoRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUserBasicInfo not implemented")
+}
+func (UnimplementedUserServer) IncreasePayTimes(context.Context, *IncreasePayTimesReq) (*IncreasePayTimesRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method IncreasePayTimes not implemented")
 }
 func (UnimplementedUserServer) GetUserGrades(context.Context, *GetUserGradesReq) (*GetUserGradesRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUserGrades not implemented")
@@ -237,6 +253,24 @@ func _User_GetUserBasicInfo_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).GetUserBasicInfo(ctx, req.(*GetUserBasicInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_IncreasePayTimes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IncreasePayTimesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).IncreasePayTimes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_IncreasePayTimes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).IncreasePayTimes(ctx, req.(*IncreasePayTimesReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -331,6 +365,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserBasicInfo",
 			Handler:    _User_GetUserBasicInfo_Handler,
+		},
+		{
+			MethodName: "IncreasePayTimes",
+			Handler:    _User_IncreasePayTimes_Handler,
 		},
 		{
 			MethodName: "GetUserGrades",

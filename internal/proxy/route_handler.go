@@ -107,6 +107,9 @@ func initBackendRoutes() {
 	backendRoutes.Register("/basic-setting", "GET", backend.CallGetBasicSetting)
 	// 设置站点配置信息
 	backendRoutes.Register("/update-basic-setting", "POST", backend.CallUpdateBasicSetting)
+	// 站点活动配置
+	backendRoutes.Register("/site-activity-list", "GET", backend.CallGetSiteActivityList)
+	backendRoutes.Register("/update-site-activity", "POST", backend.CallUpdateSiteActivity)
 
 	// 角色列表
 	backendRoutes.Register("/roles", "GET", backend.CallGetRoleList)

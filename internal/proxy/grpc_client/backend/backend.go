@@ -789,6 +789,108 @@ func CallUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	return nil
 }
 
+/**
+ * showdoc
+ * @catalog 后台/系统/活动配置
+ * @title 获取站点活动配置
+ * @description 获取 site_activity 表数据（按站点）
+ * @method get
+ * @url /api/backend/app/site-activity-list
+ * @param token 必选 string 员工token
+ * @param site_id 可选 int 站点id
+ * @param activity_id 可选 int 活动ID
+ * @param code 可选 string 活动编码
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"site_code":"jh","activity_id":1,"name":"邀请好友活动","code":"INVITE","description":"","start_time":"2025-12-29 08:00:00","end_time":"2026-11-28 08:00:00","fixed_params":"{}","status":1,"sort":0,"table":"activity_invite_bonus","created_at":"2026-02-06 07:59:33","updated_at":"2026-02-06 07:59:33"}]}}
+ * @remark 备注
+ * @number 1
+ */
+func CallGetSiteActivityList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Site GetSiteActivityList")
+
+	client := v3.NewSiteClient(conn)
+	req := &v3.GetSiteActivityListReq{
+		SiteId:     r.Get("site_id", 1).Int32(),
+		ActivityId: r.Get("activity_id", 0).Int32(),
+		Code:       r.Get("code", "").String(),
+	}
+
+	res, err := client.GetSiteActivityList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取活动配置失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/活动配置
+ * @title 更新站点活动配置
+ * @description 仅允许编辑 description/start_time/end_time/fixed_params/status/sort
+ * @method post
+ * @url /api/backend/app/update-site-activity
+ * @param token 必选 string 员工token
+ * @param site_id 可选 int 站点id
+ * @param activity_id 可选 int 活动ID(优先)
+ * @param code 可选 string 活动编码
+ * @param description 可选 string 活动描述
+ * @param start_time 可选 string 开始时间(yyyy-mm-dd hh:mm:ss)
+ * @param end_time 可选 string 结束时间(yyyy-mm-dd hh:mm:ss)
+ * @param fixed_params 可选 string 固定参数JSON
+ * @param status 可选 int 状态
+ * @param sort 可选 int 排序
+ * @return {"code":0,"msg":"success","data":{"message":"更新成功"}}
+ * @remark 备注
+ * @number 1
+ */
+func CallUpdateSiteActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	util.LogWithTrace(ctx, "info", "calling gRPC Site UpdateSiteActivity")
+
+	client := v3.NewSiteClient(conn)
+
+	siteId := getInt32FromMap(reqData, "site_id")
+	if siteId == 0 {
+		siteId = r.Get("site_id", 1).Int32()
+	}
+
+	req := &v3.UpdateSiteActivityReq{
+		SiteId:      siteId,
+		ActivityId:  getInt32FromMap(reqData, "activity_id"),
+		Code:        getStringFromMap(reqData, "code"),
+		Description: getStringFromMap(reqData, "description"),
+		StartTime:   getStringFromMap(reqData, "start_time"),
+		EndTime:     getStringFromMap(reqData, "end_time"),
+		FixedParams: getStringFromMap(reqData, "fixed_params"),
+	}
+
+	if _, ok := reqData["status"]; ok {
+		req.Status = getInt32FromMap(reqData, "status")
+		req.StatusSet = true
+	}
+	if _, ok := reqData["sort"]; ok {
+		req.Sort = getInt32FromMap(reqData, "sort")
+		req.SortSet = true
+	}
+
+	res, err := client.UpdateSiteActivity(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "更新活动配置失败，请稍后重试")
+		return nil
+	}
+
+	util.WriteSuccess(r, map[string]interface{}{
+		"message": res.Message,
+	})
+	return nil
+}
+
 // 辅助函数：从 map 中安全获取各种类型的值
 func getStringFromMap(data map[string]interface{}, key string) string {
 	if val, ok := data[key]; ok {
