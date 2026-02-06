@@ -826,6 +826,45 @@ func CallGetSiteActivityList(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 /**
  * showdoc
  * @catalog 后台/系统/活动配置
+ * @title 获取活动参数配置
+ * @description 获取活动对应参数表字段和值
+ * @method get
+ * @url /api/backend/app/site-activity-params
+ * @param token 必选 string 员工token
+ * @param site_id 可选 int 站点id
+ * @param activity_id 必选 int 活动ID
+ * @return {"code":0,"msg":"success","data":{"table":"activity_invite_bonus","fields":[{"name":"trigger_event","label":"发放触发","type":"select","options":[{"label":"充值总和","value":"1"},{"label":"首充","value":"2"}]}],"values":{"trigger_event":"1"}}}
+ * @remark 备注
+ * @number 1
+ */
+func CallGetSiteActivityParams(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Site GetSiteActivityParams")
+
+	activityId := r.Get("activity_id", 0).Int32()
+	if activityId <= 0 {
+		util.WriteBadRequest(r, "活动ID不能为空")
+		return nil
+	}
+
+	client := v3.NewSiteClient(conn)
+	req := &v3.GetSiteActivityParamsReq{
+		SiteId:     r.Get("site_id", 1).Int32(),
+		ActivityId: activityId,
+		SiteCode:   r.Get("site_code", "").String(),
+	}
+
+	res, err := client.GetSiteActivityParams(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, err.Error())
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/系统/活动配置
  * @title 更新站点活动配置
  * @description 仅允许编辑 description/start_time/end_time/fixed_params/status/sort
  * @method post
@@ -868,6 +907,29 @@ func CallUpdateSiteActivity(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 		StartTime:   getStringFromMap(reqData, "start_time"),
 		EndTime:     getStringFromMap(reqData, "end_time"),
 		FixedParams: getStringFromMap(reqData, "fixed_params"),
+	}
+
+	// param_values 支持对象或JSON字符串
+	if raw, ok := reqData["param_values"]; ok {
+		paramValues := make(map[string]string)
+		switch v := raw.(type) {
+		case map[string]interface{}:
+			for key, val := range v {
+				paramValues[key] = gconv.String(val)
+			}
+		case string:
+			if strings.TrimSpace(v) != "" {
+				var temp map[string]interface{}
+				if err := json.Unmarshal([]byte(v), &temp); err == nil {
+					for key, val := range temp {
+						paramValues[key] = gconv.String(val)
+					}
+				}
+			}
+		}
+		if len(paramValues) > 0 {
+			req.ParamValues = paramValues
+		}
 	}
 
 	if _, ok := reqData["status"]; ok {

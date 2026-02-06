@@ -9,11 +9,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -26,7 +27,7 @@ const (
 type GetBasicSettingReq struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// 站点ID，可选，如果不传则使用当前站点
-	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	SiteId        int32 `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选，如果不传则使用当前站点"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -70,23 +71,23 @@ func (x *GetBasicSettingReq) GetSiteId() int32 {
 
 type GetBasicSettingRes struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`                                                                // 站点代码
-	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                                // 站点名称
-	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
-	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty"`                                  // 客服链接
-	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty"`                                // 代理链接地址
-	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty"`                                     // 手机域名地址
-	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty"`             // 代理推广地址
-	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                             // 单笔最低提现金额
-	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                             // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
-	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id,omitempty"`                  // 默认代理ID
-	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name,omitempty"`             // 默认代理名称
-	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance,omitempty"`                                                       // 总可用额度
-	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset,omitempty"`                         // 剩余额度
+	Code                 string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code" dc:"站点代码"`                                                                        // 站点代码
+	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"站点名称"`                                                                        // 站点名称
+	RegisterTimeInterval int32                  `protobuf:"varint,3,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,4,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"是否开放注册"`                           // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,5,opt,name=is_close,json=isClose,proto3" json:"is_close" dc:"是否关闭站点"`                                                // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,6,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"关闭原因"`                                       // 关闭原因
+	UrlService           string                 `protobuf:"bytes,7,opt,name=url_service,json=urlService,proto3" json:"url_service" dc:"客服链接"`                                          // 客服链接
+	UrlAgentPc           string                 `protobuf:"bytes,8,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc" dc:"代理链接地址"`                                      // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,9,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile" dc:"手机域名地址"`                                           // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,10,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register" dc:"代理推广地址"`                   // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,11,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最低提现金额"`                                 // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,12,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,13,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端Logo"`                                      // 手机端Logo
+	DefaultAgentId       int32                  `protobuf:"varint,14,opt,name=default_agent_id,json=defaultAgentId,proto3" json:"default_agent_id" dc:"默认代理ID"`                        // 默认代理ID
+	DefaultAgentName     string                 `protobuf:"bytes,15,opt,name=default_agent_name,json=defaultAgentName,proto3" json:"default_agent_name" dc:"默认代理名称"`                   // 默认代理名称
+	Balance              float64                `protobuf:"fixed64,16,opt,name=balance,proto3" json:"balance" dc:"总可用额度"`                                                              // 总可用额度
+	BalanceReset         float64                `protobuf:"fixed64,17,opt,name=balance_reset,json=balanceReset,proto3" json:"balance_reset" dc:"剩余额度"`                                 // 剩余额度
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -242,18 +243,18 @@ func (x *GetBasicSettingRes) GetBalanceReset() float64 {
 
 type UpdateBasicSettingReq struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`                                             // 站点ID，可选
-	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval,omitempty"` // 同一IP重复注册时间间隔
-	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register,omitempty"`                     // 是否开放注册
-	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close,omitempty"`                                          // 是否关闭站点
-	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason,omitempty"`                               // 关闭原因
-	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc,omitempty"`                                // 代理链接地址
-	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile,omitempty"`                                     // 手机域名地址
-	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register,omitempty"`              // 代理推广地址
-	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw,omitempty"`                              // 单笔最低提现金额
-	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                             // 单笔最高提现金额
-	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo,omitempty"`                                 // 手机端Logo
-	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service,omitempty"`                                 // 客服链接
+	SiteId               int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`                                                  // 站点ID，可选
+	RegisterTimeInterval int32                  `protobuf:"varint,2,opt,name=register_time_interval,json=registerTimeInterval,proto3" json:"register_time_interval" dc:"同一IP重复注册时间间隔"` // 同一IP重复注册时间间隔
+	SwitchRegister       bool                   `protobuf:"varint,3,opt,name=switch_register,json=switchRegister,proto3" json:"switch_register" dc:"是否开放注册"`                           // 是否开放注册
+	IsClose              bool                   `protobuf:"varint,4,opt,name=is_close,json=isClose,proto3" json:"is_close" dc:"是否关闭站点"`                                                // 是否关闭站点
+	CloseReason          string                 `protobuf:"bytes,5,opt,name=close_reason,json=closeReason,proto3" json:"close_reason" dc:"关闭原因"`                                       // 关闭原因
+	UrlAgentPc           string                 `protobuf:"bytes,6,opt,name=url_agent_pc,json=urlAgentPc,proto3" json:"url_agent_pc" dc:"代理链接地址"`                                      // 代理链接地址
+	UrlMobile            string                 `protobuf:"bytes,7,opt,name=url_mobile,json=urlMobile,proto3" json:"url_mobile" dc:"手机域名地址"`                                           // 手机域名地址
+	UrlAgentRegister     string                 `protobuf:"bytes,8,opt,name=url_agent_register,json=urlAgentRegister,proto3" json:"url_agent_register" dc:"代理推广地址"`                    // 代理推广地址
+	MinWithdraw          int32                  `protobuf:"varint,9,opt,name=min_withdraw,json=minWithdraw,proto3" json:"min_withdraw" dc:"单笔最低提现金额"`                                  // 单笔最低提现金额
+	MaxWithdraw          int32                  `protobuf:"varint,10,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw" dc:"单笔最高提现金额"`                                 // 单笔最高提现金额
+	MobileLogo           string                 `protobuf:"bytes,11,opt,name=mobile_logo,json=mobileLogo,proto3" json:"mobile_logo" dc:"手机端Logo"`                                      // 手机端Logo
+	UrlService           string                 `protobuf:"bytes,12,opt,name=url_service,json=urlService,proto3" json:"url_service" dc:"客服链接"`                                         // 客服链接
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -374,7 +375,7 @@ func (x *UpdateBasicSettingReq) GetUrlService() string {
 
 type UpdateBasicSettingRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"` // 响应消息
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message" dc:"响应消息"` // 响应消息
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -418,8 +419,8 @@ func (x *UpdateBasicSettingRes) GetMessage() string {
 
 type GetInviteBonusConfigReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"` // 站点ID，可选
-	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`                    // 活动全局唯一编码（默认 INVITE）
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"` // 站点ID，可选
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" dc:"活动全局唯一编码（默认 INVITE）"`        // 活动全局唯一编码（默认 INVITE）
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -470,15 +471,15 @@ func (x *GetInviteBonusConfigReq) GetCode() string {
 
 type GetInviteBonusConfigRes struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	ActivityId          int32                  `protobuf:"varint,1,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`                               // 活动ID
-	Code                string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`                                                              // 活动编码
-	Status              int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`                                                         // 活动状态
-	Table               string                 `protobuf:"bytes,4,opt,name=table,proto3" json:"table,omitempty"`                                                            // 活动参数表
-	TriggerEvent        int32                  `protobuf:"varint,5,opt,name=trigger_event,json=triggerEvent,proto3" json:"trigger_event,omitempty"`                         // 发放触发
-	RewardType          int32                  `protobuf:"varint,6,opt,name=reward_type,json=rewardType,proto3" json:"reward_type,omitempty"`                               // 奖励类型
-	MinRechargeAmount   float64                `protobuf:"fixed64,7,opt,name=min_recharge_amount,json=minRechargeAmount,proto3" json:"min_recharge_amount,omitempty"`       // 触发最小充值金额
-	InviterRewardAmount float64                `protobuf:"fixed64,8,opt,name=inviter_reward_amount,json=inviterRewardAmount,proto3" json:"inviter_reward_amount,omitempty"` // 邀请人奖励金额
-	FixedParams         string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params,omitempty"`                             // 固定参数(JSON)
+	ActivityId          int32                  `protobuf:"varint,1,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID"`                                  // 活动ID
+	Code                string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" dc:"活动编码"`                                                                 // 活动编码
+	Status              int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status" dc:"活动状态"`                                                            // 活动状态
+	Table               string                 `protobuf:"bytes,4,opt,name=table,proto3" json:"table" dc:"活动参数表"`                                                              // 活动参数表
+	TriggerEvent        int32                  `protobuf:"varint,5,opt,name=trigger_event,json=triggerEvent,proto3" json:"trigger_event" dc:"发放触发"`                            // 发放触发
+	RewardType          int32                  `protobuf:"varint,6,opt,name=reward_type,json=rewardType,proto3" json:"reward_type" dc:"奖励类型"`                                  // 奖励类型
+	MinRechargeAmount   float64                `protobuf:"fixed64,7,opt,name=min_recharge_amount,json=minRechargeAmount,proto3" json:"min_recharge_amount" dc:"触发最小充值金额"`      // 触发最小充值金额
+	InviterRewardAmount float64                `protobuf:"fixed64,8,opt,name=inviter_reward_amount,json=inviterRewardAmount,proto3" json:"inviter_reward_amount" dc:"邀请人奖励金额"` // 邀请人奖励金额
+	FixedParams         string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params" dc:"固定参数(JSON)"`                          // 固定参数(JSON)
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -578,9 +579,9 @@ func (x *GetInviteBonusConfigRes) GetFixedParams() string {
 
 type GetSiteActivityListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`             // 站点ID，可选
-	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"` // 活动ID(可选)
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`                                // 活动编码(可选)
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`              // 站点ID，可选
+	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID(可选)"` // 活动ID(可选)
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"活动编码(可选)"`                                // 活动编码(可选)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -638,21 +639,21 @@ func (x *GetSiteActivityListReq) GetCode() string {
 
 type SiteActivityInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code,omitempty"`
-	ActivityId    int32                  `protobuf:"varint,3,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code,omitempty"`
-	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       string                 `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	FixedParams   string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params,omitempty"`
-	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status,omitempty"`
-	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort,omitempty"`
-	Table         string                 `protobuf:"bytes,12,opt,name=table,proto3" json:"table,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	Uri           string                 `protobuf:"bytes,15,opt,name=uri,proto3" json:"uri,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code"`
+	ActivityId    int32                  `protobuf:"varint,3,opt,name=activity_id,json=activityId,proto3" json:"activity_id"`
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
+	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code"`
+	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description"`
+	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time"`
+	EndTime       string                 `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time"`
+	FixedParams   string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params"`
+	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status"`
+	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort"`
+	Table         string                 `protobuf:"bytes,12,opt,name=table,proto3" json:"table"`
+	CreatedAt     string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Uri           string                 `protobuf:"bytes,15,opt,name=uri,proto3" json:"uri"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -794,7 +795,7 @@ func (x *SiteActivityInfo) GetUri() string {
 
 type GetSiteActivityListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*SiteActivityInfo    `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	List          []*SiteActivityInfo    `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -836,26 +837,267 @@ func (x *GetSiteActivityListRes) GetList() []*SiteActivityInfo {
 	return nil
 }
 
+type GetSiteActivityParamsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`              // 站点ID，可选
+	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID(必选)"` // 活动ID(必选)
+	SiteCode      string                 `protobuf:"bytes,3,opt,name=site_code,json=siteCode,proto3" json:"site_code" dc:"站点CODE，可选（优先）"`   // 站点CODE，可选（优先）
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteActivityParamsReq) Reset() {
+	*x = GetSiteActivityParamsReq{}
+	mi := &file_backend_site_v1_site_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteActivityParamsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteActivityParamsReq) ProtoMessage() {}
+
+func (x *GetSiteActivityParamsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_site_v1_site_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteActivityParamsReq.ProtoReflect.Descriptor instead.
+func (*GetSiteActivityParamsReq) Descriptor() ([]byte, []int) {
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetSiteActivityParamsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GetSiteActivityParamsReq) GetActivityId() int32 {
+	if x != nil {
+		return x.ActivityId
+	}
+	return 0
+}
+
+func (x *GetSiteActivityParamsReq) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+type ParamOption struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Label         string                 `protobuf:"bytes,1,opt,name=label,proto3" json:"label"`
+	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ParamOption) Reset() {
+	*x = ParamOption{}
+	mi := &file_backend_site_v1_site_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ParamOption) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ParamOption) ProtoMessage() {}
+
+func (x *ParamOption) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_site_v1_site_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ParamOption.ProtoReflect.Descriptor instead.
+func (*ParamOption) Descriptor() ([]byte, []int) {
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ParamOption) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *ParamOption) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+type ActivityParamField struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name"`
+	Label         string                 `protobuf:"bytes,2,opt,name=label,proto3" json:"label"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type" dc:"select/number/text"` // select/number/text
+	Options       []*ParamOption         `protobuf:"bytes,4,rep,name=options,proto3" json:"options"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivityParamField) Reset() {
+	*x = ActivityParamField{}
+	mi := &file_backend_site_v1_site_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivityParamField) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivityParamField) ProtoMessage() {}
+
+func (x *ActivityParamField) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_site_v1_site_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivityParamField.ProtoReflect.Descriptor instead.
+func (*ActivityParamField) Descriptor() ([]byte, []int) {
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ActivityParamField) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ActivityParamField) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *ActivityParamField) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *ActivityParamField) GetOptions() []*ParamOption {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+type GetSiteActivityParamsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Table         string                 `protobuf:"bytes,1,opt,name=table,proto3" json:"table"`
+	Fields        []*ActivityParamField  `protobuf:"bytes,2,rep,name=fields,proto3" json:"fields"`
+	Values        map[string]string      `protobuf:"bytes,3,rep,name=values,proto3" json:"values" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteActivityParamsRes) Reset() {
+	*x = GetSiteActivityParamsRes{}
+	mi := &file_backend_site_v1_site_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteActivityParamsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteActivityParamsRes) ProtoMessage() {}
+
+func (x *GetSiteActivityParamsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_site_v1_site_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteActivityParamsRes.ProtoReflect.Descriptor instead.
+func (*GetSiteActivityParamsRes) Descriptor() ([]byte, []int) {
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetSiteActivityParamsRes) GetTable() string {
+	if x != nil {
+		return x.Table
+	}
+	return ""
+}
+
+func (x *GetSiteActivityParamsRes) GetFields() []*ActivityParamField {
+	if x != nil {
+		return x.Fields
+	}
+	return nil
+}
+
+func (x *GetSiteActivityParamsRes) GetValues() map[string]string {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
 type UpdateSiteActivityReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`               // 站点ID，可选
-	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id,omitempty"`   // 活动ID(可选，优先)
-	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`                                  // 活动编码(可选)
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                    // 活动描述
-	StartTime     string                 `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`       // 开始时间
-	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`             // 结束时间
-	FixedParams   string                 `protobuf:"bytes,7,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params,omitempty"` // 固定参数(JSON)
-	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status,omitempty"`                             // 状态
-	Sort          int32                  `protobuf:"varint,9,opt,name=sort,proto3" json:"sort,omitempty"`                                 // 排序
-	StatusSet     bool                   `protobuf:"varint,10,opt,name=status_set,json=statusSet,proto3" json:"status_set,omitempty"`     // 是否更新status
-	SortSet       bool                   `protobuf:"varint,11,opt,name=sort_set,json=sortSet,proto3" json:"sort_set,omitempty"`           // 是否更新sort
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`                                                                                         // 站点ID，可选
+	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID(可选，优先)"`                                                                         // 活动ID(可选，优先)
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"活动编码(可选)"`                                                                                                           // 活动编码(可选)
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description" dc:"活动描述"`                                                                                                 // 活动描述
+	StartTime     string                 `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间"`                                                                                    // 开始时间
+	EndTime       string                 `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间"`                                                                                          // 结束时间
+	FixedParams   string                 `protobuf:"bytes,7,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params" dc:"固定参数(JSON)"`                                                                        // 固定参数(JSON)
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态"`                                                                                                            // 状态
+	Sort          int32                  `protobuf:"varint,9,opt,name=sort,proto3" json:"sort" dc:"排序"`                                                                                                                // 排序
+	StatusSet     bool                   `protobuf:"varint,10,opt,name=status_set,json=statusSet,proto3" json:"status_set" dc:"是否更新status"`                                                                            // 是否更新status
+	SortSet       bool                   `protobuf:"varint,11,opt,name=sort_set,json=sortSet,proto3" json:"sort_set" dc:"是否更新sort"`                                                                                    // 是否更新sort
+	ParamValues   map[string]string      `protobuf:"bytes,12,rep,name=param_values,json=paramValues,proto3" json:"param_values" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" dc:"参数表字段值"` // 参数表字段值
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateSiteActivityReq) Reset() {
 	*x = UpdateSiteActivityReq{}
-	mi := &file_backend_site_v1_site_proto_msgTypes[9]
+	mi := &file_backend_site_v1_site_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -867,7 +1109,7 @@ func (x *UpdateSiteActivityReq) String() string {
 func (*UpdateSiteActivityReq) ProtoMessage() {}
 
 func (x *UpdateSiteActivityReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_site_v1_site_proto_msgTypes[9]
+	mi := &file_backend_site_v1_site_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -880,7 +1122,7 @@ func (x *UpdateSiteActivityReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSiteActivityReq.ProtoReflect.Descriptor instead.
 func (*UpdateSiteActivityReq) Descriptor() ([]byte, []int) {
-	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{9}
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *UpdateSiteActivityReq) GetSiteId() int32 {
@@ -960,17 +1202,24 @@ func (x *UpdateSiteActivityReq) GetSortSet() bool {
 	return false
 }
 
+func (x *UpdateSiteActivityReq) GetParamValues() map[string]string {
+	if x != nil {
+		return x.ParamValues
+	}
+	return nil
+}
+
 type UpdateSiteActivityRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateSiteActivityRes) Reset() {
 	*x = UpdateSiteActivityRes{}
-	mi := &file_backend_site_v1_site_proto_msgTypes[10]
+	mi := &file_backend_site_v1_site_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -982,7 +1231,7 @@ func (x *UpdateSiteActivityRes) String() string {
 func (*UpdateSiteActivityRes) ProtoMessage() {}
 
 func (x *UpdateSiteActivityRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_site_v1_site_proto_msgTypes[10]
+	mi := &file_backend_site_v1_site_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -995,7 +1244,7 @@ func (x *UpdateSiteActivityRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSiteActivityRes.ProtoReflect.Descriptor instead.
 func (*UpdateSiteActivityRes) Descriptor() ([]byte, []int) {
-	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{10}
+	return file_backend_site_v1_site_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *UpdateSiteActivityRes) GetSuccess() bool {
@@ -1104,7 +1353,27 @@ const file_backend_site_v1_site_proto_rawDesc = "" +
 	"updated_at\x18\x0e \x01(\tR\tupdatedAt\x12\x10\n" +
 	"\x03uri\x18\x0f \x01(\tR\x03uri\"D\n" +
 	"\x16GetSiteActivityListRes\x12*\n" +
-	"\x04list\x18\x01 \x03(\v2\x16.site.SiteActivityInfoR\x04list\"\xca\x02\n" +
+	"\x04list\x18\x01 \x03(\v2\x16.site.SiteActivityInfoR\x04list\"q\n" +
+	"\x18GetSiteActivityParamsReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x1f\n" +
+	"\vactivity_id\x18\x02 \x01(\x05R\n" +
+	"activityId\x12\x1b\n" +
+	"\tsite_code\x18\x03 \x01(\tR\bsiteCode\"9\n" +
+	"\vParamOption\x12\x14\n" +
+	"\x05label\x18\x01 \x01(\tR\x05label\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\x7f\n" +
+	"\x12ActivityParamField\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x05label\x18\x02 \x01(\tR\x05label\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12+\n" +
+	"\aoptions\x18\x04 \x03(\v2\x11.site.ParamOptionR\aoptions\"\xe1\x01\n" +
+	"\x18GetSiteActivityParamsRes\x12\x14\n" +
+	"\x05table\x18\x01 \x01(\tR\x05table\x120\n" +
+	"\x06fields\x18\x02 \x03(\v2\x18.site.ActivityParamFieldR\x06fields\x12B\n" +
+	"\x06values\x18\x03 \x03(\v2*.site.GetSiteActivityParamsRes.ValuesEntryR\x06values\x1a9\n" +
+	"\vValuesEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xdb\x03\n" +
 	"\x15UpdateSiteActivityReq\x12\x17\n" +
 	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x1f\n" +
 	"\vactivity_id\x18\x02 \x01(\x05R\n" +
@@ -1120,15 +1389,20 @@ const file_backend_site_v1_site_proto_rawDesc = "" +
 	"\n" +
 	"status_set\x18\n" +
 	" \x01(\bR\tstatusSet\x12\x19\n" +
-	"\bsort_set\x18\v \x01(\bR\asortSet\"K\n" +
+	"\bsort_set\x18\v \x01(\bR\asortSet\x12O\n" +
+	"\fparam_values\x18\f \x03(\v2,.site.UpdateSiteActivityReq.ParamValuesEntryR\vparamValues\x1a>\n" +
+	"\x10ParamValuesEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"K\n" +
 	"\x15UpdateSiteActivityRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xa0\x03\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xfb\x03\n" +
 	"\x04Site\x12G\n" +
 	"\x0fGetBasicSetting\x12\x18.site.GetBasicSettingReq\x1a\x18.site.GetBasicSettingRes\"\x00\x12P\n" +
 	"\x12UpdateBasicSetting\x12\x1b.site.UpdateBasicSettingReq\x1a\x1b.site.UpdateBasicSettingRes\"\x00\x12V\n" +
 	"\x14GetInviteBonusConfig\x12\x1d.site.GetInviteBonusConfigReq\x1a\x1d.site.GetInviteBonusConfigRes\"\x00\x12S\n" +
-	"\x13GetSiteActivityList\x12\x1c.site.GetSiteActivityListReq\x1a\x1c.site.GetSiteActivityListRes\"\x00\x12P\n" +
+	"\x13GetSiteActivityList\x12\x1c.site.GetSiteActivityListReq\x1a\x1c.site.GetSiteActivityListRes\"\x00\x12Y\n" +
+	"\x15GetSiteActivityParams\x12\x1e.site.GetSiteActivityParamsReq\x1a\x1e.site.GetSiteActivityParamsRes\"\x00\x12P\n" +
 	"\x12UpdateSiteActivity\x12\x1b.site.UpdateSiteActivityReq\x1a\x1b.site.UpdateSiteActivityRes\"\x00B$Z\"jh_app_service/api/backend/site/v1b\x06proto3"
 
 var (
@@ -1143,37 +1417,49 @@ func file_backend_site_v1_site_proto_rawDescGZIP() []byte {
 	return file_backend_site_v1_site_proto_rawDescData
 }
 
-var file_backend_site_v1_site_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_backend_site_v1_site_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_backend_site_v1_site_proto_goTypes = []any{
-	(*GetBasicSettingReq)(nil),      // 0: site.GetBasicSettingReq
-	(*GetBasicSettingRes)(nil),      // 1: site.GetBasicSettingRes
-	(*UpdateBasicSettingReq)(nil),   // 2: site.UpdateBasicSettingReq
-	(*UpdateBasicSettingRes)(nil),   // 3: site.UpdateBasicSettingRes
-	(*GetInviteBonusConfigReq)(nil), // 4: site.GetInviteBonusConfigReq
-	(*GetInviteBonusConfigRes)(nil), // 5: site.GetInviteBonusConfigRes
-	(*GetSiteActivityListReq)(nil),  // 6: site.GetSiteActivityListReq
-	(*SiteActivityInfo)(nil),        // 7: site.SiteActivityInfo
-	(*GetSiteActivityListRes)(nil),  // 8: site.GetSiteActivityListRes
-	(*UpdateSiteActivityReq)(nil),   // 9: site.UpdateSiteActivityReq
-	(*UpdateSiteActivityRes)(nil),   // 10: site.UpdateSiteActivityRes
+	(*GetBasicSettingReq)(nil),       // 0: site.GetBasicSettingReq
+	(*GetBasicSettingRes)(nil),       // 1: site.GetBasicSettingRes
+	(*UpdateBasicSettingReq)(nil),    // 2: site.UpdateBasicSettingReq
+	(*UpdateBasicSettingRes)(nil),    // 3: site.UpdateBasicSettingRes
+	(*GetInviteBonusConfigReq)(nil),  // 4: site.GetInviteBonusConfigReq
+	(*GetInviteBonusConfigRes)(nil),  // 5: site.GetInviteBonusConfigRes
+	(*GetSiteActivityListReq)(nil),   // 6: site.GetSiteActivityListReq
+	(*SiteActivityInfo)(nil),         // 7: site.SiteActivityInfo
+	(*GetSiteActivityListRes)(nil),   // 8: site.GetSiteActivityListRes
+	(*GetSiteActivityParamsReq)(nil), // 9: site.GetSiteActivityParamsReq
+	(*ParamOption)(nil),              // 10: site.ParamOption
+	(*ActivityParamField)(nil),       // 11: site.ActivityParamField
+	(*GetSiteActivityParamsRes)(nil), // 12: site.GetSiteActivityParamsRes
+	(*UpdateSiteActivityReq)(nil),    // 13: site.UpdateSiteActivityReq
+	(*UpdateSiteActivityRes)(nil),    // 14: site.UpdateSiteActivityRes
+	nil,                              // 15: site.GetSiteActivityParamsRes.ValuesEntry
+	nil,                              // 16: site.UpdateSiteActivityReq.ParamValuesEntry
 }
 var file_backend_site_v1_site_proto_depIdxs = []int32{
 	7,  // 0: site.GetSiteActivityListRes.list:type_name -> site.SiteActivityInfo
-	0,  // 1: site.Site.GetBasicSetting:input_type -> site.GetBasicSettingReq
-	2,  // 2: site.Site.UpdateBasicSetting:input_type -> site.UpdateBasicSettingReq
-	4,  // 3: site.Site.GetInviteBonusConfig:input_type -> site.GetInviteBonusConfigReq
-	6,  // 4: site.Site.GetSiteActivityList:input_type -> site.GetSiteActivityListReq
-	9,  // 5: site.Site.UpdateSiteActivity:input_type -> site.UpdateSiteActivityReq
-	1,  // 6: site.Site.GetBasicSetting:output_type -> site.GetBasicSettingRes
-	3,  // 7: site.Site.UpdateBasicSetting:output_type -> site.UpdateBasicSettingRes
-	5,  // 8: site.Site.GetInviteBonusConfig:output_type -> site.GetInviteBonusConfigRes
-	8,  // 9: site.Site.GetSiteActivityList:output_type -> site.GetSiteActivityListRes
-	10, // 10: site.Site.UpdateSiteActivity:output_type -> site.UpdateSiteActivityRes
-	6,  // [6:11] is the sub-list for method output_type
-	1,  // [1:6] is the sub-list for method input_type
-	1,  // [1:1] is the sub-list for extension type_name
-	1,  // [1:1] is the sub-list for extension extendee
-	0,  // [0:1] is the sub-list for field type_name
+	10, // 1: site.ActivityParamField.options:type_name -> site.ParamOption
+	11, // 2: site.GetSiteActivityParamsRes.fields:type_name -> site.ActivityParamField
+	15, // 3: site.GetSiteActivityParamsRes.values:type_name -> site.GetSiteActivityParamsRes.ValuesEntry
+	16, // 4: site.UpdateSiteActivityReq.param_values:type_name -> site.UpdateSiteActivityReq.ParamValuesEntry
+	0,  // 5: site.Site.GetBasicSetting:input_type -> site.GetBasicSettingReq
+	2,  // 6: site.Site.UpdateBasicSetting:input_type -> site.UpdateBasicSettingReq
+	4,  // 7: site.Site.GetInviteBonusConfig:input_type -> site.GetInviteBonusConfigReq
+	6,  // 8: site.Site.GetSiteActivityList:input_type -> site.GetSiteActivityListReq
+	9,  // 9: site.Site.GetSiteActivityParams:input_type -> site.GetSiteActivityParamsReq
+	13, // 10: site.Site.UpdateSiteActivity:input_type -> site.UpdateSiteActivityReq
+	1,  // 11: site.Site.GetBasicSetting:output_type -> site.GetBasicSettingRes
+	3,  // 12: site.Site.UpdateBasicSetting:output_type -> site.UpdateBasicSettingRes
+	5,  // 13: site.Site.GetInviteBonusConfig:output_type -> site.GetInviteBonusConfigRes
+	8,  // 14: site.Site.GetSiteActivityList:output_type -> site.GetSiteActivityListRes
+	12, // 15: site.Site.GetSiteActivityParams:output_type -> site.GetSiteActivityParamsRes
+	14, // 16: site.Site.UpdateSiteActivity:output_type -> site.UpdateSiteActivityRes
+	11, // [11:17] is the sub-list for method output_type
+	5,  // [5:11] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_backend_site_v1_site_proto_init() }
@@ -1187,7 +1473,7 @@ func file_backend_site_v1_site_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_site_v1_site_proto_rawDesc), len(file_backend_site_v1_site_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
