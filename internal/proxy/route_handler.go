@@ -209,6 +209,8 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/deposit-callback", "POST", balance.CallDepositCallback)
 	// 申请提现
 	balanceRoutes.Register("/withdraw", "POST", balance.CallWithdraw)
+	// 洗码返水
+	balanceRoutes.Register("/wash-code-rebate", "POST", balance.CallWashCodeRebate)
 
 	// 后台接口
 	// 账变记录
@@ -288,6 +290,8 @@ func initGameRoutes() {
 	gameRoutes.Register("/recall-balance", "POST", game.CallRecallGameBalance)
 	// 历史投注列表（前台）
 	gameRoutes.Register("/bet-history", "GET", game.CallGetUserBetHistory)
+	// 可洗码额度（前台）
+	gameRoutes.Register("/wash-code-quota", "GET", game.CallGetWashCodeQuota)
 }
 
 // initManageRoutes 初始化总后台管理路由

@@ -2861,6 +2861,494 @@ func (x *WithdrawRes) GetTradeNo() string {
 	return ""
 }
 
+// 发放邀请红利请求
+type GrantInviteBonusReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"` // 站点ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"` // 用户ID
+	Amount        float64                `protobuf:"fixed64,3,opt,name=amount,proto3" json:"amount" dc:"红利金额"`              // 红利金额
+	Remark        string                 `protobuf:"bytes,4,opt,name=remark,proto3" json:"remark" dc:"备注"`                  // 备注
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GrantInviteBonusReq) Reset() {
+	*x = GrantInviteBonusReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GrantInviteBonusReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GrantInviteBonusReq) ProtoMessage() {}
+
+func (x *GrantInviteBonusReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GrantInviteBonusReq.ProtoReflect.Descriptor instead.
+func (*GrantInviteBonusReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *GrantInviteBonusReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GrantInviteBonusReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GrantInviteBonusReq) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *GrantInviteBonusReq) GetRemark() string {
+	if x != nil {
+		return x.Remark
+	}
+	return ""
+}
+
+// 发放邀请红利响应
+type GrantInviteBonusRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`              // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                 // 消息
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"` // 流水号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GrantInviteBonusRes) Reset() {
+	*x = GrantInviteBonusRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GrantInviteBonusRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GrantInviteBonusRes) ProtoMessage() {}
+
+func (x *GrantInviteBonusRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GrantInviteBonusRes.ProtoReflect.Descriptor instead.
+func (*GrantInviteBonusRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *GrantInviteBonusRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GrantInviteBonusRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GrantInviteBonusRes) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+// 获取邀请红利统计请求
+type GetInviteBonusSummaryReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"` // 站点ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"` // 用户ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInviteBonusSummaryReq) Reset() {
+	*x = GetInviteBonusSummaryReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteBonusSummaryReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteBonusSummaryReq) ProtoMessage() {}
+
+func (x *GetInviteBonusSummaryReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteBonusSummaryReq.ProtoReflect.Descriptor instead.
+func (*GetInviteBonusSummaryReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *GetInviteBonusSummaryReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GetInviteBonusSummaryReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+// 获取邀请红利统计响应
+type GetInviteBonusSummaryRes struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	TodayAmount     float64                `protobuf:"fixed64,1,opt,name=today_amount,json=todayAmount,proto3" json:"today_amount" dc:"今日邀请红利"`             // 今日邀请红利
+	YesterdayAmount float64                `protobuf:"fixed64,2,opt,name=yesterday_amount,json=yesterdayAmount,proto3" json:"yesterday_amount" dc:"昨日邀请红利"` // 昨日邀请红利
+	TotalAmount     float64                `protobuf:"fixed64,3,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount" dc:"总邀请红利"`              // 总邀请红利
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetInviteBonusSummaryRes) Reset() {
+	*x = GetInviteBonusSummaryRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteBonusSummaryRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteBonusSummaryRes) ProtoMessage() {}
+
+func (x *GetInviteBonusSummaryRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteBonusSummaryRes.ProtoReflect.Descriptor instead.
+func (*GetInviteBonusSummaryRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *GetInviteBonusSummaryRes) GetTodayAmount() float64 {
+	if x != nil {
+		return x.TodayAmount
+	}
+	return 0
+}
+
+func (x *GetInviteBonusSummaryRes) GetYesterdayAmount() float64 {
+	if x != nil {
+		return x.YesterdayAmount
+	}
+	return 0
+}
+
+func (x *GetInviteBonusSummaryRes) GetTotalAmount() float64 {
+	if x != nil {
+		return x.TotalAmount
+	}
+	return 0
+}
+
+// 统计有效邀请人数请求
+type GetValidReferralCountReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                // 站点ID
+	UserIds       []int32                `protobuf:"varint,2,rep,packed,name=user_ids,json=userIds,proto3" json:"user_ids" dc:"被邀请用户ID列表"` // 被邀请用户ID列表
+	MinTotal      float64                `protobuf:"fixed64,3,opt,name=min_total,json=minTotal,proto3" json:"min_total" dc:"有效充值门槛"`       // 有效充值门槛
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetValidReferralCountReq) Reset() {
+	*x = GetValidReferralCountReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetValidReferralCountReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetValidReferralCountReq) ProtoMessage() {}
+
+func (x *GetValidReferralCountReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetValidReferralCountReq.ProtoReflect.Descriptor instead.
+func (*GetValidReferralCountReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *GetValidReferralCountReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GetValidReferralCountReq) GetUserIds() []int32 {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
+func (x *GetValidReferralCountReq) GetMinTotal() float64 {
+	if x != nil {
+		return x.MinTotal
+	}
+	return 0
+}
+
+// 统计有效邀请人数响应
+type GetValidReferralCountRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count" dc:"有效邀请人数"` // 有效邀请人数
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetValidReferralCountRes) Reset() {
+	*x = GetValidReferralCountRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetValidReferralCountRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetValidReferralCountRes) ProtoMessage() {}
+
+func (x *GetValidReferralCountRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetValidReferralCountRes.ProtoReflect.Descriptor instead.
+func (*GetValidReferralCountRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *GetValidReferralCountRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 执行洗码返水请求
+type WashCodeRebateReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WashCodeRebateReq) Reset() {
+	*x = WashCodeRebateReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WashCodeRebateReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WashCodeRebateReq) ProtoMessage() {}
+
+func (x *WashCodeRebateReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WashCodeRebateReq.ProtoReflect.Descriptor instead.
+func (*WashCodeRebateReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{49}
+}
+
+// 执行洗码返水响应
+type WashCodeRebateRes struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                              // 是否成功
+	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                                 // 消息
+	TradeNo        string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                                 // 流水号
+	ValidBetAmount float64                `protobuf:"fixed64,4,opt,name=valid_bet_amount,json=validBetAmount,proto3" json:"valid_bet_amount" dc:"本次洗码有效投注额度"` // 本次洗码有效投注额度
+	RebatePercent  float64                `protobuf:"fixed64,5,opt,name=rebate_percent,json=rebatePercent,proto3" json:"rebate_percent" dc:"当前等级电子洗码比例(%)"`   // 当前等级电子洗码比例(%)
+	RebateAmount   float64                `protobuf:"fixed64,6,opt,name=rebate_amount,json=rebateAmount,proto3" json:"rebate_amount" dc:"本次返水金额"`             // 本次返水金额
+	GradeName      string                 `protobuf:"bytes,7,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"当前用户等级名称"`                      // 当前用户等级名称
+	MaxBetId       uint64                 `protobuf:"varint,8,opt,name=max_bet_id,json=maxBetId,proto3" json:"max_bet_id" dc:"本次洗码覆盖的最大注单ID"`                 // 本次洗码覆盖的最大注单ID
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *WashCodeRebateRes) Reset() {
+	*x = WashCodeRebateRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WashCodeRebateRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WashCodeRebateRes) ProtoMessage() {}
+
+func (x *WashCodeRebateRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WashCodeRebateRes.ProtoReflect.Descriptor instead.
+func (*WashCodeRebateRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *WashCodeRebateRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *WashCodeRebateRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *WashCodeRebateRes) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *WashCodeRebateRes) GetValidBetAmount() float64 {
+	if x != nil {
+		return x.ValidBetAmount
+	}
+	return 0
+}
+
+func (x *WashCodeRebateRes) GetRebatePercent() float64 {
+	if x != nil {
+		return x.RebatePercent
+	}
+	return 0
+}
+
+func (x *WashCodeRebateRes) GetRebateAmount() float64 {
+	if x != nil {
+		return x.RebateAmount
+	}
+	return 0
+}
+
+func (x *WashCodeRebateRes) GetGradeName() string {
+	if x != nil {
+		return x.GradeName
+	}
+	return ""
+}
+
+func (x *WashCodeRebateRes) GetMaxBetId() uint64 {
+	if x != nil {
+		return x.MaxBetId
+	}
+	return 0
+}
+
 var File_frontend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_frontend_balance_v1_balance_proto_rawDesc = "" +
@@ -3087,7 +3575,41 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\vWithdrawRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
-	"\btrade_no\x18\x03 \x01(\tR\atradeNo2\xda\x0e\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\"w\n" +
+	"\x13GrantInviteBonusReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x16\n" +
+	"\x06amount\x18\x03 \x01(\x01R\x06amount\x12\x16\n" +
+	"\x06remark\x18\x04 \x01(\tR\x06remark\"d\n" +
+	"\x13GrantInviteBonusRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\"L\n" +
+	"\x18GetInviteBonusSummaryReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\"\x8b\x01\n" +
+	"\x18GetInviteBonusSummaryRes\x12!\n" +
+	"\ftoday_amount\x18\x01 \x01(\x01R\vtodayAmount\x12)\n" +
+	"\x10yesterday_amount\x18\x02 \x01(\x01R\x0fyesterdayAmount\x12!\n" +
+	"\ftotal_amount\x18\x03 \x01(\x01R\vtotalAmount\"k\n" +
+	"\x18GetValidReferralCountReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x19\n" +
+	"\buser_ids\x18\x02 \x03(\x05R\auserIds\x12\x1b\n" +
+	"\tmin_total\x18\x03 \x01(\x01R\bminTotal\"0\n" +
+	"\x18GetValidReferralCountRes\x12\x14\n" +
+	"\x05count\x18\x01 \x01(\x05R\x05count\"\x13\n" +
+	"\x11WashCodeRebateReq\"\x95\x02\n" +
+	"\x11WashCodeRebateRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12(\n" +
+	"\x10valid_bet_amount\x18\x04 \x01(\x01R\x0evalidBetAmount\x12%\n" +
+	"\x0erebate_percent\x18\x05 \x01(\x01R\rrebatePercent\x12#\n" +
+	"\rrebate_amount\x18\x06 \x01(\x01R\frebateAmount\x12\x1d\n" +
+	"\n" +
+	"grade_name\x18\a \x01(\tR\tgradeName\x12\x1c\n" +
+	"\n" +
+	"max_bet_id\x18\b \x01(\x04R\bmaxBetId2\x82\x12\n" +
 	"\aBalance\x12_\n" +
 	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
 	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00\x12Y\n" +
@@ -3107,7 +3629,11 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\rGetBalanceLog\x12\".frontend_balance.GetBalanceLogReq\x1a\".frontend_balance.GetBalanceLogRes\"\x00\x12w\n" +
 	"\x17GetUserFlowRequirements\x12,.frontend_balance.GetUserFlowRequirementsReq\x1a,.frontend_balance.GetUserFlowRequirementsRes\"\x00\x12_\n" +
 	"\x0fDepositCallback\x12$.frontend_balance.DepositCallbackReq\x1a$.frontend_balance.DepositCallbackRes\"\x00\x12J\n" +
-	"\bWithdraw\x12\x1d.frontend_balance.WithdrawReq\x1a\x1d.frontend_balance.WithdrawRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
+	"\bWithdraw\x12\x1d.frontend_balance.WithdrawReq\x1a\x1d.frontend_balance.WithdrawRes\"\x00\x12b\n" +
+	"\x10GrantInviteBonus\x12%.frontend_balance.GrantInviteBonusReq\x1a%.frontend_balance.GrantInviteBonusRes\"\x00\x12q\n" +
+	"\x15GetInviteBonusSummary\x12*.frontend_balance.GetInviteBonusSummaryReq\x1a*.frontend_balance.GetInviteBonusSummaryRes\"\x00\x12q\n" +
+	"\x15GetValidReferralCount\x12*.frontend_balance.GetValidReferralCountReq\x1a*.frontend_balance.GetValidReferralCountRes\"\x00\x12\\\n" +
+	"\x0eWashCodeRebate\x12#.frontend_balance.WashCodeRebateReq\x1a#.frontend_balance.WashCodeRebateRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
 var (
 	file_frontend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -3121,7 +3647,7 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*InitBalanceUserReq)(nil),         // 0: frontend_balance.InitBalanceUserReq
 	(*InitBalanceUserRes)(nil),         // 1: frontend_balance.InitBalanceUserRes
@@ -3166,6 +3692,14 @@ var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*DepositCallbackRes)(nil),         // 40: frontend_balance.DepositCallbackRes
 	(*WithdrawReq)(nil),                // 41: frontend_balance.WithdrawReq
 	(*WithdrawRes)(nil),                // 42: frontend_balance.WithdrawRes
+	(*GrantInviteBonusReq)(nil),        // 43: frontend_balance.GrantInviteBonusReq
+	(*GrantInviteBonusRes)(nil),        // 44: frontend_balance.GrantInviteBonusRes
+	(*GetInviteBonusSummaryReq)(nil),   // 45: frontend_balance.GetInviteBonusSummaryReq
+	(*GetInviteBonusSummaryRes)(nil),   // 46: frontend_balance.GetInviteBonusSummaryRes
+	(*GetValidReferralCountReq)(nil),   // 47: frontend_balance.GetValidReferralCountReq
+	(*GetValidReferralCountRes)(nil),   // 48: frontend_balance.GetValidReferralCountRes
+	(*WashCodeRebateReq)(nil),          // 49: frontend_balance.WashCodeRebateReq
+	(*WashCodeRebateRes)(nil),          // 50: frontend_balance.WashCodeRebateRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	13, // 0: frontend_balance.GetPaymentListRes.list:type_name -> frontend_balance.PaymentInfo
@@ -3192,27 +3726,35 @@ var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	36, // 21: frontend_balance.Balance.GetUserFlowRequirements:input_type -> frontend_balance.GetUserFlowRequirementsReq
 	39, // 22: frontend_balance.Balance.DepositCallback:input_type -> frontend_balance.DepositCallbackReq
 	41, // 23: frontend_balance.Balance.Withdraw:input_type -> frontend_balance.WithdrawReq
-	1,  // 24: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	3,  // 25: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
-	5,  // 26: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
-	7,  // 27: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
-	9,  // 28: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
-	11, // 29: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
-	14, // 30: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
-	17, // 31: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
-	19, // 32: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
-	22, // 33: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
-	24, // 34: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
-	26, // 35: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
-	28, // 36: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
-	30, // 37: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
-	32, // 38: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
-	35, // 39: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
-	38, // 40: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
-	40, // 41: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
-	42, // 42: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
-	24, // [24:43] is the sub-list for method output_type
-	5,  // [5:24] is the sub-list for method input_type
+	43, // 24: frontend_balance.Balance.GrantInviteBonus:input_type -> frontend_balance.GrantInviteBonusReq
+	45, // 25: frontend_balance.Balance.GetInviteBonusSummary:input_type -> frontend_balance.GetInviteBonusSummaryReq
+	47, // 26: frontend_balance.Balance.GetValidReferralCount:input_type -> frontend_balance.GetValidReferralCountReq
+	49, // 27: frontend_balance.Balance.WashCodeRebate:input_type -> frontend_balance.WashCodeRebateReq
+	1,  // 28: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3,  // 29: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	5,  // 30: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
+	7,  // 31: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
+	9,  // 32: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
+	11, // 33: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
+	14, // 34: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
+	17, // 35: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
+	19, // 36: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
+	22, // 37: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
+	24, // 38: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
+	26, // 39: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
+	28, // 40: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
+	30, // 41: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
+	32, // 42: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
+	35, // 43: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
+	38, // 44: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
+	40, // 45: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
+	42, // 46: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
+	44, // 47: frontend_balance.Balance.GrantInviteBonus:output_type -> frontend_balance.GrantInviteBonusRes
+	46, // 48: frontend_balance.Balance.GetInviteBonusSummary:output_type -> frontend_balance.GetInviteBonusSummaryRes
+	48, // 49: frontend_balance.Balance.GetValidReferralCount:output_type -> frontend_balance.GetValidReferralCountRes
+	50, // 50: frontend_balance.Balance.WashCodeRebate:output_type -> frontend_balance.WashCodeRebateRes
+	28, // [28:51] is the sub-list for method output_type
+	5,  // [5:28] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -3229,7 +3771,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   43,
+			NumMessages:   51,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

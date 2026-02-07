@@ -187,6 +187,36 @@ func CallRefreshBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
+ * @catalog 前台/财务/洗码
+ * @title 执行洗码返水
+ * @description 根据当前用户可洗码额度执行返水
+ * @method post
+ * @url /api/frontend/balance/wash-code-rebate
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"洗码返水成功","trade_no":"RB202602070001","valid_bet_amount":100.0,"rebate_percent":0.5,"rebate_amount":0.5,"grade_name":"VIP2","max_bet_id":12345}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 110
+ */
+func CallWashCodeRebate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance WashCodeRebate (Frontend)")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.WashCodeRebateReq{}
+
+	res, err := client.WashCodeRebate(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance WashCodeRebate failed: %v", err)
+		util.WriteInternalError(r, "洗码返水失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 后台/财务/账变记录
  * @title 获取账变记录
  * @description 获取会员账变记录列表

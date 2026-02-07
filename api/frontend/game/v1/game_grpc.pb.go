@@ -26,6 +26,7 @@ const (
 	Game_GetGameBalance_FullMethodName    = "/front_game.Game/GetGameBalance"
 	Game_RecallGameBalance_FullMethodName = "/front_game.Game/RecallGameBalance"
 	Game_GetUserBetHistory_FullMethodName = "/front_game.Game/GetUserBetHistory"
+	Game_GetWashCodeQuota_FullMethodName  = "/front_game.Game/GetWashCodeQuota"
 )
 
 // GameClient is the client API for Game service.
@@ -38,6 +39,7 @@ type GameClient interface {
 	GetGameBalance(ctx context.Context, in *GetGameBalanceReq, opts ...grpc.CallOption) (*GetGameBalanceRes, error)
 	RecallGameBalance(ctx context.Context, in *RecallGameBalanceReq, opts ...grpc.CallOption) (*RecallGameBalanceRes, error)
 	GetUserBetHistory(ctx context.Context, in *GetUserBetHistoryReq, opts ...grpc.CallOption) (*GetUserBetHistoryRes, error)
+	GetWashCodeQuota(ctx context.Context, in *GetWashCodeQuotaReq, opts ...grpc.CallOption) (*GetWashCodeQuotaRes, error)
 }
 
 type gameClient struct {
@@ -108,6 +110,16 @@ func (c *gameClient) GetUserBetHistory(ctx context.Context, in *GetUserBetHistor
 	return out, nil
 }
 
+func (c *gameClient) GetWashCodeQuota(ctx context.Context, in *GetWashCodeQuotaReq, opts ...grpc.CallOption) (*GetWashCodeQuotaRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWashCodeQuotaRes)
+	err := c.cc.Invoke(ctx, Game_GetWashCodeQuota_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GameServer is the server API for Game service.
 // All implementations must embed UnimplementedGameServer
 // for forward compatibility.
@@ -118,6 +130,7 @@ type GameServer interface {
 	GetGameBalance(context.Context, *GetGameBalanceReq) (*GetGameBalanceRes, error)
 	RecallGameBalance(context.Context, *RecallGameBalanceReq) (*RecallGameBalanceRes, error)
 	GetUserBetHistory(context.Context, *GetUserBetHistoryReq) (*GetUserBetHistoryRes, error)
+	GetWashCodeQuota(context.Context, *GetWashCodeQuotaReq) (*GetWashCodeQuotaRes, error)
 	mustEmbedUnimplementedGameServer()
 }
 
@@ -145,6 +158,9 @@ func (UnimplementedGameServer) RecallGameBalance(context.Context, *RecallGameBal
 }
 func (UnimplementedGameServer) GetUserBetHistory(context.Context, *GetUserBetHistoryReq) (*GetUserBetHistoryRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUserBetHistory not implemented")
+}
+func (UnimplementedGameServer) GetWashCodeQuota(context.Context, *GetWashCodeQuotaReq) (*GetWashCodeQuotaRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetWashCodeQuota not implemented")
 }
 func (UnimplementedGameServer) mustEmbedUnimplementedGameServer() {}
 func (UnimplementedGameServer) testEmbeddedByValue()              {}
@@ -275,6 +291,24 @@ func _Game_GetUserBetHistory_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Game_GetWashCodeQuota_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWashCodeQuotaReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServer).GetWashCodeQuota(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Game_GetWashCodeQuota_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServer).GetWashCodeQuota(ctx, req.(*GetWashCodeQuotaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Game_ServiceDesc is the grpc.ServiceDesc for Game service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -305,6 +339,10 @@ var Game_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserBetHistory",
 			Handler:    _Game_GetUserBetHistory_Handler,
+		},
+		{
+			MethodName: "GetWashCodeQuota",
+			Handler:    _Game_GetWashCodeQuota_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

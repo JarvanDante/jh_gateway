@@ -1444,7 +1444,6 @@ func CallGetAdminLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
  * @param level_id 可选 int 层级ID
  * @param status 可选 int 状态
  * @param username 可选 string 用户名
- * @param realname 可选 string 真实姓名
  * @param agent_username 可选 string 代理用户名
  * @param mobile 可选 string 手机号
  * @param page 可选 int 页码 (默认: 1)
@@ -1484,7 +1483,6 @@ func CallGetUserList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 		LevelId:       getInt32FromMapWithDefault(reqData, "level_id", 0),
 		Status:        getInt32FromMapWithDefault(reqData, "status", 0),
 		Username:      getStringFromMap(reqData, "username"),
-		Realname:      getStringFromMap(reqData, "realname"),
 		AgentUsername: getStringFromMap(reqData, "agent_username"),
 		Mobile:        getStringFromMap(reqData, "mobile"),
 		Page:          getInt32FromMapWithDefault(reqData, "page", 1),
@@ -1526,14 +1524,10 @@ func CallGetUserList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
  * @param grade_id 必选 int 等级ID
  * @param level_id 必选 int 层级ID
  * @param agent_id 必选 int 代理ID
- * @param realname 可选 string 真实姓名
  * @param mobile 可选 string 手机号
  * @param email 可选 string 邮箱
- * @param qq 可选 string QQ号
  * @param birthday 可选 string 生日
  * @param sex 必选 int 性别
- * @param focus_level 必选 int 关注级别
- * @param balance_status 必选 int 资金状态
  * @param status 必选 int 状态
  * @param remark 可选 string 备注
  * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新用户成功"}}
@@ -1564,14 +1558,10 @@ func CallUpdateUser(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		GradeId:       getInt32FromMapWithDefault(reqData, "grade_id", 0),
 		LevelId:       getInt32FromMapWithDefault(reqData, "level_id", 0),
 		AgentId:       getInt32FromMapWithDefault(reqData, "agent_id", 0),
-		Realname:      getStringFromMap(reqData, "realname"),
 		Mobile:        getStringFromMap(reqData, "mobile"),
 		Email:         getStringFromMap(reqData, "email"),
-		Qq:            getStringFromMap(reqData, "qq"),
 		Birthday:      getStringFromMap(reqData, "birthday"),
 		Sex:           getInt32FromMapWithDefault(reqData, "sex", 0),
-		FocusLevel:    getInt32FromMapWithDefault(reqData, "focus_level", 1),
-		BalanceStatus: getInt32FromMapWithDefault(reqData, "balance_status", 1),
 		Status:        getInt32FromMapWithDefault(reqData, "status", 1),
 		Remark:        getStringFromMap(reqData, "remark"),
 	}

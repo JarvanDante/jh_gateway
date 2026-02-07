@@ -703,3 +703,36 @@ func CallGetUserBetHistory(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/游戏/洗码
+ * @title 获取可洗码额度
+ * @description 获取当前用户的可洗码有效投注额度
+ * @method get
+ * @url /api/frontend/game/wash-code-quota
+ * @param last_bet_id 可选 uint64 上次洗码游标ID（不传则自动按最近洗码时间统计）
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"查询成功","valid_bet_amount":100.0,"max_bet_id":12345,"last_rebate_time":"2026-02-07 12:00:00"}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 12
+ */
+func CallGetWashCodeQuota(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Game GetWashCodeQuota (Frontend)")
+
+	lastBetId := gconv.Uint64(r.Get("last_bet_id").String())
+
+	req := &v20.GetWashCodeQuotaReq{
+		LastBetId: lastBetId,
+	}
+
+	client := v20.NewGameClient(conn)
+	res, err := client.GetWashCodeQuota(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetWashCodeQuota failed: %v", err)
+		return err
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
