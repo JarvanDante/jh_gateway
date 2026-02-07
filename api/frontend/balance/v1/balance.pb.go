@@ -3211,6 +3211,192 @@ func (x *GetValidReferralCountRes) GetCount() int32 {
 	return 0
 }
 
+// 获取VIP升级进度请求
+type GetVipUpgradeProgressReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetVipUpgradeProgressReq) Reset() {
+	*x = GetVipUpgradeProgressReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetVipUpgradeProgressReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetVipUpgradeProgressReq) ProtoMessage() {}
+
+func (x *GetVipUpgradeProgressReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetVipUpgradeProgressReq.ProtoReflect.Descriptor instead.
+func (*GetVipUpgradeProgressReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{49}
+}
+
+// 获取VIP升级进度响应
+type GetVipUpgradeProgressRes struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Success          bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                                  // 是否成功
+	Message          string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                                     // 消息
+	CurrentGradeId   int32                  `protobuf:"varint,3,opt,name=current_grade_id,json=currentGradeId,proto3" json:"current_grade_id" dc:"当前等级ID"`          // 当前等级ID
+	CurrentGradeName string                 `protobuf:"bytes,4,opt,name=current_grade_name,json=currentGradeName,proto3" json:"current_grade_name" dc:"当前等级名称"`     // 当前等级名称
+	NextGradeId      int32                  `protobuf:"varint,5,opt,name=next_grade_id,json=nextGradeId,proto3" json:"next_grade_id" dc:"下一等级ID"`                   // 下一等级ID
+	NextGradeName    string                 `protobuf:"bytes,6,opt,name=next_grade_name,json=nextGradeName,proto3" json:"next_grade_name" dc:"下一等级名称"`              // 下一等级名称
+	DepositAmount    float64                `protobuf:"fixed64,7,opt,name=deposit_amount,json=depositAmount,proto3" json:"deposit_amount" dc:"当前累计充值金额"`            // 当前累计充值金额
+	BetAmount        float64                `protobuf:"fixed64,8,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount" dc:"当前累计有效投注金额"`                      // 当前累计有效投注金额
+	NextPaymentLimit float64                `protobuf:"fixed64,9,opt,name=next_payment_limit,json=nextPaymentLimit,proto3" json:"next_payment_limit" dc:"下一等级充值门槛"` // 下一等级充值门槛
+	NextBetLimit     float64                `protobuf:"fixed64,10,opt,name=next_bet_limit,json=nextBetLimit,proto3" json:"next_bet_limit" dc:"下一等级有效投注门槛"`          // 下一等级有效投注门槛
+	DepositProgress  float64                `protobuf:"fixed64,11,opt,name=deposit_progress,json=depositProgress,proto3" json:"deposit_progress" dc:"充值进度(0-100)"`  // 充值进度(0-100)
+	BetProgress      float64                `protobuf:"fixed64,12,opt,name=bet_progress,json=betProgress,proto3" json:"bet_progress" dc:"投注进度(0-100)"`              // 投注进度(0-100)
+	Progress         float64                `protobuf:"fixed64,13,opt,name=progress,proto3" json:"progress" dc:"综合进度(0-100, AND取较小值)"`                              // 综合进度(0-100, AND取较小值)
+	IsMaxGrade       bool                   `protobuf:"varint,14,opt,name=is_max_grade,json=isMaxGrade,proto3" json:"is_max_grade" dc:"是否已达最高等级"`                   // 是否已达最高等级
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GetVipUpgradeProgressRes) Reset() {
+	*x = GetVipUpgradeProgressRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetVipUpgradeProgressRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetVipUpgradeProgressRes) ProtoMessage() {}
+
+func (x *GetVipUpgradeProgressRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetVipUpgradeProgressRes.ProtoReflect.Descriptor instead.
+func (*GetVipUpgradeProgressRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *GetVipUpgradeProgressRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetVipUpgradeProgressRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetVipUpgradeProgressRes) GetCurrentGradeId() int32 {
+	if x != nil {
+		return x.CurrentGradeId
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetCurrentGradeName() string {
+	if x != nil {
+		return x.CurrentGradeName
+	}
+	return ""
+}
+
+func (x *GetVipUpgradeProgressRes) GetNextGradeId() int32 {
+	if x != nil {
+		return x.NextGradeId
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetNextGradeName() string {
+	if x != nil {
+		return x.NextGradeName
+	}
+	return ""
+}
+
+func (x *GetVipUpgradeProgressRes) GetDepositAmount() float64 {
+	if x != nil {
+		return x.DepositAmount
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetBetAmount() float64 {
+	if x != nil {
+		return x.BetAmount
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetNextPaymentLimit() float64 {
+	if x != nil {
+		return x.NextPaymentLimit
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetNextBetLimit() float64 {
+	if x != nil {
+		return x.NextBetLimit
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetDepositProgress() float64 {
+	if x != nil {
+		return x.DepositProgress
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetBetProgress() float64 {
+	if x != nil {
+		return x.BetProgress
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+func (x *GetVipUpgradeProgressRes) GetIsMaxGrade() bool {
+	if x != nil {
+		return x.IsMaxGrade
+	}
+	return false
+}
+
 // 执行洗码返水请求
 type WashCodeRebateReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -3220,7 +3406,7 @@ type WashCodeRebateReq struct {
 
 func (x *WashCodeRebateReq) Reset() {
 	*x = WashCodeRebateReq{}
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[49]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3232,7 +3418,7 @@ func (x *WashCodeRebateReq) String() string {
 func (*WashCodeRebateReq) ProtoMessage() {}
 
 func (x *WashCodeRebateReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[49]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3245,7 +3431,7 @@ func (x *WashCodeRebateReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WashCodeRebateReq.ProtoReflect.Descriptor instead.
 func (*WashCodeRebateReq) Descriptor() ([]byte, []int) {
-	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{49}
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{51}
 }
 
 // 执行洗码返水响应
@@ -3265,7 +3451,7 @@ type WashCodeRebateRes struct {
 
 func (x *WashCodeRebateRes) Reset() {
 	*x = WashCodeRebateRes{}
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[50]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3277,7 +3463,7 @@ func (x *WashCodeRebateRes) String() string {
 func (*WashCodeRebateRes) ProtoMessage() {}
 
 func (x *WashCodeRebateRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_balance_v1_balance_proto_msgTypes[50]
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3290,7 +3476,7 @@ func (x *WashCodeRebateRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WashCodeRebateRes.ProtoReflect.Descriptor instead.
 func (*WashCodeRebateRes) Descriptor() ([]byte, []int) {
-	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{50}
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *WashCodeRebateRes) GetSuccess() bool {
@@ -3597,7 +3783,26 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\buser_ids\x18\x02 \x03(\x05R\auserIds\x12\x1b\n" +
 	"\tmin_total\x18\x03 \x01(\x01R\bminTotal\"0\n" +
 	"\x18GetValidReferralCountRes\x12\x14\n" +
-	"\x05count\x18\x01 \x01(\x05R\x05count\"\x13\n" +
+	"\x05count\x18\x01 \x01(\x05R\x05count\"\x1a\n" +
+	"\x18GetVipUpgradeProgressReq\"\x98\x04\n" +
+	"\x18GetVipUpgradeProgressRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12(\n" +
+	"\x10current_grade_id\x18\x03 \x01(\x05R\x0ecurrentGradeId\x12,\n" +
+	"\x12current_grade_name\x18\x04 \x01(\tR\x10currentGradeName\x12\"\n" +
+	"\rnext_grade_id\x18\x05 \x01(\x05R\vnextGradeId\x12&\n" +
+	"\x0fnext_grade_name\x18\x06 \x01(\tR\rnextGradeName\x12%\n" +
+	"\x0edeposit_amount\x18\a \x01(\x01R\rdepositAmount\x12\x1d\n" +
+	"\n" +
+	"bet_amount\x18\b \x01(\x01R\tbetAmount\x12,\n" +
+	"\x12next_payment_limit\x18\t \x01(\x01R\x10nextPaymentLimit\x12$\n" +
+	"\x0enext_bet_limit\x18\n" +
+	" \x01(\x01R\fnextBetLimit\x12)\n" +
+	"\x10deposit_progress\x18\v \x01(\x01R\x0fdepositProgress\x12!\n" +
+	"\fbet_progress\x18\f \x01(\x01R\vbetProgress\x12\x1a\n" +
+	"\bprogress\x18\r \x01(\x01R\bprogress\x12 \n" +
+	"\fis_max_grade\x18\x0e \x01(\bR\n" +
+	"isMaxGrade\"\x13\n" +
 	"\x11WashCodeRebateReq\"\x95\x02\n" +
 	"\x11WashCodeRebateRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
@@ -3609,7 +3814,7 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\n" +
 	"grade_name\x18\a \x01(\tR\tgradeName\x12\x1c\n" +
 	"\n" +
-	"max_bet_id\x18\b \x01(\x04R\bmaxBetId2\x82\x12\n" +
+	"max_bet_id\x18\b \x01(\x04R\bmaxBetId2\xf5\x12\n" +
 	"\aBalance\x12_\n" +
 	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
 	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00\x12Y\n" +
@@ -3632,7 +3837,8 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\bWithdraw\x12\x1d.frontend_balance.WithdrawReq\x1a\x1d.frontend_balance.WithdrawRes\"\x00\x12b\n" +
 	"\x10GrantInviteBonus\x12%.frontend_balance.GrantInviteBonusReq\x1a%.frontend_balance.GrantInviteBonusRes\"\x00\x12q\n" +
 	"\x15GetInviteBonusSummary\x12*.frontend_balance.GetInviteBonusSummaryReq\x1a*.frontend_balance.GetInviteBonusSummaryRes\"\x00\x12q\n" +
-	"\x15GetValidReferralCount\x12*.frontend_balance.GetValidReferralCountReq\x1a*.frontend_balance.GetValidReferralCountRes\"\x00\x12\\\n" +
+	"\x15GetValidReferralCount\x12*.frontend_balance.GetValidReferralCountReq\x1a*.frontend_balance.GetValidReferralCountRes\"\x00\x12q\n" +
+	"\x15GetVipUpgradeProgress\x12*.frontend_balance.GetVipUpgradeProgressReq\x1a*.frontend_balance.GetVipUpgradeProgressRes\"\x00\x12\\\n" +
 	"\x0eWashCodeRebate\x12#.frontend_balance.WashCodeRebateReq\x1a#.frontend_balance.WashCodeRebateRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
 var (
@@ -3647,7 +3853,7 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 53)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*InitBalanceUserReq)(nil),         // 0: frontend_balance.InitBalanceUserReq
 	(*InitBalanceUserRes)(nil),         // 1: frontend_balance.InitBalanceUserRes
@@ -3698,8 +3904,10 @@ var file_frontend_balance_v1_balance_proto_goTypes = []any{
 	(*GetInviteBonusSummaryRes)(nil),   // 46: frontend_balance.GetInviteBonusSummaryRes
 	(*GetValidReferralCountReq)(nil),   // 47: frontend_balance.GetValidReferralCountReq
 	(*GetValidReferralCountRes)(nil),   // 48: frontend_balance.GetValidReferralCountRes
-	(*WashCodeRebateReq)(nil),          // 49: frontend_balance.WashCodeRebateReq
-	(*WashCodeRebateRes)(nil),          // 50: frontend_balance.WashCodeRebateRes
+	(*GetVipUpgradeProgressReq)(nil),   // 49: frontend_balance.GetVipUpgradeProgressReq
+	(*GetVipUpgradeProgressRes)(nil),   // 50: frontend_balance.GetVipUpgradeProgressRes
+	(*WashCodeRebateReq)(nil),          // 51: frontend_balance.WashCodeRebateReq
+	(*WashCodeRebateRes)(nil),          // 52: frontend_balance.WashCodeRebateRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	13, // 0: frontend_balance.GetPaymentListRes.list:type_name -> frontend_balance.PaymentInfo
@@ -3729,32 +3937,34 @@ var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	43, // 24: frontend_balance.Balance.GrantInviteBonus:input_type -> frontend_balance.GrantInviteBonusReq
 	45, // 25: frontend_balance.Balance.GetInviteBonusSummary:input_type -> frontend_balance.GetInviteBonusSummaryReq
 	47, // 26: frontend_balance.Balance.GetValidReferralCount:input_type -> frontend_balance.GetValidReferralCountReq
-	49, // 27: frontend_balance.Balance.WashCodeRebate:input_type -> frontend_balance.WashCodeRebateReq
-	1,  // 28: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	3,  // 29: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
-	5,  // 30: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
-	7,  // 31: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
-	9,  // 32: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
-	11, // 33: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
-	14, // 34: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
-	17, // 35: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
-	19, // 36: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
-	22, // 37: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
-	24, // 38: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
-	26, // 39: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
-	28, // 40: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
-	30, // 41: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
-	32, // 42: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
-	35, // 43: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
-	38, // 44: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
-	40, // 45: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
-	42, // 46: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
-	44, // 47: frontend_balance.Balance.GrantInviteBonus:output_type -> frontend_balance.GrantInviteBonusRes
-	46, // 48: frontend_balance.Balance.GetInviteBonusSummary:output_type -> frontend_balance.GetInviteBonusSummaryRes
-	48, // 49: frontend_balance.Balance.GetValidReferralCount:output_type -> frontend_balance.GetValidReferralCountRes
-	50, // 50: frontend_balance.Balance.WashCodeRebate:output_type -> frontend_balance.WashCodeRebateRes
-	28, // [28:51] is the sub-list for method output_type
-	5,  // [5:28] is the sub-list for method input_type
+	49, // 27: frontend_balance.Balance.GetVipUpgradeProgress:input_type -> frontend_balance.GetVipUpgradeProgressReq
+	51, // 28: frontend_balance.Balance.WashCodeRebate:input_type -> frontend_balance.WashCodeRebateReq
+	1,  // 29: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3,  // 30: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	5,  // 31: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
+	7,  // 32: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
+	9,  // 33: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
+	11, // 34: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
+	14, // 35: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
+	17, // 36: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
+	19, // 37: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
+	22, // 38: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
+	24, // 39: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
+	26, // 40: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
+	28, // 41: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
+	30, // 42: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
+	32, // 43: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
+	35, // 44: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
+	38, // 45: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
+	40, // 46: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
+	42, // 47: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
+	44, // 48: frontend_balance.Balance.GrantInviteBonus:output_type -> frontend_balance.GrantInviteBonusRes
+	46, // 49: frontend_balance.Balance.GetInviteBonusSummary:output_type -> frontend_balance.GetInviteBonusSummaryRes
+	48, // 50: frontend_balance.Balance.GetValidReferralCount:output_type -> frontend_balance.GetValidReferralCountRes
+	50, // 51: frontend_balance.Balance.GetVipUpgradeProgress:output_type -> frontend_balance.GetVipUpgradeProgressRes
+	52, // 52: frontend_balance.Balance.WashCodeRebate:output_type -> frontend_balance.WashCodeRebateRes
+	29, // [29:53] is the sub-list for method output_type
+	5,  // [5:29] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -3771,7 +3981,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   51,
+			NumMessages:   53,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

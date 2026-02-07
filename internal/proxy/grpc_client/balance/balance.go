@@ -187,6 +187,36 @@ func CallRefreshBalance(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
+ * @catalog 前台/财务/VIP
+ * @title 获取VIP升级进度
+ * @description 获取当前用户累计充值/投注及下一等级升级进度
+ * @method get
+ * @url /api/frontend/balance/vip-upgrade-progress
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","current_grade_id":9,"current_grade_name":"VIP9","next_grade_id":10,"next_grade_name":"VIP10","deposit_amount":900.0,"bet_amount":9.0,"next_payment_limit":1000.0,"next_bet_limit":10.0,"deposit_progress":90.0,"bet_progress":90.0,"progress":90.0,"is_max_grade":false}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 111
+ */
+func CallGetVipUpgradeProgress(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetVipUpgradeProgress (Frontend)")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetVipUpgradeProgressReq{}
+
+	res, err := client.GetVipUpgradeProgress(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetVipUpgradeProgress failed: %v", err)
+		util.WriteInternalError(r, "获取VIP升级进度失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 前台/财务/洗码
  * @title 执行洗码返水
  * @description 根据当前用户可洗码额度执行返水

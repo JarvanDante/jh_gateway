@@ -209,6 +209,8 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/deposit-callback", "POST", balance.CallDepositCallback)
 	// 申请提现
 	balanceRoutes.Register("/withdraw", "POST", balance.CallWithdraw)
+	// VIP升级进度
+	balanceRoutes.Register("/vip-upgrade-progress", "GET", balance.CallGetVipUpgradeProgress)
 	// 洗码返水
 	balanceRoutes.Register("/wash-code-rebate", "POST", balance.CallWashCodeRebate)
 

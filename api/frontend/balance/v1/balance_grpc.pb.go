@@ -42,6 +42,7 @@ const (
 	Balance_GrantInviteBonus_FullMethodName        = "/frontend_balance.Balance/GrantInviteBonus"
 	Balance_GetInviteBonusSummary_FullMethodName   = "/frontend_balance.Balance/GetInviteBonusSummary"
 	Balance_GetValidReferralCount_FullMethodName   = "/frontend_balance.Balance/GetValidReferralCount"
+	Balance_GetVipUpgradeProgress_FullMethodName   = "/frontend_balance.Balance/GetVipUpgradeProgress"
 	Balance_WashCodeRebate_FullMethodName          = "/frontend_balance.Balance/WashCodeRebate"
 )
 
@@ -93,6 +94,8 @@ type BalanceClient interface {
 	GetInviteBonusSummary(ctx context.Context, in *GetInviteBonusSummaryReq, opts ...grpc.CallOption) (*GetInviteBonusSummaryRes, error)
 	// 统计有效邀请人数（按充值总额）
 	GetValidReferralCount(ctx context.Context, in *GetValidReferralCountReq, opts ...grpc.CallOption) (*GetValidReferralCountRes, error)
+	// 获取VIP升级进度
+	GetVipUpgradeProgress(ctx context.Context, in *GetVipUpgradeProgressReq, opts ...grpc.CallOption) (*GetVipUpgradeProgressRes, error)
 	// 执行洗码返水
 	WashCodeRebate(ctx context.Context, in *WashCodeRebateReq, opts ...grpc.CallOption) (*WashCodeRebateRes, error)
 }
@@ -325,6 +328,16 @@ func (c *balanceClient) GetValidReferralCount(ctx context.Context, in *GetValidR
 	return out, nil
 }
 
+func (c *balanceClient) GetVipUpgradeProgress(ctx context.Context, in *GetVipUpgradeProgressReq, opts ...grpc.CallOption) (*GetVipUpgradeProgressRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetVipUpgradeProgressRes)
+	err := c.cc.Invoke(ctx, Balance_GetVipUpgradeProgress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *balanceClient) WashCodeRebate(ctx context.Context, in *WashCodeRebateReq, opts ...grpc.CallOption) (*WashCodeRebateRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WashCodeRebateRes)
@@ -383,6 +396,8 @@ type BalanceServer interface {
 	GetInviteBonusSummary(context.Context, *GetInviteBonusSummaryReq) (*GetInviteBonusSummaryRes, error)
 	// 统计有效邀请人数（按充值总额）
 	GetValidReferralCount(context.Context, *GetValidReferralCountReq) (*GetValidReferralCountRes, error)
+	// 获取VIP升级进度
+	GetVipUpgradeProgress(context.Context, *GetVipUpgradeProgressReq) (*GetVipUpgradeProgressRes, error)
 	// 执行洗码返水
 	WashCodeRebate(context.Context, *WashCodeRebateReq) (*WashCodeRebateRes, error)
 	mustEmbedUnimplementedBalanceServer()
@@ -460,6 +475,9 @@ func (UnimplementedBalanceServer) GetInviteBonusSummary(context.Context, *GetInv
 }
 func (UnimplementedBalanceServer) GetValidReferralCount(context.Context, *GetValidReferralCountReq) (*GetValidReferralCountRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetValidReferralCount not implemented")
+}
+func (UnimplementedBalanceServer) GetVipUpgradeProgress(context.Context, *GetVipUpgradeProgressReq) (*GetVipUpgradeProgressRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetVipUpgradeProgress not implemented")
 }
 func (UnimplementedBalanceServer) WashCodeRebate(context.Context, *WashCodeRebateReq) (*WashCodeRebateRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method WashCodeRebate not implemented")
@@ -881,6 +899,24 @@ func _Balance_GetValidReferralCount_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetVipUpgradeProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVipUpgradeProgressReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetVipUpgradeProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetVipUpgradeProgress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetVipUpgradeProgress(ctx, req.(*GetVipUpgradeProgressReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Balance_WashCodeRebate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(WashCodeRebateReq)
 	if err := dec(in); err != nil {
@@ -993,6 +1029,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetValidReferralCount",
 			Handler:    _Balance_GetValidReferralCount_Handler,
+		},
+		{
+			MethodName: "GetVipUpgradeProgress",
+			Handler:    _Balance_GetVipUpgradeProgress_Handler,
 		},
 		{
 			MethodName: "WashCodeRebate",
