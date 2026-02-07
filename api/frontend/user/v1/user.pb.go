@@ -61,42 +61,25 @@ func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
 
 // 获取用户信息响应
 type GetUserInfoRes struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	UserId            int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户名"`                                                 // 用户名
-	Username          string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                                            // 用户名
-	Realname          string                 `protobuf:"bytes,3,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                                           // 真实姓名
-	Email             string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                                   // 邮箱
-	Mobile            string                 `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                                // 手机号
-	Qq                string                 `protobuf:"bytes,6,opt,name=qq,proto3" json:"qq" dc:"QQ号"`                                                                        // QQ号
-	Sex               int32                  `protobuf:"varint,7,opt,name=sex,proto3" json:"sex" dc:"性别 0=保密 1=男 2=女"`                                                         // 性别 0=保密 1=男 2=女
-	Birthday          string                 `protobuf:"bytes,8,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                             // 生日
-	LastLoginTime     string                 `protobuf:"bytes,9,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`                        // 最后登录时间
-	LastLoginAddress  string                 `protobuf:"bytes,10,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"`              // 最后登录地址
-	ShowBeginnerGuide int32                  `protobuf:"varint,11,opt,name=show_beginner_guide,json=showBeginnerGuide,proto3" json:"show_beginner_guide" dc:"新手引导 0=不显示 1=显示"` // 新手引导 0=不显示 1=显示
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	UserId           int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户名"`                                    // 用户名
+	Username         string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                               // 用户名
+	Realname         string                 `protobuf:"bytes,3,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                              // 真实姓名
+	Email            string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                      // 邮箱
+	Mobile           string                 `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                   // 手机号
+	Birthday         string                 `protobuf:"bytes,8,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                // 生日
+	LastLoginTime    string                 `protobuf:"bytes,9,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time" dc:"最后登录时间"`           // 最后登录时间
+	LastLoginAddress string                 `protobuf:"bytes,10,opt,name=last_login_address,json=lastLoginAddress,proto3" json:"last_login_address" dc:"最后登录地址"` // 最后登录地址
 	// 等级相关
 	GradeId   int32  `protobuf:"varint,12,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级相关会员等级ID"`  // 会员等级ID
 	GradeName string `protobuf:"bytes,13,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"会员等级名称"` // 会员等级名称
 	// 绑定状态
-	BindSafeQuestion int32 `protobuf:"varint,14,opt,name=bind_safe_question,json=bindSafeQuestion,proto3" json:"bind_safe_question" dc:"绑定状态是否绑定安全问题 0=未绑定 1=已绑定"` // 是否绑定安全问题 0=未绑定 1=已绑定
-	BindPayPassword  int32 `protobuf:"varint,15,opt,name=bind_pay_password,json=bindPayPassword,proto3" json:"bind_pay_password" dc:"是否绑定资金密码 0=未绑定 1=已绑定"`        // 是否绑定资金密码 0=未绑定 1=已绑定
-	// int32 bind_bank = 16;          // 已废弃：银行卡信息已移至 balance 服务
-	IsPayPassword int32 `protobuf:"varint,27,opt,name=is_pay_password,json=isPayPassword,proto3" json:"is_pay_password" dc:"int32 bind_bank = 16;          // 已废弃：银行卡信息已移至 balance 服务是否设置资金密码 0=未设置 1=已设置"` // 是否设置资金密码 0=未设置 1=已设置
-	IsPassword    int32 `protobuf:"varint,28,opt,name=is_password,json=isPassword,proto3" json:"is_password" dc:"是否设置登录密码 0=未设置 1=已设置"`                                                                     // 是否设置登录密码 0=未设置 1=已设置
+	IsPayPassword int32 `protobuf:"varint,27,opt,name=is_pay_password,json=isPayPassword,proto3" json:"is_pay_password" dc:"绑定状态是否设置资金密码 0=未设置 1=已设置"` // 是否设置资金密码 0=未设置 1=已设置
+	IsPassword    int32 `protobuf:"varint,28,opt,name=is_password,json=isPassword,proto3" json:"is_password" dc:"是否设置登录密码 0=未设置 1=已设置"`                // 是否设置登录密码 0=未设置 1=已设置
 	// 其他
-	UnreadMessageCount  int32 `protobuf:"varint,17,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"其他未读消息数量"`                // 未读消息数量
-	SwitchSign          int32 `protobuf:"varint,18,opt,name=switch_sign,json=switchSign,proto3" json:"switch_sign" dc:"签到开关 0=关闭 1=开启"`                                    // 签到开关 0=关闭 1=开启
-	ApplyBirthdayBonus  int32 `protobuf:"varint,19,opt,name=apply_birthday_bonus,json=applyBirthdayBonus,proto3" json:"apply_birthday_bonus" dc:"是否可申请生日礼金 0=不可 1=可以"`     // 是否可申请生日礼金 0=不可 1=可以
-	AutoBindGameBalance int32 `protobuf:"varint,20,opt,name=auto_bind_game_balance,json=autoBindGameBalance,proto3" json:"auto_bind_game_balance" dc:"自动绑定游戏余额 0=关闭 1=开启"` // 自动绑定游戏余额 0=关闭 1=开启
-	// 统计数据（先写死默认值）
-	TotalBet    string `protobuf:"bytes,21,opt,name=total_bet,json=totalBet,proto3" json:"total_bet" dc:"统计数据（先写死默认值）总投注"` // 总投注
-	TotalBonus  string `protobuf:"bytes,22,opt,name=total_bonus,json=totalBonus,proto3" json:"total_bonus" dc:"总彩金"`       // 总彩金
-	TotalRebate string `protobuf:"bytes,23,opt,name=total_rebate,json=totalRebate,proto3" json:"total_rebate" dc:"总返水"`    // 总返水
-	// 最后记录（先写死默认值）
-	LastRecharge  []*LastRecord  `protobuf:"bytes,24,rep,name=last_recharge,json=lastRecharge,proto3" json:"last_recharge" dc:"最后记录（先写死默认值）最后充值记录"` // 最后充值记录
-	LastWithdraw  []*LastRecord  `protobuf:"bytes,25,rep,name=last_withdraw,json=lastWithdraw,proto3" json:"last_withdraw" dc:"最后提现记录"`             // 最后提现记录
-	LastMessage   []*LastMessage `protobuf:"bytes,26,rep,name=last_message,json=lastMessage,proto3" json:"last_message" dc:"最后消息"`                  // 最后消息
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	UnreadMessageCount int32 `protobuf:"varint,17,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count" dc:"其他未读消息数量"` // 未读消息数量
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GetUserInfoRes) Reset() {
@@ -164,20 +147,6 @@ func (x *GetUserInfoRes) GetMobile() string {
 	return ""
 }
 
-func (x *GetUserInfoRes) GetQq() string {
-	if x != nil {
-		return x.Qq
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetSex() int32 {
-	if x != nil {
-		return x.Sex
-	}
-	return 0
-}
-
 func (x *GetUserInfoRes) GetBirthday() string {
 	if x != nil {
 		return x.Birthday
@@ -199,13 +168,6 @@ func (x *GetUserInfoRes) GetLastLoginAddress() string {
 	return ""
 }
 
-func (x *GetUserInfoRes) GetShowBeginnerGuide() int32 {
-	if x != nil {
-		return x.ShowBeginnerGuide
-	}
-	return 0
-}
-
 func (x *GetUserInfoRes) GetGradeId() int32 {
 	if x != nil {
 		return x.GradeId
@@ -218,20 +180,6 @@ func (x *GetUserInfoRes) GetGradeName() string {
 		return x.GradeName
 	}
 	return ""
-}
-
-func (x *GetUserInfoRes) GetBindSafeQuestion() int32 {
-	if x != nil {
-		return x.BindSafeQuestion
-	}
-	return 0
-}
-
-func (x *GetUserInfoRes) GetBindPayPassword() int32 {
-	if x != nil {
-		return x.BindPayPassword
-	}
-	return 0
 }
 
 func (x *GetUserInfoRes) GetIsPayPassword() int32 {
@@ -253,69 +201,6 @@ func (x *GetUserInfoRes) GetUnreadMessageCount() int32 {
 		return x.UnreadMessageCount
 	}
 	return 0
-}
-
-func (x *GetUserInfoRes) GetSwitchSign() int32 {
-	if x != nil {
-		return x.SwitchSign
-	}
-	return 0
-}
-
-func (x *GetUserInfoRes) GetApplyBirthdayBonus() int32 {
-	if x != nil {
-		return x.ApplyBirthdayBonus
-	}
-	return 0
-}
-
-func (x *GetUserInfoRes) GetAutoBindGameBalance() int32 {
-	if x != nil {
-		return x.AutoBindGameBalance
-	}
-	return 0
-}
-
-func (x *GetUserInfoRes) GetTotalBet() string {
-	if x != nil {
-		return x.TotalBet
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetTotalBonus() string {
-	if x != nil {
-		return x.TotalBonus
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetTotalRebate() string {
-	if x != nil {
-		return x.TotalRebate
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetLastRecharge() []*LastRecord {
-	if x != nil {
-		return x.LastRecharge
-	}
-	return nil
-}
-
-func (x *GetUserInfoRes) GetLastWithdraw() []*LastRecord {
-	if x != nil {
-		return x.LastWithdraw
-	}
-	return nil
-}
-
-func (x *GetUserInfoRes) GetLastMessage() []*LastMessage {
-	if x != nil {
-		return x.LastMessage
-	}
-	return nil
 }
 
 // 最后记录
@@ -1733,40 +1618,24 @@ var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/user/v1/user.proto\x12\rfrontend_user\"\x10\n" +
-	"\x0eGetUserInfoReq\"\x8a\b\n" +
+	"\x0eGetUserInfoReq\"\xb6\x03\n" +
 	"\x0eGetUserInfoRes\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
 	"\brealname\x18\x03 \x01(\tR\brealname\x12\x14\n" +
 	"\x05email\x18\x04 \x01(\tR\x05email\x12\x16\n" +
-	"\x06mobile\x18\x05 \x01(\tR\x06mobile\x12\x0e\n" +
-	"\x02qq\x18\x06 \x01(\tR\x02qq\x12\x10\n" +
-	"\x03sex\x18\a \x01(\x05R\x03sex\x12\x1a\n" +
+	"\x06mobile\x18\x05 \x01(\tR\x06mobile\x12\x1a\n" +
 	"\bbirthday\x18\b \x01(\tR\bbirthday\x12&\n" +
 	"\x0flast_login_time\x18\t \x01(\tR\rlastLoginTime\x12,\n" +
 	"\x12last_login_address\x18\n" +
-	" \x01(\tR\x10lastLoginAddress\x12.\n" +
-	"\x13show_beginner_guide\x18\v \x01(\x05R\x11showBeginnerGuide\x12\x19\n" +
+	" \x01(\tR\x10lastLoginAddress\x12\x19\n" +
 	"\bgrade_id\x18\f \x01(\x05R\agradeId\x12\x1d\n" +
 	"\n" +
-	"grade_name\x18\r \x01(\tR\tgradeName\x12,\n" +
-	"\x12bind_safe_question\x18\x0e \x01(\x05R\x10bindSafeQuestion\x12*\n" +
-	"\x11bind_pay_password\x18\x0f \x01(\x05R\x0fbindPayPassword\x12&\n" +
+	"grade_name\x18\r \x01(\tR\tgradeName\x12&\n" +
 	"\x0fis_pay_password\x18\x1b \x01(\x05R\risPayPassword\x12\x1f\n" +
 	"\vis_password\x18\x1c \x01(\x05R\n" +
 	"isPassword\x120\n" +
-	"\x14unread_message_count\x18\x11 \x01(\x05R\x12unreadMessageCount\x12\x1f\n" +
-	"\vswitch_sign\x18\x12 \x01(\x05R\n" +
-	"switchSign\x120\n" +
-	"\x14apply_birthday_bonus\x18\x13 \x01(\x05R\x12applyBirthdayBonus\x123\n" +
-	"\x16auto_bind_game_balance\x18\x14 \x01(\x05R\x13autoBindGameBalance\x12\x1b\n" +
-	"\ttotal_bet\x18\x15 \x01(\tR\btotalBet\x12\x1f\n" +
-	"\vtotal_bonus\x18\x16 \x01(\tR\n" +
-	"totalBonus\x12!\n" +
-	"\ftotal_rebate\x18\x17 \x01(\tR\vtotalRebate\x12>\n" +
-	"\rlast_recharge\x18\x18 \x03(\v2\x19.frontend_user.LastRecordR\flastRecharge\x12>\n" +
-	"\rlast_withdraw\x18\x19 \x03(\v2\x19.frontend_user.LastRecordR\flastWithdraw\x12=\n" +
-	"\flast_message\x18\x1a \x03(\v2\x1a.frontend_user.LastMessageR\vlastMessage\"S\n" +
+	"\x14unread_message_count\x18\x11 \x01(\x05R\x12unreadMessageCount\"S\n" +
 	"\n" +
 	"LastRecord\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
@@ -1916,40 +1785,37 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*InviteItem)(nil),             // 27: frontend_user.InviteItem
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
-	2,  // 0: frontend_user.GetUserInfoRes.last_recharge:type_name -> frontend_user.LastRecord
-	2,  // 1: frontend_user.GetUserInfoRes.last_withdraw:type_name -> frontend_user.LastRecord
-	3,  // 2: frontend_user.GetUserInfoRes.last_message:type_name -> frontend_user.LastMessage
-	16, // 3: frontend_user.GetGradeListRes.list:type_name -> frontend_user.GradeItem
-	27, // 4: frontend_user.GetInviteListRes.list:type_name -> frontend_user.InviteItem
-	0,  // 5: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
-	4,  // 6: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
-	6,  // 7: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
-	8,  // 8: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
-	10, // 9: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
-	12, // 10: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
-	14, // 11: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
-	17, // 12: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
-	19, // 13: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
-	21, // 14: frontend_user.User.ChangePayPassword:input_type -> frontend_user.ChangePayPasswordReq
-	23, // 15: frontend_user.User.GetInviteInfo:input_type -> frontend_user.GetInviteInfoReq
-	25, // 16: frontend_user.User.GetInviteList:input_type -> frontend_user.GetInviteListReq
-	1,  // 17: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5,  // 18: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	7,  // 19: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
-	9,  // 20: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
-	11, // 21: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
-	13, // 22: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
-	15, // 23: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
-	18, // 24: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
-	20, // 25: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
-	22, // 26: frontend_user.User.ChangePayPassword:output_type -> frontend_user.ChangePayPasswordRes
-	24, // 27: frontend_user.User.GetInviteInfo:output_type -> frontend_user.GetInviteInfoRes
-	26, // 28: frontend_user.User.GetInviteList:output_type -> frontend_user.GetInviteListRes
-	17, // [17:29] is the sub-list for method output_type
-	5,  // [5:17] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	16, // 0: frontend_user.GetGradeListRes.list:type_name -> frontend_user.GradeItem
+	27, // 1: frontend_user.GetInviteListRes.list:type_name -> frontend_user.InviteItem
+	0,  // 2: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
+	4,  // 3: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
+	6,  // 4: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
+	8,  // 5: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
+	10, // 6: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
+	12, // 7: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
+	14, // 8: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
+	17, // 9: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
+	19, // 10: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
+	21, // 11: frontend_user.User.ChangePayPassword:input_type -> frontend_user.ChangePayPasswordReq
+	23, // 12: frontend_user.User.GetInviteInfo:input_type -> frontend_user.GetInviteInfoReq
+	25, // 13: frontend_user.User.GetInviteList:input_type -> frontend_user.GetInviteListReq
+	1,  // 14: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5,  // 15: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7,  // 16: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9,  // 17: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	11, // 18: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
+	13, // 19: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
+	15, // 20: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
+	18, // 21: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
+	20, // 22: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
+	22, // 23: frontend_user.User.ChangePayPassword:output_type -> frontend_user.ChangePayPasswordRes
+	24, // 24: frontend_user.User.GetInviteInfo:output_type -> frontend_user.GetInviteInfoRes
+	26, // 25: frontend_user.User.GetInviteList:output_type -> frontend_user.GetInviteListRes
+	14, // [14:26] is the sub-list for method output_type
+	2,  // [2:14] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_frontend_user_v1_user_proto_init() }
