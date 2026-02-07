@@ -977,9 +977,6 @@ type GradeItem struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Id                   int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"等级ID"`                                                                    // 等级ID
 	Name                 string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"等级名称"`                                                                 // 等级名称
-	PointsUpgrade        int32                  `protobuf:"varint,3,opt,name=points_upgrade,json=pointsUpgrade,proto3" json:"points_upgrade" dc:"升级所需积分"`                       // 升级所需积分
-	BonusUpgrade         string                 `protobuf:"bytes,4,opt,name=bonus_upgrade,json=bonusUpgrade,proto3" json:"bonus_upgrade" dc:"升级赠送彩金"`                           // 升级赠送彩金
-	BonusBirthday        string                 `protobuf:"bytes,5,opt,name=bonus_birthday,json=bonusBirthday,proto3" json:"bonus_birthday" dc:"生日彩金"`                          // 生日彩金
 	RebatePercentSports  string                 `protobuf:"bytes,6,opt,name=rebate_percent_sports,json=rebatePercentSports,proto3" json:"rebate_percent_sports" dc:"体育返水比例"`    // 体育返水比例
 	RebatePercentLottery string                 `protobuf:"bytes,7,opt,name=rebate_percent_lottery,json=rebatePercentLottery,proto3" json:"rebate_percent_lottery" dc:"彩票返水比例"` // 彩票返水比例
 	RebatePercentLive    string                 `protobuf:"bytes,8,opt,name=rebate_percent_live,json=rebatePercentLive,proto3" json:"rebate_percent_live" dc:"真人视讯返水比例"`        // 真人视讯返水比例
@@ -1032,27 +1029,6 @@ func (x *GradeItem) GetId() int32 {
 func (x *GradeItem) GetName() string {
 	if x != nil {
 		return x.Name
-	}
-	return ""
-}
-
-func (x *GradeItem) GetPointsUpgrade() int32 {
-	if x != nil {
-		return x.PointsUpgrade
-	}
-	return 0
-}
-
-func (x *GradeItem) GetBonusUpgrade() string {
-	if x != nil {
-		return x.BonusUpgrade
-	}
-	return ""
-}
-
-func (x *GradeItem) GetBonusBirthday() string {
-	if x != nil {
-		return x.BonusBirthday
 	}
 	return ""
 }
@@ -1824,13 +1800,10 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"\x11\n" +
 	"\x0fGetGradeListReq\"?\n" +
 	"\x0fGetGradeListRes\x12,\n" +
-	"\x04list\x18\x01 \x03(\v2\x18.frontend_user.GradeItemR\x04list\"\x83\x04\n" +
+	"\x04list\x18\x01 \x03(\v2\x18.frontend_user.GradeItemR\x04list\"\x90\x03\n" +
 	"\tGradeItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
-	"\x0epoints_upgrade\x18\x03 \x01(\x05R\rpointsUpgrade\x12#\n" +
-	"\rbonus_upgrade\x18\x04 \x01(\tR\fbonusUpgrade\x12%\n" +
-	"\x0ebonus_birthday\x18\x05 \x01(\tR\rbonusBirthday\x122\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x122\n" +
 	"\x15rebate_percent_sports\x18\x06 \x01(\tR\x13rebatePercentSports\x124\n" +
 	"\x16rebate_percent_lottery\x18\a \x01(\tR\x14rebatePercentLottery\x12.\n" +
 	"\x13rebate_percent_live\x18\b \x01(\tR\x11rebatePercentLive\x120\n" +

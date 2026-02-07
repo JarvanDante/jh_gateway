@@ -1751,9 +1751,6 @@ func CallSaveUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 				gradeInfo := &v5.UserGradeInfo{
 					Id:                   getInt32FromMap(gradeMap, "id"),
 					Name:                 getStringFromMap(gradeMap, "name"),
-					PointsUpgrade:        getInt32FromMap(gradeMap, "points_upgrade"),
-					BonusUpgrade:         getFloat64FromMap(gradeMap, "bonus_upgrade"),
-					BonusBirthday:        getFloat64FromMap(gradeMap, "bonus_birthday"),
 					RebatePercentSports:  getFloat64FromMap(gradeMap, "rebate_percent_sports"),
 					RebatePercentLottery: getFloat64FromMap(gradeMap, "rebate_percent_lottery"),
 					RebatePercentLive:    getFloat64FromMap(gradeMap, "rebate_percent_live"),
@@ -1779,10 +1776,8 @@ func CallSaveUserGrades(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 	// 创建 gRPC 客户端
 	client := v5.NewUserClient(conn)
 	req := &v5.SaveUserGradesReq{
-		SiteId:        siteId,
-		Data:          gradeInfos,
-		FieldsDisable: getStringFromMap(reqData, "fields_disable"),
-		AutoProviding: getStringFromMap(reqData, "auto_providing"),
+		SiteId: siteId,
+		Data:   gradeInfos,
 	}
 
 	util.LogWithTrace(ctx, "info", "gRPC请求参数 - SiteId: %d, GradeCount: %d", req.SiteId, len(req.Data))
