@@ -64,7 +64,6 @@ type GetUserInfoRes struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	UserId           int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户名"`                                    // 用户名
 	Username         string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                               // 用户名
-	Realname         string                 `protobuf:"bytes,3,opt,name=realname,proto3" json:"realname" dc:"真实姓名"`                                              // 真实姓名
 	Email            string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email" dc:"邮箱"`                                                      // 邮箱
 	Mobile           string                 `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile" dc:"手机号"`                                                   // 手机号
 	Birthday         string                 `protobuf:"bytes,8,opt,name=birthday,proto3" json:"birthday" dc:"生日"`                                                // 生日
@@ -122,13 +121,6 @@ func (x *GetUserInfoRes) GetUserId() int32 {
 func (x *GetUserInfoRes) GetUsername() string {
 	if x != nil {
 		return x.Username
-	}
-	return ""
-}
-
-func (x *GetUserInfoRes) GetRealname() string {
-	if x != nil {
-		return x.Realname
 	}
 	return ""
 }
@@ -1618,11 +1610,10 @@ var File_frontend_user_v1_user_proto protoreflect.FileDescriptor
 const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"\x1bfrontend/user/v1/user.proto\x12\rfrontend_user\"\x10\n" +
-	"\x0eGetUserInfoReq\"\xb6\x03\n" +
+	"\x0eGetUserInfoReq\"\x9a\x03\n" +
 	"\x0eGetUserInfoRes\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
-	"\brealname\x18\x03 \x01(\tR\brealname\x12\x14\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x04 \x01(\tR\x05email\x12\x16\n" +
 	"\x06mobile\x18\x05 \x01(\tR\x06mobile\x12\x1a\n" +
 	"\bbirthday\x18\b \x01(\tR\bbirthday\x12&\n" +
