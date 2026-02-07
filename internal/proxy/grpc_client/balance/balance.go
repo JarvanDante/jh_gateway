@@ -217,6 +217,66 @@ func CallGetVipUpgradeProgress(ctx context.Context, conn *grpc.ClientConn, r *gh
 
 /**
  * showdoc
+ * @catalog 前台/财务/签到
+ * @title 获取签到活动信息
+ * @description 获取当前用户签到活动开关、本月每日奖励与签到状态
+ * @method get
+ * @url /api/frontend/balance/signin-activity-info
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","active":true,"year":2026,"month":2,"today":8,"today_signed":false,"signed_days":2,"signed_amount":15.0,"today_reward_amount":8.0,"day_list":[{"day_no":1,"reward_amount":5.0,"signed":true}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 112
+ */
+func CallGetSigninActivityInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetSigninActivityInfo (Frontend)")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetSigninActivityInfoReq{}
+
+	res, err := client.GetSigninActivityInfo(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetSigninActivityInfo failed: %v", err)
+		util.WriteInternalError(r, "获取签到活动信息失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/财务/签到
+ * @title 签到领取
+ * @description 领取当前用户今日签到奖励
+ * @method post
+ * @url /api/frontend/balance/signin-claim
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"签到成功","trade_no":"HL202602080001","day_no":8,"reward_amount":8.0,"sign_date":"2026-02-08","signed_days":3,"signed_amount":23.0}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 113
+ */
+func CallClaimSigninReward(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance ClaimSigninReward (Frontend)")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.ClaimSigninRewardReq{}
+
+	res, err := client.ClaimSigninReward(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance ClaimSigninReward failed: %v", err)
+		util.WriteInternalError(r, "签到失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 前台/财务/洗码
  * @title 执行洗码返水
  * @description 根据当前用户可洗码额度执行返水

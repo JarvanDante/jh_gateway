@@ -211,6 +211,10 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/withdraw", "POST", balance.CallWithdraw)
 	// VIP升级进度
 	balanceRoutes.Register("/vip-upgrade-progress", "GET", balance.CallGetVipUpgradeProgress)
+	// 签到活动信息
+	balanceRoutes.Register("/signin-activity-info", "GET", balance.CallGetSigninActivityInfo)
+	// 签到领取
+	balanceRoutes.Register("/signin-claim", "POST", balance.CallClaimSigninReward)
 	// 洗码返水
 	balanceRoutes.Register("/wash-code-rebate", "POST", balance.CallWashCodeRebate)
 

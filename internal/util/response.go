@@ -265,6 +265,8 @@ func translateMessage(msg string) string {
 		"原支付密码错误":                 "Original payment password incorrect",
 		"原密码错误":                   "Original password incorrect",
 		"获取成功":                    "Get data success",
+		"签到成功":                    "Sign in success",
+		"今日已签到，请明日再来":             "Signed already today",
 	}
 	for prefix, translated := range prefixMapping {
 		if strings.HasPrefix(trimmed, prefix) || strings.HasPrefix(msg, prefix) {

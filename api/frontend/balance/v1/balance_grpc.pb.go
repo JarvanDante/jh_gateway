@@ -43,6 +43,8 @@ const (
 	Balance_GetInviteBonusSummary_FullMethodName   = "/frontend_balance.Balance/GetInviteBonusSummary"
 	Balance_GetValidReferralCount_FullMethodName   = "/frontend_balance.Balance/GetValidReferralCount"
 	Balance_GetVipUpgradeProgress_FullMethodName   = "/frontend_balance.Balance/GetVipUpgradeProgress"
+	Balance_GetSigninActivityInfo_FullMethodName   = "/frontend_balance.Balance/GetSigninActivityInfo"
+	Balance_ClaimSigninReward_FullMethodName       = "/frontend_balance.Balance/ClaimSigninReward"
 	Balance_WashCodeRebate_FullMethodName          = "/frontend_balance.Balance/WashCodeRebate"
 )
 
@@ -96,6 +98,10 @@ type BalanceClient interface {
 	GetValidReferralCount(ctx context.Context, in *GetValidReferralCountReq, opts ...grpc.CallOption) (*GetValidReferralCountRes, error)
 	// 获取VIP升级进度
 	GetVipUpgradeProgress(ctx context.Context, in *GetVipUpgradeProgressReq, opts ...grpc.CallOption) (*GetVipUpgradeProgressRes, error)
+	// 获取签到活动信息
+	GetSigninActivityInfo(ctx context.Context, in *GetSigninActivityInfoReq, opts ...grpc.CallOption) (*GetSigninActivityInfoRes, error)
+	// 签到领取
+	ClaimSigninReward(ctx context.Context, in *ClaimSigninRewardReq, opts ...grpc.CallOption) (*ClaimSigninRewardRes, error)
 	// 执行洗码返水
 	WashCodeRebate(ctx context.Context, in *WashCodeRebateReq, opts ...grpc.CallOption) (*WashCodeRebateRes, error)
 }
@@ -338,6 +344,26 @@ func (c *balanceClient) GetVipUpgradeProgress(ctx context.Context, in *GetVipUpg
 	return out, nil
 }
 
+func (c *balanceClient) GetSigninActivityInfo(ctx context.Context, in *GetSigninActivityInfoReq, opts ...grpc.CallOption) (*GetSigninActivityInfoRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSigninActivityInfoRes)
+	err := c.cc.Invoke(ctx, Balance_GetSigninActivityInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) ClaimSigninReward(ctx context.Context, in *ClaimSigninRewardReq, opts ...grpc.CallOption) (*ClaimSigninRewardRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClaimSigninRewardRes)
+	err := c.cc.Invoke(ctx, Balance_ClaimSigninReward_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *balanceClient) WashCodeRebate(ctx context.Context, in *WashCodeRebateReq, opts ...grpc.CallOption) (*WashCodeRebateRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WashCodeRebateRes)
@@ -398,6 +424,10 @@ type BalanceServer interface {
 	GetValidReferralCount(context.Context, *GetValidReferralCountReq) (*GetValidReferralCountRes, error)
 	// 获取VIP升级进度
 	GetVipUpgradeProgress(context.Context, *GetVipUpgradeProgressReq) (*GetVipUpgradeProgressRes, error)
+	// 获取签到活动信息
+	GetSigninActivityInfo(context.Context, *GetSigninActivityInfoReq) (*GetSigninActivityInfoRes, error)
+	// 签到领取
+	ClaimSigninReward(context.Context, *ClaimSigninRewardReq) (*ClaimSigninRewardRes, error)
 	// 执行洗码返水
 	WashCodeRebate(context.Context, *WashCodeRebateReq) (*WashCodeRebateRes, error)
 	mustEmbedUnimplementedBalanceServer()
@@ -478,6 +508,12 @@ func (UnimplementedBalanceServer) GetValidReferralCount(context.Context, *GetVal
 }
 func (UnimplementedBalanceServer) GetVipUpgradeProgress(context.Context, *GetVipUpgradeProgressReq) (*GetVipUpgradeProgressRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetVipUpgradeProgress not implemented")
+}
+func (UnimplementedBalanceServer) GetSigninActivityInfo(context.Context, *GetSigninActivityInfoReq) (*GetSigninActivityInfoRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSigninActivityInfo not implemented")
+}
+func (UnimplementedBalanceServer) ClaimSigninReward(context.Context, *ClaimSigninRewardReq) (*ClaimSigninRewardRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method ClaimSigninReward not implemented")
 }
 func (UnimplementedBalanceServer) WashCodeRebate(context.Context, *WashCodeRebateReq) (*WashCodeRebateRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method WashCodeRebate not implemented")
@@ -917,6 +953,42 @@ func _Balance_GetVipUpgradeProgress_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetSigninActivityInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSigninActivityInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetSigninActivityInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetSigninActivityInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetSigninActivityInfo(ctx, req.(*GetSigninActivityInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_ClaimSigninReward_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClaimSigninRewardReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).ClaimSigninReward(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_ClaimSigninReward_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).ClaimSigninReward(ctx, req.(*ClaimSigninRewardReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Balance_WashCodeRebate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(WashCodeRebateReq)
 	if err := dec(in); err != nil {
@@ -1033,6 +1105,14 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetVipUpgradeProgress",
 			Handler:    _Balance_GetVipUpgradeProgress_Handler,
+		},
+		{
+			MethodName: "GetSigninActivityInfo",
+			Handler:    _Balance_GetSigninActivityInfo_Handler,
+		},
+		{
+			MethodName: "ClaimSigninReward",
+			Handler:    _Balance_ClaimSigninReward_Handler,
 		},
 		{
 			MethodName: "WashCodeRebate",
