@@ -590,7 +590,7 @@ func CallBindMobile(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 
 	// 返回成功响应
 	util.WriteSuccess(r, map[string]interface{}{
-		"message": res.Message,
+		"message": util.NormalizeMessageWithPath(res.Message, r.URL.Path),
 	})
 	return nil
 }
