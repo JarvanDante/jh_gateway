@@ -268,6 +268,7 @@ func translateMessage(msg string) string {
 		"签到成功":                    "Sign in success",
 		"今日已签到，请明日再来":             "Signed already today",
 		"绑定手机号成功":                 "Mobile number successfully bound",
+		"该手机号已被其他用户绑定":            "Phone number has been used by others",
 	}
 	for prefix, translated := range prefixMapping {
 		if strings.HasPrefix(trimmed, prefix) || strings.HasPrefix(msg, prefix) {
