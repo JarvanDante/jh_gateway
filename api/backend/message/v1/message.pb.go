@@ -25,8 +25,8 @@ const (
 // 获取消息列表请求
 type GetMessageListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -78,13 +78,13 @@ func (x *GetMessageListReq) GetSize() int32 {
 // 获取消息列表响应
 type GetMessageListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MessageList   []*MessageItem         `protobuf:"bytes,1,rep,name=message_list,json=messageList,proto3" json:"message_list,omitempty"`
-	GradeList     []*GradeItem           `protobuf:"bytes,2,rep,name=grade_list,json=gradeList,proto3" json:"grade_list,omitempty"`
-	LevelList     []*LevelItem           `protobuf:"bytes,3,rep,name=level_list,json=levelList,proto3" json:"level_list,omitempty"`
-	StatusList    []*StatusItem          `protobuf:"bytes,4,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
-	Total         int32                  `protobuf:"varint,5,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage   int32                  `protobuf:"varint,6,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage       int32                  `protobuf:"varint,7,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	MessageList   []*MessageItem         `protobuf:"bytes,1,rep,name=message_list,json=messageList,proto3" json:"message_list"`
+	GradeList     []*GradeItem           `protobuf:"bytes,2,rep,name=grade_list,json=gradeList,proto3" json:"grade_list"`
+	LevelList     []*LevelItem           `protobuf:"bytes,3,rep,name=level_list,json=levelList,proto3" json:"level_list"`
+	StatusList    []*StatusItem          `protobuf:"bytes,4,rep,name=status_list,json=statusList,proto3" json:"status_list"`
+	Total         int32                  `protobuf:"varint,5,opt,name=total,proto3" json:"total"`
+	CurrentPage   int32                  `protobuf:"varint,6,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage       int32                  `protobuf:"varint,7,opt,name=per_page,json=perPage,proto3" json:"per_page"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -171,14 +171,14 @@ func (x *GetMessageListRes) GetPerPage() int32 {
 // 消息项
 type MessageItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	EventCode     string                 `protobuf:"bytes,7,opt,name=event_code,json=eventCode,proto3" json:"event_code,omitempty"`
-	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
+	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver"`
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	EventCode     string                 `protobuf:"bytes,7,opt,name=event_code,json=eventCode,proto3" json:"event_code"`
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -272,8 +272,8 @@ func (x *MessageItem) GetStatus() int32 {
 // 等级项
 type GradeItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -325,8 +325,8 @@ func (x *GradeItem) GetName() string {
 // 层级项
 type LevelItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -378,8 +378,8 @@ func (x *LevelItem) GetName() string {
 // 状态项
 type StatusItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -431,17 +431,18 @@ func (x *StatusItem) GetName() string {
 // 创建消息请求
 type CreateMessageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,255"`                          // v: required|length:2,255
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty" v:"required|length:2,255"`                      // v: required|length:2,255
-	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty" 1:"指定用户 2:等级 3:层级 4:状态"`                             // 1:指定用户 2:等级 3:层级 4:状态
-	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver,omitempty" dc:"接收者（用户名或ID列表）"`                           // 接收者（用户名或ID列表）
-	GradeId       int32                  `protobuf:"varint,5,opt,name=grade_id,json=gradeId,proto3" json:"grade_id,omitempty" dc:"等级ID"`                      // 等级ID
-	LevelId       int32                  `protobuf:"varint,6,opt,name=level_id,json=levelId,proto3" json:"level_id,omitempty" dc:"层级ID"`                      // 层级ID
-	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty" dc:"状态0=关闭 1=启用"`                                // 状态0=关闭 1=启用
-	Position      int32                  `protobuf:"varint,8,opt,name=position,proto3" json:"position,omitempty" dc:"弹框位置"`                                   // 弹框位置
-	AlertTimes    int32                  `protobuf:"varint,9,opt,name=alert_times,json=alertTimes,proto3" json:"alert_times,omitempty" dc:"弹框次数"`             // 弹框次数
-	EventCode     string                 `protobuf:"bytes,10,opt,name=event_code,json=eventCode,proto3" json:"event_code,omitempty" v:"required|length:1,50"` // v: required|length:1,50
-	Amount        float64                `protobuf:"fixed64,11,opt,name=amount,proto3" json:"amount,omitempty" dc:"涉及金额(可选)"`                                 // 涉及金额(可选)
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" v:"required|length:2,255"`                          // v: required|length:2,255
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content" v:"required|length:2,255"`                      // v: required|length:2,255
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type" 1:"指定用户 2:等级 3:层级 4:状态"`                             // 1:指定用户 2:等级 3:层级 4:状态
+	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver" dc:"接收者（用户名或ID列表）"`                           // 接收者（用户名或ID列表）
+	GradeId       int32                  `protobuf:"varint,5,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID"`                      // 等级ID
+	LevelId       int32                  `protobuf:"varint,6,opt,name=level_id,json=levelId,proto3" json:"level_id" dc:"层级ID"`                      // 层级ID
+	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status" dc:"状态0=关闭 1=启用"`                                // 状态0=关闭 1=启用
+	Position      int32                  `protobuf:"varint,8,opt,name=position,proto3" json:"position" dc:"弹框位置"`                                   // 弹框位置
+	AlertTimes    int32                  `protobuf:"varint,9,opt,name=alert_times,json=alertTimes,proto3" json:"alert_times" dc:"弹框次数"`             // 弹框次数
+	EventCode     string                 `protobuf:"bytes,10,opt,name=event_code,json=eventCode,proto3" json:"event_code" v:"required|length:1,50"` // v: required|length:1,50
+	Amount        float64                `protobuf:"fixed64,11,opt,name=amount,proto3" json:"amount" dc:"涉及金额(可选)"`                                 // 涉及金额(可选)
+	GradeName     string                 `protobuf:"bytes,12,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"等级名称(可选)"`            // 等级名称(可选)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -553,6 +554,13 @@ func (x *CreateMessageReq) GetAmount() float64 {
 	return 0
 }
 
+func (x *CreateMessageReq) GetGradeName() string {
+	if x != nil {
+		return x.GradeName
+	}
+	return ""
+}
+
 // 创建消息响应
 type CreateMessageRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -593,11 +601,11 @@ func (*CreateMessageRes) Descriptor() ([]byte, []int) {
 // 更新消息请求
 type UpdateMessageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"`                            // v: required|min:1
-	EventCode     string                 `protobuf:"bytes,2,opt,name=event_code,json=eventCode,proto3" json:"event_code,omitempty" v:"length:1,50"` // v: length:1,50
-	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty" v:"length:2,255"`                         // v: length:2,255
-	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty" v:"length:2,5000"`                    // v: length:2,5000
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"in:0,1"`                            // v: in:0,1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                            // v: required|min:1
+	EventCode     string                 `protobuf:"bytes,2,opt,name=event_code,json=eventCode,proto3" json:"event_code" v:"length:1,50"` // v: length:1,50
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title" v:"length:2,255"`                         // v: length:2,255
+	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content" v:"length:2,5000"`                    // v: length:2,5000
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" v:"in:0,1"`                            // v: in:0,1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -707,7 +715,7 @@ func (*UpdateMessageRes) Descriptor() ([]byte, []int) {
 // 删除消息请求
 type DeleteMessageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"` // v: required|min:1
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"` // v: required|min:1
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -789,9 +797,9 @@ func (*DeleteMessageRes) Descriptor() ([]byte, []int) {
 // 获取用户消息请求
 type GetUserMessagesReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -850,11 +858,11 @@ func (x *GetUserMessagesReq) GetSize() int32 {
 // 获取用户消息响应
 type GetUserMessagesRes struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	List               []*UserMessageItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
-	Total              int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage        int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage            int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
-	UnreadMessageCount int32                  `protobuf:"varint,5,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count,omitempty"`
+	List               []*UserMessageItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total              int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage        int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage            int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	UnreadMessageCount int32                  `protobuf:"varint,5,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -927,11 +935,11 @@ func (x *GetUserMessagesRes) GetUnreadMessageCount() int32 {
 // 用户消息项
 type UserMessageItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	IsRead        int32                  `protobuf:"varint,4,opt,name=is_read,json=isRead,proto3" json:"is_read,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
+	IsRead        int32                  `protobuf:"varint,4,opt,name=is_read,json=isRead,proto3" json:"is_read"`
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1004,7 +1012,7 @@ func (x *UserMessageItem) GetCreatedAt() string {
 // 获取未读数量请求
 type GetUnreadCountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1049,7 +1057,7 @@ func (x *GetUnreadCountReq) GetUserId() int32 {
 // 获取未读数量响应
 type GetUnreadCountRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
+	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1094,8 +1102,8 @@ func (x *GetUnreadCountRes) GetCount() int32 {
 // 读取消息请求
 type ReadMessageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	MessageId     int32                  `protobuf:"varint,2,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	MessageId     int32                  `protobuf:"varint,2,opt,name=message_id,json=messageId,proto3" json:"message_id"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1221,7 +1229,7 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\n" +
 	"StatusItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\xb4\x02\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xd3\x02\n" +
 	"\x10CreateMessageReq\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x12\n" +
@@ -1236,7 +1244,9 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\n" +
 	"event_code\x18\n" +
 	" \x01(\tR\teventCode\x12\x16\n" +
-	"\x06amount\x18\v \x01(\x01R\x06amount\"\x12\n" +
+	"\x06amount\x18\v \x01(\x01R\x06amount\x12\x1d\n" +
+	"\n" +
+	"grade_name\x18\f \x01(\tR\tgradeName\"\x12\n" +
 	"\x10CreateMessageRes\"\x89\x01\n" +
 	"\x10UpdateMessageReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1d\n" +
