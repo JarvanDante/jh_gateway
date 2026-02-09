@@ -22,6 +22,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Message_GetMessageList_FullMethodName  = "/message.Message/GetMessageList"
 	Message_CreateMessage_FullMethodName   = "/message.Message/CreateMessage"
+	Message_UpdateMessage_FullMethodName   = "/message.Message/UpdateMessage"
+	Message_DeleteMessage_FullMethodName   = "/message.Message/DeleteMessage"
 	Message_GetUserMessages_FullMethodName = "/message.Message/GetUserMessages"
 	Message_GetUnreadCount_FullMethodName  = "/message.Message/GetUnreadCount"
 	Message_ReadMessage_FullMethodName     = "/message.Message/ReadMessage"
@@ -33,6 +35,8 @@ const (
 type MessageClient interface {
 	GetMessageList(ctx context.Context, in *GetMessageListReq, opts ...grpc.CallOption) (*GetMessageListRes, error)
 	CreateMessage(ctx context.Context, in *CreateMessageReq, opts ...grpc.CallOption) (*CreateMessageRes, error)
+	UpdateMessage(ctx context.Context, in *UpdateMessageReq, opts ...grpc.CallOption) (*UpdateMessageRes, error)
+	DeleteMessage(ctx context.Context, in *DeleteMessageReq, opts ...grpc.CallOption) (*DeleteMessageRes, error)
 	GetUserMessages(ctx context.Context, in *GetUserMessagesReq, opts ...grpc.CallOption) (*GetUserMessagesRes, error)
 	GetUnreadCount(ctx context.Context, in *GetUnreadCountReq, opts ...grpc.CallOption) (*GetUnreadCountRes, error)
 	ReadMessage(ctx context.Context, in *ReadMessageReq, opts ...grpc.CallOption) (*ReadMessageRes, error)
@@ -60,6 +64,26 @@ func (c *messageClient) CreateMessage(ctx context.Context, in *CreateMessageReq,
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateMessageRes)
 	err := c.cc.Invoke(ctx, Message_CreateMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *messageClient) UpdateMessage(ctx context.Context, in *UpdateMessageReq, opts ...grpc.CallOption) (*UpdateMessageRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateMessageRes)
+	err := c.cc.Invoke(ctx, Message_UpdateMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *messageClient) DeleteMessage(ctx context.Context, in *DeleteMessageReq, opts ...grpc.CallOption) (*DeleteMessageRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteMessageRes)
+	err := c.cc.Invoke(ctx, Message_DeleteMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -102,6 +126,8 @@ func (c *messageClient) ReadMessage(ctx context.Context, in *ReadMessageReq, opt
 type MessageServer interface {
 	GetMessageList(context.Context, *GetMessageListReq) (*GetMessageListRes, error)
 	CreateMessage(context.Context, *CreateMessageReq) (*CreateMessageRes, error)
+	UpdateMessage(context.Context, *UpdateMessageReq) (*UpdateMessageRes, error)
+	DeleteMessage(context.Context, *DeleteMessageReq) (*DeleteMessageRes, error)
 	GetUserMessages(context.Context, *GetUserMessagesReq) (*GetUserMessagesRes, error)
 	GetUnreadCount(context.Context, *GetUnreadCountReq) (*GetUnreadCountRes, error)
 	ReadMessage(context.Context, *ReadMessageReq) (*ReadMessageRes, error)
@@ -120,6 +146,12 @@ func (UnimplementedMessageServer) GetMessageList(context.Context, *GetMessageLis
 }
 func (UnimplementedMessageServer) CreateMessage(context.Context, *CreateMessageReq) (*CreateMessageRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateMessage not implemented")
+}
+func (UnimplementedMessageServer) UpdateMessage(context.Context, *UpdateMessageReq) (*UpdateMessageRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateMessage not implemented")
+}
+func (UnimplementedMessageServer) DeleteMessage(context.Context, *DeleteMessageReq) (*DeleteMessageRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteMessage not implemented")
 }
 func (UnimplementedMessageServer) GetUserMessages(context.Context, *GetUserMessagesReq) (*GetUserMessagesRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUserMessages not implemented")
@@ -183,6 +215,42 @@ func _Message_CreateMessage_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MessageServer).CreateMessage(ctx, req.(*CreateMessageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Message_UpdateMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMessageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MessageServer).UpdateMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Message_UpdateMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MessageServer).UpdateMessage(ctx, req.(*UpdateMessageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Message_DeleteMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteMessageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MessageServer).DeleteMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Message_DeleteMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MessageServer).DeleteMessage(ctx, req.(*DeleteMessageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -255,6 +323,14 @@ var Message_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateMessage",
 			Handler:    _Message_CreateMessage_Handler,
+		},
+		{
+			MethodName: "UpdateMessage",
+			Handler:    _Message_UpdateMessage_Handler,
+		},
+		{
+			MethodName: "DeleteMessage",
+			Handler:    _Message_DeleteMessage_Handler,
 		},
 		{
 			MethodName: "GetUserMessages",

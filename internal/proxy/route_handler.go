@@ -150,6 +150,10 @@ func initBackendRoutes() {
 	backendRoutes.Register("/messages", "GET", backend.CallGetMessageList)
 	// 新增消息
 	backendRoutes.Register("/create-message", "POST", backend.CallCreateMessage)
+	// 更新消息
+	backendRoutes.Register("/update-message", "POST", backend.CallUpdateMessage)
+	// 删除消息
+	backendRoutes.Register("/delete-message", "POST", backend.CallDeleteMessage)
 	// 用户-消息列表(预留前台)
 	backendRoutes.Register("/user-messages", "GET", backend.CallGetUserMessages)
 	// 用户-已读消息(预留前台)

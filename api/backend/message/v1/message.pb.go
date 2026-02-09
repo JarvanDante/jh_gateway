@@ -25,8 +25,8 @@ const (
 // 获取消息列表请求
 type GetMessageListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -78,13 +78,13 @@ func (x *GetMessageListReq) GetSize() int32 {
 // 获取消息列表响应
 type GetMessageListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MessageList   []*MessageItem         `protobuf:"bytes,1,rep,name=message_list,json=messageList,proto3" json:"message_list"`
-	GradeList     []*GradeItem           `protobuf:"bytes,2,rep,name=grade_list,json=gradeList,proto3" json:"grade_list"`
-	LevelList     []*LevelItem           `protobuf:"bytes,3,rep,name=level_list,json=levelList,proto3" json:"level_list"`
-	StatusList    []*StatusItem          `protobuf:"bytes,4,rep,name=status_list,json=statusList,proto3" json:"status_list"`
-	Total         int32                  `protobuf:"varint,5,opt,name=total,proto3" json:"total"`
-	CurrentPage   int32                  `protobuf:"varint,6,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
-	PerPage       int32                  `protobuf:"varint,7,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	MessageList   []*MessageItem         `protobuf:"bytes,1,rep,name=message_list,json=messageList,proto3" json:"message_list,omitempty"`
+	GradeList     []*GradeItem           `protobuf:"bytes,2,rep,name=grade_list,json=gradeList,proto3" json:"grade_list,omitempty"`
+	LevelList     []*LevelItem           `protobuf:"bytes,3,rep,name=level_list,json=levelList,proto3" json:"level_list,omitempty"`
+	StatusList    []*StatusItem          `protobuf:"bytes,4,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
+	Total         int32                  `protobuf:"varint,5,opt,name=total,proto3" json:"total,omitempty"`
+	CurrentPage   int32                  `protobuf:"varint,6,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,7,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -171,12 +171,14 @@ func (x *GetMessageListRes) GetPerPage() int32 {
 // 消息项
 type MessageItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
-	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
-	UpdatedAt     string                 `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                 `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	EventCode     string                 `protobuf:"bytes,7,opt,name=event_code,json=eventCode,proto3" json:"event_code,omitempty"`
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -253,11 +255,25 @@ func (x *MessageItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *MessageItem) GetEventCode() string {
+	if x != nil {
+		return x.EventCode
+	}
+	return ""
+}
+
+func (x *MessageItem) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
 // 等级项
 type GradeItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -309,8 +325,8 @@ func (x *GradeItem) GetName() string {
 // 层级项
 type LevelItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -362,8 +378,8 @@ func (x *LevelItem) GetName() string {
 // 状态项
 type StatusItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -415,15 +431,17 @@ func (x *StatusItem) GetName() string {
 // 创建消息请求
 type CreateMessageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" v:"required|length:2,255"`              // v: required|length:2,255
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content" v:"required|length:2,255"`          // v: required|length:2,255
-	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type" 1:"指定用户 2:等级 3:层级 4:状态"`                 // 1:指定用户 2:等级 3:层级 4:状态
-	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver" dc:"接收者（用户名或ID列表）"`               // 接收者（用户名或ID列表）
-	GradeId       int32                  `protobuf:"varint,5,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID"`          // 等级ID
-	LevelId       int32                  `protobuf:"varint,6,opt,name=level_id,json=levelId,proto3" json:"level_id" dc:"层级ID"`          // 层级ID
-	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status" dc:"状态"`                             // 状态
-	Position      int32                  `protobuf:"varint,8,opt,name=position,proto3" json:"position" dc:"弹框位置"`                       // 弹框位置
-	AlertTimes    int32                  `protobuf:"varint,9,opt,name=alert_times,json=alertTimes,proto3" json:"alert_times" dc:"弹框次数"` // 弹框次数
+	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty" v:"required|length:2,255"`                          // v: required|length:2,255
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty" v:"required|length:2,255"`                      // v: required|length:2,255
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty" 1:"指定用户 2:等级 3:层级 4:状态"`                             // 1:指定用户 2:等级 3:层级 4:状态
+	Receiver      string                 `protobuf:"bytes,4,opt,name=receiver,proto3" json:"receiver,omitempty" dc:"接收者（用户名或ID列表）"`                           // 接收者（用户名或ID列表）
+	GradeId       int32                  `protobuf:"varint,5,opt,name=grade_id,json=gradeId,proto3" json:"grade_id,omitempty" dc:"等级ID"`                      // 等级ID
+	LevelId       int32                  `protobuf:"varint,6,opt,name=level_id,json=levelId,proto3" json:"level_id,omitempty" dc:"层级ID"`                      // 层级ID
+	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty" dc:"状态0=关闭 1=启用"`                                // 状态0=关闭 1=启用
+	Position      int32                  `protobuf:"varint,8,opt,name=position,proto3" json:"position,omitempty" dc:"弹框位置"`                                   // 弹框位置
+	AlertTimes    int32                  `protobuf:"varint,9,opt,name=alert_times,json=alertTimes,proto3" json:"alert_times,omitempty" dc:"弹框次数"`             // 弹框次数
+	EventCode     string                 `protobuf:"bytes,10,opt,name=event_code,json=eventCode,proto3" json:"event_code,omitempty" v:"required|length:1,50"` // v: required|length:1,50
+	Amount        float64                `protobuf:"fixed64,11,opt,name=amount,proto3" json:"amount,omitempty" dc:"涉及金额(可选)"`                                 // 涉及金额(可选)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -521,6 +539,20 @@ func (x *CreateMessageReq) GetAlertTimes() int32 {
 	return 0
 }
 
+func (x *CreateMessageReq) GetEventCode() string {
+	if x != nil {
+		return x.EventCode
+	}
+	return ""
+}
+
+func (x *CreateMessageReq) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
 // 创建消息响应
 type CreateMessageRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -558,19 +590,215 @@ func (*CreateMessageRes) Descriptor() ([]byte, []int) {
 	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{7}
 }
 
+// 更新消息请求
+type UpdateMessageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"`                            // v: required|min:1
+	EventCode     string                 `protobuf:"bytes,2,opt,name=event_code,json=eventCode,proto3" json:"event_code,omitempty" v:"length:1,50"` // v: length:1,50
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty" v:"length:2,255"`                         // v: length:2,255
+	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty" v:"length:2,5000"`                    // v: length:2,5000
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty" v:"in:0,1"`                            // v: in:0,1
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateMessageReq) Reset() {
+	*x = UpdateMessageReq{}
+	mi := &file_backend_message_v1_message_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateMessageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateMessageReq) ProtoMessage() {}
+
+func (x *UpdateMessageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_message_v1_message_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateMessageReq.ProtoReflect.Descriptor instead.
+func (*UpdateMessageReq) Descriptor() ([]byte, []int) {
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateMessageReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateMessageReq) GetEventCode() string {
+	if x != nil {
+		return x.EventCode
+	}
+	return ""
+}
+
+func (x *UpdateMessageReq) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *UpdateMessageReq) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *UpdateMessageReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+// 更新消息响应
+type UpdateMessageRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateMessageRes) Reset() {
+	*x = UpdateMessageRes{}
+	mi := &file_backend_message_v1_message_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateMessageRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateMessageRes) ProtoMessage() {}
+
+func (x *UpdateMessageRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_message_v1_message_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateMessageRes.ProtoReflect.Descriptor instead.
+func (*UpdateMessageRes) Descriptor() ([]byte, []int) {
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{9}
+}
+
+// 删除消息请求
+type DeleteMessageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" v:"required|min:1"` // v: required|min:1
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteMessageReq) Reset() {
+	*x = DeleteMessageReq{}
+	mi := &file_backend_message_v1_message_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteMessageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteMessageReq) ProtoMessage() {}
+
+func (x *DeleteMessageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_message_v1_message_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteMessageReq.ProtoReflect.Descriptor instead.
+func (*DeleteMessageReq) Descriptor() ([]byte, []int) {
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *DeleteMessageReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 删除消息响应
+type DeleteMessageRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteMessageRes) Reset() {
+	*x = DeleteMessageRes{}
+	mi := &file_backend_message_v1_message_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteMessageRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteMessageRes) ProtoMessage() {}
+
+func (x *DeleteMessageRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_message_v1_message_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteMessageRes.ProtoReflect.Descriptor instead.
+func (*DeleteMessageRes) Descriptor() ([]byte, []int) {
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{11}
+}
+
 // 获取用户消息请求
 type GetUserMessagesReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
-	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page"`
-	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetUserMessagesReq) Reset() {
 	*x = GetUserMessagesReq{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[8]
+	mi := &file_backend_message_v1_message_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -582,7 +810,7 @@ func (x *GetUserMessagesReq) String() string {
 func (*GetUserMessagesReq) ProtoMessage() {}
 
 func (x *GetUserMessagesReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[8]
+	mi := &file_backend_message_v1_message_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -595,7 +823,7 @@ func (x *GetUserMessagesReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserMessagesReq.ProtoReflect.Descriptor instead.
 func (*GetUserMessagesReq) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{8}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetUserMessagesReq) GetUserId() int32 {
@@ -622,18 +850,18 @@ func (x *GetUserMessagesReq) GetSize() int32 {
 // 获取用户消息响应
 type GetUserMessagesRes struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	List               []*UserMessageItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
-	Total              int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
-	CurrentPage        int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
-	PerPage            int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
-	UnreadMessageCount int32                  `protobuf:"varint,5,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count"`
+	List               []*UserMessageItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	Total              int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	CurrentPage        int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
+	PerPage            int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	UnreadMessageCount int32                  `protobuf:"varint,5,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GetUserMessagesRes) Reset() {
 	*x = GetUserMessagesRes{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[9]
+	mi := &file_backend_message_v1_message_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -645,7 +873,7 @@ func (x *GetUserMessagesRes) String() string {
 func (*GetUserMessagesRes) ProtoMessage() {}
 
 func (x *GetUserMessagesRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[9]
+	mi := &file_backend_message_v1_message_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -658,7 +886,7 @@ func (x *GetUserMessagesRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserMessagesRes.ProtoReflect.Descriptor instead.
 func (*GetUserMessagesRes) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{9}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetUserMessagesRes) GetList() []*UserMessageItem {
@@ -699,18 +927,18 @@ func (x *GetUserMessagesRes) GetUnreadMessageCount() int32 {
 // 用户消息项
 type UserMessageItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
-	IsRead        int32                  `protobuf:"varint,4,opt,name=is_read,json=isRead,proto3" json:"is_read"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	IsRead        int32                  `protobuf:"varint,4,opt,name=is_read,json=isRead,proto3" json:"is_read,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UserMessageItem) Reset() {
 	*x = UserMessageItem{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[10]
+	mi := &file_backend_message_v1_message_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -722,7 +950,7 @@ func (x *UserMessageItem) String() string {
 func (*UserMessageItem) ProtoMessage() {}
 
 func (x *UserMessageItem) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[10]
+	mi := &file_backend_message_v1_message_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -735,7 +963,7 @@ func (x *UserMessageItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserMessageItem.ProtoReflect.Descriptor instead.
 func (*UserMessageItem) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{10}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *UserMessageItem) GetId() int32 {
@@ -776,14 +1004,14 @@ func (x *UserMessageItem) GetCreatedAt() string {
 // 获取未读数量请求
 type GetUnreadCountReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetUnreadCountReq) Reset() {
 	*x = GetUnreadCountReq{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[11]
+	mi := &file_backend_message_v1_message_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -795,7 +1023,7 @@ func (x *GetUnreadCountReq) String() string {
 func (*GetUnreadCountReq) ProtoMessage() {}
 
 func (x *GetUnreadCountReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[11]
+	mi := &file_backend_message_v1_message_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -808,7 +1036,7 @@ func (x *GetUnreadCountReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUnreadCountReq.ProtoReflect.Descriptor instead.
 func (*GetUnreadCountReq) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{11}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetUnreadCountReq) GetUserId() int32 {
@@ -821,14 +1049,14 @@ func (x *GetUnreadCountReq) GetUserId() int32 {
 // 获取未读数量响应
 type GetUnreadCountRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count"`
+	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetUnreadCountRes) Reset() {
 	*x = GetUnreadCountRes{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[12]
+	mi := &file_backend_message_v1_message_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -840,7 +1068,7 @@ func (x *GetUnreadCountRes) String() string {
 func (*GetUnreadCountRes) ProtoMessage() {}
 
 func (x *GetUnreadCountRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[12]
+	mi := &file_backend_message_v1_message_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -853,7 +1081,7 @@ func (x *GetUnreadCountRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUnreadCountRes.ProtoReflect.Descriptor instead.
 func (*GetUnreadCountRes) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{12}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetUnreadCountRes) GetCount() int32 {
@@ -866,15 +1094,15 @@ func (x *GetUnreadCountRes) GetCount() int32 {
 // 读取消息请求
 type ReadMessageReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
-	MessageId     int32                  `protobuf:"varint,2,opt,name=message_id,json=messageId,proto3" json:"message_id"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	MessageId     int32                  `protobuf:"varint,2,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ReadMessageReq) Reset() {
 	*x = ReadMessageReq{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[13]
+	mi := &file_backend_message_v1_message_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -886,7 +1114,7 @@ func (x *ReadMessageReq) String() string {
 func (*ReadMessageReq) ProtoMessage() {}
 
 func (x *ReadMessageReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[13]
+	mi := &file_backend_message_v1_message_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -899,7 +1127,7 @@ func (x *ReadMessageReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReadMessageReq.ProtoReflect.Descriptor instead.
 func (*ReadMessageReq) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{13}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ReadMessageReq) GetUserId() int32 {
@@ -925,7 +1153,7 @@ type ReadMessageRes struct {
 
 func (x *ReadMessageRes) Reset() {
 	*x = ReadMessageRes{}
-	mi := &file_backend_message_v1_message_proto_msgTypes[14]
+	mi := &file_backend_message_v1_message_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -937,7 +1165,7 @@ func (x *ReadMessageRes) String() string {
 func (*ReadMessageRes) ProtoMessage() {}
 
 func (x *ReadMessageRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_message_v1_message_proto_msgTypes[14]
+	mi := &file_backend_message_v1_message_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -950,7 +1178,7 @@ func (x *ReadMessageRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReadMessageRes.ProtoReflect.Descriptor instead.
 func (*ReadMessageRes) Descriptor() ([]byte, []int) {
-	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{14}
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{18}
 }
 
 var File_backend_message_v1_message_proto protoreflect.FileDescriptor
@@ -971,7 +1199,7 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"statusList\x12\x14\n" +
 	"\x05total\x18\x05 \x01(\x05R\x05total\x12!\n" +
 	"\fcurrent_page\x18\x06 \x01(\x05R\vcurrentPage\x12\x19\n" +
-	"\bper_page\x18\a \x01(\x05R\aperPage\"\xa7\x01\n" +
+	"\bper_page\x18\a \x01(\x05R\aperPage\"\xde\x01\n" +
 	"\vMessageItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
@@ -980,7 +1208,10 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x05 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\tR\tupdatedAt\"/\n" +
+	"updated_at\x18\x06 \x01(\tR\tupdatedAt\x12\x1d\n" +
+	"\n" +
+	"event_code\x18\a \x01(\tR\teventCode\x12\x16\n" +
+	"\x06status\x18\b \x01(\x05R\x06status\"/\n" +
 	"\tGradeItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"/\n" +
@@ -990,7 +1221,7 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\n" +
 	"StatusItem\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\x05R\x05value\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\xfd\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xb4\x02\n" +
 	"\x10CreateMessageReq\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x12\n" +
@@ -1001,8 +1232,23 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\x06status\x18\a \x01(\x05R\x06status\x12\x1a\n" +
 	"\bposition\x18\b \x01(\x05R\bposition\x12\x1f\n" +
 	"\valert_times\x18\t \x01(\x05R\n" +
-	"alertTimes\"\x12\n" +
-	"\x10CreateMessageRes\"U\n" +
+	"alertTimes\x12\x1d\n" +
+	"\n" +
+	"event_code\x18\n" +
+	" \x01(\tR\teventCode\x12\x16\n" +
+	"\x06amount\x18\v \x01(\x01R\x06amount\"\x12\n" +
+	"\x10CreateMessageRes\"\x89\x01\n" +
+	"\x10UpdateMessageReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1d\n" +
+	"\n" +
+	"event_code\x18\x02 \x01(\tR\teventCode\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\x12\x18\n" +
+	"\acontent\x18\x04 \x01(\tR\acontent\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\x05R\x06status\"\x12\n" +
+	"\x10UpdateMessageRes\"\"\n" +
+	"\x10DeleteMessageReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\x12\n" +
+	"\x10DeleteMessageRes\"U\n" +
 	"\x12GetUserMessagesReq\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x12\n" +
@@ -1028,10 +1274,12 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1d\n" +
 	"\n" +
 	"message_id\x18\x02 \x01(\x05R\tmessageId\"\x10\n" +
-	"\x0eReadMessageRes2\xfc\x02\n" +
+	"\x0eReadMessageRes2\x8e\x04\n" +
 	"\aMessage\x12J\n" +
 	"\x0eGetMessageList\x12\x1a.message.GetMessageListReq\x1a\x1a.message.GetMessageListRes\"\x00\x12G\n" +
-	"\rCreateMessage\x12\x19.message.CreateMessageReq\x1a\x19.message.CreateMessageRes\"\x00\x12M\n" +
+	"\rCreateMessage\x12\x19.message.CreateMessageReq\x1a\x19.message.CreateMessageRes\"\x00\x12G\n" +
+	"\rUpdateMessage\x12\x19.message.UpdateMessageReq\x1a\x19.message.UpdateMessageRes\"\x00\x12G\n" +
+	"\rDeleteMessage\x12\x19.message.DeleteMessageReq\x1a\x19.message.DeleteMessageRes\"\x00\x12M\n" +
 	"\x0fGetUserMessages\x12\x1b.message.GetUserMessagesReq\x1a\x1b.message.GetUserMessagesRes\"\x00\x12J\n" +
 	"\x0eGetUnreadCount\x12\x1a.message.GetUnreadCountReq\x1a\x1a.message.GetUnreadCountRes\"\x00\x12A\n" +
 	"\vReadMessage\x12\x17.message.ReadMessageReq\x1a\x17.message.ReadMessageRes\"\x00B'Z%jh_app_service/api/backend/message/v1b\x06proto3"
@@ -1048,7 +1296,7 @@ func file_backend_message_v1_message_proto_rawDescGZIP() []byte {
 	return file_backend_message_v1_message_proto_rawDescData
 }
 
-var file_backend_message_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_backend_message_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_backend_message_v1_message_proto_goTypes = []any{
 	(*GetMessageListReq)(nil),  // 0: message.GetMessageListReq
 	(*GetMessageListRes)(nil),  // 1: message.GetMessageListRes
@@ -1058,32 +1306,40 @@ var file_backend_message_v1_message_proto_goTypes = []any{
 	(*StatusItem)(nil),         // 5: message.StatusItem
 	(*CreateMessageReq)(nil),   // 6: message.CreateMessageReq
 	(*CreateMessageRes)(nil),   // 7: message.CreateMessageRes
-	(*GetUserMessagesReq)(nil), // 8: message.GetUserMessagesReq
-	(*GetUserMessagesRes)(nil), // 9: message.GetUserMessagesRes
-	(*UserMessageItem)(nil),    // 10: message.UserMessageItem
-	(*GetUnreadCountReq)(nil),  // 11: message.GetUnreadCountReq
-	(*GetUnreadCountRes)(nil),  // 12: message.GetUnreadCountRes
-	(*ReadMessageReq)(nil),     // 13: message.ReadMessageReq
-	(*ReadMessageRes)(nil),     // 14: message.ReadMessageRes
+	(*UpdateMessageReq)(nil),   // 8: message.UpdateMessageReq
+	(*UpdateMessageRes)(nil),   // 9: message.UpdateMessageRes
+	(*DeleteMessageReq)(nil),   // 10: message.DeleteMessageReq
+	(*DeleteMessageRes)(nil),   // 11: message.DeleteMessageRes
+	(*GetUserMessagesReq)(nil), // 12: message.GetUserMessagesReq
+	(*GetUserMessagesRes)(nil), // 13: message.GetUserMessagesRes
+	(*UserMessageItem)(nil),    // 14: message.UserMessageItem
+	(*GetUnreadCountReq)(nil),  // 15: message.GetUnreadCountReq
+	(*GetUnreadCountRes)(nil),  // 16: message.GetUnreadCountRes
+	(*ReadMessageReq)(nil),     // 17: message.ReadMessageReq
+	(*ReadMessageRes)(nil),     // 18: message.ReadMessageRes
 }
 var file_backend_message_v1_message_proto_depIdxs = []int32{
 	2,  // 0: message.GetMessageListRes.message_list:type_name -> message.MessageItem
 	3,  // 1: message.GetMessageListRes.grade_list:type_name -> message.GradeItem
 	4,  // 2: message.GetMessageListRes.level_list:type_name -> message.LevelItem
 	5,  // 3: message.GetMessageListRes.status_list:type_name -> message.StatusItem
-	10, // 4: message.GetUserMessagesRes.list:type_name -> message.UserMessageItem
+	14, // 4: message.GetUserMessagesRes.list:type_name -> message.UserMessageItem
 	0,  // 5: message.Message.GetMessageList:input_type -> message.GetMessageListReq
 	6,  // 6: message.Message.CreateMessage:input_type -> message.CreateMessageReq
-	8,  // 7: message.Message.GetUserMessages:input_type -> message.GetUserMessagesReq
-	11, // 8: message.Message.GetUnreadCount:input_type -> message.GetUnreadCountReq
-	13, // 9: message.Message.ReadMessage:input_type -> message.ReadMessageReq
-	1,  // 10: message.Message.GetMessageList:output_type -> message.GetMessageListRes
-	7,  // 11: message.Message.CreateMessage:output_type -> message.CreateMessageRes
-	9,  // 12: message.Message.GetUserMessages:output_type -> message.GetUserMessagesRes
-	12, // 13: message.Message.GetUnreadCount:output_type -> message.GetUnreadCountRes
-	14, // 14: message.Message.ReadMessage:output_type -> message.ReadMessageRes
-	10, // [10:15] is the sub-list for method output_type
-	5,  // [5:10] is the sub-list for method input_type
+	8,  // 7: message.Message.UpdateMessage:input_type -> message.UpdateMessageReq
+	10, // 8: message.Message.DeleteMessage:input_type -> message.DeleteMessageReq
+	12, // 9: message.Message.GetUserMessages:input_type -> message.GetUserMessagesReq
+	15, // 10: message.Message.GetUnreadCount:input_type -> message.GetUnreadCountReq
+	17, // 11: message.Message.ReadMessage:input_type -> message.ReadMessageReq
+	1,  // 12: message.Message.GetMessageList:output_type -> message.GetMessageListRes
+	7,  // 13: message.Message.CreateMessage:output_type -> message.CreateMessageRes
+	9,  // 14: message.Message.UpdateMessage:output_type -> message.UpdateMessageRes
+	11, // 15: message.Message.DeleteMessage:output_type -> message.DeleteMessageRes
+	13, // 16: message.Message.GetUserMessages:output_type -> message.GetUserMessagesRes
+	16, // 17: message.Message.GetUnreadCount:output_type -> message.GetUnreadCountRes
+	18, // 18: message.Message.ReadMessage:output_type -> message.ReadMessageRes
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -1100,7 +1356,7 @@ func file_backend_message_v1_message_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_message_v1_message_proto_rawDesc), len(file_backend_message_v1_message_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -2095,6 +2095,8 @@ func CallGetMessageList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
  * @description 创建消息的接口
  * @method post
  * @url /api/backend/app/create-message
+ * @param event_code 必选 string 业务触发编码
+ * @param amount 可选 float 涉及金额
  * @param title 必选 string 消息标题
  * @param content 必选 string 消息内容
  * @param type 必选 int 消息类型 1:指定用户 2:等级 3:层级 4:状态
@@ -2123,6 +2125,8 @@ func CallCreateMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 		Status:     gconv.Int32(requestData["status"]),
 		Position:   gconv.Int32(requestData["position"]),
 		AlertTimes: gconv.Int32(requestData["alert_times"]),
+		EventCode:  gconv.String(requestData["event_code"]),
+		Amount:     gconv.Float64(requestData["amount"]),
 	}
 
 	// 调用gRPC服务
@@ -2134,6 +2138,70 @@ func CallCreateMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	}
 
 	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/消息管理
+ * @title 更新消息
+ * @description 更新消息的接口
+ * @method post
+ * @url /api/backend/app/update-message
+ * @param id 必选 int 消息ID
+ * @param event_code 可选 string 业务触发编码
+ * @param title 可选 string 消息标题
+ * @param content 可选 string 消息内容
+ * @param status 可选 int 状态0=关闭 1=启用
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 12
+ */
+func CallUpdateMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message UpdateMessage")
+
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	req := &v8.UpdateMessageReq{
+		Id:        gconv.Int32(requestData["id"]),
+		EventCode: gconv.String(requestData["event_code"]),
+		Title:     gconv.String(requestData["title"]),
+		Content:   gconv.String(requestData["content"]),
+		Status:    gconv.Int32(requestData["status"]),
+	}
+
+	client := v8.NewMessageClient(conn)
+	res, err := client.UpdateMessage(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message UpdateMessage failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/运营/消息管理
+ * @title 删除消息
+ * @description 删除消息的接口
+ * @method post
+ * @url /api/backend/app/delete-message
+ * @param id 必选 int 消息ID
+ * @return {"code":0,"msg":"success","data":{}}
+ * @number 13
+ */
+func CallDeleteMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Message DeleteMessage")
+
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	req := &v8.DeleteMessageReq{
+		Id: gconv.Int32(requestData["id"]),
+	}
+
+	client := v8.NewMessageClient(conn)
+	res, err := client.DeleteMessage(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Message DeleteMessage failed: %v", err)
+		return err
+	}
 	return writeProtobufResponse(ctx, r, res)
 }
 
