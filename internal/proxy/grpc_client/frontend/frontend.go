@@ -1135,3 +1135,95 @@ func CallGetInviteList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	// 返回成功响应
 	return writeProtobufResponse(ctx, r, res)
 }
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 获取用户消息
+ * @description 获取当前用户消息列表
+ * @method get
+ * @url /api/frontend/app/app-user-messages
+ * @param page 可选 int 页码
+ * @param size 可选 int 每页数量
+ * @return {"code":0,"msg":"success","data":{"list":[],"total":0,"current_page":1,"per_page":20,"unread_message_count":0}}
+ * @number 120
+ */
+func CallGetUserMessages(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "20"))
+
+	client := v16.NewUserClient(conn)
+	req := &v16.GetUserMessagesReq{
+		Page: page,
+		Size: size,
+	}
+
+	res, err := client.GetUserMessages(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取用户消息失败")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 获取未读数量
+ * @description 获取当前用户未读消息数量
+ * @method get
+ * @url /api/frontend/app/app-unread-count
+ * @return {"code":0,"msg":"success","data":{"count":0}}
+ * @number 121
+ */
+func CallGetUnreadCount(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	client := v16.NewUserClient(conn)
+	req := &v16.GetUnreadCountReq{}
+	res, err := client.GetUnreadCount(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取未读消息数量失败")
+		return nil
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/用户
+ * @title 阅读消息
+ * @description 标记消息已读
+ * @method post
+ * @url /api/frontend/app/app-read-message
+ * @param message_id 必选 int 消息ID
+ * @return {"code":0,"msg":"success","data":{"message":"success"}}
+ * @number 122
+ */
+func CallReadMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	messageId := gconv.Int32(reqData["message_id"])
+	if messageId <= 0 {
+		messageId = gconv.Int32(r.Get("message_id"))
+	}
+	if messageId <= 0 {
+		util.WriteBadRequest(r, "message_id必填")
+		return nil
+	}
+
+	client := v16.NewUserClient(conn)
+	req := &v16.ReadMessageReq{
+		MessageId: messageId,
+	}
+	res, err := client.ReadMessage(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "读取消息失败")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}

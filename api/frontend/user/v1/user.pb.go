@@ -1520,6 +1520,385 @@ func (x *GetInviteListRes) GetPageSize() int32 {
 	return 0
 }
 
+// 获取用户消息请求
+type GetUserMessagesReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page" dc:"页码"`   // 页码
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size" dc:"每页数量"` // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserMessagesReq) Reset() {
+	*x = GetUserMessagesReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserMessagesReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserMessagesReq) ProtoMessage() {}
+
+func (x *GetUserMessagesReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserMessagesReq.ProtoReflect.Descriptor instead.
+func (*GetUserMessagesReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *GetUserMessagesReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetUserMessagesReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 获取用户消息响应
+type GetUserMessagesRes struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	List               []*UserMessageItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total              int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage        int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage            int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	UnreadMessageCount int32                  `protobuf:"varint,5,opt,name=unread_message_count,json=unreadMessageCount,proto3" json:"unread_message_count"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *GetUserMessagesRes) Reset() {
+	*x = GetUserMessagesRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserMessagesRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserMessagesRes) ProtoMessage() {}
+
+func (x *GetUserMessagesRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserMessagesRes.ProtoReflect.Descriptor instead.
+func (*GetUserMessagesRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *GetUserMessagesRes) GetList() []*UserMessageItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetUserMessagesRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *GetUserMessagesRes) GetCurrentPage() int32 {
+	if x != nil {
+		return x.CurrentPage
+	}
+	return 0
+}
+
+func (x *GetUserMessagesRes) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
+}
+
+func (x *GetUserMessagesRes) GetUnreadMessageCount() int32 {
+	if x != nil {
+		return x.UnreadMessageCount
+	}
+	return 0
+}
+
+// 用户消息项
+type UserMessageItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content"`
+	IsRead        int32                  `protobuf:"varint,4,opt,name=is_read,json=isRead,proto3" json:"is_read"`
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserMessageItem) Reset() {
+	*x = UserMessageItem{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserMessageItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserMessageItem) ProtoMessage() {}
+
+func (x *UserMessageItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserMessageItem.ProtoReflect.Descriptor instead.
+func (*UserMessageItem) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *UserMessageItem) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserMessageItem) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *UserMessageItem) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *UserMessageItem) GetIsRead() int32 {
+	if x != nil {
+		return x.IsRead
+	}
+	return 0
+}
+
+func (x *UserMessageItem) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取未读数量请求
+type GetUnreadCountReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUnreadCountReq) Reset() {
+	*x = GetUnreadCountReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUnreadCountReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUnreadCountReq) ProtoMessage() {}
+
+func (x *GetUnreadCountReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUnreadCountReq.ProtoReflect.Descriptor instead.
+func (*GetUnreadCountReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{30}
+}
+
+// 获取未读数量响应
+type GetUnreadCountRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUnreadCountRes) Reset() {
+	*x = GetUnreadCountRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUnreadCountRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUnreadCountRes) ProtoMessage() {}
+
+func (x *GetUnreadCountRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUnreadCountRes.ProtoReflect.Descriptor instead.
+func (*GetUnreadCountRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *GetUnreadCountRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 读取消息请求
+type ReadMessageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MessageId     int32                  `protobuf:"varint,1,opt,name=message_id,json=messageId,proto3" json:"message_id"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReadMessageReq) Reset() {
+	*x = ReadMessageReq{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReadMessageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReadMessageReq) ProtoMessage() {}
+
+func (x *ReadMessageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReadMessageReq.ProtoReflect.Descriptor instead.
+func (*ReadMessageReq) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *ReadMessageReq) GetMessageId() int32 {
+	if x != nil {
+		return x.MessageId
+	}
+	return 0
+}
+
+// 读取消息响应
+type ReadMessageRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReadMessageRes) Reset() {
+	*x = ReadMessageRes{}
+	mi := &file_frontend_user_v1_user_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReadMessageRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReadMessageRes) ProtoMessage() {}
+
+func (x *ReadMessageRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_user_v1_user_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReadMessageRes.ProtoReflect.Descriptor instead.
+func (*ReadMessageRes) Descriptor() ([]byte, []int) {
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *ReadMessageRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 // 邀请项
 type InviteItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1535,7 +1914,7 @@ type InviteItem struct {
 
 func (x *InviteItem) Reset() {
 	*x = InviteItem{}
-	mi := &file_frontend_user_v1_user_proto_msgTypes[27]
+	mi := &file_frontend_user_v1_user_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1547,7 +1926,7 @@ func (x *InviteItem) String() string {
 func (*InviteItem) ProtoMessage() {}
 
 func (x *InviteItem) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_user_v1_user_proto_msgTypes[27]
+	mi := &file_frontend_user_v1_user_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1560,7 +1939,7 @@ func (x *InviteItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InviteItem.ProtoReflect.Descriptor instead.
 func (*InviteItem) Descriptor() ([]byte, []int) {
-	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{27}
+	return file_frontend_user_v1_user_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *InviteItem) GetUserId() int32 {
@@ -1708,7 +2087,31 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x04list\x18\x01 \x03(\v2\x19.frontend_user.InviteItemR\x04list\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\xc2\x01\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"<\n" +
+	"\x12GetUserMessagesReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"\xce\x01\n" +
+	"\x12GetUserMessagesRes\x122\n" +
+	"\x04list\x18\x01 \x03(\v2\x1e.frontend_user.UserMessageItemR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12!\n" +
+	"\fcurrent_page\x18\x03 \x01(\x05R\vcurrentPage\x12\x19\n" +
+	"\bper_page\x18\x04 \x01(\x05R\aperPage\x120\n" +
+	"\x14unread_message_count\x18\x05 \x01(\x05R\x12unreadMessageCount\"\x89\x01\n" +
+	"\x0fUserMessageItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
+	"\acontent\x18\x03 \x01(\tR\acontent\x12\x17\n" +
+	"\ais_read\x18\x04 \x01(\x05R\x06isRead\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\tR\tcreatedAt\"\x13\n" +
+	"\x11GetUnreadCountReq\")\n" +
+	"\x11GetUnreadCountRes\x12\x14\n" +
+	"\x05count\x18\x01 \x01(\x05R\x05count\"/\n" +
+	"\x0eReadMessageReq\x12\x1d\n" +
+	"\n" +
+	"message_id\x18\x01 \x01(\x05R\tmessageId\"*\n" +
+	"\x0eReadMessageRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xc2\x01\n" +
 	"\n" +
 	"InviteItem\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
@@ -1716,7 +2119,8 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\rregister_time\x18\x03 \x01(\tR\fregisterTime\x12\x1b\n" +
 	"\ttotal_bet\x18\x04 \x01(\tR\btotalBet\x12%\n" +
 	"\x0etotal_recharge\x18\x05 \x01(\tR\rtotalRecharge\x12\x16\n" +
-	"\x06status\x18\x06 \x01(\x05R\x06status2\x88\b\n" +
+	"\x06status\x18\x06 \x01(\x05R\x06status2\x8a\n" +
+	"\n" +
 	"\x04User\x12M\n" +
 	"\vGetUserInfo\x12\x1d.frontend_user.GetUserInfoReq\x1a\x1d.frontend_user.GetUserInfoRes\"\x00\x12>\n" +
 	"\x06Logout\x12\x18.frontend_user.LogoutReq\x1a\x18.frontend_user.LogoutRes\"\x00\x12G\n" +
@@ -1730,7 +2134,10 @@ const file_frontend_user_v1_user_proto_rawDesc = "" +
 	"\x11VerifyPayPassword\x12#.frontend_user.VerifyPayPasswordReq\x1a#.frontend_user.VerifyPayPasswordRes\"\x00\x12_\n" +
 	"\x11ChangePayPassword\x12#.frontend_user.ChangePayPasswordReq\x1a#.frontend_user.ChangePayPasswordRes\"\x00\x12S\n" +
 	"\rGetInviteInfo\x12\x1f.frontend_user.GetInviteInfoReq\x1a\x1f.frontend_user.GetInviteInfoRes\"\x00\x12S\n" +
-	"\rGetInviteList\x12\x1f.frontend_user.GetInviteListReq\x1a\x1f.frontend_user.GetInviteListRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
+	"\rGetInviteList\x12\x1f.frontend_user.GetInviteListReq\x1a\x1f.frontend_user.GetInviteListRes\"\x00\x12Y\n" +
+	"\x0fGetUserMessages\x12!.frontend_user.GetUserMessagesReq\x1a!.frontend_user.GetUserMessagesRes\"\x00\x12V\n" +
+	"\x0eGetUnreadCount\x12 .frontend_user.GetUnreadCountReq\x1a .frontend_user.GetUnreadCountRes\"\x00\x12M\n" +
+	"\vReadMessage\x12\x1d.frontend_user.ReadMessageReq\x1a\x1d.frontend_user.ReadMessageRes\"\x00B%Z#jh_app_service/api/frontend/user/v1b\x06proto3"
 
 var (
 	file_frontend_user_v1_user_proto_rawDescOnce sync.Once
@@ -1744,7 +2151,7 @@ func file_frontend_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_frontend_user_v1_user_proto_rawDescData
 }
 
-var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_frontend_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetUserInfoReq)(nil),         // 0: frontend_user.GetUserInfoReq
 	(*GetUserInfoRes)(nil),         // 1: frontend_user.GetUserInfoRes
@@ -1773,40 +2180,54 @@ var file_frontend_user_v1_user_proto_goTypes = []any{
 	(*GetInviteInfoRes)(nil),       // 24: frontend_user.GetInviteInfoRes
 	(*GetInviteListReq)(nil),       // 25: frontend_user.GetInviteListReq
 	(*GetInviteListRes)(nil),       // 26: frontend_user.GetInviteListRes
-	(*InviteItem)(nil),             // 27: frontend_user.InviteItem
+	(*GetUserMessagesReq)(nil),     // 27: frontend_user.GetUserMessagesReq
+	(*GetUserMessagesRes)(nil),     // 28: frontend_user.GetUserMessagesRes
+	(*UserMessageItem)(nil),        // 29: frontend_user.UserMessageItem
+	(*GetUnreadCountReq)(nil),      // 30: frontend_user.GetUnreadCountReq
+	(*GetUnreadCountRes)(nil),      // 31: frontend_user.GetUnreadCountRes
+	(*ReadMessageReq)(nil),         // 32: frontend_user.ReadMessageReq
+	(*ReadMessageRes)(nil),         // 33: frontend_user.ReadMessageRes
+	(*InviteItem)(nil),             // 34: frontend_user.InviteItem
 }
 var file_frontend_user_v1_user_proto_depIdxs = []int32{
 	16, // 0: frontend_user.GetGradeListRes.list:type_name -> frontend_user.GradeItem
-	27, // 1: frontend_user.GetInviteListRes.list:type_name -> frontend_user.InviteItem
-	0,  // 2: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
-	4,  // 3: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
-	6,  // 4: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
-	8,  // 5: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
-	10, // 6: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
-	12, // 7: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
-	14, // 8: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
-	17, // 9: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
-	19, // 10: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
-	21, // 11: frontend_user.User.ChangePayPassword:input_type -> frontend_user.ChangePayPasswordReq
-	23, // 12: frontend_user.User.GetInviteInfo:input_type -> frontend_user.GetInviteInfoReq
-	25, // 13: frontend_user.User.GetInviteList:input_type -> frontend_user.GetInviteListReq
-	1,  // 14: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
-	5,  // 15: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
-	7,  // 16: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
-	9,  // 17: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
-	11, // 18: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
-	13, // 19: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
-	15, // 20: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
-	18, // 21: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
-	20, // 22: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
-	22, // 23: frontend_user.User.ChangePayPassword:output_type -> frontend_user.ChangePayPasswordRes
-	24, // 24: frontend_user.User.GetInviteInfo:output_type -> frontend_user.GetInviteInfoRes
-	26, // 25: frontend_user.User.GetInviteList:output_type -> frontend_user.GetInviteListRes
-	14, // [14:26] is the sub-list for method output_type
-	2,  // [2:14] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	34, // 1: frontend_user.GetInviteListRes.list:type_name -> frontend_user.InviteItem
+	29, // 2: frontend_user.GetUserMessagesRes.list:type_name -> frontend_user.UserMessageItem
+	0,  // 3: frontend_user.User.GetUserInfo:input_type -> frontend_user.GetUserInfoReq
+	4,  // 4: frontend_user.User.Logout:input_type -> frontend_user.LogoutReq
+	6,  // 5: frontend_user.User.BindEmail:input_type -> frontend_user.BindEmailReq
+	8,  // 6: frontend_user.User.BindMobile:input_type -> frontend_user.BindMobileReq
+	10, // 7: frontend_user.User.ChangeLoginPassword:input_type -> frontend_user.ChangeLoginPasswordReq
+	12, // 8: frontend_user.User.BindLoginPassword:input_type -> frontend_user.BindLoginPasswordReq
+	14, // 9: frontend_user.User.GetGradeList:input_type -> frontend_user.GetGradeListReq
+	17, // 10: frontend_user.User.SetPayPassword:input_type -> frontend_user.SetPayPasswordReq
+	19, // 11: frontend_user.User.VerifyPayPassword:input_type -> frontend_user.VerifyPayPasswordReq
+	21, // 12: frontend_user.User.ChangePayPassword:input_type -> frontend_user.ChangePayPasswordReq
+	23, // 13: frontend_user.User.GetInviteInfo:input_type -> frontend_user.GetInviteInfoReq
+	25, // 14: frontend_user.User.GetInviteList:input_type -> frontend_user.GetInviteListReq
+	27, // 15: frontend_user.User.GetUserMessages:input_type -> frontend_user.GetUserMessagesReq
+	30, // 16: frontend_user.User.GetUnreadCount:input_type -> frontend_user.GetUnreadCountReq
+	32, // 17: frontend_user.User.ReadMessage:input_type -> frontend_user.ReadMessageReq
+	1,  // 18: frontend_user.User.GetUserInfo:output_type -> frontend_user.GetUserInfoRes
+	5,  // 19: frontend_user.User.Logout:output_type -> frontend_user.LogoutRes
+	7,  // 20: frontend_user.User.BindEmail:output_type -> frontend_user.BindEmailRes
+	9,  // 21: frontend_user.User.BindMobile:output_type -> frontend_user.BindMobileRes
+	11, // 22: frontend_user.User.ChangeLoginPassword:output_type -> frontend_user.ChangeLoginPasswordRes
+	13, // 23: frontend_user.User.BindLoginPassword:output_type -> frontend_user.BindLoginPasswordRes
+	15, // 24: frontend_user.User.GetGradeList:output_type -> frontend_user.GetGradeListRes
+	18, // 25: frontend_user.User.SetPayPassword:output_type -> frontend_user.SetPayPasswordRes
+	20, // 26: frontend_user.User.VerifyPayPassword:output_type -> frontend_user.VerifyPayPasswordRes
+	22, // 27: frontend_user.User.ChangePayPassword:output_type -> frontend_user.ChangePayPasswordRes
+	24, // 28: frontend_user.User.GetInviteInfo:output_type -> frontend_user.GetInviteInfoRes
+	26, // 29: frontend_user.User.GetInviteList:output_type -> frontend_user.GetInviteListRes
+	28, // 30: frontend_user.User.GetUserMessages:output_type -> frontend_user.GetUserMessagesRes
+	31, // 31: frontend_user.User.GetUnreadCount:output_type -> frontend_user.GetUnreadCountRes
+	33, // 32: frontend_user.User.ReadMessage:output_type -> frontend_user.ReadMessageRes
+	18, // [18:33] is the sub-list for method output_type
+	3,  // [3:18] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_frontend_user_v1_user_proto_init() }
@@ -1820,7 +2241,7 @@ func file_frontend_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_user_v1_user_proto_rawDesc), len(file_frontend_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   28,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

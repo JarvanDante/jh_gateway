@@ -32,6 +32,9 @@ const (
 	User_ChangePayPassword_FullMethodName   = "/frontend_user.User/ChangePayPassword"
 	User_GetInviteInfo_FullMethodName       = "/frontend_user.User/GetInviteInfo"
 	User_GetInviteList_FullMethodName       = "/frontend_user.User/GetInviteList"
+	User_GetUserMessages_FullMethodName     = "/frontend_user.User/GetUserMessages"
+	User_GetUnreadCount_FullMethodName      = "/frontend_user.User/GetUnreadCount"
+	User_ReadMessage_FullMethodName         = "/frontend_user.User/ReadMessage"
 )
 
 // UserClient is the client API for User service.
@@ -51,6 +54,10 @@ type UserClient interface {
 	// 邀请相关接口
 	GetInviteInfo(ctx context.Context, in *GetInviteInfoReq, opts ...grpc.CallOption) (*GetInviteInfoRes, error)
 	GetInviteList(ctx context.Context, in *GetInviteListReq, opts ...grpc.CallOption) (*GetInviteListRes, error)
+	// 消息相关接口
+	GetUserMessages(ctx context.Context, in *GetUserMessagesReq, opts ...grpc.CallOption) (*GetUserMessagesRes, error)
+	GetUnreadCount(ctx context.Context, in *GetUnreadCountReq, opts ...grpc.CallOption) (*GetUnreadCountRes, error)
+	ReadMessage(ctx context.Context, in *ReadMessageReq, opts ...grpc.CallOption) (*ReadMessageRes, error)
 }
 
 type userClient struct {
@@ -181,6 +188,36 @@ func (c *userClient) GetInviteList(ctx context.Context, in *GetInviteListReq, op
 	return out, nil
 }
 
+func (c *userClient) GetUserMessages(ctx context.Context, in *GetUserMessagesReq, opts ...grpc.CallOption) (*GetUserMessagesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserMessagesRes)
+	err := c.cc.Invoke(ctx, User_GetUserMessages_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) GetUnreadCount(ctx context.Context, in *GetUnreadCountReq, opts ...grpc.CallOption) (*GetUnreadCountRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUnreadCountRes)
+	err := c.cc.Invoke(ctx, User_GetUnreadCount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) ReadMessage(ctx context.Context, in *ReadMessageReq, opts ...grpc.CallOption) (*ReadMessageRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReadMessageRes)
+	err := c.cc.Invoke(ctx, User_ReadMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -198,6 +235,10 @@ type UserServer interface {
 	// 邀请相关接口
 	GetInviteInfo(context.Context, *GetInviteInfoReq) (*GetInviteInfoRes, error)
 	GetInviteList(context.Context, *GetInviteListReq) (*GetInviteListRes, error)
+	// 消息相关接口
+	GetUserMessages(context.Context, *GetUserMessagesReq) (*GetUserMessagesRes, error)
+	GetUnreadCount(context.Context, *GetUnreadCountReq) (*GetUnreadCountRes, error)
+	ReadMessage(context.Context, *ReadMessageReq) (*ReadMessageRes, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -243,6 +284,15 @@ func (UnimplementedUserServer) GetInviteInfo(context.Context, *GetInviteInfoReq)
 }
 func (UnimplementedUserServer) GetInviteList(context.Context, *GetInviteListReq) (*GetInviteListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetInviteList not implemented")
+}
+func (UnimplementedUserServer) GetUserMessages(context.Context, *GetUserMessagesReq) (*GetUserMessagesRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUserMessages not implemented")
+}
+func (UnimplementedUserServer) GetUnreadCount(context.Context, *GetUnreadCountReq) (*GetUnreadCountRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUnreadCount not implemented")
+}
+func (UnimplementedUserServer) ReadMessage(context.Context, *ReadMessageReq) (*ReadMessageRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReadMessage not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -481,6 +531,60 @@ func _User_GetInviteList_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserMessagesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserMessages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserMessages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserMessages(ctx, req.(*GetUserMessagesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetUnreadCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUnreadCountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUnreadCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUnreadCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUnreadCount(ctx, req.(*GetUnreadCountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_ReadMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReadMessageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).ReadMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_ReadMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).ReadMessage(ctx, req.(*ReadMessageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -535,6 +639,18 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInviteList",
 			Handler:    _User_GetInviteList_Handler,
+		},
+		{
+			MethodName: "GetUserMessages",
+			Handler:    _User_GetUserMessages_Handler,
+		},
+		{
+			MethodName: "GetUnreadCount",
+			Handler:    _User_GetUnreadCount_Handler,
+		},
+		{
+			MethodName: "ReadMessage",
+			Handler:    _User_ReadMessage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

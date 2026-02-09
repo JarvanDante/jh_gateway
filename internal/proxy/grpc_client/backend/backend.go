@@ -2212,7 +2212,6 @@ func CallDeleteMessage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
  * @description 获取用户消息的接口
  * @method get
  * @url /api/frontend/app/user-messages
- * @param user_id 必选 int 用户ID
  * @param page 可选 int 页码
  * @param size 可选 int 每页数量
  * @return {"code":0,"msg":"success","data":{"list":[],"total":0,"current_page":1,"per_page":20,"unread_message_count":0}}
@@ -2222,7 +2221,17 @@ func CallGetUserMessages(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	util.LogWithTrace(ctx, "info", "calling gRPC Message GetUserMessages")
 
 	// 解析请求参数
-	userId := gconv.Int32(r.GetQuery("user_id"))
+	userId := int32(0)
+	if userIdVar := r.GetCtxVar("user_id"); userIdVar != nil {
+		userId = int32(userIdVar.Int())
+	}
+	if userId <= 0 {
+		userId = gconv.Int32(r.GetQuery("user_id"))
+	}
+	if userId <= 0 {
+		util.WriteUnauthorized(r, "未登录")
+		return nil
+	}
 	page := gconv.Int32(r.GetQuery("page", "1"))
 	size := gconv.Int32(r.GetQuery("size", "20"))
 

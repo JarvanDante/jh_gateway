@@ -446,4 +446,8 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/setting-site", "GET", frontend.CallGetSiteSetting)
 	// 获取活动列表（前台）
 	frontendRoutes.Register("/site-activity-list", "GET", frontend.CallGetSiteActivityList)
+	// 用户消息
+	frontendRoutes.Register("/app-user-messages", "GET", frontend.CallGetUserMessages)
+	frontendRoutes.Register("/app-unread-count", "GET", frontend.CallGetUnreadCount)
+	frontendRoutes.Register("/app-read-message", "POST", frontend.CallReadMessage)
 }
