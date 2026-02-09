@@ -845,6 +845,48 @@ func CallGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
+ * @catalog 前台/系统/活动配置
+ * @title 获取活动列表
+ * @description 获取 site_activity 表数据（前台）
+ * @method get
+ * @url /api/frontend/app/site-activity-list
+ * @param token 必选 string token
+ * @param site_id 可选 int 站点id
+ * @param activity_id 可选 int 活动ID
+ * @param code 可选 string 活动编码
+ * @return {"code":0,"msg":"success","data":{"list":[{"id":1,"site_code":"jh","activity_id":1,"name":"邀请好友活动","code":"INVITE","description":"","start_time":"2025-12-29 08:00:00","end_time":"2026-11-28 08:00:00","fixed_params":"{}","status":1,"sort":0,"table":"activity_invite_bonus","created_at":"2026-02-06 07:59:33","updated_at":"2026-02-06 07:59:33","uri":"/invite_activity"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 120
+ */
+func CallGetSiteActivityList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Public GetSiteActivityList")
+
+	client := v15.NewPublicClient(conn)
+	siteId := r.Get("site_id", 0).Int32()
+	if siteId <= 0 {
+		if ctxVar := r.GetCtxVar("site_id"); ctxVar != nil {
+			siteId = ctxVar.Int32()
+		}
+	}
+	req := &v15.GetSiteActivityListReq{
+		SiteId:     siteId,
+		ActivityId: r.Get("activity_id", 0).Int32(),
+		Code:       r.Get("code", "").String(),
+	}
+
+	res, err := client.GetSiteActivityList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, "获取活动列表失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 前台/用户
  * @title OK设置支付密码
  * @description 设置支付密码接口

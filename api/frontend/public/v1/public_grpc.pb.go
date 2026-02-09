@@ -20,14 +20,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Public_QuickRegister_FullMethodName    = "/public.Public/QuickRegister"
-	Public_Register_FullMethodName         = "/public.Public/Register"
-	Public_Login_FullMethodName            = "/public.Public/Login"
-	Public_GenerateCaptcha_FullMethodName  = "/public.Public/GenerateCaptcha"
-	Public_RefreshToken_FullMethodName     = "/public.Public/RefreshToken"
-	Public_GetSiteSetting_FullMethodName   = "/public.Public/GetSiteSetting"
-	Public_GetAppNoticeList_FullMethodName = "/public.Public/GetAppNoticeList"
-	Public_GetAppAdList_FullMethodName     = "/public.Public/GetAppAdList"
+	Public_QuickRegister_FullMethodName       = "/public.Public/QuickRegister"
+	Public_Register_FullMethodName            = "/public.Public/Register"
+	Public_Login_FullMethodName               = "/public.Public/Login"
+	Public_GenerateCaptcha_FullMethodName     = "/public.Public/GenerateCaptcha"
+	Public_RefreshToken_FullMethodName        = "/public.Public/RefreshToken"
+	Public_GetSiteSetting_FullMethodName      = "/public.Public/GetSiteSetting"
+	Public_GetAppNoticeList_FullMethodName    = "/public.Public/GetAppNoticeList"
+	Public_GetAppAdList_FullMethodName        = "/public.Public/GetAppAdList"
+	Public_GetSiteActivityList_FullMethodName = "/public.Public/GetSiteActivityList"
 )
 
 // PublicClient is the client API for Public service.
@@ -42,6 +43,7 @@ type PublicClient interface {
 	GetSiteSetting(ctx context.Context, in *GetSiteSettingReq, opts ...grpc.CallOption) (*GetSiteSettingRes, error)
 	GetAppNoticeList(ctx context.Context, in *GetNoticeListReq, opts ...grpc.CallOption) (*GetNoticeListRes, error)
 	GetAppAdList(ctx context.Context, in *GetAdListReq, opts ...grpc.CallOption) (*GetAdListRes, error)
+	GetSiteActivityList(ctx context.Context, in *GetSiteActivityListReq, opts ...grpc.CallOption) (*GetSiteActivityListRes, error)
 }
 
 type publicClient struct {
@@ -132,6 +134,16 @@ func (c *publicClient) GetAppAdList(ctx context.Context, in *GetAdListReq, opts 
 	return out, nil
 }
 
+func (c *publicClient) GetSiteActivityList(ctx context.Context, in *GetSiteActivityListReq, opts ...grpc.CallOption) (*GetSiteActivityListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSiteActivityListRes)
+	err := c.cc.Invoke(ctx, Public_GetSiteActivityList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PublicServer is the server API for Public service.
 // All implementations must embed UnimplementedPublicServer
 // for forward compatibility.
@@ -144,6 +156,7 @@ type PublicServer interface {
 	GetSiteSetting(context.Context, *GetSiteSettingReq) (*GetSiteSettingRes, error)
 	GetAppNoticeList(context.Context, *GetNoticeListReq) (*GetNoticeListRes, error)
 	GetAppAdList(context.Context, *GetAdListReq) (*GetAdListRes, error)
+	GetSiteActivityList(context.Context, *GetSiteActivityListReq) (*GetSiteActivityListRes, error)
 	mustEmbedUnimplementedPublicServer()
 }
 
@@ -177,6 +190,9 @@ func (UnimplementedPublicServer) GetAppNoticeList(context.Context, *GetNoticeLis
 }
 func (UnimplementedPublicServer) GetAppAdList(context.Context, *GetAdListReq) (*GetAdListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAppAdList not implemented")
+}
+func (UnimplementedPublicServer) GetSiteActivityList(context.Context, *GetSiteActivityListReq) (*GetSiteActivityListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSiteActivityList not implemented")
 }
 func (UnimplementedPublicServer) mustEmbedUnimplementedPublicServer() {}
 func (UnimplementedPublicServer) testEmbeddedByValue()                {}
@@ -343,6 +359,24 @@ func _Public_GetAppAdList_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Public_GetSiteActivityList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSiteActivityListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServer).GetSiteActivityList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Public_GetSiteActivityList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServer).GetSiteActivityList(ctx, req.(*GetSiteActivityListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Public_ServiceDesc is the grpc.ServiceDesc for Public service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -381,6 +415,10 @@ var Public_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAppAdList",
 			Handler:    _Public_GetAppAdList_Handler,
+		},
+		{
+			MethodName: "GetSiteActivityList",
+			Handler:    _Public_GetSiteActivityList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

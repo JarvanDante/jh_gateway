@@ -1544,6 +1544,269 @@ func (x *GetAdListRes) GetList() []*AdItem {
 	return nil
 }
 
+// 获取活动列表请求（前台）
+type GetSiteActivityListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID，可选"`              // 站点ID，可选
+	ActivityId    int32                  `protobuf:"varint,2,opt,name=activity_id,json=activityId,proto3" json:"activity_id" dc:"活动ID(可选)"` // 活动ID(可选)
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"活动编码(可选)"`                                // 活动编码(可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteActivityListReq) Reset() {
+	*x = GetSiteActivityListReq{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteActivityListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteActivityListReq) ProtoMessage() {}
+
+func (x *GetSiteActivityListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteActivityListReq.ProtoReflect.Descriptor instead.
+func (*GetSiteActivityListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetSiteActivityListReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *GetSiteActivityListReq) GetActivityId() int32 {
+	if x != nil {
+		return x.ActivityId
+	}
+	return 0
+}
+
+func (x *GetSiteActivityListReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+// 活动信息
+type SiteActivityInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	SiteCode      string                 `protobuf:"bytes,2,opt,name=site_code,json=siteCode,proto3" json:"site_code"`
+	ActivityId    int32                  `protobuf:"varint,3,opt,name=activity_id,json=activityId,proto3" json:"activity_id"`
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
+	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code"`
+	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description"`
+	StartTime     string                 `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time"`
+	EndTime       string                 `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time"`
+	FixedParams   string                 `protobuf:"bytes,9,opt,name=fixed_params,json=fixedParams,proto3" json:"fixed_params"`
+	Status        int32                  `protobuf:"varint,10,opt,name=status,proto3" json:"status"`
+	Sort          int32                  `protobuf:"varint,11,opt,name=sort,proto3" json:"sort"`
+	Table         string                 `protobuf:"bytes,12,opt,name=table,proto3" json:"table"`
+	CreatedAt     string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Uri           string                 `protobuf:"bytes,15,opt,name=uri,proto3" json:"uri"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SiteActivityInfo) Reset() {
+	*x = SiteActivityInfo{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SiteActivityInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SiteActivityInfo) ProtoMessage() {}
+
+func (x *SiteActivityInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SiteActivityInfo.ProtoReflect.Descriptor instead.
+func (*SiteActivityInfo) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *SiteActivityInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *SiteActivityInfo) GetSiteCode() string {
+	if x != nil {
+		return x.SiteCode
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetActivityId() int32 {
+	if x != nil {
+		return x.ActivityId
+	}
+	return 0
+}
+
+func (x *SiteActivityInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetFixedParams() string {
+	if x != nil {
+		return x.FixedParams
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *SiteActivityInfo) GetSort() int32 {
+	if x != nil {
+		return x.Sort
+	}
+	return 0
+}
+
+func (x *SiteActivityInfo) GetTable() string {
+	if x != nil {
+		return x.Table
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *SiteActivityInfo) GetUri() string {
+	if x != nil {
+		return x.Uri
+	}
+	return ""
+}
+
+// 获取活动列表响应
+type GetSiteActivityListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*SiteActivityInfo    `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSiteActivityListRes) Reset() {
+	*x = GetSiteActivityListRes{}
+	mi := &file_frontend_public_v1_public_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSiteActivityListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSiteActivityListRes) ProtoMessage() {}
+
+func (x *GetSiteActivityListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_public_v1_public_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSiteActivityListRes.ProtoReflect.Descriptor instead.
+func (*GetSiteActivityListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *GetSiteActivityListRes) GetList() []*SiteActivityInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
 // 广告项
 type AdItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1560,7 +1823,7 @@ type AdItem struct {
 
 func (x *AdItem) Reset() {
 	*x = AdItem{}
-	mi := &file_frontend_public_v1_public_proto_msgTypes[21]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1572,7 +1835,7 @@ func (x *AdItem) String() string {
 func (*AdItem) ProtoMessage() {}
 
 func (x *AdItem) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_public_v1_public_proto_msgTypes[21]
+	mi := &file_frontend_public_v1_public_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1585,7 +1848,7 @@ func (x *AdItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdItem.ProtoReflect.Descriptor instead.
 func (*AdItem) Descriptor() ([]byte, []int) {
-	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{21}
+	return file_frontend_public_v1_public_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *AdItem) GetName() string {
@@ -1776,7 +2039,35 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\fGetAdListReq\x12\x16\n" +
 	"\x06mobile\x18\x01 \x01(\x05R\x06mobile\"2\n" +
 	"\fGetAdListRes\x12\"\n" +
-	"\x04list\x18\x01 \x03(\v2\x0e.public.AdItemR\x04list\"\xab\x01\n" +
+	"\x04list\x18\x01 \x03(\v2\x0e.public.AdItemR\x04list\"f\n" +
+	"\x16GetSiteActivityListReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x1f\n" +
+	"\vactivity_id\x18\x02 \x01(\x05R\n" +
+	"activityId\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\"\x99\x03\n" +
+	"\x10SiteActivityInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1b\n" +
+	"\tsite_code\x18\x02 \x01(\tR\bsiteCode\x12\x1f\n" +
+	"\vactivity_id\x18\x03 \x01(\x05R\n" +
+	"activityId\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12\x12\n" +
+	"\x04code\x18\x05 \x01(\tR\x04code\x12 \n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\a \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\b \x01(\tR\aendTime\x12!\n" +
+	"\ffixed_params\x18\t \x01(\tR\vfixedParams\x12\x16\n" +
+	"\x06status\x18\n" +
+	" \x01(\x05R\x06status\x12\x12\n" +
+	"\x04sort\x18\v \x01(\x05R\x04sort\x12\x14\n" +
+	"\x05table\x18\f \x01(\tR\x05table\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\r \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x0e \x01(\tR\tupdatedAt\x12\x10\n" +
+	"\x03uri\x18\x0f \x01(\tR\x03uri\"F\n" +
+	"\x16GetSiteActivityListRes\x12,\n" +
+	"\x04list\x18\x01 \x03(\v2\x18.public.SiteActivityInfoR\x04list\"\xab\x01\n" +
 	"\x06AdItem\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
 	"\x05image\x18\x02 \x01(\tR\x05image\x12\x10\n" +
@@ -1784,7 +2075,7 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\x04type\x18\x04 \x01(\x05R\x04type\x12!\n" +
 	"\fbefore_login\x18\x05 \x01(\x05R\vbeforeLogin\x12\x1a\n" +
 	"\bposition\x18\x06 \x01(\x05R\bposition\x12\x12\n" +
-	"\x04sort\x18\a \x01(\x05R\x04sort2\x99\x04\n" +
+	"\x04sort\x18\a \x01(\x05R\x04sort2\xf2\x04\n" +
 	"\x06Public\x12E\n" +
 	"\rQuickRegister\x12\x18.public.QuickRegisterReq\x1a\x18.public.QuickRegisterRes\"\x00\x126\n" +
 	"\bRegister\x12\x13.public.RegisterReq\x1a\x13.public.RegisterRes\"\x00\x12-\n" +
@@ -1793,7 +2084,8 @@ const file_frontend_public_v1_public_proto_rawDesc = "" +
 	"\fRefreshToken\x12\x17.public.RefreshTokenReq\x1a\x17.public.RefreshTokenRes\"\x00\x12H\n" +
 	"\x0eGetSiteSetting\x12\x19.public.GetSiteSettingReq\x1a\x19.public.GetSiteSettingRes\"\x00\x12H\n" +
 	"\x10GetAppNoticeList\x12\x18.public.GetNoticeListReq\x1a\x18.public.GetNoticeListRes\"\x00\x12<\n" +
-	"\fGetAppAdList\x12\x14.public.GetAdListReq\x1a\x14.public.GetAdListRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
+	"\fGetAppAdList\x12\x14.public.GetAdListReq\x1a\x14.public.GetAdListRes\"\x00\x12W\n" +
+	"\x13GetSiteActivityList\x12\x1e.public.GetSiteActivityListReq\x1a\x1e.public.GetSiteActivityListRes\"\x00B'Z%jh_app_service/api/frontend/public/v1b\x06proto3"
 
 var (
 	file_frontend_public_v1_public_proto_rawDescOnce sync.Once
@@ -1807,58 +2099,64 @@ func file_frontend_public_v1_public_proto_rawDescGZIP() []byte {
 	return file_frontend_public_v1_public_proto_rawDescData
 }
 
-var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_frontend_public_v1_public_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_frontend_public_v1_public_proto_goTypes = []any{
-	(*QuickRegisterReq)(nil),   // 0: public.QuickRegisterReq
-	(*QuickRegisterRes)(nil),   // 1: public.QuickRegisterRes
-	(*LoginReq)(nil),           // 2: public.LoginReq
-	(*LoginRes)(nil),           // 3: public.LoginRes
-	(*GenerateCaptchaReq)(nil), // 4: public.GenerateCaptchaReq
-	(*GenerateCaptchaRes)(nil), // 5: public.GenerateCaptchaRes
-	(*RefreshTokenReq)(nil),    // 6: public.RefreshTokenReq
-	(*RefreshTokenRes)(nil),    // 7: public.RefreshTokenRes
-	(*RegisterReq)(nil),        // 8: public.RegisterReq
-	(*RegisterRes)(nil),        // 9: public.RegisterRes
-	(*GetUserInfoReq)(nil),     // 10: public.GetUserInfoReq
-	(*GetUserInfoRes)(nil),     // 11: public.GetUserInfoRes
-	(*LastRecord)(nil),         // 12: public.LastRecord
-	(*LastMessage)(nil),        // 13: public.LastMessage
-	(*GetSiteSettingReq)(nil),  // 14: public.GetSiteSettingReq
-	(*GetSiteSettingRes)(nil),  // 15: public.GetSiteSettingRes
-	(*GetNoticeListReq)(nil),   // 16: public.GetNoticeListReq
-	(*GetNoticeListRes)(nil),   // 17: public.GetNoticeListRes
-	(*NoticeItem)(nil),         // 18: public.NoticeItem
-	(*GetAdListReq)(nil),       // 19: public.GetAdListReq
-	(*GetAdListRes)(nil),       // 20: public.GetAdListRes
-	(*AdItem)(nil),             // 21: public.AdItem
+	(*QuickRegisterReq)(nil),       // 0: public.QuickRegisterReq
+	(*QuickRegisterRes)(nil),       // 1: public.QuickRegisterRes
+	(*LoginReq)(nil),               // 2: public.LoginReq
+	(*LoginRes)(nil),               // 3: public.LoginRes
+	(*GenerateCaptchaReq)(nil),     // 4: public.GenerateCaptchaReq
+	(*GenerateCaptchaRes)(nil),     // 5: public.GenerateCaptchaRes
+	(*RefreshTokenReq)(nil),        // 6: public.RefreshTokenReq
+	(*RefreshTokenRes)(nil),        // 7: public.RefreshTokenRes
+	(*RegisterReq)(nil),            // 8: public.RegisterReq
+	(*RegisterRes)(nil),            // 9: public.RegisterRes
+	(*GetUserInfoReq)(nil),         // 10: public.GetUserInfoReq
+	(*GetUserInfoRes)(nil),         // 11: public.GetUserInfoRes
+	(*LastRecord)(nil),             // 12: public.LastRecord
+	(*LastMessage)(nil),            // 13: public.LastMessage
+	(*GetSiteSettingReq)(nil),      // 14: public.GetSiteSettingReq
+	(*GetSiteSettingRes)(nil),      // 15: public.GetSiteSettingRes
+	(*GetNoticeListReq)(nil),       // 16: public.GetNoticeListReq
+	(*GetNoticeListRes)(nil),       // 17: public.GetNoticeListRes
+	(*NoticeItem)(nil),             // 18: public.NoticeItem
+	(*GetAdListReq)(nil),           // 19: public.GetAdListReq
+	(*GetAdListRes)(nil),           // 20: public.GetAdListRes
+	(*GetSiteActivityListReq)(nil), // 21: public.GetSiteActivityListReq
+	(*SiteActivityInfo)(nil),       // 22: public.SiteActivityInfo
+	(*GetSiteActivityListRes)(nil), // 23: public.GetSiteActivityListRes
+	(*AdItem)(nil),                 // 24: public.AdItem
 }
 var file_frontend_public_v1_public_proto_depIdxs = []int32{
 	12, // 0: public.GetUserInfoRes.last_recharge:type_name -> public.LastRecord
 	12, // 1: public.GetUserInfoRes.last_withdraw:type_name -> public.LastRecord
 	13, // 2: public.GetUserInfoRes.last_message:type_name -> public.LastMessage
 	18, // 3: public.GetNoticeListRes.list:type_name -> public.NoticeItem
-	21, // 4: public.GetAdListRes.list:type_name -> public.AdItem
-	0,  // 5: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
-	8,  // 6: public.Public.Register:input_type -> public.RegisterReq
-	2,  // 7: public.Public.Login:input_type -> public.LoginReq
-	4,  // 8: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
-	6,  // 9: public.Public.RefreshToken:input_type -> public.RefreshTokenReq
-	14, // 10: public.Public.GetSiteSetting:input_type -> public.GetSiteSettingReq
-	16, // 11: public.Public.GetAppNoticeList:input_type -> public.GetNoticeListReq
-	19, // 12: public.Public.GetAppAdList:input_type -> public.GetAdListReq
-	1,  // 13: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
-	9,  // 14: public.Public.Register:output_type -> public.RegisterRes
-	3,  // 15: public.Public.Login:output_type -> public.LoginRes
-	5,  // 16: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
-	7,  // 17: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
-	15, // 18: public.Public.GetSiteSetting:output_type -> public.GetSiteSettingRes
-	17, // 19: public.Public.GetAppNoticeList:output_type -> public.GetNoticeListRes
-	20, // 20: public.Public.GetAppAdList:output_type -> public.GetAdListRes
-	13, // [13:21] is the sub-list for method output_type
-	5,  // [5:13] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	24, // 4: public.GetAdListRes.list:type_name -> public.AdItem
+	22, // 5: public.GetSiteActivityListRes.list:type_name -> public.SiteActivityInfo
+	0,  // 6: public.Public.QuickRegister:input_type -> public.QuickRegisterReq
+	8,  // 7: public.Public.Register:input_type -> public.RegisterReq
+	2,  // 8: public.Public.Login:input_type -> public.LoginReq
+	4,  // 9: public.Public.GenerateCaptcha:input_type -> public.GenerateCaptchaReq
+	6,  // 10: public.Public.RefreshToken:input_type -> public.RefreshTokenReq
+	14, // 11: public.Public.GetSiteSetting:input_type -> public.GetSiteSettingReq
+	16, // 12: public.Public.GetAppNoticeList:input_type -> public.GetNoticeListReq
+	19, // 13: public.Public.GetAppAdList:input_type -> public.GetAdListReq
+	21, // 14: public.Public.GetSiteActivityList:input_type -> public.GetSiteActivityListReq
+	1,  // 15: public.Public.QuickRegister:output_type -> public.QuickRegisterRes
+	9,  // 16: public.Public.Register:output_type -> public.RegisterRes
+	3,  // 17: public.Public.Login:output_type -> public.LoginRes
+	5,  // 18: public.Public.GenerateCaptcha:output_type -> public.GenerateCaptchaRes
+	7,  // 19: public.Public.RefreshToken:output_type -> public.RefreshTokenRes
+	15, // 20: public.Public.GetSiteSetting:output_type -> public.GetSiteSettingRes
+	17, // 21: public.Public.GetAppNoticeList:output_type -> public.GetNoticeListRes
+	20, // 22: public.Public.GetAppAdList:output_type -> public.GetAdListRes
+	23, // 23: public.Public.GetSiteActivityList:output_type -> public.GetSiteActivityListRes
+	15, // [15:24] is the sub-list for method output_type
+	6,  // [6:15] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_frontend_public_v1_public_proto_init() }
@@ -1872,7 +2170,7 @@ func file_frontend_public_v1_public_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_public_v1_public_proto_rawDesc), len(file_frontend_public_v1_public_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

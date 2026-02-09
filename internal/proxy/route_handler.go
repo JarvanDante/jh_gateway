@@ -440,4 +440,6 @@ func initFrontendRoutes() {
 	frontendRoutes.Register("/ad-list", "GET", frontend.CallGetAppAdList)
 	// 获取站点设置
 	frontendRoutes.Register("/setting-site", "GET", frontend.CallGetSiteSetting)
+	// 获取活动列表（前台）
+	frontendRoutes.Register("/site-activity-list", "GET", frontend.CallGetSiteActivityList)
 }
