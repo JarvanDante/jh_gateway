@@ -3896,6 +3896,789 @@ func (x *WashCodeRebateRes) GetMaxBetId() uint64 {
 	return 0
 }
 
+// 大转盘奖项
+type LuckySpinPrizeItem struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	SegmentNo         int32                  `protobuf:"varint,1,opt,name=segment_no,json=segmentNo,proto3" json:"segment_no" dc:"扇区编号"`                                         // 扇区编号
+	PrizeName         string                 `protobuf:"bytes,2,opt,name=prize_name,json=prizeName,proto3" json:"prize_name" dc:"奖项名称"`                                          // 奖项名称
+	RewardAmount      float64                `protobuf:"fixed64,3,opt,name=reward_amount,json=rewardAmount,proto3" json:"reward_amount" dc:"奖励金额"`                               // 奖励金额
+	Weight            int32                  `protobuf:"varint,4,opt,name=weight,proto3" json:"weight" dc:"权重"`                                                                  // 权重
+	UserDailyWinLimit int32                  `protobuf:"varint,5,opt,name=user_daily_win_limit,json=userDailyWinLimit,proto3" json:"user_daily_win_limit" dc:"单用户当日中奖次数上限(0不限)"` // 单用户当日中奖次数上限(0不限)
+	MinVipLevel       int32                  `protobuf:"varint,6,opt,name=min_vip_level,json=minVipLevel,proto3" json:"min_vip_level" dc:"最低VIP等级要求"`                            // 最低VIP等级要求
+	Icon              string                 `protobuf:"bytes,7,opt,name=icon,proto3" json:"icon" dc:"奖项图标"`                                                                     // 奖项图标
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *LuckySpinPrizeItem) Reset() {
+	*x = LuckySpinPrizeItem{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[58]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckySpinPrizeItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckySpinPrizeItem) ProtoMessage() {}
+
+func (x *LuckySpinPrizeItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[58]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckySpinPrizeItem.ProtoReflect.Descriptor instead.
+func (*LuckySpinPrizeItem) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *LuckySpinPrizeItem) GetSegmentNo() int32 {
+	if x != nil {
+		return x.SegmentNo
+	}
+	return 0
+}
+
+func (x *LuckySpinPrizeItem) GetPrizeName() string {
+	if x != nil {
+		return x.PrizeName
+	}
+	return ""
+}
+
+func (x *LuckySpinPrizeItem) GetRewardAmount() float64 {
+	if x != nil {
+		return x.RewardAmount
+	}
+	return 0
+}
+
+func (x *LuckySpinPrizeItem) GetWeight() int32 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+func (x *LuckySpinPrizeItem) GetUserDailyWinLimit() int32 {
+	if x != nil {
+		return x.UserDailyWinLimit
+	}
+	return 0
+}
+
+func (x *LuckySpinPrizeItem) GetMinVipLevel() int32 {
+	if x != nil {
+		return x.MinVipLevel
+	}
+	return 0
+}
+
+func (x *LuckySpinPrizeItem) GetIcon() string {
+	if x != nil {
+		return x.Icon
+	}
+	return ""
+}
+
+// 获取大转盘活动信息请求
+type GetLuckySpinInfoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckySpinInfoReq) Reset() {
+	*x = GetLuckySpinInfoReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[59]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckySpinInfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckySpinInfoReq) ProtoMessage() {}
+
+func (x *GetLuckySpinInfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[59]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckySpinInfoReq.ProtoReflect.Descriptor instead.
+func (*GetLuckySpinInfoReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{59}
+}
+
+// 获取大转盘活动信息响应
+type GetLuckySpinInfoRes struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Success         bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                              // 是否成功
+	Message         string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                                 // 消息
+	Active          bool                   `protobuf:"varint,3,opt,name=active,proto3" json:"active" dc:"活动是否开启"`                                              // 活动是否开启
+	FreeSpinsPerDay int32                  `protobuf:"varint,4,opt,name=free_spins_per_day,json=freeSpinsPerDay,proto3" json:"free_spins_per_day" dc:"每日免费次数"` // 每日免费次数
+	FreeSpinsLeft   int32                  `protobuf:"varint,5,opt,name=free_spins_left,json=freeSpinsLeft,proto3" json:"free_spins_left" dc:"今日剩余免费次数"`       // 今日剩余免费次数
+	TodaySpinCount  int32                  `protobuf:"varint,6,opt,name=today_spin_count,json=todaySpinCount,proto3" json:"today_spin_count" dc:"今日已抽奖次数"`     // 今日已抽奖次数
+	JackpotAmount   float64                `protobuf:"fixed64,7,opt,name=jackpot_amount,json=jackpotAmount,proto3" json:"jackpot_amount" dc:"奖池展示金额"`          // 奖池展示金额
+	TotalWon        float64                `protobuf:"fixed64,8,opt,name=total_won,json=totalWon,proto3" json:"total_won" dc:"用户累计中奖金额"`                       // 用户累计中奖金额
+	PrizeList       []*LuckySpinPrizeItem  `protobuf:"bytes,9,rep,name=prize_list,json=prizeList,proto3" json:"prize_list" dc:"奖项列表"`                          // 奖项列表
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetLuckySpinInfoRes) Reset() {
+	*x = GetLuckySpinInfoRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckySpinInfoRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckySpinInfoRes) ProtoMessage() {}
+
+func (x *GetLuckySpinInfoRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[60]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckySpinInfoRes.ProtoReflect.Descriptor instead.
+func (*GetLuckySpinInfoRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *GetLuckySpinInfoRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetLuckySpinInfoRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetLuckySpinInfoRes) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+func (x *GetLuckySpinInfoRes) GetFreeSpinsPerDay() int32 {
+	if x != nil {
+		return x.FreeSpinsPerDay
+	}
+	return 0
+}
+
+func (x *GetLuckySpinInfoRes) GetFreeSpinsLeft() int32 {
+	if x != nil {
+		return x.FreeSpinsLeft
+	}
+	return 0
+}
+
+func (x *GetLuckySpinInfoRes) GetTodaySpinCount() int32 {
+	if x != nil {
+		return x.TodaySpinCount
+	}
+	return 0
+}
+
+func (x *GetLuckySpinInfoRes) GetJackpotAmount() float64 {
+	if x != nil {
+		return x.JackpotAmount
+	}
+	return 0
+}
+
+func (x *GetLuckySpinInfoRes) GetTotalWon() float64 {
+	if x != nil {
+		return x.TotalWon
+	}
+	return 0
+}
+
+func (x *GetLuckySpinInfoRes) GetPrizeList() []*LuckySpinPrizeItem {
+	if x != nil {
+		return x.PrizeList
+	}
+	return nil
+}
+
+// 执行大转盘抽奖请求
+type LuckySpinReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LuckySpinReq) Reset() {
+	*x = LuckySpinReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckySpinReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckySpinReq) ProtoMessage() {}
+
+func (x *LuckySpinReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckySpinReq.ProtoReflect.Descriptor instead.
+func (*LuckySpinReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{61}
+}
+
+// 执行大转盘抽奖响应
+type LuckySpinRes struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                          // 是否成功
+	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                             // 消息
+	TradeNo        string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                             // 流水号
+	SegmentNo      int32                  `protobuf:"varint,4,opt,name=segment_no,json=segmentNo,proto3" json:"segment_no" dc:"命中扇区"`                     // 命中扇区
+	PrizeName      string                 `protobuf:"bytes,5,opt,name=prize_name,json=prizeName,proto3" json:"prize_name" dc:"命中奖项名称"`                    // 命中奖项名称
+	RewardAmount   float64                `protobuf:"fixed64,6,opt,name=reward_amount,json=rewardAmount,proto3" json:"reward_amount" dc:"命中奖励金额"`         // 命中奖励金额
+	FreeSpinsLeft  int32                  `protobuf:"varint,7,opt,name=free_spins_left,json=freeSpinsLeft,proto3" json:"free_spins_left" dc:"今日剩余免费次数"`   // 今日剩余免费次数
+	TodaySpinCount int32                  `protobuf:"varint,8,opt,name=today_spin_count,json=todaySpinCount,proto3" json:"today_spin_count" dc:"今日已抽奖次数"` // 今日已抽奖次数
+	TotalWon       float64                `protobuf:"fixed64,9,opt,name=total_won,json=totalWon,proto3" json:"total_won" dc:"用户累计中奖金额"`                   // 用户累计中奖金额
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *LuckySpinRes) Reset() {
+	*x = LuckySpinRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckySpinRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckySpinRes) ProtoMessage() {}
+
+func (x *LuckySpinRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckySpinRes.ProtoReflect.Descriptor instead.
+func (*LuckySpinRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *LuckySpinRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *LuckySpinRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *LuckySpinRes) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *LuckySpinRes) GetSegmentNo() int32 {
+	if x != nil {
+		return x.SegmentNo
+	}
+	return 0
+}
+
+func (x *LuckySpinRes) GetPrizeName() string {
+	if x != nil {
+		return x.PrizeName
+	}
+	return ""
+}
+
+func (x *LuckySpinRes) GetRewardAmount() float64 {
+	if x != nil {
+		return x.RewardAmount
+	}
+	return 0
+}
+
+func (x *LuckySpinRes) GetFreeSpinsLeft() int32 {
+	if x != nil {
+		return x.FreeSpinsLeft
+	}
+	return 0
+}
+
+func (x *LuckySpinRes) GetTodaySpinCount() int32 {
+	if x != nil {
+		return x.TodaySpinCount
+	}
+	return 0
+}
+
+func (x *LuckySpinRes) GetTotalWon() float64 {
+	if x != nil {
+		return x.TotalWon
+	}
+	return 0
+}
+
+// 大转盘中奖记录项
+type LuckySpinRecordItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TradeNo       string                 `protobuf:"bytes,1,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号"`                   // 流水号
+	SegmentNo     int32                  `protobuf:"varint,2,opt,name=segment_no,json=segmentNo,proto3" json:"segment_no" dc:"命中扇区"`           // 命中扇区
+	PrizeName     string                 `protobuf:"bytes,3,opt,name=prize_name,json=prizeName,proto3" json:"prize_name" dc:"奖项名称"`            // 奖项名称
+	RewardAmount  float64                `protobuf:"fixed64,4,opt,name=reward_amount,json=rewardAmount,proto3" json:"reward_amount" dc:"奖励金额"` // 奖励金额
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"中奖时间"`            // 中奖时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LuckySpinRecordItem) Reset() {
+	*x = LuckySpinRecordItem{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[63]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckySpinRecordItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckySpinRecordItem) ProtoMessage() {}
+
+func (x *LuckySpinRecordItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[63]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckySpinRecordItem.ProtoReflect.Descriptor instead.
+func (*LuckySpinRecordItem) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *LuckySpinRecordItem) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *LuckySpinRecordItem) GetSegmentNo() int32 {
+	if x != nil {
+		return x.SegmentNo
+	}
+	return 0
+}
+
+func (x *LuckySpinRecordItem) GetPrizeName() string {
+	if x != nil {
+		return x.PrizeName
+	}
+	return ""
+}
+
+func (x *LuckySpinRecordItem) GetRewardAmount() float64 {
+	if x != nil {
+		return x.RewardAmount
+	}
+	return 0
+}
+
+func (x *LuckySpinRecordItem) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取我的大转盘中奖记录请求
+type GetLuckySpinRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page" dc:"页码"`   // 页码
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size" dc:"每页数量"` // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckySpinRecordsReq) Reset() {
+	*x = GetLuckySpinRecordsReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[64]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckySpinRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckySpinRecordsReq) ProtoMessage() {}
+
+func (x *GetLuckySpinRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[64]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckySpinRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetLuckySpinRecordsReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{64}
+}
+
+func (x *GetLuckySpinRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetLuckySpinRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 获取我的大转盘中奖记录响应
+type GetLuckySpinRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`    // 消息
+	List          []*LuckySpinRecordItem `protobuf:"bytes,3,rep,name=list,proto3" json:"list" dc:"记录列表"`        // 记录列表
+	Count         int32                  `protobuf:"varint,4,opt,name=count,proto3" json:"count" dc:"总记录数"`     // 总记录数
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"当前页码"`       // 当前页码
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`       // 每页数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckySpinRecordsRes) Reset() {
+	*x = GetLuckySpinRecordsRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[65]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckySpinRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckySpinRecordsRes) ProtoMessage() {}
+
+func (x *GetLuckySpinRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[65]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckySpinRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetLuckySpinRecordsRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *GetLuckySpinRecordsRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetLuckySpinRecordsRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetLuckySpinRecordsRes) GetList() []*LuckySpinRecordItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetLuckySpinRecordsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *GetLuckySpinRecordsRes) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetLuckySpinRecordsRes) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+// 大转盘最近中奖项
+type LuckySpinRecentWinnerItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                    // 用户ID
+	MaskName      string                 `protobuf:"bytes,2,opt,name=mask_name,json=maskName,proto3" json:"mask_name" dc:"脱敏用户名"`              // 脱敏用户名
+	PrizeName     string                 `protobuf:"bytes,3,opt,name=prize_name,json=prizeName,proto3" json:"prize_name" dc:"奖项名称"`            // 奖项名称
+	RewardAmount  float64                `protobuf:"fixed64,4,opt,name=reward_amount,json=rewardAmount,proto3" json:"reward_amount" dc:"奖励金额"` // 奖励金额
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"中奖时间"`            // 中奖时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LuckySpinRecentWinnerItem) Reset() {
+	*x = LuckySpinRecentWinnerItem{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[66]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckySpinRecentWinnerItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckySpinRecentWinnerItem) ProtoMessage() {}
+
+func (x *LuckySpinRecentWinnerItem) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[66]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckySpinRecentWinnerItem.ProtoReflect.Descriptor instead.
+func (*LuckySpinRecentWinnerItem) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *LuckySpinRecentWinnerItem) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *LuckySpinRecentWinnerItem) GetMaskName() string {
+	if x != nil {
+		return x.MaskName
+	}
+	return ""
+}
+
+func (x *LuckySpinRecentWinnerItem) GetPrizeName() string {
+	if x != nil {
+		return x.PrizeName
+	}
+	return ""
+}
+
+func (x *LuckySpinRecentWinnerItem) GetRewardAmount() float64 {
+	if x != nil {
+		return x.RewardAmount
+	}
+	return 0
+}
+
+func (x *LuckySpinRecentWinnerItem) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取大转盘最近中奖榜请求
+type GetLuckySpinRecentWinnersReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Limit         int32                  `protobuf:"varint,1,opt,name=limit,proto3" json:"limit" dc:"条数，默认20，最大100"` // 条数，默认20，最大100
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckySpinRecentWinnersReq) Reset() {
+	*x = GetLuckySpinRecentWinnersReq{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckySpinRecentWinnersReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckySpinRecentWinnersReq) ProtoMessage() {}
+
+func (x *GetLuckySpinRecentWinnersReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckySpinRecentWinnersReq.ProtoReflect.Descriptor instead.
+func (*GetLuckySpinRecentWinnersReq) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *GetLuckySpinRecentWinnersReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+// 获取大转盘最近中奖榜响应
+type GetLuckySpinRecentWinnersRes struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Success       bool                         `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"` // 是否成功
+	Message       string                       `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`    // 消息
+	List          []*LuckySpinRecentWinnerItem `protobuf:"bytes,3,rep,name=list,proto3" json:"list" dc:"最近中奖列表"`      // 最近中奖列表
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckySpinRecentWinnersRes) Reset() {
+	*x = GetLuckySpinRecentWinnersRes{}
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckySpinRecentWinnersRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckySpinRecentWinnersRes) ProtoMessage() {}
+
+func (x *GetLuckySpinRecentWinnersRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_balance_v1_balance_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckySpinRecentWinnersRes.ProtoReflect.Descriptor instead.
+func (*GetLuckySpinRecentWinnersRes) Descriptor() ([]byte, []int) {
+	return file_frontend_balance_v1_balance_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *GetLuckySpinRecentWinnersRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetLuckySpinRecentWinnersRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *GetLuckySpinRecentWinnersRes) GetList() []*LuckySpinRecentWinnerItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
 var File_frontend_balance_v1_balance_proto protoreflect.FileDescriptor
 
 const file_frontend_balance_v1_balance_proto_rawDesc = "" +
@@ -4205,7 +4988,75 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\n" +
 	"grade_name\x18\a \x01(\tR\tgradeName\x12\x1c\n" +
 	"\n" +
-	"max_bet_id\x18\b \x01(\x04R\bmaxBetId2\xcf\x14\n" +
+	"max_bet_id\x18\b \x01(\x04R\bmaxBetId\"\xf8\x01\n" +
+	"\x12LuckySpinPrizeItem\x12\x1d\n" +
+	"\n" +
+	"segment_no\x18\x01 \x01(\x05R\tsegmentNo\x12\x1d\n" +
+	"\n" +
+	"prize_name\x18\x02 \x01(\tR\tprizeName\x12#\n" +
+	"\rreward_amount\x18\x03 \x01(\x01R\frewardAmount\x12\x16\n" +
+	"\x06weight\x18\x04 \x01(\x05R\x06weight\x12/\n" +
+	"\x14user_daily_win_limit\x18\x05 \x01(\x05R\x11userDailyWinLimit\x12\"\n" +
+	"\rmin_vip_level\x18\x06 \x01(\x05R\vminVipLevel\x12\x12\n" +
+	"\x04icon\x18\a \x01(\tR\x04icon\"\x15\n" +
+	"\x13GetLuckySpinInfoReq\"\xe9\x02\n" +
+	"\x13GetLuckySpinInfoRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x16\n" +
+	"\x06active\x18\x03 \x01(\bR\x06active\x12+\n" +
+	"\x12free_spins_per_day\x18\x04 \x01(\x05R\x0ffreeSpinsPerDay\x12&\n" +
+	"\x0ffree_spins_left\x18\x05 \x01(\x05R\rfreeSpinsLeft\x12(\n" +
+	"\x10today_spin_count\x18\x06 \x01(\x05R\x0etodaySpinCount\x12%\n" +
+	"\x0ejackpot_amount\x18\a \x01(\x01R\rjackpotAmount\x12\x1b\n" +
+	"\ttotal_won\x18\b \x01(\x01R\btotalWon\x12C\n" +
+	"\n" +
+	"prize_list\x18\t \x03(\v2$.frontend_balance.LuckySpinPrizeItemR\tprizeList\"\x0e\n" +
+	"\fLuckySpinReq\"\xaf\x02\n" +
+	"\fLuckySpinRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"segment_no\x18\x04 \x01(\x05R\tsegmentNo\x12\x1d\n" +
+	"\n" +
+	"prize_name\x18\x05 \x01(\tR\tprizeName\x12#\n" +
+	"\rreward_amount\x18\x06 \x01(\x01R\frewardAmount\x12&\n" +
+	"\x0ffree_spins_left\x18\a \x01(\x05R\rfreeSpinsLeft\x12(\n" +
+	"\x10today_spin_count\x18\b \x01(\x05R\x0etodaySpinCount\x12\x1b\n" +
+	"\ttotal_won\x18\t \x01(\x01R\btotalWon\"\xb2\x01\n" +
+	"\x13LuckySpinRecordItem\x12\x19\n" +
+	"\btrade_no\x18\x01 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"segment_no\x18\x02 \x01(\x05R\tsegmentNo\x12\x1d\n" +
+	"\n" +
+	"prize_name\x18\x03 \x01(\tR\tprizeName\x12#\n" +
+	"\rreward_amount\x18\x04 \x01(\x01R\frewardAmount\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\tR\tcreatedAt\"@\n" +
+	"\x16GetLuckySpinRecordsReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"\xc5\x01\n" +
+	"\x16GetLuckySpinRecordsRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x129\n" +
+	"\x04list\x18\x03 \x03(\v2%.frontend_balance.LuckySpinRecordItemR\x04list\x12\x14\n" +
+	"\x05count\x18\x04 \x01(\x05R\x05count\x12\x12\n" +
+	"\x04page\x18\x05 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x06 \x01(\x05R\x04size\"\xb4\x01\n" +
+	"\x19LuckySpinRecentWinnerItem\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1b\n" +
+	"\tmask_name\x18\x02 \x01(\tR\bmaskName\x12\x1d\n" +
+	"\n" +
+	"prize_name\x18\x03 \x01(\tR\tprizeName\x12#\n" +
+	"\rreward_amount\x18\x04 \x01(\x01R\frewardAmount\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\tR\tcreatedAt\"4\n" +
+	"\x1cGetLuckySpinRecentWinnersReq\x12\x14\n" +
+	"\x05limit\x18\x01 \x01(\x05R\x05limit\"\x93\x01\n" +
+	"\x1cGetLuckySpinRecentWinnersRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12?\n" +
+	"\x04list\x18\x03 \x03(\v2+.frontend_balance.LuckySpinRecentWinnerItemR\x04list2\xee\x17\n" +
 	"\aBalance\x12_\n" +
 	"\x0fInitBalanceUser\x12$.frontend_balance.InitBalanceUserReq\x1a$.frontend_balance.InitBalanceUserRes\"\x00\x12\\\n" +
 	"\x0eRefreshBalance\x12#.frontend_balance.RefreshBalanceReq\x1a#.frontend_balance.RefreshBalanceRes\"\x00\x12Y\n" +
@@ -4232,7 +5083,11 @@ const file_frontend_balance_v1_balance_proto_rawDesc = "" +
 	"\x15GetVipUpgradeProgress\x12*.frontend_balance.GetVipUpgradeProgressReq\x1a*.frontend_balance.GetVipUpgradeProgressRes\"\x00\x12q\n" +
 	"\x15GetSigninActivityInfo\x12*.frontend_balance.GetSigninActivityInfoReq\x1a*.frontend_balance.GetSigninActivityInfoRes\"\x00\x12e\n" +
 	"\x11ClaimSigninReward\x12&.frontend_balance.ClaimSigninRewardReq\x1a&.frontend_balance.ClaimSigninRewardRes\"\x00\x12\\\n" +
-	"\x0eWashCodeRebate\x12#.frontend_balance.WashCodeRebateReq\x1a#.frontend_balance.WashCodeRebateRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
+	"\x0eWashCodeRebate\x12#.frontend_balance.WashCodeRebateReq\x1a#.frontend_balance.WashCodeRebateRes\"\x00\x12b\n" +
+	"\x10GetLuckySpinInfo\x12%.frontend_balance.GetLuckySpinInfoReq\x1a%.frontend_balance.GetLuckySpinInfoRes\"\x00\x12M\n" +
+	"\tLuckySpin\x12\x1e.frontend_balance.LuckySpinReq\x1a\x1e.frontend_balance.LuckySpinRes\"\x00\x12k\n" +
+	"\x13GetLuckySpinRecords\x12(.frontend_balance.GetLuckySpinRecordsReq\x1a(.frontend_balance.GetLuckySpinRecordsRes\"\x00\x12}\n" +
+	"\x19GetLuckySpinRecentWinners\x12..frontend_balance.GetLuckySpinRecentWinnersReq\x1a..frontend_balance.GetLuckySpinRecentWinnersRes\"\x00B,Z*jh_balance_service/api/frontend/balance/v1b\x06proto3"
 
 var (
 	file_frontend_balance_v1_balance_proto_rawDescOnce sync.Once
@@ -4246,66 +5101,77 @@ func file_frontend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_frontend_balance_v1_balance_proto_rawDescData
 }
 
-var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 58)
+var file_frontend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 69)
 var file_frontend_balance_v1_balance_proto_goTypes = []any{
-	(*InitBalanceUserReq)(nil),         // 0: frontend_balance.InitBalanceUserReq
-	(*InitBalanceUserRes)(nil),         // 1: frontend_balance.InitBalanceUserRes
-	(*RefreshBalanceReq)(nil),          // 2: frontend_balance.RefreshBalanceReq
-	(*RefreshBalanceRes)(nil),          // 3: frontend_balance.RefreshBalanceRes
-	(*AdjustBalanceReq)(nil),           // 4: frontend_balance.AdjustBalanceReq
-	(*AdjustBalanceRes)(nil),           // 5: frontend_balance.AdjustBalanceRes
-	(*UpdateTransferStatusReq)(nil),    // 6: frontend_balance.UpdateTransferStatusReq
-	(*UpdateTransferStatusRes)(nil),    // 7: frontend_balance.UpdateTransferStatusRes
-	(*CompensateBalanceReq)(nil),       // 8: frontend_balance.CompensateBalanceReq
-	(*CompensateBalanceRes)(nil),       // 9: frontend_balance.CompensateBalanceRes
-	(*GetLastBalanceLogGameReq)(nil),   // 10: frontend_balance.GetLastBalanceLogGameReq
-	(*GetLastBalanceLogGameRes)(nil),   // 11: frontend_balance.GetLastBalanceLogGameRes
-	(*GetPaymentListReq)(nil),          // 12: frontend_balance.GetPaymentListReq
-	(*PaymentInfo)(nil),                // 13: frontend_balance.PaymentInfo
-	(*GetPaymentListRes)(nil),          // 14: frontend_balance.GetPaymentListRes
-	(*GetWithdrawListReq)(nil),         // 15: frontend_balance.GetWithdrawListReq
-	(*WithdrawInfo)(nil),               // 16: frontend_balance.WithdrawInfo
-	(*GetWithdrawListRes)(nil),         // 17: frontend_balance.GetWithdrawListRes
-	(*AddBankCardReq)(nil),             // 18: frontend_balance.AddBankCardReq
-	(*AddBankCardRes)(nil),             // 19: frontend_balance.AddBankCardRes
-	(*GetBankCardListReq)(nil),         // 20: frontend_balance.GetBankCardListReq
-	(*BankCardInfo)(nil),               // 21: frontend_balance.BankCardInfo
-	(*GetBankCardListRes)(nil),         // 22: frontend_balance.GetBankCardListRes
-	(*DeleteBankCardReq)(nil),          // 23: frontend_balance.DeleteBankCardReq
-	(*DeleteBankCardRes)(nil),          // 24: frontend_balance.DeleteBankCardRes
-	(*SetDefaultBankCardReq)(nil),      // 25: frontend_balance.SetDefaultBankCardReq
-	(*SetDefaultBankCardRes)(nil),      // 26: frontend_balance.SetDefaultBankCardRes
-	(*GetDepositNonceReq)(nil),         // 27: frontend_balance.GetDepositNonceReq
-	(*GetDepositNonceRes)(nil),         // 28: frontend_balance.GetDepositNonceRes
-	(*GetWithdrawNonceReq)(nil),        // 29: frontend_balance.GetWithdrawNonceReq
-	(*GetWithdrawNonceRes)(nil),        // 30: frontend_balance.GetWithdrawNonceRes
-	(*CreateDepositOrderReq)(nil),      // 31: frontend_balance.CreateDepositOrderReq
-	(*CreateDepositOrderRes)(nil),      // 32: frontend_balance.CreateDepositOrderRes
-	(*GetBalanceLogReq)(nil),           // 33: frontend_balance.GetBalanceLogReq
-	(*BalanceLogItem)(nil),             // 34: frontend_balance.BalanceLogItem
-	(*GetBalanceLogRes)(nil),           // 35: frontend_balance.GetBalanceLogRes
-	(*GetUserFlowRequirementsReq)(nil), // 36: frontend_balance.GetUserFlowRequirementsReq
-	(*UserFlowRequirementInfo)(nil),    // 37: frontend_balance.UserFlowRequirementInfo
-	(*GetUserFlowRequirementsRes)(nil), // 38: frontend_balance.GetUserFlowRequirementsRes
-	(*DepositCallbackReq)(nil),         // 39: frontend_balance.DepositCallbackReq
-	(*DepositCallbackRes)(nil),         // 40: frontend_balance.DepositCallbackRes
-	(*WithdrawReq)(nil),                // 41: frontend_balance.WithdrawReq
-	(*WithdrawRes)(nil),                // 42: frontend_balance.WithdrawRes
-	(*GrantInviteBonusReq)(nil),        // 43: frontend_balance.GrantInviteBonusReq
-	(*GrantInviteBonusRes)(nil),        // 44: frontend_balance.GrantInviteBonusRes
-	(*GetInviteBonusSummaryReq)(nil),   // 45: frontend_balance.GetInviteBonusSummaryReq
-	(*GetInviteBonusSummaryRes)(nil),   // 46: frontend_balance.GetInviteBonusSummaryRes
-	(*GetValidReferralCountReq)(nil),   // 47: frontend_balance.GetValidReferralCountReq
-	(*GetValidReferralCountRes)(nil),   // 48: frontend_balance.GetValidReferralCountRes
-	(*GetVipUpgradeProgressReq)(nil),   // 49: frontend_balance.GetVipUpgradeProgressReq
-	(*GetVipUpgradeProgressRes)(nil),   // 50: frontend_balance.GetVipUpgradeProgressRes
-	(*SigninDayInfo)(nil),              // 51: frontend_balance.SigninDayInfo
-	(*GetSigninActivityInfoReq)(nil),   // 52: frontend_balance.GetSigninActivityInfoReq
-	(*GetSigninActivityInfoRes)(nil),   // 53: frontend_balance.GetSigninActivityInfoRes
-	(*ClaimSigninRewardReq)(nil),       // 54: frontend_balance.ClaimSigninRewardReq
-	(*ClaimSigninRewardRes)(nil),       // 55: frontend_balance.ClaimSigninRewardRes
-	(*WashCodeRebateReq)(nil),          // 56: frontend_balance.WashCodeRebateReq
-	(*WashCodeRebateRes)(nil),          // 57: frontend_balance.WashCodeRebateRes
+	(*InitBalanceUserReq)(nil),           // 0: frontend_balance.InitBalanceUserReq
+	(*InitBalanceUserRes)(nil),           // 1: frontend_balance.InitBalanceUserRes
+	(*RefreshBalanceReq)(nil),            // 2: frontend_balance.RefreshBalanceReq
+	(*RefreshBalanceRes)(nil),            // 3: frontend_balance.RefreshBalanceRes
+	(*AdjustBalanceReq)(nil),             // 4: frontend_balance.AdjustBalanceReq
+	(*AdjustBalanceRes)(nil),             // 5: frontend_balance.AdjustBalanceRes
+	(*UpdateTransferStatusReq)(nil),      // 6: frontend_balance.UpdateTransferStatusReq
+	(*UpdateTransferStatusRes)(nil),      // 7: frontend_balance.UpdateTransferStatusRes
+	(*CompensateBalanceReq)(nil),         // 8: frontend_balance.CompensateBalanceReq
+	(*CompensateBalanceRes)(nil),         // 9: frontend_balance.CompensateBalanceRes
+	(*GetLastBalanceLogGameReq)(nil),     // 10: frontend_balance.GetLastBalanceLogGameReq
+	(*GetLastBalanceLogGameRes)(nil),     // 11: frontend_balance.GetLastBalanceLogGameRes
+	(*GetPaymentListReq)(nil),            // 12: frontend_balance.GetPaymentListReq
+	(*PaymentInfo)(nil),                  // 13: frontend_balance.PaymentInfo
+	(*GetPaymentListRes)(nil),            // 14: frontend_balance.GetPaymentListRes
+	(*GetWithdrawListReq)(nil),           // 15: frontend_balance.GetWithdrawListReq
+	(*WithdrawInfo)(nil),                 // 16: frontend_balance.WithdrawInfo
+	(*GetWithdrawListRes)(nil),           // 17: frontend_balance.GetWithdrawListRes
+	(*AddBankCardReq)(nil),               // 18: frontend_balance.AddBankCardReq
+	(*AddBankCardRes)(nil),               // 19: frontend_balance.AddBankCardRes
+	(*GetBankCardListReq)(nil),           // 20: frontend_balance.GetBankCardListReq
+	(*BankCardInfo)(nil),                 // 21: frontend_balance.BankCardInfo
+	(*GetBankCardListRes)(nil),           // 22: frontend_balance.GetBankCardListRes
+	(*DeleteBankCardReq)(nil),            // 23: frontend_balance.DeleteBankCardReq
+	(*DeleteBankCardRes)(nil),            // 24: frontend_balance.DeleteBankCardRes
+	(*SetDefaultBankCardReq)(nil),        // 25: frontend_balance.SetDefaultBankCardReq
+	(*SetDefaultBankCardRes)(nil),        // 26: frontend_balance.SetDefaultBankCardRes
+	(*GetDepositNonceReq)(nil),           // 27: frontend_balance.GetDepositNonceReq
+	(*GetDepositNonceRes)(nil),           // 28: frontend_balance.GetDepositNonceRes
+	(*GetWithdrawNonceReq)(nil),          // 29: frontend_balance.GetWithdrawNonceReq
+	(*GetWithdrawNonceRes)(nil),          // 30: frontend_balance.GetWithdrawNonceRes
+	(*CreateDepositOrderReq)(nil),        // 31: frontend_balance.CreateDepositOrderReq
+	(*CreateDepositOrderRes)(nil),        // 32: frontend_balance.CreateDepositOrderRes
+	(*GetBalanceLogReq)(nil),             // 33: frontend_balance.GetBalanceLogReq
+	(*BalanceLogItem)(nil),               // 34: frontend_balance.BalanceLogItem
+	(*GetBalanceLogRes)(nil),             // 35: frontend_balance.GetBalanceLogRes
+	(*GetUserFlowRequirementsReq)(nil),   // 36: frontend_balance.GetUserFlowRequirementsReq
+	(*UserFlowRequirementInfo)(nil),      // 37: frontend_balance.UserFlowRequirementInfo
+	(*GetUserFlowRequirementsRes)(nil),   // 38: frontend_balance.GetUserFlowRequirementsRes
+	(*DepositCallbackReq)(nil),           // 39: frontend_balance.DepositCallbackReq
+	(*DepositCallbackRes)(nil),           // 40: frontend_balance.DepositCallbackRes
+	(*WithdrawReq)(nil),                  // 41: frontend_balance.WithdrawReq
+	(*WithdrawRes)(nil),                  // 42: frontend_balance.WithdrawRes
+	(*GrantInviteBonusReq)(nil),          // 43: frontend_balance.GrantInviteBonusReq
+	(*GrantInviteBonusRes)(nil),          // 44: frontend_balance.GrantInviteBonusRes
+	(*GetInviteBonusSummaryReq)(nil),     // 45: frontend_balance.GetInviteBonusSummaryReq
+	(*GetInviteBonusSummaryRes)(nil),     // 46: frontend_balance.GetInviteBonusSummaryRes
+	(*GetValidReferralCountReq)(nil),     // 47: frontend_balance.GetValidReferralCountReq
+	(*GetValidReferralCountRes)(nil),     // 48: frontend_balance.GetValidReferralCountRes
+	(*GetVipUpgradeProgressReq)(nil),     // 49: frontend_balance.GetVipUpgradeProgressReq
+	(*GetVipUpgradeProgressRes)(nil),     // 50: frontend_balance.GetVipUpgradeProgressRes
+	(*SigninDayInfo)(nil),                // 51: frontend_balance.SigninDayInfo
+	(*GetSigninActivityInfoReq)(nil),     // 52: frontend_balance.GetSigninActivityInfoReq
+	(*GetSigninActivityInfoRes)(nil),     // 53: frontend_balance.GetSigninActivityInfoRes
+	(*ClaimSigninRewardReq)(nil),         // 54: frontend_balance.ClaimSigninRewardReq
+	(*ClaimSigninRewardRes)(nil),         // 55: frontend_balance.ClaimSigninRewardRes
+	(*WashCodeRebateReq)(nil),            // 56: frontend_balance.WashCodeRebateReq
+	(*WashCodeRebateRes)(nil),            // 57: frontend_balance.WashCodeRebateRes
+	(*LuckySpinPrizeItem)(nil),           // 58: frontend_balance.LuckySpinPrizeItem
+	(*GetLuckySpinInfoReq)(nil),          // 59: frontend_balance.GetLuckySpinInfoReq
+	(*GetLuckySpinInfoRes)(nil),          // 60: frontend_balance.GetLuckySpinInfoRes
+	(*LuckySpinReq)(nil),                 // 61: frontend_balance.LuckySpinReq
+	(*LuckySpinRes)(nil),                 // 62: frontend_balance.LuckySpinRes
+	(*LuckySpinRecordItem)(nil),          // 63: frontend_balance.LuckySpinRecordItem
+	(*GetLuckySpinRecordsReq)(nil),       // 64: frontend_balance.GetLuckySpinRecordsReq
+	(*GetLuckySpinRecordsRes)(nil),       // 65: frontend_balance.GetLuckySpinRecordsRes
+	(*LuckySpinRecentWinnerItem)(nil),    // 66: frontend_balance.LuckySpinRecentWinnerItem
+	(*GetLuckySpinRecentWinnersReq)(nil), // 67: frontend_balance.GetLuckySpinRecentWinnersReq
+	(*GetLuckySpinRecentWinnersRes)(nil), // 68: frontend_balance.GetLuckySpinRecentWinnersRes
 }
 var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	13, // 0: frontend_balance.GetPaymentListRes.list:type_name -> frontend_balance.PaymentInfo
@@ -4314,63 +5180,74 @@ var file_frontend_balance_v1_balance_proto_depIdxs = []int32{
 	34, // 3: frontend_balance.GetBalanceLogRes.list:type_name -> frontend_balance.BalanceLogItem
 	37, // 4: frontend_balance.GetUserFlowRequirementsRes.list:type_name -> frontend_balance.UserFlowRequirementInfo
 	51, // 5: frontend_balance.GetSigninActivityInfoRes.day_list:type_name -> frontend_balance.SigninDayInfo
-	0,  // 6: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
-	2,  // 7: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
-	4,  // 8: frontend_balance.Balance.AdjustBalance:input_type -> frontend_balance.AdjustBalanceReq
-	6,  // 9: frontend_balance.Balance.UpdateTransferStatus:input_type -> frontend_balance.UpdateTransferStatusReq
-	8,  // 10: frontend_balance.Balance.CompensateBalance:input_type -> frontend_balance.CompensateBalanceReq
-	10, // 11: frontend_balance.Balance.GetLastBalanceLogGame:input_type -> frontend_balance.GetLastBalanceLogGameReq
-	12, // 12: frontend_balance.Balance.GetPaymentList:input_type -> frontend_balance.GetPaymentListReq
-	15, // 13: frontend_balance.Balance.GetWithdrawList:input_type -> frontend_balance.GetWithdrawListReq
-	18, // 14: frontend_balance.Balance.AddBankCard:input_type -> frontend_balance.AddBankCardReq
-	20, // 15: frontend_balance.Balance.GetBankCardList:input_type -> frontend_balance.GetBankCardListReq
-	23, // 16: frontend_balance.Balance.DeleteBankCard:input_type -> frontend_balance.DeleteBankCardReq
-	25, // 17: frontend_balance.Balance.SetDefaultBankCard:input_type -> frontend_balance.SetDefaultBankCardReq
-	27, // 18: frontend_balance.Balance.GetDepositNonce:input_type -> frontend_balance.GetDepositNonceReq
-	29, // 19: frontend_balance.Balance.GetWithdrawNonce:input_type -> frontend_balance.GetWithdrawNonceReq
-	31, // 20: frontend_balance.Balance.CreateDepositOrder:input_type -> frontend_balance.CreateDepositOrderReq
-	33, // 21: frontend_balance.Balance.GetBalanceLog:input_type -> frontend_balance.GetBalanceLogReq
-	36, // 22: frontend_balance.Balance.GetUserFlowRequirements:input_type -> frontend_balance.GetUserFlowRequirementsReq
-	39, // 23: frontend_balance.Balance.DepositCallback:input_type -> frontend_balance.DepositCallbackReq
-	41, // 24: frontend_balance.Balance.Withdraw:input_type -> frontend_balance.WithdrawReq
-	43, // 25: frontend_balance.Balance.GrantInviteBonus:input_type -> frontend_balance.GrantInviteBonusReq
-	45, // 26: frontend_balance.Balance.GetInviteBonusSummary:input_type -> frontend_balance.GetInviteBonusSummaryReq
-	47, // 27: frontend_balance.Balance.GetValidReferralCount:input_type -> frontend_balance.GetValidReferralCountReq
-	49, // 28: frontend_balance.Balance.GetVipUpgradeProgress:input_type -> frontend_balance.GetVipUpgradeProgressReq
-	52, // 29: frontend_balance.Balance.GetSigninActivityInfo:input_type -> frontend_balance.GetSigninActivityInfoReq
-	54, // 30: frontend_balance.Balance.ClaimSigninReward:input_type -> frontend_balance.ClaimSigninRewardReq
-	56, // 31: frontend_balance.Balance.WashCodeRebate:input_type -> frontend_balance.WashCodeRebateReq
-	1,  // 32: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
-	3,  // 33: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
-	5,  // 34: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
-	7,  // 35: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
-	9,  // 36: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
-	11, // 37: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
-	14, // 38: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
-	17, // 39: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
-	19, // 40: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
-	22, // 41: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
-	24, // 42: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
-	26, // 43: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
-	28, // 44: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
-	30, // 45: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
-	32, // 46: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
-	35, // 47: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
-	38, // 48: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
-	40, // 49: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
-	42, // 50: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
-	44, // 51: frontend_balance.Balance.GrantInviteBonus:output_type -> frontend_balance.GrantInviteBonusRes
-	46, // 52: frontend_balance.Balance.GetInviteBonusSummary:output_type -> frontend_balance.GetInviteBonusSummaryRes
-	48, // 53: frontend_balance.Balance.GetValidReferralCount:output_type -> frontend_balance.GetValidReferralCountRes
-	50, // 54: frontend_balance.Balance.GetVipUpgradeProgress:output_type -> frontend_balance.GetVipUpgradeProgressRes
-	53, // 55: frontend_balance.Balance.GetSigninActivityInfo:output_type -> frontend_balance.GetSigninActivityInfoRes
-	55, // 56: frontend_balance.Balance.ClaimSigninReward:output_type -> frontend_balance.ClaimSigninRewardRes
-	57, // 57: frontend_balance.Balance.WashCodeRebate:output_type -> frontend_balance.WashCodeRebateRes
-	32, // [32:58] is the sub-list for method output_type
-	6,  // [6:32] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	58, // 6: frontend_balance.GetLuckySpinInfoRes.prize_list:type_name -> frontend_balance.LuckySpinPrizeItem
+	63, // 7: frontend_balance.GetLuckySpinRecordsRes.list:type_name -> frontend_balance.LuckySpinRecordItem
+	66, // 8: frontend_balance.GetLuckySpinRecentWinnersRes.list:type_name -> frontend_balance.LuckySpinRecentWinnerItem
+	0,  // 9: frontend_balance.Balance.InitBalanceUser:input_type -> frontend_balance.InitBalanceUserReq
+	2,  // 10: frontend_balance.Balance.RefreshBalance:input_type -> frontend_balance.RefreshBalanceReq
+	4,  // 11: frontend_balance.Balance.AdjustBalance:input_type -> frontend_balance.AdjustBalanceReq
+	6,  // 12: frontend_balance.Balance.UpdateTransferStatus:input_type -> frontend_balance.UpdateTransferStatusReq
+	8,  // 13: frontend_balance.Balance.CompensateBalance:input_type -> frontend_balance.CompensateBalanceReq
+	10, // 14: frontend_balance.Balance.GetLastBalanceLogGame:input_type -> frontend_balance.GetLastBalanceLogGameReq
+	12, // 15: frontend_balance.Balance.GetPaymentList:input_type -> frontend_balance.GetPaymentListReq
+	15, // 16: frontend_balance.Balance.GetWithdrawList:input_type -> frontend_balance.GetWithdrawListReq
+	18, // 17: frontend_balance.Balance.AddBankCard:input_type -> frontend_balance.AddBankCardReq
+	20, // 18: frontend_balance.Balance.GetBankCardList:input_type -> frontend_balance.GetBankCardListReq
+	23, // 19: frontend_balance.Balance.DeleteBankCard:input_type -> frontend_balance.DeleteBankCardReq
+	25, // 20: frontend_balance.Balance.SetDefaultBankCard:input_type -> frontend_balance.SetDefaultBankCardReq
+	27, // 21: frontend_balance.Balance.GetDepositNonce:input_type -> frontend_balance.GetDepositNonceReq
+	29, // 22: frontend_balance.Balance.GetWithdrawNonce:input_type -> frontend_balance.GetWithdrawNonceReq
+	31, // 23: frontend_balance.Balance.CreateDepositOrder:input_type -> frontend_balance.CreateDepositOrderReq
+	33, // 24: frontend_balance.Balance.GetBalanceLog:input_type -> frontend_balance.GetBalanceLogReq
+	36, // 25: frontend_balance.Balance.GetUserFlowRequirements:input_type -> frontend_balance.GetUserFlowRequirementsReq
+	39, // 26: frontend_balance.Balance.DepositCallback:input_type -> frontend_balance.DepositCallbackReq
+	41, // 27: frontend_balance.Balance.Withdraw:input_type -> frontend_balance.WithdrawReq
+	43, // 28: frontend_balance.Balance.GrantInviteBonus:input_type -> frontend_balance.GrantInviteBonusReq
+	45, // 29: frontend_balance.Balance.GetInviteBonusSummary:input_type -> frontend_balance.GetInviteBonusSummaryReq
+	47, // 30: frontend_balance.Balance.GetValidReferralCount:input_type -> frontend_balance.GetValidReferralCountReq
+	49, // 31: frontend_balance.Balance.GetVipUpgradeProgress:input_type -> frontend_balance.GetVipUpgradeProgressReq
+	52, // 32: frontend_balance.Balance.GetSigninActivityInfo:input_type -> frontend_balance.GetSigninActivityInfoReq
+	54, // 33: frontend_balance.Balance.ClaimSigninReward:input_type -> frontend_balance.ClaimSigninRewardReq
+	56, // 34: frontend_balance.Balance.WashCodeRebate:input_type -> frontend_balance.WashCodeRebateReq
+	59, // 35: frontend_balance.Balance.GetLuckySpinInfo:input_type -> frontend_balance.GetLuckySpinInfoReq
+	61, // 36: frontend_balance.Balance.LuckySpin:input_type -> frontend_balance.LuckySpinReq
+	64, // 37: frontend_balance.Balance.GetLuckySpinRecords:input_type -> frontend_balance.GetLuckySpinRecordsReq
+	67, // 38: frontend_balance.Balance.GetLuckySpinRecentWinners:input_type -> frontend_balance.GetLuckySpinRecentWinnersReq
+	1,  // 39: frontend_balance.Balance.InitBalanceUser:output_type -> frontend_balance.InitBalanceUserRes
+	3,  // 40: frontend_balance.Balance.RefreshBalance:output_type -> frontend_balance.RefreshBalanceRes
+	5,  // 41: frontend_balance.Balance.AdjustBalance:output_type -> frontend_balance.AdjustBalanceRes
+	7,  // 42: frontend_balance.Balance.UpdateTransferStatus:output_type -> frontend_balance.UpdateTransferStatusRes
+	9,  // 43: frontend_balance.Balance.CompensateBalance:output_type -> frontend_balance.CompensateBalanceRes
+	11, // 44: frontend_balance.Balance.GetLastBalanceLogGame:output_type -> frontend_balance.GetLastBalanceLogGameRes
+	14, // 45: frontend_balance.Balance.GetPaymentList:output_type -> frontend_balance.GetPaymentListRes
+	17, // 46: frontend_balance.Balance.GetWithdrawList:output_type -> frontend_balance.GetWithdrawListRes
+	19, // 47: frontend_balance.Balance.AddBankCard:output_type -> frontend_balance.AddBankCardRes
+	22, // 48: frontend_balance.Balance.GetBankCardList:output_type -> frontend_balance.GetBankCardListRes
+	24, // 49: frontend_balance.Balance.DeleteBankCard:output_type -> frontend_balance.DeleteBankCardRes
+	26, // 50: frontend_balance.Balance.SetDefaultBankCard:output_type -> frontend_balance.SetDefaultBankCardRes
+	28, // 51: frontend_balance.Balance.GetDepositNonce:output_type -> frontend_balance.GetDepositNonceRes
+	30, // 52: frontend_balance.Balance.GetWithdrawNonce:output_type -> frontend_balance.GetWithdrawNonceRes
+	32, // 53: frontend_balance.Balance.CreateDepositOrder:output_type -> frontend_balance.CreateDepositOrderRes
+	35, // 54: frontend_balance.Balance.GetBalanceLog:output_type -> frontend_balance.GetBalanceLogRes
+	38, // 55: frontend_balance.Balance.GetUserFlowRequirements:output_type -> frontend_balance.GetUserFlowRequirementsRes
+	40, // 56: frontend_balance.Balance.DepositCallback:output_type -> frontend_balance.DepositCallbackRes
+	42, // 57: frontend_balance.Balance.Withdraw:output_type -> frontend_balance.WithdrawRes
+	44, // 58: frontend_balance.Balance.GrantInviteBonus:output_type -> frontend_balance.GrantInviteBonusRes
+	46, // 59: frontend_balance.Balance.GetInviteBonusSummary:output_type -> frontend_balance.GetInviteBonusSummaryRes
+	48, // 60: frontend_balance.Balance.GetValidReferralCount:output_type -> frontend_balance.GetValidReferralCountRes
+	50, // 61: frontend_balance.Balance.GetVipUpgradeProgress:output_type -> frontend_balance.GetVipUpgradeProgressRes
+	53, // 62: frontend_balance.Balance.GetSigninActivityInfo:output_type -> frontend_balance.GetSigninActivityInfoRes
+	55, // 63: frontend_balance.Balance.ClaimSigninReward:output_type -> frontend_balance.ClaimSigninRewardRes
+	57, // 64: frontend_balance.Balance.WashCodeRebate:output_type -> frontend_balance.WashCodeRebateRes
+	60, // 65: frontend_balance.Balance.GetLuckySpinInfo:output_type -> frontend_balance.GetLuckySpinInfoRes
+	62, // 66: frontend_balance.Balance.LuckySpin:output_type -> frontend_balance.LuckySpinRes
+	65, // 67: frontend_balance.Balance.GetLuckySpinRecords:output_type -> frontend_balance.GetLuckySpinRecordsRes
+	68, // 68: frontend_balance.Balance.GetLuckySpinRecentWinners:output_type -> frontend_balance.GetLuckySpinRecentWinnersRes
+	39, // [39:69] is the sub-list for method output_type
+	9,  // [9:39] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_frontend_balance_v1_balance_proto_init() }
@@ -4384,7 +5261,7 @@ func file_frontend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_balance_v1_balance_proto_rawDesc), len(file_frontend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   58,
+			NumMessages:   69,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

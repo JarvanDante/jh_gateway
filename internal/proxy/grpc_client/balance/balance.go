@@ -307,6 +307,146 @@ func CallWashCodeRebate(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 
 /**
  * showdoc
+ * @catalog 前台/财务/大转盘
+ * @title 获取大转盘活动信息
+ * @description 获取当前用户大转盘活动信息、奖项列表与抽奖统计
+ * @method get
+ * @url /api/frontend/balance/lucky-spin-info
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","active":true,"free_spins_per_day":2,"free_spins_left":1,"today_spin_count":1,"jackpot_amount":8888.0,"total_won":50.0,"prize_list":[{"segment_no":1,"prize_name":"P50","reward_amount":50.0,"weight":10}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 114
+ */
+func CallGetLuckySpinInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetLuckySpinInfo (Frontend)")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetLuckySpinInfoReq{}
+
+	res, err := client.GetLuckySpinInfo(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetLuckySpinInfo failed: %v", err)
+		util.WriteInternalError(r, "获取大转盘活动信息失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/财务/大转盘
+ * @title 执行大转盘抽奖
+ * @description 执行一次大转盘抽奖并发放中奖奖励
+ * @method post
+ * @url /api/frontend/balance/lucky-spin
+ * @param token 必选 string token
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"抽奖成功","trade_no":"HL202602090001","segment_no":3,"prize_name":"P50","reward_amount":50.0,"free_spins_left":1,"today_spin_count":1,"total_won":50.0}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 115
+ */
+func CallLuckySpin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance LuckySpin (Frontend)")
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.LuckySpinReq{}
+
+	res, err := client.LuckySpin(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance LuckySpin failed: %v", err)
+		util.WriteInternalError(r, "执行大转盘抽奖失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/财务/大转盘
+ * @title 获取大转盘中奖记录
+ * @description 获取当前用户大转盘中奖记录
+ * @method get
+ * @url /api/frontend/balance/lucky-spin-records
+ * @param token 必选 string token
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认20
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","list":[{"trade_no":"HL202602090001","segment_no":3,"prize_name":"P50","reward_amount":50.0,"created_at":"2026-02-09 10:00:00"}],"count":1,"page":1,"size":20}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 116
+ */
+func CallGetLuckySpinRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetLuckySpinRecords (Frontend)")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetLuckySpinRecordsReq{
+		Page: getInt32FromMapWithDefault(reqData, "page", 1),
+		Size: getInt32FromMapWithDefault(reqData, "size", 20),
+	}
+
+	res, err := client.GetLuckySpinRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetLuckySpinRecords failed: %v", err)
+		util.WriteInternalError(r, "获取大转盘中奖记录失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/财务/大转盘
+ * @title 获取大转盘最近中奖榜
+ * @description 获取站点最近大转盘中奖榜单
+ * @method get
+ * @url /api/frontend/balance/lucky-spin-recent-winners
+ * @param token 必选 string token
+ * @param limit 可选 int 返回条数，默认20，最大100
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","list":[{"user_id":1001,"mask_name":"ka***88","prize_name":"P50","reward_amount":50.0,"created_at":"2026-02-09 10:00:00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 117
+ */
+func CallGetLuckySpinRecentWinners(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetLuckySpinRecentWinners (Frontend)")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetLuckySpinRecentWinnersReq{
+		Limit: getInt32FromMapWithDefault(reqData, "limit", 20),
+	}
+
+	res, err := client.GetLuckySpinRecentWinners(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetLuckySpinRecentWinners failed: %v", err)
+		util.WriteInternalError(r, "获取大转盘最近中奖榜失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 后台/财务/账变记录
  * @title 获取账变记录
  * @description 获取会员账变记录列表

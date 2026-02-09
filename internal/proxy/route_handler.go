@@ -215,6 +215,14 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/signin-activity-info", "GET", balance.CallGetSigninActivityInfo)
 	// 签到领取
 	balanceRoutes.Register("/signin-claim", "POST", balance.CallClaimSigninReward)
+	// 大转盘活动信息
+	balanceRoutes.Register("/lucky-spin-info", "GET", balance.CallGetLuckySpinInfo)
+	// 大转盘抽奖
+	balanceRoutes.Register("/lucky-spin", "POST", balance.CallLuckySpin)
+	// 大转盘中奖记录
+	balanceRoutes.Register("/lucky-spin-records", "GET", balance.CallGetLuckySpinRecords)
+	// 大转盘最近中奖榜
+	balanceRoutes.Register("/lucky-spin-recent-winners", "GET", balance.CallGetLuckySpinRecentWinners)
 	// 洗码返水
 	balanceRoutes.Register("/wash-code-rebate", "POST", balance.CallWashCodeRebate)
 

@@ -20,32 +20,36 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Balance_InitBalanceUser_FullMethodName         = "/frontend_balance.Balance/InitBalanceUser"
-	Balance_RefreshBalance_FullMethodName          = "/frontend_balance.Balance/RefreshBalance"
-	Balance_AdjustBalance_FullMethodName           = "/frontend_balance.Balance/AdjustBalance"
-	Balance_UpdateTransferStatus_FullMethodName    = "/frontend_balance.Balance/UpdateTransferStatus"
-	Balance_CompensateBalance_FullMethodName       = "/frontend_balance.Balance/CompensateBalance"
-	Balance_GetLastBalanceLogGame_FullMethodName   = "/frontend_balance.Balance/GetLastBalanceLogGame"
-	Balance_GetPaymentList_FullMethodName          = "/frontend_balance.Balance/GetPaymentList"
-	Balance_GetWithdrawList_FullMethodName         = "/frontend_balance.Balance/GetWithdrawList"
-	Balance_AddBankCard_FullMethodName             = "/frontend_balance.Balance/AddBankCard"
-	Balance_GetBankCardList_FullMethodName         = "/frontend_balance.Balance/GetBankCardList"
-	Balance_DeleteBankCard_FullMethodName          = "/frontend_balance.Balance/DeleteBankCard"
-	Balance_SetDefaultBankCard_FullMethodName      = "/frontend_balance.Balance/SetDefaultBankCard"
-	Balance_GetDepositNonce_FullMethodName         = "/frontend_balance.Balance/GetDepositNonce"
-	Balance_GetWithdrawNonce_FullMethodName        = "/frontend_balance.Balance/GetWithdrawNonce"
-	Balance_CreateDepositOrder_FullMethodName      = "/frontend_balance.Balance/CreateDepositOrder"
-	Balance_GetBalanceLog_FullMethodName           = "/frontend_balance.Balance/GetBalanceLog"
-	Balance_GetUserFlowRequirements_FullMethodName = "/frontend_balance.Balance/GetUserFlowRequirements"
-	Balance_DepositCallback_FullMethodName         = "/frontend_balance.Balance/DepositCallback"
-	Balance_Withdraw_FullMethodName                = "/frontend_balance.Balance/Withdraw"
-	Balance_GrantInviteBonus_FullMethodName        = "/frontend_balance.Balance/GrantInviteBonus"
-	Balance_GetInviteBonusSummary_FullMethodName   = "/frontend_balance.Balance/GetInviteBonusSummary"
-	Balance_GetValidReferralCount_FullMethodName   = "/frontend_balance.Balance/GetValidReferralCount"
-	Balance_GetVipUpgradeProgress_FullMethodName   = "/frontend_balance.Balance/GetVipUpgradeProgress"
-	Balance_GetSigninActivityInfo_FullMethodName   = "/frontend_balance.Balance/GetSigninActivityInfo"
-	Balance_ClaimSigninReward_FullMethodName       = "/frontend_balance.Balance/ClaimSigninReward"
-	Balance_WashCodeRebate_FullMethodName          = "/frontend_balance.Balance/WashCodeRebate"
+	Balance_InitBalanceUser_FullMethodName           = "/frontend_balance.Balance/InitBalanceUser"
+	Balance_RefreshBalance_FullMethodName            = "/frontend_balance.Balance/RefreshBalance"
+	Balance_AdjustBalance_FullMethodName             = "/frontend_balance.Balance/AdjustBalance"
+	Balance_UpdateTransferStatus_FullMethodName      = "/frontend_balance.Balance/UpdateTransferStatus"
+	Balance_CompensateBalance_FullMethodName         = "/frontend_balance.Balance/CompensateBalance"
+	Balance_GetLastBalanceLogGame_FullMethodName     = "/frontend_balance.Balance/GetLastBalanceLogGame"
+	Balance_GetPaymentList_FullMethodName            = "/frontend_balance.Balance/GetPaymentList"
+	Balance_GetWithdrawList_FullMethodName           = "/frontend_balance.Balance/GetWithdrawList"
+	Balance_AddBankCard_FullMethodName               = "/frontend_balance.Balance/AddBankCard"
+	Balance_GetBankCardList_FullMethodName           = "/frontend_balance.Balance/GetBankCardList"
+	Balance_DeleteBankCard_FullMethodName            = "/frontend_balance.Balance/DeleteBankCard"
+	Balance_SetDefaultBankCard_FullMethodName        = "/frontend_balance.Balance/SetDefaultBankCard"
+	Balance_GetDepositNonce_FullMethodName           = "/frontend_balance.Balance/GetDepositNonce"
+	Balance_GetWithdrawNonce_FullMethodName          = "/frontend_balance.Balance/GetWithdrawNonce"
+	Balance_CreateDepositOrder_FullMethodName        = "/frontend_balance.Balance/CreateDepositOrder"
+	Balance_GetBalanceLog_FullMethodName             = "/frontend_balance.Balance/GetBalanceLog"
+	Balance_GetUserFlowRequirements_FullMethodName   = "/frontend_balance.Balance/GetUserFlowRequirements"
+	Balance_DepositCallback_FullMethodName           = "/frontend_balance.Balance/DepositCallback"
+	Balance_Withdraw_FullMethodName                  = "/frontend_balance.Balance/Withdraw"
+	Balance_GrantInviteBonus_FullMethodName          = "/frontend_balance.Balance/GrantInviteBonus"
+	Balance_GetInviteBonusSummary_FullMethodName     = "/frontend_balance.Balance/GetInviteBonusSummary"
+	Balance_GetValidReferralCount_FullMethodName     = "/frontend_balance.Balance/GetValidReferralCount"
+	Balance_GetVipUpgradeProgress_FullMethodName     = "/frontend_balance.Balance/GetVipUpgradeProgress"
+	Balance_GetSigninActivityInfo_FullMethodName     = "/frontend_balance.Balance/GetSigninActivityInfo"
+	Balance_ClaimSigninReward_FullMethodName         = "/frontend_balance.Balance/ClaimSigninReward"
+	Balance_WashCodeRebate_FullMethodName            = "/frontend_balance.Balance/WashCodeRebate"
+	Balance_GetLuckySpinInfo_FullMethodName          = "/frontend_balance.Balance/GetLuckySpinInfo"
+	Balance_LuckySpin_FullMethodName                 = "/frontend_balance.Balance/LuckySpin"
+	Balance_GetLuckySpinRecords_FullMethodName       = "/frontend_balance.Balance/GetLuckySpinRecords"
+	Balance_GetLuckySpinRecentWinners_FullMethodName = "/frontend_balance.Balance/GetLuckySpinRecentWinners"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -104,6 +108,14 @@ type BalanceClient interface {
 	ClaimSigninReward(ctx context.Context, in *ClaimSigninRewardReq, opts ...grpc.CallOption) (*ClaimSigninRewardRes, error)
 	// 执行洗码返水
 	WashCodeRebate(ctx context.Context, in *WashCodeRebateReq, opts ...grpc.CallOption) (*WashCodeRebateRes, error)
+	// 获取大转盘活动信息
+	GetLuckySpinInfo(ctx context.Context, in *GetLuckySpinInfoReq, opts ...grpc.CallOption) (*GetLuckySpinInfoRes, error)
+	// 执行大转盘抽奖
+	LuckySpin(ctx context.Context, in *LuckySpinReq, opts ...grpc.CallOption) (*LuckySpinRes, error)
+	// 获取我的大转盘中奖记录
+	GetLuckySpinRecords(ctx context.Context, in *GetLuckySpinRecordsReq, opts ...grpc.CallOption) (*GetLuckySpinRecordsRes, error)
+	// 获取大转盘最近中奖榜
+	GetLuckySpinRecentWinners(ctx context.Context, in *GetLuckySpinRecentWinnersReq, opts ...grpc.CallOption) (*GetLuckySpinRecentWinnersRes, error)
 }
 
 type balanceClient struct {
@@ -374,6 +386,46 @@ func (c *balanceClient) WashCodeRebate(ctx context.Context, in *WashCodeRebateRe
 	return out, nil
 }
 
+func (c *balanceClient) GetLuckySpinInfo(ctx context.Context, in *GetLuckySpinInfoReq, opts ...grpc.CallOption) (*GetLuckySpinInfoRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLuckySpinInfoRes)
+	err := c.cc.Invoke(ctx, Balance_GetLuckySpinInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) LuckySpin(ctx context.Context, in *LuckySpinReq, opts ...grpc.CallOption) (*LuckySpinRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LuckySpinRes)
+	err := c.cc.Invoke(ctx, Balance_LuckySpin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetLuckySpinRecords(ctx context.Context, in *GetLuckySpinRecordsReq, opts ...grpc.CallOption) (*GetLuckySpinRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLuckySpinRecordsRes)
+	err := c.cc.Invoke(ctx, Balance_GetLuckySpinRecords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetLuckySpinRecentWinners(ctx context.Context, in *GetLuckySpinRecentWinnersReq, opts ...grpc.CallOption) (*GetLuckySpinRecentWinnersRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLuckySpinRecentWinnersRes)
+	err := c.cc.Invoke(ctx, Balance_GetLuckySpinRecentWinners_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -430,6 +482,14 @@ type BalanceServer interface {
 	ClaimSigninReward(context.Context, *ClaimSigninRewardReq) (*ClaimSigninRewardRes, error)
 	// 执行洗码返水
 	WashCodeRebate(context.Context, *WashCodeRebateReq) (*WashCodeRebateRes, error)
+	// 获取大转盘活动信息
+	GetLuckySpinInfo(context.Context, *GetLuckySpinInfoReq) (*GetLuckySpinInfoRes, error)
+	// 执行大转盘抽奖
+	LuckySpin(context.Context, *LuckySpinReq) (*LuckySpinRes, error)
+	// 获取我的大转盘中奖记录
+	GetLuckySpinRecords(context.Context, *GetLuckySpinRecordsReq) (*GetLuckySpinRecordsRes, error)
+	// 获取大转盘最近中奖榜
+	GetLuckySpinRecentWinners(context.Context, *GetLuckySpinRecentWinnersReq) (*GetLuckySpinRecentWinnersRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -517,6 +577,18 @@ func (UnimplementedBalanceServer) ClaimSigninReward(context.Context, *ClaimSigni
 }
 func (UnimplementedBalanceServer) WashCodeRebate(context.Context, *WashCodeRebateReq) (*WashCodeRebateRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method WashCodeRebate not implemented")
+}
+func (UnimplementedBalanceServer) GetLuckySpinInfo(context.Context, *GetLuckySpinInfoReq) (*GetLuckySpinInfoRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetLuckySpinInfo not implemented")
+}
+func (UnimplementedBalanceServer) LuckySpin(context.Context, *LuckySpinReq) (*LuckySpinRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method LuckySpin not implemented")
+}
+func (UnimplementedBalanceServer) GetLuckySpinRecords(context.Context, *GetLuckySpinRecordsReq) (*GetLuckySpinRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetLuckySpinRecords not implemented")
+}
+func (UnimplementedBalanceServer) GetLuckySpinRecentWinners(context.Context, *GetLuckySpinRecentWinnersReq) (*GetLuckySpinRecentWinnersRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetLuckySpinRecentWinners not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -1007,6 +1079,78 @@ func _Balance_WashCodeRebate_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetLuckySpinInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLuckySpinInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetLuckySpinInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetLuckySpinInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetLuckySpinInfo(ctx, req.(*GetLuckySpinInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_LuckySpin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LuckySpinReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).LuckySpin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_LuckySpin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).LuckySpin(ctx, req.(*LuckySpinReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetLuckySpinRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLuckySpinRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetLuckySpinRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetLuckySpinRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetLuckySpinRecords(ctx, req.(*GetLuckySpinRecordsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetLuckySpinRecentWinners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLuckySpinRecentWinnersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetLuckySpinRecentWinners(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetLuckySpinRecentWinners_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetLuckySpinRecentWinners(ctx, req.(*GetLuckySpinRecentWinnersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1117,6 +1261,22 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WashCodeRebate",
 			Handler:    _Balance_WashCodeRebate_Handler,
+		},
+		{
+			MethodName: "GetLuckySpinInfo",
+			Handler:    _Balance_GetLuckySpinInfo_Handler,
+		},
+		{
+			MethodName: "LuckySpin",
+			Handler:    _Balance_LuckySpin_Handler,
+		},
+		{
+			MethodName: "GetLuckySpinRecords",
+			Handler:    _Balance_GetLuckySpinRecords_Handler,
+		},
+		{
+			MethodName: "GetLuckySpinRecentWinners",
+			Handler:    _Balance_GetLuckySpinRecentWinners_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
