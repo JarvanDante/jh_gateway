@@ -223,6 +223,10 @@ func initBalanceRoutes() {
 	balanceRoutes.Register("/lucky-spin-records", "GET", balance.CallGetLuckySpinRecords)
 	// 大转盘最近中奖榜
 	balanceRoutes.Register("/lucky-spin-recent-winners", "GET", balance.CallGetLuckySpinRecentWinners)
+	// 充值送活动最近中奖榜
+	balanceRoutes.Register("/deposit-bonus-recent-winners", "GET", balance.CallGetDepositBonusRecentWinners)
+	// 注册送活动最近中奖榜
+	balanceRoutes.Register("/register-bonus-recent-winners", "GET", balance.CallGetRegisterBonusRecentWinners)
 	// 洗码返水
 	balanceRoutes.Register("/wash-code-rebate", "POST", balance.CallWashCodeRebate)
 

@@ -447,6 +447,84 @@ func CallGetLuckySpinRecentWinners(ctx context.Context, conn *grpc.ClientConn, r
 
 /**
  * showdoc
+ * @catalog 前台/财务/充值送
+ * @title 获取充值送最近中奖榜
+ * @description 获取站点最近充值送中奖榜单
+ * @method get
+ * @url /api/frontend/balance/deposit-bonus-recent-winners
+ * @param token 必选 string token
+ * @param limit 可选 int 返回条数，默认20，最大100
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","list":[{"user_id":1001,"mask_name":"ka***88","deposit_amount":500.0,"bonus_amount":300.0,"created_at":"2026-02-09 10:00:00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 118
+ */
+func CallGetDepositBonusRecentWinners(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetDepositBonusRecentWinners (Frontend)")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetDepositBonusRecentWinnersReq{
+		Limit: getInt32FromMapWithDefault(reqData, "limit", 20),
+	}
+
+	res, err := client.GetDepositBonusRecentWinners(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetDepositBonusRecentWinners failed: %v", err)
+		util.WriteInternalError(r, "获取充值送最近中奖榜失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 前台/财务/注册送
+ * @title 获取注册送最近中奖榜
+ * @description 获取站点最近注册送中奖榜单
+ * @method get
+ * @url /api/frontend/balance/register-bonus-recent-winners
+ * @param token 必选 string token
+ * @param limit 可选 int 返回条数，默认20，最大100
+ * @return {"code":0,"msg":"success","data":{"success":true,"message":"获取成功","list":[{"user_id":1001,"mask_name":"ka***88","bonus_amount":5.0,"created_at":"2026-02-09 10:00:00"}]}}
+ * @return_param code int 状态码
+ * @return_param msg string 返回信息
+ * @return_param data object 返回数据
+ * @number 119
+ */
+func CallGetRegisterBonusRecentWinners(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetRegisterBonusRecentWinners (Frontend)")
+
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteInternalError(r, "解析请求数据失败")
+		return nil
+	}
+
+	client := v17.NewBalanceClient(conn)
+	req := &v17.GetRegisterBonusRecentWinnersReq{
+		Limit: getInt32FromMapWithDefault(reqData, "limit", 20),
+	}
+
+	res, err := client.GetRegisterBonusRecentWinners(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Balance GetRegisterBonusRecentWinners failed: %v", err)
+		util.WriteInternalError(r, "获取注册送最近中奖榜失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 后台/财务/账变记录
  * @title 获取账变记录
  * @description 获取会员账变记录列表

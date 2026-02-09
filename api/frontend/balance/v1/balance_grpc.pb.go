@@ -20,36 +20,38 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Balance_InitBalanceUser_FullMethodName           = "/frontend_balance.Balance/InitBalanceUser"
-	Balance_RefreshBalance_FullMethodName            = "/frontend_balance.Balance/RefreshBalance"
-	Balance_AdjustBalance_FullMethodName             = "/frontend_balance.Balance/AdjustBalance"
-	Balance_UpdateTransferStatus_FullMethodName      = "/frontend_balance.Balance/UpdateTransferStatus"
-	Balance_CompensateBalance_FullMethodName         = "/frontend_balance.Balance/CompensateBalance"
-	Balance_GetLastBalanceLogGame_FullMethodName     = "/frontend_balance.Balance/GetLastBalanceLogGame"
-	Balance_GetPaymentList_FullMethodName            = "/frontend_balance.Balance/GetPaymentList"
-	Balance_GetWithdrawList_FullMethodName           = "/frontend_balance.Balance/GetWithdrawList"
-	Balance_AddBankCard_FullMethodName               = "/frontend_balance.Balance/AddBankCard"
-	Balance_GetBankCardList_FullMethodName           = "/frontend_balance.Balance/GetBankCardList"
-	Balance_DeleteBankCard_FullMethodName            = "/frontend_balance.Balance/DeleteBankCard"
-	Balance_SetDefaultBankCard_FullMethodName        = "/frontend_balance.Balance/SetDefaultBankCard"
-	Balance_GetDepositNonce_FullMethodName           = "/frontend_balance.Balance/GetDepositNonce"
-	Balance_GetWithdrawNonce_FullMethodName          = "/frontend_balance.Balance/GetWithdrawNonce"
-	Balance_CreateDepositOrder_FullMethodName        = "/frontend_balance.Balance/CreateDepositOrder"
-	Balance_GetBalanceLog_FullMethodName             = "/frontend_balance.Balance/GetBalanceLog"
-	Balance_GetUserFlowRequirements_FullMethodName   = "/frontend_balance.Balance/GetUserFlowRequirements"
-	Balance_DepositCallback_FullMethodName           = "/frontend_balance.Balance/DepositCallback"
-	Balance_Withdraw_FullMethodName                  = "/frontend_balance.Balance/Withdraw"
-	Balance_GrantInviteBonus_FullMethodName          = "/frontend_balance.Balance/GrantInviteBonus"
-	Balance_GetInviteBonusSummary_FullMethodName     = "/frontend_balance.Balance/GetInviteBonusSummary"
-	Balance_GetValidReferralCount_FullMethodName     = "/frontend_balance.Balance/GetValidReferralCount"
-	Balance_GetVipUpgradeProgress_FullMethodName     = "/frontend_balance.Balance/GetVipUpgradeProgress"
-	Balance_GetSigninActivityInfo_FullMethodName     = "/frontend_balance.Balance/GetSigninActivityInfo"
-	Balance_ClaimSigninReward_FullMethodName         = "/frontend_balance.Balance/ClaimSigninReward"
-	Balance_WashCodeRebate_FullMethodName            = "/frontend_balance.Balance/WashCodeRebate"
-	Balance_GetLuckySpinInfo_FullMethodName          = "/frontend_balance.Balance/GetLuckySpinInfo"
-	Balance_LuckySpin_FullMethodName                 = "/frontend_balance.Balance/LuckySpin"
-	Balance_GetLuckySpinRecords_FullMethodName       = "/frontend_balance.Balance/GetLuckySpinRecords"
-	Balance_GetLuckySpinRecentWinners_FullMethodName = "/frontend_balance.Balance/GetLuckySpinRecentWinners"
+	Balance_InitBalanceUser_FullMethodName               = "/frontend_balance.Balance/InitBalanceUser"
+	Balance_RefreshBalance_FullMethodName                = "/frontend_balance.Balance/RefreshBalance"
+	Balance_AdjustBalance_FullMethodName                 = "/frontend_balance.Balance/AdjustBalance"
+	Balance_UpdateTransferStatus_FullMethodName          = "/frontend_balance.Balance/UpdateTransferStatus"
+	Balance_CompensateBalance_FullMethodName             = "/frontend_balance.Balance/CompensateBalance"
+	Balance_GetLastBalanceLogGame_FullMethodName         = "/frontend_balance.Balance/GetLastBalanceLogGame"
+	Balance_GetPaymentList_FullMethodName                = "/frontend_balance.Balance/GetPaymentList"
+	Balance_GetWithdrawList_FullMethodName               = "/frontend_balance.Balance/GetWithdrawList"
+	Balance_AddBankCard_FullMethodName                   = "/frontend_balance.Balance/AddBankCard"
+	Balance_GetBankCardList_FullMethodName               = "/frontend_balance.Balance/GetBankCardList"
+	Balance_DeleteBankCard_FullMethodName                = "/frontend_balance.Balance/DeleteBankCard"
+	Balance_SetDefaultBankCard_FullMethodName            = "/frontend_balance.Balance/SetDefaultBankCard"
+	Balance_GetDepositNonce_FullMethodName               = "/frontend_balance.Balance/GetDepositNonce"
+	Balance_GetWithdrawNonce_FullMethodName              = "/frontend_balance.Balance/GetWithdrawNonce"
+	Balance_CreateDepositOrder_FullMethodName            = "/frontend_balance.Balance/CreateDepositOrder"
+	Balance_GetBalanceLog_FullMethodName                 = "/frontend_balance.Balance/GetBalanceLog"
+	Balance_GetUserFlowRequirements_FullMethodName       = "/frontend_balance.Balance/GetUserFlowRequirements"
+	Balance_DepositCallback_FullMethodName               = "/frontend_balance.Balance/DepositCallback"
+	Balance_Withdraw_FullMethodName                      = "/frontend_balance.Balance/Withdraw"
+	Balance_GrantInviteBonus_FullMethodName              = "/frontend_balance.Balance/GrantInviteBonus"
+	Balance_GetInviteBonusSummary_FullMethodName         = "/frontend_balance.Balance/GetInviteBonusSummary"
+	Balance_GetValidReferralCount_FullMethodName         = "/frontend_balance.Balance/GetValidReferralCount"
+	Balance_GetVipUpgradeProgress_FullMethodName         = "/frontend_balance.Balance/GetVipUpgradeProgress"
+	Balance_GetSigninActivityInfo_FullMethodName         = "/frontend_balance.Balance/GetSigninActivityInfo"
+	Balance_ClaimSigninReward_FullMethodName             = "/frontend_balance.Balance/ClaimSigninReward"
+	Balance_WashCodeRebate_FullMethodName                = "/frontend_balance.Balance/WashCodeRebate"
+	Balance_GetLuckySpinInfo_FullMethodName              = "/frontend_balance.Balance/GetLuckySpinInfo"
+	Balance_LuckySpin_FullMethodName                     = "/frontend_balance.Balance/LuckySpin"
+	Balance_GetLuckySpinRecords_FullMethodName           = "/frontend_balance.Balance/GetLuckySpinRecords"
+	Balance_GetLuckySpinRecentWinners_FullMethodName     = "/frontend_balance.Balance/GetLuckySpinRecentWinners"
+	Balance_GetDepositBonusRecentWinners_FullMethodName  = "/frontend_balance.Balance/GetDepositBonusRecentWinners"
+	Balance_GetRegisterBonusRecentWinners_FullMethodName = "/frontend_balance.Balance/GetRegisterBonusRecentWinners"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -116,6 +118,10 @@ type BalanceClient interface {
 	GetLuckySpinRecords(ctx context.Context, in *GetLuckySpinRecordsReq, opts ...grpc.CallOption) (*GetLuckySpinRecordsRes, error)
 	// 获取大转盘最近中奖榜
 	GetLuckySpinRecentWinners(ctx context.Context, in *GetLuckySpinRecentWinnersReq, opts ...grpc.CallOption) (*GetLuckySpinRecentWinnersRes, error)
+	// 获取充值送活动最近中奖榜
+	GetDepositBonusRecentWinners(ctx context.Context, in *GetDepositBonusRecentWinnersReq, opts ...grpc.CallOption) (*GetDepositBonusRecentWinnersRes, error)
+	// 获取注册送活动最近中奖榜
+	GetRegisterBonusRecentWinners(ctx context.Context, in *GetRegisterBonusRecentWinnersReq, opts ...grpc.CallOption) (*GetRegisterBonusRecentWinnersRes, error)
 }
 
 type balanceClient struct {
@@ -426,6 +432,26 @@ func (c *balanceClient) GetLuckySpinRecentWinners(ctx context.Context, in *GetLu
 	return out, nil
 }
 
+func (c *balanceClient) GetDepositBonusRecentWinners(ctx context.Context, in *GetDepositBonusRecentWinnersReq, opts ...grpc.CallOption) (*GetDepositBonusRecentWinnersRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDepositBonusRecentWinnersRes)
+	err := c.cc.Invoke(ctx, Balance_GetDepositBonusRecentWinners_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetRegisterBonusRecentWinners(ctx context.Context, in *GetRegisterBonusRecentWinnersReq, opts ...grpc.CallOption) (*GetRegisterBonusRecentWinnersRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRegisterBonusRecentWinnersRes)
+	err := c.cc.Invoke(ctx, Balance_GetRegisterBonusRecentWinners_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility.
@@ -490,6 +516,10 @@ type BalanceServer interface {
 	GetLuckySpinRecords(context.Context, *GetLuckySpinRecordsReq) (*GetLuckySpinRecordsRes, error)
 	// 获取大转盘最近中奖榜
 	GetLuckySpinRecentWinners(context.Context, *GetLuckySpinRecentWinnersReq) (*GetLuckySpinRecentWinnersRes, error)
+	// 获取充值送活动最近中奖榜
+	GetDepositBonusRecentWinners(context.Context, *GetDepositBonusRecentWinnersReq) (*GetDepositBonusRecentWinnersRes, error)
+	// 获取注册送活动最近中奖榜
+	GetRegisterBonusRecentWinners(context.Context, *GetRegisterBonusRecentWinnersReq) (*GetRegisterBonusRecentWinnersRes, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -589,6 +619,12 @@ func (UnimplementedBalanceServer) GetLuckySpinRecords(context.Context, *GetLucky
 }
 func (UnimplementedBalanceServer) GetLuckySpinRecentWinners(context.Context, *GetLuckySpinRecentWinnersReq) (*GetLuckySpinRecentWinnersRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetLuckySpinRecentWinners not implemented")
+}
+func (UnimplementedBalanceServer) GetDepositBonusRecentWinners(context.Context, *GetDepositBonusRecentWinnersReq) (*GetDepositBonusRecentWinnersRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetDepositBonusRecentWinners not implemented")
+}
+func (UnimplementedBalanceServer) GetRegisterBonusRecentWinners(context.Context, *GetRegisterBonusRecentWinnersReq) (*GetRegisterBonusRecentWinnersRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetRegisterBonusRecentWinners not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 func (UnimplementedBalanceServer) testEmbeddedByValue()                 {}
@@ -1151,6 +1187,42 @@ func _Balance_GetLuckySpinRecentWinners_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetDepositBonusRecentWinners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDepositBonusRecentWinnersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetDepositBonusRecentWinners(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetDepositBonusRecentWinners_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetDepositBonusRecentWinners(ctx, req.(*GetDepositBonusRecentWinnersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetRegisterBonusRecentWinners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRegisterBonusRecentWinnersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetRegisterBonusRecentWinners(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetRegisterBonusRecentWinners_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetRegisterBonusRecentWinners(ctx, req.(*GetRegisterBonusRecentWinnersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1277,6 +1349,14 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLuckySpinRecentWinners",
 			Handler:    _Balance_GetLuckySpinRecentWinners_Handler,
+		},
+		{
+			MethodName: "GetDepositBonusRecentWinners",
+			Handler:    _Balance_GetDepositBonusRecentWinners_Handler,
+		},
+		{
+			MethodName: "GetRegisterBonusRecentWinners",
+			Handler:    _Balance_GetRegisterBonusRecentWinners_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
