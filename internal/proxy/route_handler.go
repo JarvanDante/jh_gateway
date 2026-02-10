@@ -237,6 +237,12 @@ func initBalanceRoutes() {
 	// 后台接口
 	// 账变记录
 	balanceRoutes.Register("/balance-changes", "GET", balance.CallGetBalanceChanges)
+	// 活动彩金发放记录
+	balanceRoutes.Register("/lucky-bonus-records", "GET", balance.CallGetLuckyBonusRecords)
+	balanceRoutes.Register("/deposit-bonus-records", "GET", balance.CallGetDepositBonusRecords)
+	balanceRoutes.Register("/register-bonus-records", "GET", balance.CallGetRegisterBonusRecords)
+	balanceRoutes.Register("/invite-bonus-records", "GET", balance.CallGetInviteBonusRecords)
+	balanceRoutes.Register("/signin-bonus-records", "GET", balance.CallGetSigninBonusRecords)
 	// 交易类型列表
 	balanceRoutes.Register("/options-change", "GET", balance.CallGetChangeOptions)
 

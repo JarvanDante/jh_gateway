@@ -542,6 +542,1313 @@ func (x *GetBalanceChangesRes) GetCount() int32 {
 	return 0
 }
 
+// 获取大转盘活动发放记录请求
+type GetLuckyBonusRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID (可选)"`         // 用户ID (可选)
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`        // 流水号 (可选)
+	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
+	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	SiteId        int32                  `protobuf:"varint,8,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID (可选)"`         // 站点ID (可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckyBonusRecordsReq) Reset() {
+	*x = GetLuckyBonusRecordsReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckyBonusRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckyBonusRecordsReq) ProtoMessage() {}
+
+func (x *GetLuckyBonusRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckyBonusRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetLuckyBonusRecordsReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetLuckyBonusRecordsReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GetLuckyBonusRecordsReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetLuckyBonusRecordsReq) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *GetLuckyBonusRecordsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *GetLuckyBonusRecordsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *GetLuckyBonusRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetLuckyBonusRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetLuckyBonusRecordsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 大转盘活动发放记录
+type LuckyBonusRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                            // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                    // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                                // 用户名
+	Date          string                 `protobuf:"bytes,4,opt,name=date,proto3" json:"date" dc:"活动日期(yyyy-mm-dd)"`                           // 活动日期(yyyy-mm-dd)
+	SegmentNo     int32                  `protobuf:"varint,5,opt,name=segment_no,json=segmentNo,proto3" json:"segment_no" dc:"大转盘扇区"`          // 大转盘扇区
+	PrizeName     string                 `protobuf:"bytes,6,opt,name=prize_name,json=prizeName,proto3" json:"prize_name" dc:"大转盘奖项"`           // 大转盘奖项
+	RewardAmount  float64                `protobuf:"fixed64,7,opt,name=reward_amount,json=rewardAmount,proto3" json:"reward_amount" dc:"发放金额"` // 发放金额
+	TradeNo       string                 `protobuf:"bytes,8,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"发放流水号/订单号"`             // 发放流水号/订单号
+	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"发放时间"`            // 发放时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LuckyBonusRecord) Reset() {
+	*x = LuckyBonusRecord{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LuckyBonusRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LuckyBonusRecord) ProtoMessage() {}
+
+func (x *LuckyBonusRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LuckyBonusRecord.ProtoReflect.Descriptor instead.
+func (*LuckyBonusRecord) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *LuckyBonusRecord) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *LuckyBonusRecord) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *LuckyBonusRecord) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *LuckyBonusRecord) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *LuckyBonusRecord) GetSegmentNo() int32 {
+	if x != nil {
+		return x.SegmentNo
+	}
+	return 0
+}
+
+func (x *LuckyBonusRecord) GetPrizeName() string {
+	if x != nil {
+		return x.PrizeName
+	}
+	return ""
+}
+
+func (x *LuckyBonusRecord) GetRewardAmount() float64 {
+	if x != nil {
+		return x.RewardAmount
+	}
+	return 0
+}
+
+func (x *LuckyBonusRecord) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *LuckyBonusRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取大转盘活动发放记录响应
+type GetLuckyBonusRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*LuckyBonusRecord    `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"发放记录列表"` // 发放记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLuckyBonusRecordsRes) Reset() {
+	*x = GetLuckyBonusRecordsRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLuckyBonusRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLuckyBonusRecordsRes) ProtoMessage() {}
+
+func (x *GetLuckyBonusRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLuckyBonusRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetLuckyBonusRecordsRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetLuckyBonusRecordsRes) GetList() []*LuckyBonusRecord {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetLuckyBonusRecordsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 获取充值送活动发放记录请求
+type GetDepositBonusRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID (可选)"`         // 用户ID (可选)
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`        // 流水号 (可选)
+	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
+	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	SiteId        int32                  `protobuf:"varint,8,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID (可选)"`         // 站点ID (可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDepositBonusRecordsReq) Reset() {
+	*x = GetDepositBonusRecordsReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDepositBonusRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDepositBonusRecordsReq) ProtoMessage() {}
+
+func (x *GetDepositBonusRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDepositBonusRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetDepositBonusRecordsReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetDepositBonusRecordsReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GetDepositBonusRecordsReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetDepositBonusRecordsReq) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *GetDepositBonusRecordsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *GetDepositBonusRecordsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *GetDepositBonusRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetDepositBonusRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetDepositBonusRecordsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 充值送活动发放记录
+type DepositBonusRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                         // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                 // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                             // 用户名
+	Date          string                 `protobuf:"bytes,4,opt,name=date,proto3" json:"date" dc:"活动日期(yyyy-mm-dd)"`                        // 活动日期(yyyy-mm-dd)
+	BonusAmount   float64                `protobuf:"fixed64,5,opt,name=bonus_amount,json=bonusAmount,proto3" json:"bonus_amount" dc:"发放金额"` // 发放金额
+	TradeNo       string                 `protobuf:"bytes,6,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"发放流水号/订单号"`          // 发放流水号/订单号
+	CreatedAt     string                 `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"发放时间"`         // 发放时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DepositBonusRecord) Reset() {
+	*x = DepositBonusRecord{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DepositBonusRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DepositBonusRecord) ProtoMessage() {}
+
+func (x *DepositBonusRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DepositBonusRecord.ProtoReflect.Descriptor instead.
+func (*DepositBonusRecord) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DepositBonusRecord) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *DepositBonusRecord) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *DepositBonusRecord) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *DepositBonusRecord) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *DepositBonusRecord) GetBonusAmount() float64 {
+	if x != nil {
+		return x.BonusAmount
+	}
+	return 0
+}
+
+func (x *DepositBonusRecord) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *DepositBonusRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取充值送活动发放记录响应
+type GetDepositBonusRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*DepositBonusRecord  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"发放记录列表"` // 发放记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDepositBonusRecordsRes) Reset() {
+	*x = GetDepositBonusRecordsRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDepositBonusRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDepositBonusRecordsRes) ProtoMessage() {}
+
+func (x *GetDepositBonusRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDepositBonusRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetDepositBonusRecordsRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetDepositBonusRecordsRes) GetList() []*DepositBonusRecord {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetDepositBonusRecordsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 获取注册送活动发放记录请求
+type GetRegisterBonusRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID (可选)"`         // 用户ID (可选)
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`        // 流水号 (可选)
+	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
+	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	SiteId        int32                  `protobuf:"varint,8,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID (可选)"`         // 站点ID (可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRegisterBonusRecordsReq) Reset() {
+	*x = GetRegisterBonusRecordsReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRegisterBonusRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRegisterBonusRecordsReq) ProtoMessage() {}
+
+func (x *GetRegisterBonusRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRegisterBonusRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetRegisterBonusRecordsReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetRegisterBonusRecordsReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GetRegisterBonusRecordsReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetRegisterBonusRecordsReq) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *GetRegisterBonusRecordsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *GetRegisterBonusRecordsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *GetRegisterBonusRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetRegisterBonusRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetRegisterBonusRecordsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 注册送活动发放记录
+type RegisterBonusRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                         // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                 // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                             // 用户名
+	Date          string                 `protobuf:"bytes,4,opt,name=date,proto3" json:"date" dc:"活动日期(yyyy-mm-dd)"`                        // 活动日期(yyyy-mm-dd)
+	BonusAmount   float64                `protobuf:"fixed64,5,opt,name=bonus_amount,json=bonusAmount,proto3" json:"bonus_amount" dc:"发放金额"` // 发放金额
+	TradeNo       string                 `protobuf:"bytes,6,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"发放流水号/订单号"`          // 发放流水号/订单号
+	RegisterIp    string                 `protobuf:"bytes,7,opt,name=register_ip,json=registerIp,proto3" json:"register_ip" dc:"注册IP"`      // 注册IP
+	DeviceId      string                 `protobuf:"bytes,8,opt,name=device_id,json=deviceId,proto3" json:"device_id" dc:"设备ID"`            // 设备ID
+	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"发放时间"`         // 发放时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterBonusRecord) Reset() {
+	*x = RegisterBonusRecord{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterBonusRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterBonusRecord) ProtoMessage() {}
+
+func (x *RegisterBonusRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterBonusRecord.ProtoReflect.Descriptor instead.
+func (*RegisterBonusRecord) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *RegisterBonusRecord) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *RegisterBonusRecord) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *RegisterBonusRecord) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *RegisterBonusRecord) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *RegisterBonusRecord) GetBonusAmount() float64 {
+	if x != nil {
+		return x.BonusAmount
+	}
+	return 0
+}
+
+func (x *RegisterBonusRecord) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *RegisterBonusRecord) GetRegisterIp() string {
+	if x != nil {
+		return x.RegisterIp
+	}
+	return ""
+}
+
+func (x *RegisterBonusRecord) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *RegisterBonusRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取注册送活动发放记录响应
+type GetRegisterBonusRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*RegisterBonusRecord `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"发放记录列表"` // 发放记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRegisterBonusRecordsRes) Reset() {
+	*x = GetRegisterBonusRecordsRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRegisterBonusRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRegisterBonusRecordsRes) ProtoMessage() {}
+
+func (x *GetRegisterBonusRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRegisterBonusRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetRegisterBonusRecordsRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetRegisterBonusRecordsRes) GetList() []*RegisterBonusRecord {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetRegisterBonusRecordsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 获取邀请朋友活动发放记录请求
+type GetInviteBonusRecordsReq struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	InviterId       int32                  `protobuf:"varint,1,opt,name=inviter_id,json=inviterId,proto3" json:"inviter_id" dc:"邀请人ID (可选)"`                    // 邀请人ID (可选)
+	InviterUsername string                 `protobuf:"bytes,2,opt,name=inviter_username,json=inviterUsername,proto3" json:"inviter_username" dc:"邀请人用户名 (可选)"`  // 邀请人用户名 (可选)
+	InviteeId       int32                  `protobuf:"varint,3,opt,name=invitee_id,json=inviteeId,proto3" json:"invitee_id" dc:"被邀请人ID (可选)"`                   // 被邀请人ID (可选)
+	InviteeUsername string                 `protobuf:"bytes,4,opt,name=invitee_username,json=inviteeUsername,proto3" json:"invitee_username" dc:"被邀请人用户名 (可选)"` // 被邀请人用户名 (可选)
+	TradeNo         string                 `protobuf:"bytes,5,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`                             // 流水号 (可选)
+	StartTime       string                 `protobuf:"bytes,6,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"`                      // 开始时间 (可选)
+	EndTime         string                 `protobuf:"bytes,7,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`                            // 结束时间 (可选)
+	Page            int32                  `protobuf:"varint,8,opt,name=page,proto3" json:"page" dc:"页码"`                                                       // 页码
+	Size            int32                  `protobuf:"varint,9,opt,name=size,proto3" json:"size" dc:"每页数量"`                                                     // 每页数量
+	SiteId          int32                  `protobuf:"varint,10,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID (可选)"`                             // 站点ID (可选)
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetInviteBonusRecordsReq) Reset() {
+	*x = GetInviteBonusRecordsReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteBonusRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteBonusRecordsReq) ProtoMessage() {}
+
+func (x *GetInviteBonusRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteBonusRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetInviteBonusRecordsReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetInviteBonusRecordsReq) GetInviterId() int32 {
+	if x != nil {
+		return x.InviterId
+	}
+	return 0
+}
+
+func (x *GetInviteBonusRecordsReq) GetInviterUsername() string {
+	if x != nil {
+		return x.InviterUsername
+	}
+	return ""
+}
+
+func (x *GetInviteBonusRecordsReq) GetInviteeId() int32 {
+	if x != nil {
+		return x.InviteeId
+	}
+	return 0
+}
+
+func (x *GetInviteBonusRecordsReq) GetInviteeUsername() string {
+	if x != nil {
+		return x.InviteeUsername
+	}
+	return ""
+}
+
+func (x *GetInviteBonusRecordsReq) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *GetInviteBonusRecordsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *GetInviteBonusRecordsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *GetInviteBonusRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetInviteBonusRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetInviteBonusRecordsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 邀请朋友活动发放记录
+type InviteBonusRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                          // ID
+	InviterId     int32                  `protobuf:"varint,2,opt,name=inviter_id,json=inviterId,proto3" json:"inviter_id" dc:"邀请人ID"`        // 邀请人ID
+	InviterName   string                 `protobuf:"bytes,3,opt,name=inviter_name,json=inviterName,proto3" json:"inviter_name" dc:"邀请人用户名"`  // 邀请人用户名
+	InviteeId     int32                  `protobuf:"varint,4,opt,name=invitee_id,json=inviteeId,proto3" json:"invitee_id" dc:"被邀请人ID"`       // 被邀请人ID
+	InviteeName   string                 `protobuf:"bytes,5,opt,name=invitee_name,json=inviteeName,proto3" json:"invitee_name" dc:"被邀请人用户名"` // 被邀请人用户名
+	Date          string                 `protobuf:"bytes,6,opt,name=date,proto3" json:"date" dc:"活动日期(yyyy-mm-dd)"`                         // 活动日期(yyyy-mm-dd)
+	BonusAmount   float64                `protobuf:"fixed64,7,opt,name=bonus_amount,json=bonusAmount,proto3" json:"bonus_amount" dc:"发放金额"`  // 发放金额
+	TradeNo       string                 `protobuf:"bytes,8,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"发放流水号/订单号"`           // 发放流水号/订单号
+	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"发放时间"`          // 发放时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InviteBonusRecord) Reset() {
+	*x = InviteBonusRecord{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InviteBonusRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InviteBonusRecord) ProtoMessage() {}
+
+func (x *InviteBonusRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InviteBonusRecord.ProtoReflect.Descriptor instead.
+func (*InviteBonusRecord) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *InviteBonusRecord) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *InviteBonusRecord) GetInviterId() int32 {
+	if x != nil {
+		return x.InviterId
+	}
+	return 0
+}
+
+func (x *InviteBonusRecord) GetInviterName() string {
+	if x != nil {
+		return x.InviterName
+	}
+	return ""
+}
+
+func (x *InviteBonusRecord) GetInviteeId() int32 {
+	if x != nil {
+		return x.InviteeId
+	}
+	return 0
+}
+
+func (x *InviteBonusRecord) GetInviteeName() string {
+	if x != nil {
+		return x.InviteeName
+	}
+	return ""
+}
+
+func (x *InviteBonusRecord) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *InviteBonusRecord) GetBonusAmount() float64 {
+	if x != nil {
+		return x.BonusAmount
+	}
+	return 0
+}
+
+func (x *InviteBonusRecord) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *InviteBonusRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取邀请朋友活动发放记录响应
+type GetInviteBonusRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*InviteBonusRecord   `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"发放记录列表"` // 发放记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInviteBonusRecordsRes) Reset() {
+	*x = GetInviteBonusRecordsRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInviteBonusRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInviteBonusRecordsRes) ProtoMessage() {}
+
+func (x *GetInviteBonusRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInviteBonusRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetInviteBonusRecordsRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetInviteBonusRecordsRes) GetList() []*InviteBonusRecord {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetInviteBonusRecordsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+// 获取每日签到活动发放记录请求
+type GetSigninBonusRecordsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID (可选)"`         // 用户ID (可选)
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                     // 用户名 (可选)
+	TradeNo       string                 `protobuf:"bytes,3,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"流水号 (可选)"`        // 流水号 (可选)
+	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 (可选)"` // 开始时间 (可选)
+	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 (可选)"`       // 结束时间 (可选)
+	Page          int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page" dc:"页码"`                                  // 页码
+	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size" dc:"每页数量"`                                // 每页数量
+	SiteId        int32                  `protobuf:"varint,8,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID (可选)"`         // 站点ID (可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSigninBonusRecordsReq) Reset() {
+	*x = GetSigninBonusRecordsReq{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSigninBonusRecordsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSigninBonusRecordsReq) ProtoMessage() {}
+
+func (x *GetSigninBonusRecordsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSigninBonusRecordsReq.ProtoReflect.Descriptor instead.
+func (*GetSigninBonusRecordsReq) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetSigninBonusRecordsReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GetSigninBonusRecordsReq) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetSigninBonusRecordsReq) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *GetSigninBonusRecordsReq) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *GetSigninBonusRecordsReq) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *GetSigninBonusRecordsReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetSigninBonusRecordsReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetSigninBonusRecordsReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+// 每日签到活动发放记录
+type SigninBonusRecord struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                         // ID
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                 // 用户ID
+	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username" dc:"用户名"`                             // 用户名
+	Date          string                 `protobuf:"bytes,4,opt,name=date,proto3" json:"date" dc:"活动日期(yyyy-mm-dd)"`                        // 活动日期(yyyy-mm-dd)
+	DayNo         int32                  `protobuf:"varint,5,opt,name=day_no,json=dayNo,proto3" json:"day_no" dc:"签到日号(1-31)"`              // 签到日号(1-31)
+	BonusAmount   float64                `protobuf:"fixed64,6,opt,name=bonus_amount,json=bonusAmount,proto3" json:"bonus_amount" dc:"发放金额"` // 发放金额
+	TradeNo       string                 `protobuf:"bytes,7,opt,name=trade_no,json=tradeNo,proto3" json:"trade_no" dc:"发放流水号/订单号"`          // 发放流水号/订单号
+	CreatedAt     string                 `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"发放时间"`         // 发放时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SigninBonusRecord) Reset() {
+	*x = SigninBonusRecord{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SigninBonusRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SigninBonusRecord) ProtoMessage() {}
+
+func (x *SigninBonusRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SigninBonusRecord.ProtoReflect.Descriptor instead.
+func (*SigninBonusRecord) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *SigninBonusRecord) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *SigninBonusRecord) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *SigninBonusRecord) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *SigninBonusRecord) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *SigninBonusRecord) GetDayNo() int32 {
+	if x != nil {
+		return x.DayNo
+	}
+	return 0
+}
+
+func (x *SigninBonusRecord) GetBonusAmount() float64 {
+	if x != nil {
+		return x.BonusAmount
+	}
+	return 0
+}
+
+func (x *SigninBonusRecord) GetTradeNo() string {
+	if x != nil {
+		return x.TradeNo
+	}
+	return ""
+}
+
+func (x *SigninBonusRecord) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+// 获取每日签到活动发放记录响应
+type GetSigninBonusRecordsRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*SigninBonusRecord   `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"发放记录列表"` // 发放记录列表
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count" dc:"总数量"` // 总数量
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSigninBonusRecordsRes) Reset() {
+	*x = GetSigninBonusRecordsRes{}
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSigninBonusRecordsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSigninBonusRecordsRes) ProtoMessage() {}
+
+func (x *GetSigninBonusRecordsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSigninBonusRecordsRes.ProtoReflect.Descriptor instead.
+func (*GetSigninBonusRecordsRes) Descriptor() ([]byte, []int) {
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *GetSigninBonusRecordsRes) GetList() []*SigninBonusRecord {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetSigninBonusRecordsRes) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
 // 获取充值记录请求
 type GetRechargePaymentsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -562,7 +1869,7 @@ type GetRechargePaymentsReq struct {
 
 func (x *GetRechargePaymentsReq) Reset() {
 	*x = GetRechargePaymentsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[8]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -574,7 +1881,7 @@ func (x *GetRechargePaymentsReq) String() string {
 func (*GetRechargePaymentsReq) ProtoMessage() {}
 
 func (x *GetRechargePaymentsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[8]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -587,7 +1894,7 @@ func (x *GetRechargePaymentsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRechargePaymentsReq.ProtoReflect.Descriptor instead.
 func (*GetRechargePaymentsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{8}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetRechargePaymentsReq) GetUsername() string {
@@ -696,7 +2003,7 @@ type RechargePaymentInfo struct {
 
 func (x *RechargePaymentInfo) Reset() {
 	*x = RechargePaymentInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[9]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -708,7 +2015,7 @@ func (x *RechargePaymentInfo) String() string {
 func (*RechargePaymentInfo) ProtoMessage() {}
 
 func (x *RechargePaymentInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[9]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -721,7 +2028,7 @@ func (x *RechargePaymentInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RechargePaymentInfo.ProtoReflect.Descriptor instead.
 func (*RechargePaymentInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{9}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *RechargePaymentInfo) GetId() int64 {
@@ -875,7 +2182,7 @@ type GetRechargePaymentsRes struct {
 
 func (x *GetRechargePaymentsRes) Reset() {
 	*x = GetRechargePaymentsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[10]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -887,7 +2194,7 @@ func (x *GetRechargePaymentsRes) String() string {
 func (*GetRechargePaymentsRes) ProtoMessage() {}
 
 func (x *GetRechargePaymentsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[10]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -900,7 +2207,7 @@ func (x *GetRechargePaymentsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRechargePaymentsRes.ProtoReflect.Descriptor instead.
 func (*GetRechargePaymentsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{10}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *GetRechargePaymentsRes) GetList() []*RechargePaymentInfo {
@@ -932,7 +2239,7 @@ type GetRechargeManualsReq struct {
 
 func (x *GetRechargeManualsReq) Reset() {
 	*x = GetRechargeManualsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[11]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -944,7 +2251,7 @@ func (x *GetRechargeManualsReq) String() string {
 func (*GetRechargeManualsReq) ProtoMessage() {}
 
 func (x *GetRechargeManualsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[11]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -957,7 +2264,7 @@ func (x *GetRechargeManualsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRechargeManualsReq.ProtoReflect.Descriptor instead.
 func (*GetRechargeManualsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{11}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *GetRechargeManualsReq) GetUsername() string {
@@ -1022,7 +2329,7 @@ type RechargeManualInfo struct {
 
 func (x *RechargeManualInfo) Reset() {
 	*x = RechargeManualInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[12]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1034,7 +2341,7 @@ func (x *RechargeManualInfo) String() string {
 func (*RechargeManualInfo) ProtoMessage() {}
 
 func (x *RechargeManualInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[12]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1047,7 +2354,7 @@ func (x *RechargeManualInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RechargeManualInfo.ProtoReflect.Descriptor instead.
 func (*RechargeManualInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{12}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *RechargeManualInfo) GetId() int64 {
@@ -1138,7 +2445,7 @@ type GetRechargeManualsRes struct {
 
 func (x *GetRechargeManualsRes) Reset() {
 	*x = GetRechargeManualsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[13]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1150,7 +2457,7 @@ func (x *GetRechargeManualsRes) String() string {
 func (*GetRechargeManualsRes) ProtoMessage() {}
 
 func (x *GetRechargeManualsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[13]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1163,7 +2470,7 @@ func (x *GetRechargeManualsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRechargeManualsRes.ProtoReflect.Descriptor instead.
 func (*GetRechargeManualsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{13}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetRechargeManualsRes) GetList() []*RechargeManualInfo {
@@ -1191,7 +2498,7 @@ type ConfirmPaymentOrderReq struct {
 
 func (x *ConfirmPaymentOrderReq) Reset() {
 	*x = ConfirmPaymentOrderReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[14]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1203,7 +2510,7 @@ func (x *ConfirmPaymentOrderReq) String() string {
 func (*ConfirmPaymentOrderReq) ProtoMessage() {}
 
 func (x *ConfirmPaymentOrderReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[14]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1216,7 +2523,7 @@ func (x *ConfirmPaymentOrderReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfirmPaymentOrderReq.ProtoReflect.Descriptor instead.
 func (*ConfirmPaymentOrderReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{14}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ConfirmPaymentOrderReq) GetId() int64 {
@@ -1244,7 +2551,7 @@ type ConfirmPaymentOrderRes struct {
 
 func (x *ConfirmPaymentOrderRes) Reset() {
 	*x = ConfirmPaymentOrderRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[15]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1256,7 +2563,7 @@ func (x *ConfirmPaymentOrderRes) String() string {
 func (*ConfirmPaymentOrderRes) ProtoMessage() {}
 
 func (x *ConfirmPaymentOrderRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[15]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1269,7 +2576,7 @@ func (x *ConfirmPaymentOrderRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfirmPaymentOrderRes.ProtoReflect.Descriptor instead.
 func (*ConfirmPaymentOrderRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{15}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ConfirmPaymentOrderRes) GetSuccess() bool {
@@ -1303,7 +2610,7 @@ type GetWithdrawsReq struct {
 
 func (x *GetWithdrawsReq) Reset() {
 	*x = GetWithdrawsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[16]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1315,7 +2622,7 @@ func (x *GetWithdrawsReq) String() string {
 func (*GetWithdrawsReq) ProtoMessage() {}
 
 func (x *GetWithdrawsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[16]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1328,7 +2635,7 @@ func (x *GetWithdrawsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWithdrawsReq.ProtoReflect.Descriptor instead.
 func (*GetWithdrawsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{16}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *GetWithdrawsReq) GetUsername() string {
@@ -1414,7 +2721,7 @@ type WithdrawInfo struct {
 
 func (x *WithdrawInfo) Reset() {
 	*x = WithdrawInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[17]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1426,7 +2733,7 @@ func (x *WithdrawInfo) String() string {
 func (*WithdrawInfo) ProtoMessage() {}
 
 func (x *WithdrawInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[17]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1439,7 +2746,7 @@ func (x *WithdrawInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawInfo.ProtoReflect.Descriptor instead.
 func (*WithdrawInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{17}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *WithdrawInfo) GetId() int64 {
@@ -1579,7 +2886,7 @@ type GetWithdrawsRes struct {
 
 func (x *GetWithdrawsRes) Reset() {
 	*x = GetWithdrawsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[18]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1591,7 +2898,7 @@ func (x *GetWithdrawsRes) String() string {
 func (*GetWithdrawsRes) ProtoMessage() {}
 
 func (x *GetWithdrawsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[18]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1604,7 +2911,7 @@ func (x *GetWithdrawsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWithdrawsRes.ProtoReflect.Descriptor instead.
 func (*GetWithdrawsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{18}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *GetWithdrawsRes) GetList() []*WithdrawInfo {
@@ -1636,7 +2943,7 @@ type GetWithdrawManualsReq struct {
 
 func (x *GetWithdrawManualsReq) Reset() {
 	*x = GetWithdrawManualsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[19]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1648,7 +2955,7 @@ func (x *GetWithdrawManualsReq) String() string {
 func (*GetWithdrawManualsReq) ProtoMessage() {}
 
 func (x *GetWithdrawManualsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[19]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1661,7 +2968,7 @@ func (x *GetWithdrawManualsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWithdrawManualsReq.ProtoReflect.Descriptor instead.
 func (*GetWithdrawManualsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{19}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *GetWithdrawManualsReq) GetUsername() string {
@@ -1726,7 +3033,7 @@ type WithdrawManualInfo struct {
 
 func (x *WithdrawManualInfo) Reset() {
 	*x = WithdrawManualInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[20]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1738,7 +3045,7 @@ func (x *WithdrawManualInfo) String() string {
 func (*WithdrawManualInfo) ProtoMessage() {}
 
 func (x *WithdrawManualInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[20]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1751,7 +3058,7 @@ func (x *WithdrawManualInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawManualInfo.ProtoReflect.Descriptor instead.
 func (*WithdrawManualInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{20}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *WithdrawManualInfo) GetId() int64 {
@@ -1842,7 +3149,7 @@ type GetWithdrawManualsRes struct {
 
 func (x *GetWithdrawManualsRes) Reset() {
 	*x = GetWithdrawManualsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[21]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1854,7 +3161,7 @@ func (x *GetWithdrawManualsRes) String() string {
 func (*GetWithdrawManualsRes) ProtoMessage() {}
 
 func (x *GetWithdrawManualsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[21]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1867,7 +3174,7 @@ func (x *GetWithdrawManualsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWithdrawManualsRes.ProtoReflect.Descriptor instead.
 func (*GetWithdrawManualsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{21}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *GetWithdrawManualsRes) GetList() []*WithdrawManualInfo {
@@ -1894,7 +3201,7 @@ type GetWithdrawReviewReq struct {
 
 func (x *GetWithdrawReviewReq) Reset() {
 	*x = GetWithdrawReviewReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[22]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1906,7 +3213,7 @@ func (x *GetWithdrawReviewReq) String() string {
 func (*GetWithdrawReviewReq) ProtoMessage() {}
 
 func (x *GetWithdrawReviewReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[22]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1919,7 +3226,7 @@ func (x *GetWithdrawReviewReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWithdrawReviewReq.ProtoReflect.Descriptor instead.
 func (*GetWithdrawReviewReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{22}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *GetWithdrawReviewReq) GetId() int64 {
@@ -1970,7 +3277,7 @@ type WithdrawReviewInfo struct {
 
 func (x *WithdrawReviewInfo) Reset() {
 	*x = WithdrawReviewInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[23]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1982,7 +3289,7 @@ func (x *WithdrawReviewInfo) String() string {
 func (*WithdrawReviewInfo) ProtoMessage() {}
 
 func (x *WithdrawReviewInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[23]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1995,7 +3302,7 @@ func (x *WithdrawReviewInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawReviewInfo.ProtoReflect.Descriptor instead.
 func (*WithdrawReviewInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{23}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *WithdrawReviewInfo) GetUserId() int32 {
@@ -2204,7 +3511,7 @@ type GetWithdrawReviewRes struct {
 
 func (x *GetWithdrawReviewRes) Reset() {
 	*x = GetWithdrawReviewRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[24]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2216,7 +3523,7 @@ func (x *GetWithdrawReviewRes) String() string {
 func (*GetWithdrawReviewRes) ProtoMessage() {}
 
 func (x *GetWithdrawReviewRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[24]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2229,7 +3536,7 @@ func (x *GetWithdrawReviewRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWithdrawReviewRes.ProtoReflect.Descriptor instead.
 func (*GetWithdrawReviewRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{24}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *GetWithdrawReviewRes) GetData() *WithdrawReviewInfo {
@@ -2252,7 +3559,7 @@ type DealWithWithdrawReq struct {
 
 func (x *DealWithWithdrawReq) Reset() {
 	*x = DealWithWithdrawReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[25]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2264,7 +3571,7 @@ func (x *DealWithWithdrawReq) String() string {
 func (*DealWithWithdrawReq) ProtoMessage() {}
 
 func (x *DealWithWithdrawReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[25]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2277,7 +3584,7 @@ func (x *DealWithWithdrawReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DealWithWithdrawReq.ProtoReflect.Descriptor instead.
 func (*DealWithWithdrawReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{25}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *DealWithWithdrawReq) GetId() int64 {
@@ -2319,7 +3626,7 @@ type DealWithWithdrawRes struct {
 
 func (x *DealWithWithdrawRes) Reset() {
 	*x = DealWithWithdrawRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[26]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2331,7 +3638,7 @@ func (x *DealWithWithdrawRes) String() string {
 func (*DealWithWithdrawRes) ProtoMessage() {}
 
 func (x *DealWithWithdrawRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[26]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2344,7 +3651,7 @@ func (x *DealWithWithdrawRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DealWithWithdrawRes.ProtoReflect.Descriptor instead.
 func (*DealWithWithdrawRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{26}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *DealWithWithdrawRes) GetSuccess() bool {
@@ -2371,7 +3678,7 @@ type QueryUserBalanceReq struct {
 
 func (x *QueryUserBalanceReq) Reset() {
 	*x = QueryUserBalanceReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[27]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2383,7 +3690,7 @@ func (x *QueryUserBalanceReq) String() string {
 func (*QueryUserBalanceReq) ProtoMessage() {}
 
 func (x *QueryUserBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[27]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2396,7 +3703,7 @@ func (x *QueryUserBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryUserBalanceReq.ProtoReflect.Descriptor instead.
 func (*QueryUserBalanceReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{27}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *QueryUserBalanceReq) GetUserId() int32 {
@@ -2421,7 +3728,7 @@ type UserBalanceInfo struct {
 
 func (x *UserBalanceInfo) Reset() {
 	*x = UserBalanceInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[28]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2433,7 +3740,7 @@ func (x *UserBalanceInfo) String() string {
 func (*UserBalanceInfo) ProtoMessage() {}
 
 func (x *UserBalanceInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[28]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2446,7 +3753,7 @@ func (x *UserBalanceInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserBalanceInfo.ProtoReflect.Descriptor instead.
 func (*UserBalanceInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{28}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *UserBalanceInfo) GetUserId() int32 {
@@ -2501,7 +3808,7 @@ type QueryUserBalanceRes struct {
 
 func (x *QueryUserBalanceRes) Reset() {
 	*x = QueryUserBalanceRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[29]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2513,7 +3820,7 @@ func (x *QueryUserBalanceRes) String() string {
 func (*QueryUserBalanceRes) ProtoMessage() {}
 
 func (x *QueryUserBalanceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[29]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2526,7 +3833,7 @@ func (x *QueryUserBalanceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryUserBalanceRes.ProtoReflect.Descriptor instead.
 func (*QueryUserBalanceRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{29}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *QueryUserBalanceRes) GetData() *UserBalanceInfo {
@@ -2547,7 +3854,7 @@ type QueryGameBalanceReq struct {
 
 func (x *QueryGameBalanceReq) Reset() {
 	*x = QueryGameBalanceReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[30]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2559,7 +3866,7 @@ func (x *QueryGameBalanceReq) String() string {
 func (*QueryGameBalanceReq) ProtoMessage() {}
 
 func (x *QueryGameBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[30]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2572,7 +3879,7 @@ func (x *QueryGameBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryGameBalanceReq.ProtoReflect.Descriptor instead.
 func (*QueryGameBalanceReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{30}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *QueryGameBalanceReq) GetGameId() int32 {
@@ -2604,7 +3911,7 @@ type GameBalanceInfo struct {
 
 func (x *GameBalanceInfo) Reset() {
 	*x = GameBalanceInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[31]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2616,7 +3923,7 @@ func (x *GameBalanceInfo) String() string {
 func (*GameBalanceInfo) ProtoMessage() {}
 
 func (x *GameBalanceInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[31]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2629,7 +3936,7 @@ func (x *GameBalanceInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameBalanceInfo.ProtoReflect.Descriptor instead.
 func (*GameBalanceInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{31}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *GameBalanceInfo) GetGameId() int32 {
@@ -2684,7 +3991,7 @@ type QueryGameBalanceRes struct {
 
 func (x *QueryGameBalanceRes) Reset() {
 	*x = QueryGameBalanceRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[32]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2696,7 +4003,7 @@ func (x *QueryGameBalanceRes) String() string {
 func (*QueryGameBalanceRes) ProtoMessage() {}
 
 func (x *QueryGameBalanceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[32]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2709,7 +4016,7 @@ func (x *QueryGameBalanceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryGameBalanceRes.ProtoReflect.Descriptor instead.
 func (*QueryGameBalanceRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{32}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *QueryGameBalanceRes) GetData() *GameBalanceInfo {
@@ -2732,7 +4039,7 @@ type ManualUserBalanceReq struct {
 
 func (x *ManualUserBalanceReq) Reset() {
 	*x = ManualUserBalanceReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[33]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2744,7 +4051,7 @@ func (x *ManualUserBalanceReq) String() string {
 func (*ManualUserBalanceReq) ProtoMessage() {}
 
 func (x *ManualUserBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[33]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2757,7 +4064,7 @@ func (x *ManualUserBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManualUserBalanceReq.ProtoReflect.Descriptor instead.
 func (*ManualUserBalanceReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{33}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *ManualUserBalanceReq) GetUserId() int32 {
@@ -2801,7 +4108,7 @@ type ManualUserBalanceRes struct {
 
 func (x *ManualUserBalanceRes) Reset() {
 	*x = ManualUserBalanceRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[34]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2813,7 +4120,7 @@ func (x *ManualUserBalanceRes) String() string {
 func (*ManualUserBalanceRes) ProtoMessage() {}
 
 func (x *ManualUserBalanceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[34]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2826,7 +4133,7 @@ func (x *ManualUserBalanceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ManualUserBalanceRes.ProtoReflect.Descriptor instead.
 func (*ManualUserBalanceRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{34}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *ManualUserBalanceRes) GetSuccess() bool {
@@ -2866,7 +4173,7 @@ type GetManualListReq struct {
 
 func (x *GetManualListReq) Reset() {
 	*x = GetManualListReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[35]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2878,7 +4185,7 @@ func (x *GetManualListReq) String() string {
 func (*GetManualListReq) ProtoMessage() {}
 
 func (x *GetManualListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[35]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2891,7 +4198,7 @@ func (x *GetManualListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetManualListReq.ProtoReflect.Descriptor instead.
 func (*GetManualListReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{35}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{50}
 }
 
 // 获取操作类型列表响应
@@ -2904,7 +4211,7 @@ type GetManualListRes struct {
 
 func (x *GetManualListRes) Reset() {
 	*x = GetManualListRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[36]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2916,7 +4223,7 @@ func (x *GetManualListRes) String() string {
 func (*GetManualListRes) ProtoMessage() {}
 
 func (x *GetManualListRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[36]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2929,7 +4236,7 @@ func (x *GetManualListRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetManualListRes.ProtoReflect.Descriptor instead.
 func (*GetManualListRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{36}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *GetManualListRes) GetList() map[int32]string {
@@ -2954,7 +4261,7 @@ type GetFlowRulesReq struct {
 
 func (x *GetFlowRulesReq) Reset() {
 	*x = GetFlowRulesReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[37]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2966,7 +4273,7 @@ func (x *GetFlowRulesReq) String() string {
 func (*GetFlowRulesReq) ProtoMessage() {}
 
 func (x *GetFlowRulesReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[37]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2979,7 +4286,7 @@ func (x *GetFlowRulesReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFlowRulesReq.ProtoReflect.Descriptor instead.
 func (*GetFlowRulesReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{37}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *GetFlowRulesReq) GetSiteId() int32 {
@@ -3044,7 +4351,7 @@ type FlowRuleInfo struct {
 
 func (x *FlowRuleInfo) Reset() {
 	*x = FlowRuleInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[38]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3056,7 +4363,7 @@ func (x *FlowRuleInfo) String() string {
 func (*FlowRuleInfo) ProtoMessage() {}
 
 func (x *FlowRuleInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[38]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3069,7 +4376,7 @@ func (x *FlowRuleInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FlowRuleInfo.ProtoReflect.Descriptor instead.
 func (*FlowRuleInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{38}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *FlowRuleInfo) GetId() int32 {
@@ -3160,7 +4467,7 @@ type GetFlowRulesRes struct {
 
 func (x *GetFlowRulesRes) Reset() {
 	*x = GetFlowRulesRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[39]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3172,7 +4479,7 @@ func (x *GetFlowRulesRes) String() string {
 func (*GetFlowRulesRes) ProtoMessage() {}
 
 func (x *GetFlowRulesRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[39]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3185,7 +4492,7 @@ func (x *GetFlowRulesRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFlowRulesRes.ProtoReflect.Descriptor instead.
 func (*GetFlowRulesRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{39}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *GetFlowRulesRes) GetList() []*FlowRuleInfo {
@@ -3232,7 +4539,7 @@ type FlowRequirementInfo struct {
 
 func (x *FlowRequirementInfo) Reset() {
 	*x = FlowRequirementInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[40]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3244,7 +4551,7 @@ func (x *FlowRequirementInfo) String() string {
 func (*FlowRequirementInfo) ProtoMessage() {}
 
 func (x *FlowRequirementInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[40]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3257,7 +4564,7 @@ func (x *FlowRequirementInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FlowRequirementInfo.ProtoReflect.Descriptor instead.
 func (*FlowRequirementInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{40}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *FlowRequirementInfo) GetId() int64 {
@@ -3425,7 +4732,7 @@ type GetFlowRequirementsReq struct {
 
 func (x *GetFlowRequirementsReq) Reset() {
 	*x = GetFlowRequirementsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[41]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3437,7 +4744,7 @@ func (x *GetFlowRequirementsReq) String() string {
 func (*GetFlowRequirementsReq) ProtoMessage() {}
 
 func (x *GetFlowRequirementsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[41]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3450,7 +4757,7 @@ func (x *GetFlowRequirementsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFlowRequirementsReq.ProtoReflect.Descriptor instead.
 func (*GetFlowRequirementsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{41}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *GetFlowRequirementsReq) GetSiteId() int32 {
@@ -3527,7 +4834,7 @@ type GetFlowRequirementsRes struct {
 
 func (x *GetFlowRequirementsRes) Reset() {
 	*x = GetFlowRequirementsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[42]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3539,7 +4846,7 @@ func (x *GetFlowRequirementsRes) String() string {
 func (*GetFlowRequirementsRes) ProtoMessage() {}
 
 func (x *GetFlowRequirementsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[42]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3552,7 +4859,7 @@ func (x *GetFlowRequirementsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFlowRequirementsRes.ProtoReflect.Descriptor instead.
 func (*GetFlowRequirementsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{42}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *GetFlowRequirementsRes) GetList() []*FlowRequirementInfo {
@@ -3582,7 +4889,7 @@ type UpdateFlowRequirementReq struct {
 
 func (x *UpdateFlowRequirementReq) Reset() {
 	*x = UpdateFlowRequirementReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[43]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3594,7 +4901,7 @@ func (x *UpdateFlowRequirementReq) String() string {
 func (*UpdateFlowRequirementReq) ProtoMessage() {}
 
 func (x *UpdateFlowRequirementReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[43]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3607,7 +4914,7 @@ func (x *UpdateFlowRequirementReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFlowRequirementReq.ProtoReflect.Descriptor instead.
 func (*UpdateFlowRequirementReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{43}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *UpdateFlowRequirementReq) GetId() int64 {
@@ -3649,7 +4956,7 @@ type UpdateFlowRequirementRes struct {
 
 func (x *UpdateFlowRequirementRes) Reset() {
 	*x = UpdateFlowRequirementRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[44]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3661,7 +4968,7 @@ func (x *UpdateFlowRequirementRes) String() string {
 func (*UpdateFlowRequirementRes) ProtoMessage() {}
 
 func (x *UpdateFlowRequirementRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[44]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3674,7 +4981,7 @@ func (x *UpdateFlowRequirementRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFlowRequirementRes.ProtoReflect.Descriptor instead.
 func (*UpdateFlowRequirementRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{44}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *UpdateFlowRequirementRes) GetSuccess() bool {
@@ -3701,7 +5008,7 @@ type GetFlowRuleReq struct {
 
 func (x *GetFlowRuleReq) Reset() {
 	*x = GetFlowRuleReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[45]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3713,7 +5020,7 @@ func (x *GetFlowRuleReq) String() string {
 func (*GetFlowRuleReq) ProtoMessage() {}
 
 func (x *GetFlowRuleReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[45]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3726,7 +5033,7 @@ func (x *GetFlowRuleReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFlowRuleReq.ProtoReflect.Descriptor instead.
 func (*GetFlowRuleReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{45}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *GetFlowRuleReq) GetId() int32 {
@@ -3746,7 +5053,7 @@ type GetFlowRuleRes struct {
 
 func (x *GetFlowRuleRes) Reset() {
 	*x = GetFlowRuleRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[46]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3758,7 +5065,7 @@ func (x *GetFlowRuleRes) String() string {
 func (*GetFlowRuleRes) ProtoMessage() {}
 
 func (x *GetFlowRuleRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[46]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3771,7 +5078,7 @@ func (x *GetFlowRuleRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFlowRuleRes.ProtoReflect.Descriptor instead.
 func (*GetFlowRuleRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{46}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *GetFlowRuleRes) GetInfo() *FlowRuleInfo {
@@ -3797,7 +5104,7 @@ type CreateFlowRuleReq struct {
 
 func (x *CreateFlowRuleReq) Reset() {
 	*x = CreateFlowRuleReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[47]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3809,7 +5116,7 @@ func (x *CreateFlowRuleReq) String() string {
 func (*CreateFlowRuleReq) ProtoMessage() {}
 
 func (x *CreateFlowRuleReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[47]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3822,7 +5129,7 @@ func (x *CreateFlowRuleReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateFlowRuleReq.ProtoReflect.Descriptor instead.
 func (*CreateFlowRuleReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{47}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *CreateFlowRuleReq) GetRuleName() string {
@@ -3886,7 +5193,7 @@ type CreateFlowRuleRes struct {
 
 func (x *CreateFlowRuleRes) Reset() {
 	*x = CreateFlowRuleRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[48]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3898,7 +5205,7 @@ func (x *CreateFlowRuleRes) String() string {
 func (*CreateFlowRuleRes) ProtoMessage() {}
 
 func (x *CreateFlowRuleRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[48]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3911,7 +5218,7 @@ func (x *CreateFlowRuleRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateFlowRuleRes.ProtoReflect.Descriptor instead.
 func (*CreateFlowRuleRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{48}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *CreateFlowRuleRes) GetSuccess() bool {
@@ -3952,7 +5259,7 @@ type UpdateFlowRuleReq struct {
 
 func (x *UpdateFlowRuleReq) Reset() {
 	*x = UpdateFlowRuleReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[49]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3964,7 +5271,7 @@ func (x *UpdateFlowRuleReq) String() string {
 func (*UpdateFlowRuleReq) ProtoMessage() {}
 
 func (x *UpdateFlowRuleReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[49]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3977,7 +5284,7 @@ func (x *UpdateFlowRuleReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFlowRuleReq.ProtoReflect.Descriptor instead.
 func (*UpdateFlowRuleReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{49}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *UpdateFlowRuleReq) GetId() int32 {
@@ -4047,7 +5354,7 @@ type UpdateFlowRuleRes struct {
 
 func (x *UpdateFlowRuleRes) Reset() {
 	*x = UpdateFlowRuleRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[50]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4059,7 +5366,7 @@ func (x *UpdateFlowRuleRes) String() string {
 func (*UpdateFlowRuleRes) ProtoMessage() {}
 
 func (x *UpdateFlowRuleRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[50]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4072,7 +5379,7 @@ func (x *UpdateFlowRuleRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFlowRuleRes.ProtoReflect.Descriptor instead.
 func (*UpdateFlowRuleRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{50}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *UpdateFlowRuleRes) GetSuccess() bool {
@@ -4099,7 +5406,7 @@ type DeleteFlowRuleReq struct {
 
 func (x *DeleteFlowRuleReq) Reset() {
 	*x = DeleteFlowRuleReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[51]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4111,7 +5418,7 @@ func (x *DeleteFlowRuleReq) String() string {
 func (*DeleteFlowRuleReq) ProtoMessage() {}
 
 func (x *DeleteFlowRuleReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[51]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4124,7 +5431,7 @@ func (x *DeleteFlowRuleReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteFlowRuleReq.ProtoReflect.Descriptor instead.
 func (*DeleteFlowRuleReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{51}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *DeleteFlowRuleReq) GetId() int32 {
@@ -4145,7 +5452,7 @@ type DeleteFlowRuleRes struct {
 
 func (x *DeleteFlowRuleRes) Reset() {
 	*x = DeleteFlowRuleRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[52]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4157,7 +5464,7 @@ func (x *DeleteFlowRuleRes) String() string {
 func (*DeleteFlowRuleRes) ProtoMessage() {}
 
 func (x *DeleteFlowRuleRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[52]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4170,7 +5477,7 @@ func (x *DeleteFlowRuleRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteFlowRuleRes.ProtoReflect.Descriptor instead.
 func (*DeleteFlowRuleRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{52}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *DeleteFlowRuleRes) GetSuccess() bool {
@@ -4200,7 +5507,7 @@ type GetSitePaymentsReq struct {
 
 func (x *GetSitePaymentsReq) Reset() {
 	*x = GetSitePaymentsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[53]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4212,7 +5519,7 @@ func (x *GetSitePaymentsReq) String() string {
 func (*GetSitePaymentsReq) ProtoMessage() {}
 
 func (x *GetSitePaymentsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[53]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4225,7 +5532,7 @@ func (x *GetSitePaymentsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSitePaymentsReq.ProtoReflect.Descriptor instead.
 func (*GetSitePaymentsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{53}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *GetSitePaymentsReq) GetPaymentId() int32 {
@@ -4283,7 +5590,7 @@ type SitePaymentInfo struct {
 
 func (x *SitePaymentInfo) Reset() {
 	*x = SitePaymentInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[54]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4295,7 +5602,7 @@ func (x *SitePaymentInfo) String() string {
 func (*SitePaymentInfo) ProtoMessage() {}
 
 func (x *SitePaymentInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[54]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4308,7 +5615,7 @@ func (x *SitePaymentInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SitePaymentInfo.ProtoReflect.Descriptor instead.
 func (*SitePaymentInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{54}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *SitePaymentInfo) GetId() int32 {
@@ -4448,7 +5755,7 @@ type GetSitePaymentsRes struct {
 
 func (x *GetSitePaymentsRes) Reset() {
 	*x = GetSitePaymentsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[55]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4460,7 +5767,7 @@ func (x *GetSitePaymentsRes) String() string {
 func (*GetSitePaymentsRes) ProtoMessage() {}
 
 func (x *GetSitePaymentsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[55]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4473,7 +5780,7 @@ func (x *GetSitePaymentsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSitePaymentsRes.ProtoReflect.Descriptor instead.
 func (*GetSitePaymentsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{55}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *GetSitePaymentsRes) GetList() []*SitePaymentInfo {
@@ -4508,7 +5815,7 @@ type UpdateSitePaymentReq struct {
 
 func (x *UpdateSitePaymentReq) Reset() {
 	*x = UpdateSitePaymentReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[56]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4520,7 +5827,7 @@ func (x *UpdateSitePaymentReq) String() string {
 func (*UpdateSitePaymentReq) ProtoMessage() {}
 
 func (x *UpdateSitePaymentReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[56]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4533,7 +5840,7 @@ func (x *UpdateSitePaymentReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSitePaymentReq.ProtoReflect.Descriptor instead.
 func (*UpdateSitePaymentReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{56}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *UpdateSitePaymentReq) GetId() int32 {
@@ -4610,7 +5917,7 @@ type UpdateSitePaymentRes struct {
 
 func (x *UpdateSitePaymentRes) Reset() {
 	*x = UpdateSitePaymentRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[57]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4622,7 +5929,7 @@ func (x *UpdateSitePaymentRes) String() string {
 func (*UpdateSitePaymentRes) ProtoMessage() {}
 
 func (x *UpdateSitePaymentRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[57]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4635,7 +5942,7 @@ func (x *UpdateSitePaymentRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSitePaymentRes.ProtoReflect.Descriptor instead.
 func (*UpdateSitePaymentRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{57}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *UpdateSitePaymentRes) GetSuccess() bool {
@@ -4665,7 +5972,7 @@ type GetSiteWithdrawsReq struct {
 
 func (x *GetSiteWithdrawsReq) Reset() {
 	*x = GetSiteWithdrawsReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[58]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4677,7 +5984,7 @@ func (x *GetSiteWithdrawsReq) String() string {
 func (*GetSiteWithdrawsReq) ProtoMessage() {}
 
 func (x *GetSiteWithdrawsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[58]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4690,7 +5997,7 @@ func (x *GetSiteWithdrawsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSiteWithdrawsReq.ProtoReflect.Descriptor instead.
 func (*GetSiteWithdrawsReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{58}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *GetSiteWithdrawsReq) GetWithdrawId() int32 {
@@ -4748,7 +6055,7 @@ type SiteWithdrawInfo struct {
 
 func (x *SiteWithdrawInfo) Reset() {
 	*x = SiteWithdrawInfo{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[59]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4760,7 +6067,7 @@ func (x *SiteWithdrawInfo) String() string {
 func (*SiteWithdrawInfo) ProtoMessage() {}
 
 func (x *SiteWithdrawInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[59]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4773,7 +6080,7 @@ func (x *SiteWithdrawInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SiteWithdrawInfo.ProtoReflect.Descriptor instead.
 func (*SiteWithdrawInfo) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{59}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *SiteWithdrawInfo) GetId() int32 {
@@ -4913,7 +6220,7 @@ type GetSiteWithdrawsRes struct {
 
 func (x *GetSiteWithdrawsRes) Reset() {
 	*x = GetSiteWithdrawsRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[60]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4925,7 +6232,7 @@ func (x *GetSiteWithdrawsRes) String() string {
 func (*GetSiteWithdrawsRes) ProtoMessage() {}
 
 func (x *GetSiteWithdrawsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[60]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4938,7 +6245,7 @@ func (x *GetSiteWithdrawsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSiteWithdrawsRes.ProtoReflect.Descriptor instead.
 func (*GetSiteWithdrawsRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{60}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *GetSiteWithdrawsRes) GetList() []*SiteWithdrawInfo {
@@ -4973,7 +6280,7 @@ type UpdateSiteWithdrawReq struct {
 
 func (x *UpdateSiteWithdrawReq) Reset() {
 	*x = UpdateSiteWithdrawReq{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[61]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4985,7 +6292,7 @@ func (x *UpdateSiteWithdrawReq) String() string {
 func (*UpdateSiteWithdrawReq) ProtoMessage() {}
 
 func (x *UpdateSiteWithdrawReq) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[61]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4998,7 +6305,7 @@ func (x *UpdateSiteWithdrawReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSiteWithdrawReq.ProtoReflect.Descriptor instead.
 func (*UpdateSiteWithdrawReq) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{61}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *UpdateSiteWithdrawReq) GetId() int32 {
@@ -5075,7 +6382,7 @@ type UpdateSiteWithdrawRes struct {
 
 func (x *UpdateSiteWithdrawRes) Reset() {
 	*x = UpdateSiteWithdrawRes{}
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[62]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5087,7 +6394,7 @@ func (x *UpdateSiteWithdrawRes) String() string {
 func (*UpdateSiteWithdrawRes) ProtoMessage() {}
 
 func (x *UpdateSiteWithdrawRes) ProtoReflect() protoreflect.Message {
-	mi := &file_backend_balance_v1_balance_proto_msgTypes[62]
+	mi := &file_backend_balance_v1_balance_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5100,7 +6407,7 @@ func (x *UpdateSiteWithdrawRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSiteWithdrawRes.ProtoReflect.Descriptor instead.
 func (*UpdateSiteWithdrawRes) Descriptor() ([]byte, []int) {
-	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{62}
+	return file_backend_balance_v1_balance_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *UpdateSiteWithdrawRes) GetSuccess() bool {
@@ -5170,6 +6477,133 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"changeType\"\\\n" +
 	"\x14GetBalanceChangesRes\x12.\n" +
 	"\x04list\x18\x01 \x03(\v2\x1a.balance.BalanceChangeInfoR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xe4\x01\n" +
+	"\x17GetLuckyBonusRecordsReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x04 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x05 \x01(\tR\aendTime\x12\x12\n" +
+	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\a \x01(\x05R\x04size\x12\x17\n" +
+	"\asite_id\x18\b \x01(\x05R\x06siteId\"\x88\x02\n" +
+	"\x10LuckyBonusRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12\x12\n" +
+	"\x04date\x18\x04 \x01(\tR\x04date\x12\x1d\n" +
+	"\n" +
+	"segment_no\x18\x05 \x01(\x05R\tsegmentNo\x12\x1d\n" +
+	"\n" +
+	"prize_name\x18\x06 \x01(\tR\tprizeName\x12#\n" +
+	"\rreward_amount\x18\a \x01(\x01R\frewardAmount\x12\x19\n" +
+	"\btrade_no\x18\b \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\"^\n" +
+	"\x17GetLuckyBonusRecordsRes\x12-\n" +
+	"\x04list\x18\x01 \x03(\v2\x19.balance.LuckyBonusRecordR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xe6\x01\n" +
+	"\x19GetDepositBonusRecordsReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x04 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x05 \x01(\tR\aendTime\x12\x12\n" +
+	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\a \x01(\x05R\x04size\x12\x17\n" +
+	"\asite_id\x18\b \x01(\x05R\x06siteId\"\xca\x01\n" +
+	"\x12DepositBonusRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12\x12\n" +
+	"\x04date\x18\x04 \x01(\tR\x04date\x12!\n" +
+	"\fbonus_amount\x18\x05 \x01(\x01R\vbonusAmount\x12\x19\n" +
+	"\btrade_no\x18\x06 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\a \x01(\tR\tcreatedAt\"b\n" +
+	"\x19GetDepositBonusRecordsRes\x12/\n" +
+	"\x04list\x18\x01 \x03(\v2\x1b.balance.DepositBonusRecordR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xe7\x01\n" +
+	"\x1aGetRegisterBonusRecordsReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x04 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x05 \x01(\tR\aendTime\x12\x12\n" +
+	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\a \x01(\x05R\x04size\x12\x17\n" +
+	"\asite_id\x18\b \x01(\x05R\x06siteId\"\x89\x02\n" +
+	"\x13RegisterBonusRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12\x12\n" +
+	"\x04date\x18\x04 \x01(\tR\x04date\x12!\n" +
+	"\fbonus_amount\x18\x05 \x01(\x01R\vbonusAmount\x12\x19\n" +
+	"\btrade_no\x18\x06 \x01(\tR\atradeNo\x12\x1f\n" +
+	"\vregister_ip\x18\a \x01(\tR\n" +
+	"registerIp\x12\x1b\n" +
+	"\tdevice_id\x18\b \x01(\tR\bdeviceId\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\"d\n" +
+	"\x1aGetRegisterBonusRecordsRes\x120\n" +
+	"\x04list\x18\x01 \x03(\v2\x1c.balance.RegisterBonusRecordR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xc4\x02\n" +
+	"\x18GetInviteBonusRecordsReq\x12\x1d\n" +
+	"\n" +
+	"inviter_id\x18\x01 \x01(\x05R\tinviterId\x12)\n" +
+	"\x10inviter_username\x18\x02 \x01(\tR\x0finviterUsername\x12\x1d\n" +
+	"\n" +
+	"invitee_id\x18\x03 \x01(\x05R\tinviteeId\x12)\n" +
+	"\x10invitee_username\x18\x04 \x01(\tR\x0finviteeUsername\x12\x19\n" +
+	"\btrade_no\x18\x05 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x06 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\a \x01(\tR\aendTime\x12\x12\n" +
+	"\x04page\x18\b \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\t \x01(\x05R\x04size\x12\x17\n" +
+	"\asite_id\x18\n" +
+	" \x01(\x05R\x06siteId\"\x98\x02\n" +
+	"\x11InviteBonusRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1d\n" +
+	"\n" +
+	"inviter_id\x18\x02 \x01(\x05R\tinviterId\x12!\n" +
+	"\finviter_name\x18\x03 \x01(\tR\vinviterName\x12\x1d\n" +
+	"\n" +
+	"invitee_id\x18\x04 \x01(\x05R\tinviteeId\x12!\n" +
+	"\finvitee_name\x18\x05 \x01(\tR\vinviteeName\x12\x12\n" +
+	"\x04date\x18\x06 \x01(\tR\x04date\x12!\n" +
+	"\fbonus_amount\x18\a \x01(\x01R\vbonusAmount\x12\x19\n" +
+	"\btrade_no\x18\b \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\"`\n" +
+	"\x18GetInviteBonusRecordsRes\x12.\n" +
+	"\x04list\x18\x01 \x03(\v2\x1a.balance.InviteBonusRecordR\x04list\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xe5\x01\n" +
+	"\x18GetSigninBonusRecordsReq\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
+	"\btrade_no\x18\x03 \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x04 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x05 \x01(\tR\aendTime\x12\x12\n" +
+	"\x04page\x18\x06 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\a \x01(\x05R\x04size\x12\x17\n" +
+	"\asite_id\x18\b \x01(\x05R\x06siteId\"\xe0\x01\n" +
+	"\x11SigninBonusRecord\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12\x12\n" +
+	"\x04date\x18\x04 \x01(\tR\x04date\x12\x15\n" +
+	"\x06day_no\x18\x05 \x01(\x05R\x05dayNo\x12!\n" +
+	"\fbonus_amount\x18\x06 \x01(\x01R\vbonusAmount\x12\x19\n" +
+	"\btrade_no\x18\a \x01(\tR\atradeNo\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\b \x01(\tR\tcreatedAt\"`\n" +
+	"\x18GetSigninBonusRecordsRes\x12.\n" +
+	"\x04list\x18\x01 \x03(\v2\x1a.balance.SigninBonusRecordR\x04list\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x05R\x05count\"\xb9\x02\n" +
 	"\x16GetRechargePaymentsReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x18\n" +
@@ -5609,9 +7043,14 @@ const file_backend_balance_v1_balance_proto_rawDesc = "" +
 	"\x04logo\x18\t \x01(\tR\x04logo\"K\n" +
 	"\x15UpdateSiteWithdrawRes\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xff\x0f\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xea\x13\n" +
 	"\aBalance\x12S\n" +
-	"\x11GetBalanceChanges\x12\x1d.balance.GetBalanceChangesReq\x1a\x1d.balance.GetBalanceChangesRes\"\x00\x12G\n" +
+	"\x11GetBalanceChanges\x12\x1d.balance.GetBalanceChangesReq\x1a\x1d.balance.GetBalanceChangesRes\"\x00\x12\\\n" +
+	"\x14GetLuckyBonusRecords\x12 .balance.GetLuckyBonusRecordsReq\x1a .balance.GetLuckyBonusRecordsRes\"\x00\x12b\n" +
+	"\x16GetDepositBonusRecords\x12\".balance.GetDepositBonusRecordsReq\x1a\".balance.GetDepositBonusRecordsRes\"\x00\x12e\n" +
+	"\x17GetRegisterBonusRecords\x12#.balance.GetRegisterBonusRecordsReq\x1a#.balance.GetRegisterBonusRecordsRes\"\x00\x12_\n" +
+	"\x15GetInviteBonusRecords\x12!.balance.GetInviteBonusRecordsReq\x1a!.balance.GetInviteBonusRecordsRes\"\x00\x12_\n" +
+	"\x15GetSigninBonusRecords\x12!.balance.GetSigninBonusRecordsReq\x1a!.balance.GetSigninBonusRecordsRes\"\x00\x12G\n" +
 	"\rGetChangeList\x12\x19.balance.GetChangeListReq\x1a\x19.balance.GetChangeListRes\"\x00\x12Y\n" +
 	"\x13GetRechargePayments\x12\x1f.balance.GetRechargePaymentsReq\x1a\x1f.balance.GetRechargePaymentsRes\"\x00\x12V\n" +
 	"\x12GetRechargeManuals\x12\x1e.balance.GetRechargeManualsReq\x1a\x1e.balance.GetRechargeManualsRes\"\x00\x12Y\n" +
@@ -5649,146 +7088,176 @@ func file_backend_balance_v1_balance_proto_rawDescGZIP() []byte {
 	return file_backend_balance_v1_balance_proto_rawDescData
 }
 
-var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 65)
+var file_backend_balance_v1_balance_proto_msgTypes = make([]protoimpl.MessageInfo, 80)
 var file_backend_balance_v1_balance_proto_goTypes = []any{
-	(*GetFlowOptionsReq)(nil),        // 0: balance.GetFlowOptionsReq
-	(*FlowOptionItem)(nil),           // 1: balance.FlowOptionItem
-	(*GetFlowOptionsRes)(nil),        // 2: balance.GetFlowOptionsRes
-	(*GetChangeListReq)(nil),         // 3: balance.GetChangeListReq
-	(*GetChangeListRes)(nil),         // 4: balance.GetChangeListRes
-	(*GetBalanceChangesReq)(nil),     // 5: balance.GetBalanceChangesReq
-	(*BalanceChangeInfo)(nil),        // 6: balance.BalanceChangeInfo
-	(*GetBalanceChangesRes)(nil),     // 7: balance.GetBalanceChangesRes
-	(*GetRechargePaymentsReq)(nil),   // 8: balance.GetRechargePaymentsReq
-	(*RechargePaymentInfo)(nil),      // 9: balance.RechargePaymentInfo
-	(*GetRechargePaymentsRes)(nil),   // 10: balance.GetRechargePaymentsRes
-	(*GetRechargeManualsReq)(nil),    // 11: balance.GetRechargeManualsReq
-	(*RechargeManualInfo)(nil),       // 12: balance.RechargeManualInfo
-	(*GetRechargeManualsRes)(nil),    // 13: balance.GetRechargeManualsRes
-	(*ConfirmPaymentOrderReq)(nil),   // 14: balance.ConfirmPaymentOrderReq
-	(*ConfirmPaymentOrderRes)(nil),   // 15: balance.ConfirmPaymentOrderRes
-	(*GetWithdrawsReq)(nil),          // 16: balance.GetWithdrawsReq
-	(*WithdrawInfo)(nil),             // 17: balance.WithdrawInfo
-	(*GetWithdrawsRes)(nil),          // 18: balance.GetWithdrawsRes
-	(*GetWithdrawManualsReq)(nil),    // 19: balance.GetWithdrawManualsReq
-	(*WithdrawManualInfo)(nil),       // 20: balance.WithdrawManualInfo
-	(*GetWithdrawManualsRes)(nil),    // 21: balance.GetWithdrawManualsRes
-	(*GetWithdrawReviewReq)(nil),     // 22: balance.GetWithdrawReviewReq
-	(*WithdrawReviewInfo)(nil),       // 23: balance.WithdrawReviewInfo
-	(*GetWithdrawReviewRes)(nil),     // 24: balance.GetWithdrawReviewRes
-	(*DealWithWithdrawReq)(nil),      // 25: balance.DealWithWithdrawReq
-	(*DealWithWithdrawRes)(nil),      // 26: balance.DealWithWithdrawRes
-	(*QueryUserBalanceReq)(nil),      // 27: balance.QueryUserBalanceReq
-	(*UserBalanceInfo)(nil),          // 28: balance.UserBalanceInfo
-	(*QueryUserBalanceRes)(nil),      // 29: balance.QueryUserBalanceRes
-	(*QueryGameBalanceReq)(nil),      // 30: balance.QueryGameBalanceReq
-	(*GameBalanceInfo)(nil),          // 31: balance.GameBalanceInfo
-	(*QueryGameBalanceRes)(nil),      // 32: balance.QueryGameBalanceRes
-	(*ManualUserBalanceReq)(nil),     // 33: balance.ManualUserBalanceReq
-	(*ManualUserBalanceRes)(nil),     // 34: balance.ManualUserBalanceRes
-	(*GetManualListReq)(nil),         // 35: balance.GetManualListReq
-	(*GetManualListRes)(nil),         // 36: balance.GetManualListRes
-	(*GetFlowRulesReq)(nil),          // 37: balance.GetFlowRulesReq
-	(*FlowRuleInfo)(nil),             // 38: balance.FlowRuleInfo
-	(*GetFlowRulesRes)(nil),          // 39: balance.GetFlowRulesRes
-	(*FlowRequirementInfo)(nil),      // 40: balance.FlowRequirementInfo
-	(*GetFlowRequirementsReq)(nil),   // 41: balance.GetFlowRequirementsReq
-	(*GetFlowRequirementsRes)(nil),   // 42: balance.GetFlowRequirementsRes
-	(*UpdateFlowRequirementReq)(nil), // 43: balance.UpdateFlowRequirementReq
-	(*UpdateFlowRequirementRes)(nil), // 44: balance.UpdateFlowRequirementRes
-	(*GetFlowRuleReq)(nil),           // 45: balance.GetFlowRuleReq
-	(*GetFlowRuleRes)(nil),           // 46: balance.GetFlowRuleRes
-	(*CreateFlowRuleReq)(nil),        // 47: balance.CreateFlowRuleReq
-	(*CreateFlowRuleRes)(nil),        // 48: balance.CreateFlowRuleRes
-	(*UpdateFlowRuleReq)(nil),        // 49: balance.UpdateFlowRuleReq
-	(*UpdateFlowRuleRes)(nil),        // 50: balance.UpdateFlowRuleRes
-	(*DeleteFlowRuleReq)(nil),        // 51: balance.DeleteFlowRuleReq
-	(*DeleteFlowRuleRes)(nil),        // 52: balance.DeleteFlowRuleRes
-	(*GetSitePaymentsReq)(nil),       // 53: balance.GetSitePaymentsReq
-	(*SitePaymentInfo)(nil),          // 54: balance.SitePaymentInfo
-	(*GetSitePaymentsRes)(nil),       // 55: balance.GetSitePaymentsRes
-	(*UpdateSitePaymentReq)(nil),     // 56: balance.UpdateSitePaymentReq
-	(*UpdateSitePaymentRes)(nil),     // 57: balance.UpdateSitePaymentRes
-	(*GetSiteWithdrawsReq)(nil),      // 58: balance.GetSiteWithdrawsReq
-	(*SiteWithdrawInfo)(nil),         // 59: balance.SiteWithdrawInfo
-	(*GetSiteWithdrawsRes)(nil),      // 60: balance.GetSiteWithdrawsRes
-	(*UpdateSiteWithdrawReq)(nil),    // 61: balance.UpdateSiteWithdrawReq
-	(*UpdateSiteWithdrawRes)(nil),    // 62: balance.UpdateSiteWithdrawRes
-	nil,                              // 63: balance.GetChangeListRes.ListEntry
-	nil,                              // 64: balance.GetManualListRes.ListEntry
+	(*GetFlowOptionsReq)(nil),          // 0: balance.GetFlowOptionsReq
+	(*FlowOptionItem)(nil),             // 1: balance.FlowOptionItem
+	(*GetFlowOptionsRes)(nil),          // 2: balance.GetFlowOptionsRes
+	(*GetChangeListReq)(nil),           // 3: balance.GetChangeListReq
+	(*GetChangeListRes)(nil),           // 4: balance.GetChangeListRes
+	(*GetBalanceChangesReq)(nil),       // 5: balance.GetBalanceChangesReq
+	(*BalanceChangeInfo)(nil),          // 6: balance.BalanceChangeInfo
+	(*GetBalanceChangesRes)(nil),       // 7: balance.GetBalanceChangesRes
+	(*GetLuckyBonusRecordsReq)(nil),    // 8: balance.GetLuckyBonusRecordsReq
+	(*LuckyBonusRecord)(nil),           // 9: balance.LuckyBonusRecord
+	(*GetLuckyBonusRecordsRes)(nil),    // 10: balance.GetLuckyBonusRecordsRes
+	(*GetDepositBonusRecordsReq)(nil),  // 11: balance.GetDepositBonusRecordsReq
+	(*DepositBonusRecord)(nil),         // 12: balance.DepositBonusRecord
+	(*GetDepositBonusRecordsRes)(nil),  // 13: balance.GetDepositBonusRecordsRes
+	(*GetRegisterBonusRecordsReq)(nil), // 14: balance.GetRegisterBonusRecordsReq
+	(*RegisterBonusRecord)(nil),        // 15: balance.RegisterBonusRecord
+	(*GetRegisterBonusRecordsRes)(nil), // 16: balance.GetRegisterBonusRecordsRes
+	(*GetInviteBonusRecordsReq)(nil),   // 17: balance.GetInviteBonusRecordsReq
+	(*InviteBonusRecord)(nil),          // 18: balance.InviteBonusRecord
+	(*GetInviteBonusRecordsRes)(nil),   // 19: balance.GetInviteBonusRecordsRes
+	(*GetSigninBonusRecordsReq)(nil),   // 20: balance.GetSigninBonusRecordsReq
+	(*SigninBonusRecord)(nil),          // 21: balance.SigninBonusRecord
+	(*GetSigninBonusRecordsRes)(nil),   // 22: balance.GetSigninBonusRecordsRes
+	(*GetRechargePaymentsReq)(nil),     // 23: balance.GetRechargePaymentsReq
+	(*RechargePaymentInfo)(nil),        // 24: balance.RechargePaymentInfo
+	(*GetRechargePaymentsRes)(nil),     // 25: balance.GetRechargePaymentsRes
+	(*GetRechargeManualsReq)(nil),      // 26: balance.GetRechargeManualsReq
+	(*RechargeManualInfo)(nil),         // 27: balance.RechargeManualInfo
+	(*GetRechargeManualsRes)(nil),      // 28: balance.GetRechargeManualsRes
+	(*ConfirmPaymentOrderReq)(nil),     // 29: balance.ConfirmPaymentOrderReq
+	(*ConfirmPaymentOrderRes)(nil),     // 30: balance.ConfirmPaymentOrderRes
+	(*GetWithdrawsReq)(nil),            // 31: balance.GetWithdrawsReq
+	(*WithdrawInfo)(nil),               // 32: balance.WithdrawInfo
+	(*GetWithdrawsRes)(nil),            // 33: balance.GetWithdrawsRes
+	(*GetWithdrawManualsReq)(nil),      // 34: balance.GetWithdrawManualsReq
+	(*WithdrawManualInfo)(nil),         // 35: balance.WithdrawManualInfo
+	(*GetWithdrawManualsRes)(nil),      // 36: balance.GetWithdrawManualsRes
+	(*GetWithdrawReviewReq)(nil),       // 37: balance.GetWithdrawReviewReq
+	(*WithdrawReviewInfo)(nil),         // 38: balance.WithdrawReviewInfo
+	(*GetWithdrawReviewRes)(nil),       // 39: balance.GetWithdrawReviewRes
+	(*DealWithWithdrawReq)(nil),        // 40: balance.DealWithWithdrawReq
+	(*DealWithWithdrawRes)(nil),        // 41: balance.DealWithWithdrawRes
+	(*QueryUserBalanceReq)(nil),        // 42: balance.QueryUserBalanceReq
+	(*UserBalanceInfo)(nil),            // 43: balance.UserBalanceInfo
+	(*QueryUserBalanceRes)(nil),        // 44: balance.QueryUserBalanceRes
+	(*QueryGameBalanceReq)(nil),        // 45: balance.QueryGameBalanceReq
+	(*GameBalanceInfo)(nil),            // 46: balance.GameBalanceInfo
+	(*QueryGameBalanceRes)(nil),        // 47: balance.QueryGameBalanceRes
+	(*ManualUserBalanceReq)(nil),       // 48: balance.ManualUserBalanceReq
+	(*ManualUserBalanceRes)(nil),       // 49: balance.ManualUserBalanceRes
+	(*GetManualListReq)(nil),           // 50: balance.GetManualListReq
+	(*GetManualListRes)(nil),           // 51: balance.GetManualListRes
+	(*GetFlowRulesReq)(nil),            // 52: balance.GetFlowRulesReq
+	(*FlowRuleInfo)(nil),               // 53: balance.FlowRuleInfo
+	(*GetFlowRulesRes)(nil),            // 54: balance.GetFlowRulesRes
+	(*FlowRequirementInfo)(nil),        // 55: balance.FlowRequirementInfo
+	(*GetFlowRequirementsReq)(nil),     // 56: balance.GetFlowRequirementsReq
+	(*GetFlowRequirementsRes)(nil),     // 57: balance.GetFlowRequirementsRes
+	(*UpdateFlowRequirementReq)(nil),   // 58: balance.UpdateFlowRequirementReq
+	(*UpdateFlowRequirementRes)(nil),   // 59: balance.UpdateFlowRequirementRes
+	(*GetFlowRuleReq)(nil),             // 60: balance.GetFlowRuleReq
+	(*GetFlowRuleRes)(nil),             // 61: balance.GetFlowRuleRes
+	(*CreateFlowRuleReq)(nil),          // 62: balance.CreateFlowRuleReq
+	(*CreateFlowRuleRes)(nil),          // 63: balance.CreateFlowRuleRes
+	(*UpdateFlowRuleReq)(nil),          // 64: balance.UpdateFlowRuleReq
+	(*UpdateFlowRuleRes)(nil),          // 65: balance.UpdateFlowRuleRes
+	(*DeleteFlowRuleReq)(nil),          // 66: balance.DeleteFlowRuleReq
+	(*DeleteFlowRuleRes)(nil),          // 67: balance.DeleteFlowRuleRes
+	(*GetSitePaymentsReq)(nil),         // 68: balance.GetSitePaymentsReq
+	(*SitePaymentInfo)(nil),            // 69: balance.SitePaymentInfo
+	(*GetSitePaymentsRes)(nil),         // 70: balance.GetSitePaymentsRes
+	(*UpdateSitePaymentReq)(nil),       // 71: balance.UpdateSitePaymentReq
+	(*UpdateSitePaymentRes)(nil),       // 72: balance.UpdateSitePaymentRes
+	(*GetSiteWithdrawsReq)(nil),        // 73: balance.GetSiteWithdrawsReq
+	(*SiteWithdrawInfo)(nil),           // 74: balance.SiteWithdrawInfo
+	(*GetSiteWithdrawsRes)(nil),        // 75: balance.GetSiteWithdrawsRes
+	(*UpdateSiteWithdrawReq)(nil),      // 76: balance.UpdateSiteWithdrawReq
+	(*UpdateSiteWithdrawRes)(nil),      // 77: balance.UpdateSiteWithdrawRes
+	nil,                                // 78: balance.GetChangeListRes.ListEntry
+	nil,                                // 79: balance.GetManualListRes.ListEntry
 }
 var file_backend_balance_v1_balance_proto_depIdxs = []int32{
 	1,  // 0: balance.GetFlowOptionsRes.list:type_name -> balance.FlowOptionItem
-	63, // 1: balance.GetChangeListRes.list:type_name -> balance.GetChangeListRes.ListEntry
+	78, // 1: balance.GetChangeListRes.list:type_name -> balance.GetChangeListRes.ListEntry
 	6,  // 2: balance.GetBalanceChangesRes.list:type_name -> balance.BalanceChangeInfo
-	9,  // 3: balance.GetRechargePaymentsRes.list:type_name -> balance.RechargePaymentInfo
-	12, // 4: balance.GetRechargeManualsRes.list:type_name -> balance.RechargeManualInfo
-	17, // 5: balance.GetWithdrawsRes.list:type_name -> balance.WithdrawInfo
-	20, // 6: balance.GetWithdrawManualsRes.list:type_name -> balance.WithdrawManualInfo
-	23, // 7: balance.GetWithdrawReviewRes.data:type_name -> balance.WithdrawReviewInfo
-	28, // 8: balance.QueryUserBalanceRes.data:type_name -> balance.UserBalanceInfo
-	31, // 9: balance.QueryGameBalanceRes.data:type_name -> balance.GameBalanceInfo
-	64, // 10: balance.GetManualListRes.list:type_name -> balance.GetManualListRes.ListEntry
-	38, // 11: balance.GetFlowRulesRes.list:type_name -> balance.FlowRuleInfo
-	40, // 12: balance.GetFlowRequirementsRes.list:type_name -> balance.FlowRequirementInfo
-	38, // 13: balance.GetFlowRuleRes.info:type_name -> balance.FlowRuleInfo
-	54, // 14: balance.GetSitePaymentsRes.list:type_name -> balance.SitePaymentInfo
-	59, // 15: balance.GetSiteWithdrawsRes.list:type_name -> balance.SiteWithdrawInfo
-	5,  // 16: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
-	3,  // 17: balance.Balance.GetChangeList:input_type -> balance.GetChangeListReq
-	8,  // 18: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
-	11, // 19: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
-	14, // 20: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
-	16, // 21: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
-	19, // 22: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
-	22, // 23: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
-	25, // 24: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
-	27, // 25: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
-	30, // 26: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
-	33, // 27: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
-	53, // 28: balance.Balance.GetSitePayments:input_type -> balance.GetSitePaymentsReq
-	56, // 29: balance.Balance.UpdateSitePayment:input_type -> balance.UpdateSitePaymentReq
-	58, // 30: balance.Balance.GetSiteWithdraws:input_type -> balance.GetSiteWithdrawsReq
-	61, // 31: balance.Balance.UpdateSiteWithdraw:input_type -> balance.UpdateSiteWithdrawReq
-	35, // 32: balance.Balance.GetManualList:input_type -> balance.GetManualListReq
-	37, // 33: balance.Balance.GetFlowRules:input_type -> balance.GetFlowRulesReq
-	45, // 34: balance.Balance.GetFlowRule:input_type -> balance.GetFlowRuleReq
-	47, // 35: balance.Balance.CreateFlowRule:input_type -> balance.CreateFlowRuleReq
-	49, // 36: balance.Balance.UpdateFlowRule:input_type -> balance.UpdateFlowRuleReq
-	51, // 37: balance.Balance.DeleteFlowRule:input_type -> balance.DeleteFlowRuleReq
-	0,  // 38: balance.Balance.GetFlowOptions:input_type -> balance.GetFlowOptionsReq
-	41, // 39: balance.Balance.GetFlowRequirements:input_type -> balance.GetFlowRequirementsReq
-	43, // 40: balance.Balance.UpdateFlowRequirement:input_type -> balance.UpdateFlowRequirementReq
-	7,  // 41: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
-	4,  // 42: balance.Balance.GetChangeList:output_type -> balance.GetChangeListRes
-	10, // 43: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
-	13, // 44: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
-	15, // 45: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
-	18, // 46: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
-	21, // 47: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
-	24, // 48: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
-	26, // 49: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
-	29, // 50: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
-	32, // 51: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
-	34, // 52: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
-	55, // 53: balance.Balance.GetSitePayments:output_type -> balance.GetSitePaymentsRes
-	57, // 54: balance.Balance.UpdateSitePayment:output_type -> balance.UpdateSitePaymentRes
-	60, // 55: balance.Balance.GetSiteWithdraws:output_type -> balance.GetSiteWithdrawsRes
-	62, // 56: balance.Balance.UpdateSiteWithdraw:output_type -> balance.UpdateSiteWithdrawRes
-	36, // 57: balance.Balance.GetManualList:output_type -> balance.GetManualListRes
-	39, // 58: balance.Balance.GetFlowRules:output_type -> balance.GetFlowRulesRes
-	46, // 59: balance.Balance.GetFlowRule:output_type -> balance.GetFlowRuleRes
-	48, // 60: balance.Balance.CreateFlowRule:output_type -> balance.CreateFlowRuleRes
-	50, // 61: balance.Balance.UpdateFlowRule:output_type -> balance.UpdateFlowRuleRes
-	52, // 62: balance.Balance.DeleteFlowRule:output_type -> balance.DeleteFlowRuleRes
-	2,  // 63: balance.Balance.GetFlowOptions:output_type -> balance.GetFlowOptionsRes
-	42, // 64: balance.Balance.GetFlowRequirements:output_type -> balance.GetFlowRequirementsRes
-	44, // 65: balance.Balance.UpdateFlowRequirement:output_type -> balance.UpdateFlowRequirementRes
-	41, // [41:66] is the sub-list for method output_type
-	16, // [16:41] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	9,  // 3: balance.GetLuckyBonusRecordsRes.list:type_name -> balance.LuckyBonusRecord
+	12, // 4: balance.GetDepositBonusRecordsRes.list:type_name -> balance.DepositBonusRecord
+	15, // 5: balance.GetRegisterBonusRecordsRes.list:type_name -> balance.RegisterBonusRecord
+	18, // 6: balance.GetInviteBonusRecordsRes.list:type_name -> balance.InviteBonusRecord
+	21, // 7: balance.GetSigninBonusRecordsRes.list:type_name -> balance.SigninBonusRecord
+	24, // 8: balance.GetRechargePaymentsRes.list:type_name -> balance.RechargePaymentInfo
+	27, // 9: balance.GetRechargeManualsRes.list:type_name -> balance.RechargeManualInfo
+	32, // 10: balance.GetWithdrawsRes.list:type_name -> balance.WithdrawInfo
+	35, // 11: balance.GetWithdrawManualsRes.list:type_name -> balance.WithdrawManualInfo
+	38, // 12: balance.GetWithdrawReviewRes.data:type_name -> balance.WithdrawReviewInfo
+	43, // 13: balance.QueryUserBalanceRes.data:type_name -> balance.UserBalanceInfo
+	46, // 14: balance.QueryGameBalanceRes.data:type_name -> balance.GameBalanceInfo
+	79, // 15: balance.GetManualListRes.list:type_name -> balance.GetManualListRes.ListEntry
+	53, // 16: balance.GetFlowRulesRes.list:type_name -> balance.FlowRuleInfo
+	55, // 17: balance.GetFlowRequirementsRes.list:type_name -> balance.FlowRequirementInfo
+	53, // 18: balance.GetFlowRuleRes.info:type_name -> balance.FlowRuleInfo
+	69, // 19: balance.GetSitePaymentsRes.list:type_name -> balance.SitePaymentInfo
+	74, // 20: balance.GetSiteWithdrawsRes.list:type_name -> balance.SiteWithdrawInfo
+	5,  // 21: balance.Balance.GetBalanceChanges:input_type -> balance.GetBalanceChangesReq
+	8,  // 22: balance.Balance.GetLuckyBonusRecords:input_type -> balance.GetLuckyBonusRecordsReq
+	11, // 23: balance.Balance.GetDepositBonusRecords:input_type -> balance.GetDepositBonusRecordsReq
+	14, // 24: balance.Balance.GetRegisterBonusRecords:input_type -> balance.GetRegisterBonusRecordsReq
+	17, // 25: balance.Balance.GetInviteBonusRecords:input_type -> balance.GetInviteBonusRecordsReq
+	20, // 26: balance.Balance.GetSigninBonusRecords:input_type -> balance.GetSigninBonusRecordsReq
+	3,  // 27: balance.Balance.GetChangeList:input_type -> balance.GetChangeListReq
+	23, // 28: balance.Balance.GetRechargePayments:input_type -> balance.GetRechargePaymentsReq
+	26, // 29: balance.Balance.GetRechargeManuals:input_type -> balance.GetRechargeManualsReq
+	29, // 30: balance.Balance.ConfirmPaymentOrder:input_type -> balance.ConfirmPaymentOrderReq
+	31, // 31: balance.Balance.GetWithdraws:input_type -> balance.GetWithdrawsReq
+	34, // 32: balance.Balance.GetWithdrawManuals:input_type -> balance.GetWithdrawManualsReq
+	37, // 33: balance.Balance.GetWithdrawReview:input_type -> balance.GetWithdrawReviewReq
+	40, // 34: balance.Balance.DealWithWithdraw:input_type -> balance.DealWithWithdrawReq
+	42, // 35: balance.Balance.QueryUserBalance:input_type -> balance.QueryUserBalanceReq
+	45, // 36: balance.Balance.QueryGameBalance:input_type -> balance.QueryGameBalanceReq
+	48, // 37: balance.Balance.ManualUserBalance:input_type -> balance.ManualUserBalanceReq
+	68, // 38: balance.Balance.GetSitePayments:input_type -> balance.GetSitePaymentsReq
+	71, // 39: balance.Balance.UpdateSitePayment:input_type -> balance.UpdateSitePaymentReq
+	73, // 40: balance.Balance.GetSiteWithdraws:input_type -> balance.GetSiteWithdrawsReq
+	76, // 41: balance.Balance.UpdateSiteWithdraw:input_type -> balance.UpdateSiteWithdrawReq
+	50, // 42: balance.Balance.GetManualList:input_type -> balance.GetManualListReq
+	52, // 43: balance.Balance.GetFlowRules:input_type -> balance.GetFlowRulesReq
+	60, // 44: balance.Balance.GetFlowRule:input_type -> balance.GetFlowRuleReq
+	62, // 45: balance.Balance.CreateFlowRule:input_type -> balance.CreateFlowRuleReq
+	64, // 46: balance.Balance.UpdateFlowRule:input_type -> balance.UpdateFlowRuleReq
+	66, // 47: balance.Balance.DeleteFlowRule:input_type -> balance.DeleteFlowRuleReq
+	0,  // 48: balance.Balance.GetFlowOptions:input_type -> balance.GetFlowOptionsReq
+	56, // 49: balance.Balance.GetFlowRequirements:input_type -> balance.GetFlowRequirementsReq
+	58, // 50: balance.Balance.UpdateFlowRequirement:input_type -> balance.UpdateFlowRequirementReq
+	7,  // 51: balance.Balance.GetBalanceChanges:output_type -> balance.GetBalanceChangesRes
+	10, // 52: balance.Balance.GetLuckyBonusRecords:output_type -> balance.GetLuckyBonusRecordsRes
+	13, // 53: balance.Balance.GetDepositBonusRecords:output_type -> balance.GetDepositBonusRecordsRes
+	16, // 54: balance.Balance.GetRegisterBonusRecords:output_type -> balance.GetRegisterBonusRecordsRes
+	19, // 55: balance.Balance.GetInviteBonusRecords:output_type -> balance.GetInviteBonusRecordsRes
+	22, // 56: balance.Balance.GetSigninBonusRecords:output_type -> balance.GetSigninBonusRecordsRes
+	4,  // 57: balance.Balance.GetChangeList:output_type -> balance.GetChangeListRes
+	25, // 58: balance.Balance.GetRechargePayments:output_type -> balance.GetRechargePaymentsRes
+	28, // 59: balance.Balance.GetRechargeManuals:output_type -> balance.GetRechargeManualsRes
+	30, // 60: balance.Balance.ConfirmPaymentOrder:output_type -> balance.ConfirmPaymentOrderRes
+	33, // 61: balance.Balance.GetWithdraws:output_type -> balance.GetWithdrawsRes
+	36, // 62: balance.Balance.GetWithdrawManuals:output_type -> balance.GetWithdrawManualsRes
+	39, // 63: balance.Balance.GetWithdrawReview:output_type -> balance.GetWithdrawReviewRes
+	41, // 64: balance.Balance.DealWithWithdraw:output_type -> balance.DealWithWithdrawRes
+	44, // 65: balance.Balance.QueryUserBalance:output_type -> balance.QueryUserBalanceRes
+	47, // 66: balance.Balance.QueryGameBalance:output_type -> balance.QueryGameBalanceRes
+	49, // 67: balance.Balance.ManualUserBalance:output_type -> balance.ManualUserBalanceRes
+	70, // 68: balance.Balance.GetSitePayments:output_type -> balance.GetSitePaymentsRes
+	72, // 69: balance.Balance.UpdateSitePayment:output_type -> balance.UpdateSitePaymentRes
+	75, // 70: balance.Balance.GetSiteWithdraws:output_type -> balance.GetSiteWithdrawsRes
+	77, // 71: balance.Balance.UpdateSiteWithdraw:output_type -> balance.UpdateSiteWithdrawRes
+	51, // 72: balance.Balance.GetManualList:output_type -> balance.GetManualListRes
+	54, // 73: balance.Balance.GetFlowRules:output_type -> balance.GetFlowRulesRes
+	61, // 74: balance.Balance.GetFlowRule:output_type -> balance.GetFlowRuleRes
+	63, // 75: balance.Balance.CreateFlowRule:output_type -> balance.CreateFlowRuleRes
+	65, // 76: balance.Balance.UpdateFlowRule:output_type -> balance.UpdateFlowRuleRes
+	67, // 77: balance.Balance.DeleteFlowRule:output_type -> balance.DeleteFlowRuleRes
+	2,  // 78: balance.Balance.GetFlowOptions:output_type -> balance.GetFlowOptionsRes
+	57, // 79: balance.Balance.GetFlowRequirements:output_type -> balance.GetFlowRequirementsRes
+	59, // 80: balance.Balance.UpdateFlowRequirement:output_type -> balance.UpdateFlowRequirementRes
+	51, // [51:81] is the sub-list for method output_type
+	21, // [21:51] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_backend_balance_v1_balance_proto_init() }
@@ -5802,7 +7271,7 @@ func file_backend_balance_v1_balance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_balance_v1_balance_proto_rawDesc), len(file_backend_balance_v1_balance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   65,
+			NumMessages:   80,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

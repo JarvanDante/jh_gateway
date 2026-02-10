@@ -586,6 +586,272 @@ func CallGetBalanceChanges(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 
 /**
  * showdoc
+ * @catalog 后台/财务/活动彩金
+ * @title 大转盘活动发放记录
+ * @description 获取大转盘活动发放记录列表
+ * @method get
+ * @url /api/backend/balance/lucky-bonus-records
+ * @param user_id 可选 int 用户ID
+ * @param username 可选 string 用户名
+ * @param trade_no 可选 string 流水号
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @param site_id 可选 int 站点ID
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 26
+ */
+func CallGetLuckyBonusRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetLuckyBonusRecords")
+
+	userId := r.Get("user_id", 0).Int32()
+	username := r.Get("username", "").String()
+	tradeNo := r.Get("trade_no", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+	siteId := r.Get("site_id", 0).Int32()
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetLuckyBonusRecordsReq{
+		UserId:    userId,
+		Username:  username,
+		TradeNo:   tradeNo,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+		SiteId:    siteId,
+	}
+
+	res, err := client.GetLuckyBonusRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取大转盘发放记录失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/活动彩金
+ * @title 充值送活动发放记录
+ * @description 获取充值送活动发放记录列表
+ * @method get
+ * @url /api/backend/balance/deposit-bonus-records
+ * @param user_id 可选 int 用户ID
+ * @param username 可选 string 用户名
+ * @param trade_no 可选 string 流水号
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @param site_id 可选 int 站点ID
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 27
+ */
+func CallGetDepositBonusRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetDepositBonusRecords")
+
+	userId := r.Get("user_id", 0).Int32()
+	username := r.Get("username", "").String()
+	tradeNo := r.Get("trade_no", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+	siteId := r.Get("site_id", 0).Int32()
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetDepositBonusRecordsReq{
+		UserId:    userId,
+		Username:  username,
+		TradeNo:   tradeNo,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+		SiteId:    siteId,
+	}
+
+	res, err := client.GetDepositBonusRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取充值送活动发放记录失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/活动彩金
+ * @title 注册送活动发放记录
+ * @description 获取注册送活动发放记录列表
+ * @method get
+ * @url /api/backend/balance/register-bonus-records
+ * @param user_id 可选 int 用户ID
+ * @param username 可选 string 用户名
+ * @param trade_no 可选 string 流水号
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @param site_id 可选 int 站点ID
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 28
+ */
+func CallGetRegisterBonusRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetRegisterBonusRecords")
+
+	userId := r.Get("user_id", 0).Int32()
+	username := r.Get("username", "").String()
+	tradeNo := r.Get("trade_no", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+	siteId := r.Get("site_id", 0).Int32()
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetRegisterBonusRecordsReq{
+		UserId:    userId,
+		Username:  username,
+		TradeNo:   tradeNo,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+		SiteId:    siteId,
+	}
+
+	res, err := client.GetRegisterBonusRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取注册送活动发放记录失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/活动彩金
+ * @title 邀请朋友活动发放记录
+ * @description 获取邀请朋友活动发放记录列表
+ * @method get
+ * @url /api/backend/balance/invite-bonus-records
+ * @param inviter_id 可选 int 邀请人ID
+ * @param inviter_username 可选 string 邀请人用户名
+ * @param invitee_id 可选 int 被邀请人ID
+ * @param invitee_username 可选 string 被邀请人用户名
+ * @param trade_no 可选 string 流水号
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @param site_id 可选 int 站点ID
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 29
+ */
+func CallGetInviteBonusRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetInviteBonusRecords")
+
+	inviterId := r.Get("inviter_id", 0).Int32()
+	inviterUsername := r.Get("inviter_username", "").String()
+	inviteeId := r.Get("invitee_id", 0).Int32()
+	inviteeUsername := r.Get("invitee_username", "").String()
+	tradeNo := r.Get("trade_no", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+	siteId := r.Get("site_id", 0).Int32()
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetInviteBonusRecordsReq{
+		InviterId:       inviterId,
+		InviterUsername: inviterUsername,
+		InviteeId:       inviteeId,
+		InviteeUsername: inviteeUsername,
+		TradeNo:         tradeNo,
+		StartTime:       startTime,
+		EndTime:         endTime,
+		Page:            page,
+		Size:            size,
+		SiteId:          siteId,
+	}
+
+	res, err := client.GetInviteBonusRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取邀请朋友活动发放记录失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
+ * @catalog 后台/财务/活动彩金
+ * @title 每日签到活动发放记录
+ * @description 获取每日签到活动发放记录列表
+ * @method get
+ * @url /api/backend/balance/signin-bonus-records
+ * @param user_id 可选 int 用户ID
+ * @param username 可选 string 用户名
+ * @param trade_no 可选 string 流水号
+ * @param start_time 可选 string 开始时间
+ * @param end_time 可选 string 结束时间
+ * @param page 可选 int 页码，默认1
+ * @param size 可选 int 每页数量，默认50
+ * @param site_id 可选 int 站点ID
+ * @return {"code":0,"msg":"success","data":{"list":[],"count":0}}
+ * @number 30
+ */
+func CallGetSigninBonusRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	util.LogWithTrace(ctx, "info", "calling gRPC Balance GetSigninBonusRecords")
+
+	userId := r.Get("user_id", 0).Int32()
+	username := r.Get("username", "").String()
+	tradeNo := r.Get("trade_no", "").String()
+	startTime := r.Get("start_time", "").String()
+	endTime := r.Get("end_time", "").String()
+	page := r.Get("page", 1).Int32()
+	size := r.Get("size", 50).Int32()
+	siteId := r.Get("site_id", 0).Int32()
+
+	client := v6.NewBalanceClient(conn)
+	req := &v6.GetSigninBonusRecordsReq{
+		UserId:    userId,
+		Username:  username,
+		TradeNo:   tradeNo,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Page:      page,
+		Size:      size,
+		SiteId:    siteId,
+	}
+
+	res, err := client.GetSigninBonusRecords(ctx, req)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC调用失败: %v", err)
+		util.WriteInternalError(r, "获取签到活动发放记录失败，请稍后重试")
+		return nil
+	}
+
+	return writeProtobufResponse(ctx, r, res)
+}
+
+/**
+ * showdoc
  * @catalog 后台/公共
  * @title 获取交易类型列表
  * @description 获取交易类型选项列表的接口

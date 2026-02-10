@@ -20,31 +20,36 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Balance_GetBalanceChanges_FullMethodName     = "/balance.Balance/GetBalanceChanges"
-	Balance_GetChangeList_FullMethodName         = "/balance.Balance/GetChangeList"
-	Balance_GetRechargePayments_FullMethodName   = "/balance.Balance/GetRechargePayments"
-	Balance_GetRechargeManuals_FullMethodName    = "/balance.Balance/GetRechargeManuals"
-	Balance_ConfirmPaymentOrder_FullMethodName   = "/balance.Balance/ConfirmPaymentOrder"
-	Balance_GetWithdraws_FullMethodName          = "/balance.Balance/GetWithdraws"
-	Balance_GetWithdrawManuals_FullMethodName    = "/balance.Balance/GetWithdrawManuals"
-	Balance_GetWithdrawReview_FullMethodName     = "/balance.Balance/GetWithdrawReview"
-	Balance_DealWithWithdraw_FullMethodName      = "/balance.Balance/DealWithWithdraw"
-	Balance_QueryUserBalance_FullMethodName      = "/balance.Balance/QueryUserBalance"
-	Balance_QueryGameBalance_FullMethodName      = "/balance.Balance/QueryGameBalance"
-	Balance_ManualUserBalance_FullMethodName     = "/balance.Balance/ManualUserBalance"
-	Balance_GetSitePayments_FullMethodName       = "/balance.Balance/GetSitePayments"
-	Balance_UpdateSitePayment_FullMethodName     = "/balance.Balance/UpdateSitePayment"
-	Balance_GetSiteWithdraws_FullMethodName      = "/balance.Balance/GetSiteWithdraws"
-	Balance_UpdateSiteWithdraw_FullMethodName    = "/balance.Balance/UpdateSiteWithdraw"
-	Balance_GetManualList_FullMethodName         = "/balance.Balance/GetManualList"
-	Balance_GetFlowRules_FullMethodName          = "/balance.Balance/GetFlowRules"
-	Balance_GetFlowRule_FullMethodName           = "/balance.Balance/GetFlowRule"
-	Balance_CreateFlowRule_FullMethodName        = "/balance.Balance/CreateFlowRule"
-	Balance_UpdateFlowRule_FullMethodName        = "/balance.Balance/UpdateFlowRule"
-	Balance_DeleteFlowRule_FullMethodName        = "/balance.Balance/DeleteFlowRule"
-	Balance_GetFlowOptions_FullMethodName        = "/balance.Balance/GetFlowOptions"
-	Balance_GetFlowRequirements_FullMethodName   = "/balance.Balance/GetFlowRequirements"
-	Balance_UpdateFlowRequirement_FullMethodName = "/balance.Balance/UpdateFlowRequirement"
+	Balance_GetBalanceChanges_FullMethodName       = "/balance.Balance/GetBalanceChanges"
+	Balance_GetLuckyBonusRecords_FullMethodName    = "/balance.Balance/GetLuckyBonusRecords"
+	Balance_GetDepositBonusRecords_FullMethodName  = "/balance.Balance/GetDepositBonusRecords"
+	Balance_GetRegisterBonusRecords_FullMethodName = "/balance.Balance/GetRegisterBonusRecords"
+	Balance_GetInviteBonusRecords_FullMethodName   = "/balance.Balance/GetInviteBonusRecords"
+	Balance_GetSigninBonusRecords_FullMethodName   = "/balance.Balance/GetSigninBonusRecords"
+	Balance_GetChangeList_FullMethodName           = "/balance.Balance/GetChangeList"
+	Balance_GetRechargePayments_FullMethodName     = "/balance.Balance/GetRechargePayments"
+	Balance_GetRechargeManuals_FullMethodName      = "/balance.Balance/GetRechargeManuals"
+	Balance_ConfirmPaymentOrder_FullMethodName     = "/balance.Balance/ConfirmPaymentOrder"
+	Balance_GetWithdraws_FullMethodName            = "/balance.Balance/GetWithdraws"
+	Balance_GetWithdrawManuals_FullMethodName      = "/balance.Balance/GetWithdrawManuals"
+	Balance_GetWithdrawReview_FullMethodName       = "/balance.Balance/GetWithdrawReview"
+	Balance_DealWithWithdraw_FullMethodName        = "/balance.Balance/DealWithWithdraw"
+	Balance_QueryUserBalance_FullMethodName        = "/balance.Balance/QueryUserBalance"
+	Balance_QueryGameBalance_FullMethodName        = "/balance.Balance/QueryGameBalance"
+	Balance_ManualUserBalance_FullMethodName       = "/balance.Balance/ManualUserBalance"
+	Balance_GetSitePayments_FullMethodName         = "/balance.Balance/GetSitePayments"
+	Balance_UpdateSitePayment_FullMethodName       = "/balance.Balance/UpdateSitePayment"
+	Balance_GetSiteWithdraws_FullMethodName        = "/balance.Balance/GetSiteWithdraws"
+	Balance_UpdateSiteWithdraw_FullMethodName      = "/balance.Balance/UpdateSiteWithdraw"
+	Balance_GetManualList_FullMethodName           = "/balance.Balance/GetManualList"
+	Balance_GetFlowRules_FullMethodName            = "/balance.Balance/GetFlowRules"
+	Balance_GetFlowRule_FullMethodName             = "/balance.Balance/GetFlowRule"
+	Balance_CreateFlowRule_FullMethodName          = "/balance.Balance/CreateFlowRule"
+	Balance_UpdateFlowRule_FullMethodName          = "/balance.Balance/UpdateFlowRule"
+	Balance_DeleteFlowRule_FullMethodName          = "/balance.Balance/DeleteFlowRule"
+	Balance_GetFlowOptions_FullMethodName          = "/balance.Balance/GetFlowOptions"
+	Balance_GetFlowRequirements_FullMethodName     = "/balance.Balance/GetFlowRequirements"
+	Balance_UpdateFlowRequirement_FullMethodName   = "/balance.Balance/UpdateFlowRequirement"
 )
 
 // BalanceClient is the client API for Balance service.
@@ -53,6 +58,12 @@ const (
 type BalanceClient interface {
 	// 账变记录相关
 	GetBalanceChanges(ctx context.Context, in *GetBalanceChangesReq, opts ...grpc.CallOption) (*GetBalanceChangesRes, error)
+	// 活动彩金发放记录
+	GetLuckyBonusRecords(ctx context.Context, in *GetLuckyBonusRecordsReq, opts ...grpc.CallOption) (*GetLuckyBonusRecordsRes, error)
+	GetDepositBonusRecords(ctx context.Context, in *GetDepositBonusRecordsReq, opts ...grpc.CallOption) (*GetDepositBonusRecordsRes, error)
+	GetRegisterBonusRecords(ctx context.Context, in *GetRegisterBonusRecordsReq, opts ...grpc.CallOption) (*GetRegisterBonusRecordsRes, error)
+	GetInviteBonusRecords(ctx context.Context, in *GetInviteBonusRecordsReq, opts ...grpc.CallOption) (*GetInviteBonusRecordsRes, error)
+	GetSigninBonusRecords(ctx context.Context, in *GetSigninBonusRecordsReq, opts ...grpc.CallOption) (*GetSigninBonusRecordsRes, error)
 	// 交易类型选项
 	GetChangeList(ctx context.Context, in *GetChangeListReq, opts ...grpc.CallOption) (*GetChangeListRes, error)
 	// 充值记录相关
@@ -101,6 +112,56 @@ func (c *balanceClient) GetBalanceChanges(ctx context.Context, in *GetBalanceCha
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetBalanceChangesRes)
 	err := c.cc.Invoke(ctx, Balance_GetBalanceChanges_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetLuckyBonusRecords(ctx context.Context, in *GetLuckyBonusRecordsReq, opts ...grpc.CallOption) (*GetLuckyBonusRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLuckyBonusRecordsRes)
+	err := c.cc.Invoke(ctx, Balance_GetLuckyBonusRecords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetDepositBonusRecords(ctx context.Context, in *GetDepositBonusRecordsReq, opts ...grpc.CallOption) (*GetDepositBonusRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDepositBonusRecordsRes)
+	err := c.cc.Invoke(ctx, Balance_GetDepositBonusRecords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetRegisterBonusRecords(ctx context.Context, in *GetRegisterBonusRecordsReq, opts ...grpc.CallOption) (*GetRegisterBonusRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRegisterBonusRecordsRes)
+	err := c.cc.Invoke(ctx, Balance_GetRegisterBonusRecords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetInviteBonusRecords(ctx context.Context, in *GetInviteBonusRecordsReq, opts ...grpc.CallOption) (*GetInviteBonusRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetInviteBonusRecordsRes)
+	err := c.cc.Invoke(ctx, Balance_GetInviteBonusRecords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetSigninBonusRecords(ctx context.Context, in *GetSigninBonusRecordsReq, opts ...grpc.CallOption) (*GetSigninBonusRecordsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSigninBonusRecordsRes)
+	err := c.cc.Invoke(ctx, Balance_GetSigninBonusRecords_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -353,6 +414,12 @@ func (c *balanceClient) UpdateFlowRequirement(ctx context.Context, in *UpdateFlo
 type BalanceServer interface {
 	// 账变记录相关
 	GetBalanceChanges(context.Context, *GetBalanceChangesReq) (*GetBalanceChangesRes, error)
+	// 活动彩金发放记录
+	GetLuckyBonusRecords(context.Context, *GetLuckyBonusRecordsReq) (*GetLuckyBonusRecordsRes, error)
+	GetDepositBonusRecords(context.Context, *GetDepositBonusRecordsReq) (*GetDepositBonusRecordsRes, error)
+	GetRegisterBonusRecords(context.Context, *GetRegisterBonusRecordsReq) (*GetRegisterBonusRecordsRes, error)
+	GetInviteBonusRecords(context.Context, *GetInviteBonusRecordsReq) (*GetInviteBonusRecordsRes, error)
+	GetSigninBonusRecords(context.Context, *GetSigninBonusRecordsReq) (*GetSigninBonusRecordsRes, error)
 	// 交易类型选项
 	GetChangeList(context.Context, *GetChangeListReq) (*GetChangeListRes, error)
 	// 充值记录相关
@@ -399,6 +466,21 @@ type UnimplementedBalanceServer struct{}
 
 func (UnimplementedBalanceServer) GetBalanceChanges(context.Context, *GetBalanceChangesReq) (*GetBalanceChangesRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBalanceChanges not implemented")
+}
+func (UnimplementedBalanceServer) GetLuckyBonusRecords(context.Context, *GetLuckyBonusRecordsReq) (*GetLuckyBonusRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetLuckyBonusRecords not implemented")
+}
+func (UnimplementedBalanceServer) GetDepositBonusRecords(context.Context, *GetDepositBonusRecordsReq) (*GetDepositBonusRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetDepositBonusRecords not implemented")
+}
+func (UnimplementedBalanceServer) GetRegisterBonusRecords(context.Context, *GetRegisterBonusRecordsReq) (*GetRegisterBonusRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetRegisterBonusRecords not implemented")
+}
+func (UnimplementedBalanceServer) GetInviteBonusRecords(context.Context, *GetInviteBonusRecordsReq) (*GetInviteBonusRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetInviteBonusRecords not implemented")
+}
+func (UnimplementedBalanceServer) GetSigninBonusRecords(context.Context, *GetSigninBonusRecordsReq) (*GetSigninBonusRecordsRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSigninBonusRecords not implemented")
 }
 func (UnimplementedBalanceServer) GetChangeList(context.Context, *GetChangeListReq) (*GetChangeListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetChangeList not implemented")
@@ -507,6 +589,96 @@ func _Balance_GetBalanceChanges_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BalanceServer).GetBalanceChanges(ctx, req.(*GetBalanceChangesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetLuckyBonusRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLuckyBonusRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetLuckyBonusRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetLuckyBonusRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetLuckyBonusRecords(ctx, req.(*GetLuckyBonusRecordsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetDepositBonusRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDepositBonusRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetDepositBonusRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetDepositBonusRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetDepositBonusRecords(ctx, req.(*GetDepositBonusRecordsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetRegisterBonusRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRegisterBonusRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetRegisterBonusRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetRegisterBonusRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetRegisterBonusRecords(ctx, req.(*GetRegisterBonusRecordsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetInviteBonusRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInviteBonusRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetInviteBonusRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetInviteBonusRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetInviteBonusRecords(ctx, req.(*GetInviteBonusRecordsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetSigninBonusRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSigninBonusRecordsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetSigninBonusRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Balance_GetSigninBonusRecords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetSigninBonusRecords(ctx, req.(*GetSigninBonusRecordsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -953,6 +1125,26 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBalanceChanges",
 			Handler:    _Balance_GetBalanceChanges_Handler,
+		},
+		{
+			MethodName: "GetLuckyBonusRecords",
+			Handler:    _Balance_GetLuckyBonusRecords_Handler,
+		},
+		{
+			MethodName: "GetDepositBonusRecords",
+			Handler:    _Balance_GetDepositBonusRecords_Handler,
+		},
+		{
+			MethodName: "GetRegisterBonusRecords",
+			Handler:    _Balance_GetRegisterBonusRecords_Handler,
+		},
+		{
+			MethodName: "GetInviteBonusRecords",
+			Handler:    _Balance_GetInviteBonusRecords_Handler,
+		},
+		{
+			MethodName: "GetSigninBonusRecords",
+			Handler:    _Balance_GetSigninBonusRecords_Handler,
 		},
 		{
 			MethodName: "GetChangeList",
