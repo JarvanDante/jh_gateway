@@ -48,6 +48,14 @@ logger:
 # 时区配置
 timezone: "Asia/Shanghai" # 北京时间
 
+# ClickHouse 配置
+clickhouse:
+  host: "172.19.0.35" # ClickHouse服务地址
+  port: 9000 # ClickHouse原生协议端口（9000）
+  database: "game_analytics" # 数据库名称
+  username: "default" # 用户名
+  password: "123456" # 密码
+
 # Redis 配置示例
 redis:
   # 单实例配置示例1

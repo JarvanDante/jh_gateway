@@ -133,6 +133,12 @@ func BackendRouteDispatcher() ghttp.HandlerFunc {
 
 		util.LogWithTrace(ctx, "info", "Backend route dispatcher processing: %s %s", method, path)
 
+		// ClickHouse 全局报表直连处理
+		if path == "/api/backend/balance/global-report" {
+			HandleGlobalReport(ctx, r)
+			return
+		}
+
 		// 解析路径，确定目标服务
 		serviceName, err := determineBackendService(path)
 		if err != nil {
