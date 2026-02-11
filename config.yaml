@@ -27,14 +27,14 @@ rateLimit:
   routes:
     # 登录类接口收紧
     - exactPath: "/api/frontend/app/login"
-      requestsPerMinute: 20
+      requestsPerMinute: 50
     - exactPath: "/api/backend/app/login"
-      requestsPerMinute: 20
+      requestsPerMinute: 50
     # 支付类接口更严格
 #    - pathPrefix: "/api/frontend/balance/withdraw"
 #      requestsPerMinute: 20
     - exactPath: "/api/frontend/balance/withdraw"
-      requestsPerMinute: 20
+      requestsPerMinute: 50
 
 # 日志配置 - JSON格式
 logger:
