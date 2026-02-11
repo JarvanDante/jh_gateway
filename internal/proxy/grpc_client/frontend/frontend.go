@@ -199,6 +199,10 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		util.WriteBadRequest(r, "用户名仅允许字母和数字")
 		return nil
 	}
+	if !regexp.MustCompile(`[A-Za-z]`).MatchString(username) || !regexp.MustCompile(`[0-9]`).MatchString(username) {
+		util.WriteBadRequest(r, "用户名必须包含字母和数字")
+		return nil
+	}
 	if time == "" {
 		util.WriteBadRequest(r, "时间戳必填")
 		return nil
@@ -230,6 +234,8 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 		errMsg := err.Error()
 		if strings.Contains(errMsg, "验证码") {
 			util.WriteForbidden(r, errMsg)
+		} else if strings.Contains(errMsg, "用户名必须包含字母和数字") {
+			util.WriteBadRequest(r, errMsg)
 		} else if strings.Contains(errMsg, "已经被注册") {
 			util.WriteBadRequest(r, errMsg)
 		} else if strings.Contains(errMsg, "注册失败") {
