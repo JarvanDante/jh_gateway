@@ -153,6 +153,21 @@ FROM firsts
 		return
 	}
 
+	var newRegisterUsers uint64
+	newRegisterQuery := `
+SELECT
+	countDistinct(user_id) AS new_register_users
+FROM game_analytics.user
+WHERE site_id = ? AND register_time >= ? AND register_time <= ?
+`
+
+	if err := conn.QueryRow(ctx, newRegisterQuery, siteID, startTime, endTime).
+		Scan(&newRegisterUsers); err != nil {
+		g.Log().Errorf(ctx, "查询新注册会员统计失败: %v", err)
+		util.WriteInternalError(r, "统计查询失败")
+		return
+	}
+
 	var (
 		validBetAmount float64
 		netAmount      float64
@@ -178,6 +193,7 @@ WHERE site_id = ? AND bet_time >= ? AND bet_time <= ?
 	}
 
 	util.WriteSuccess(r, map[string]interface{}{
+		"new_register_users":     newRegisterUsers,
 		"recharge_users":         rechargeUsers,
 		"first_deposit_users":    firstDepositUsers,
 		"first_deposit_amount":   firstDepositAmount,

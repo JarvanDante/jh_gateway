@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"strings"
 
+	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
 	"jh_gateway/internal/tracing"
 	"jh_gateway/internal/util"
 
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/util/gconv"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
@@ -91,6 +93,49 @@ func ManageRouteDispatcher() ghttp.HandlerFunc {
 
 		util.LogWithTrace(ctx, "info", "Manage route dispatcher processing: %s %s", method, path)
 
+		// 总后台全局报表直连处理（使用总后台token，不走后台token校验）
+		if path == "/api/manage/operations/global-report" {
+			HandleGlobalReport(ctx, r)
+			return
+		}
+
+		// 总后台分析页补充接口：按站点透传到业务服务
+		switch path {
+		case "/api/manage/balance/recharge-payment":
+			if err := injectManageSiteID(ctx, r); err != nil {
+				util.WriteBadRequest(r, err.Error())
+				return
+			}
+			if err := callServiceWithRouting(ctx, "jh_balance_service", r); err != nil {
+				tracing.SetSpanError(span, err)
+				util.WriteInternalError(r, err.Error())
+				return
+			}
+			return
+		case "/api/manage/balance/withdraws":
+			if err := injectManageSiteID(ctx, r); err != nil {
+				util.WriteBadRequest(r, err.Error())
+				return
+			}
+			if err := callServiceWithRouting(ctx, "jh_balance_service", r); err != nil {
+				tracing.SetSpanError(span, err)
+				util.WriteInternalError(r, err.Error())
+				return
+			}
+			return
+		case "/api/manage/app/user-login-logs":
+			if err := injectManageSiteID(ctx, r); err != nil {
+				util.WriteBadRequest(r, err.Error())
+				return
+			}
+			if err := callServiceWithRouting(ctx, "jh_app_service", r); err != nil {
+				tracing.SetSpanError(span, err)
+				util.WriteInternalError(r, err.Error())
+				return
+			}
+			return
+		}
+
 		// 解析路径，确定目标服务
 		serviceName, err := determineManageService(path)
 		if err != nil {
@@ -114,6 +159,26 @@ func ManageRouteDispatcher() ghttp.HandlerFunc {
 		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
 		util.LogWithTrace(ctx, "info", "=== ManageRouteDispatcher 处理完成 ===")
 	}
+}
+
+// injectManageSiteID 为总后台跨站点查询接口注入站点ID
+func injectManageSiteID(ctx context.Context, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		return fmt.Errorf("请求参数解析失败")
+	}
+
+	siteID := gconv.Int64(reqData["site_id"])
+	if siteID == 0 {
+		siteID = r.Get("site_id").Int64()
+	}
+	if siteID <= 0 {
+		return fmt.Errorf("站点ID不能为空")
+	}
+
+	r.SetCtxVar("site_id", siteID)
+	r.Header.Set("X-Site-Id", gconv.String(siteID))
+	return nil
 }
 
 // BackendRouteDispatcher 后台路由分发器
