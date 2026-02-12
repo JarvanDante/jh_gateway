@@ -239,7 +239,15 @@ func CallGetGameRecords(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		return err
 	}
 
-	return writeProtobufResponse(ctx, r, res)
+	// 按需返回字段，显式移除 total_amount/all_game_total_amount
+	util.WriteSuccess(r, map[string]interface{}{
+		"data":         res.GetData(),
+		"total":        res.GetTotal(),
+		"current_page": res.GetCurrentPage(),
+		"per_page":     res.GetPerPage(),
+		"last_page":    res.GetLastPage(),
+	})
+	return nil
 }
 
 /**
