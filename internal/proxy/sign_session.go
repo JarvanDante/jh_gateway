@@ -65,17 +65,18 @@ func FrontendSignSessionHandler() ghttp.HandlerFunc {
 		if authHeader != "" {
 			claims, parseErr := util.ParseToken(ctx, authHeader)
 			if parseErr != nil {
-				util.WriteUnauthorized(r, "token无效或已过期，请重新登录")
-				return
+				// token 失效时回退为匿名签名会话，避免公共页面请求被 401 卡死
+				g.Log().Warningf(ctx, "sign-session token invalid, fallback to anonymous session: %v", parseErr)
+			} else {
+				token, ok := extractBearerToken(authHeader)
+				if !ok {
+					g.Log().Warning(ctx, "sign-session authorization header invalid format, fallback to anonymous session")
+				} else {
+					payload.TokenHash = sha256Hex(token)
+					payload.UserID = claims.UserID
+					payload.SiteID = claims.SiteID
+				}
 			}
-			token, ok := extractBearerToken(authHeader)
-			if !ok {
-				util.WriteUnauthorized(r, "token格式无效")
-				return
-			}
-			payload.TokenHash = sha256Hex(token)
-			payload.UserID = claims.UserID
-			payload.SiteID = claims.SiteID
 		}
 
 		payloadJSON, err := json.Marshal(payload)
