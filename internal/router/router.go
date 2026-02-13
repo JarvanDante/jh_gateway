@@ -33,7 +33,6 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.ApiSignature,  // API签名校验（可配置开关）
 			middleware.RequestParser, // 解析请求体数据
 			middleware.AuthManageWithSkip("/login", "/logout"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
@@ -51,7 +50,6 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
-			middleware.ApiSignature,                      // API签名校验（可配置开关）
 			middleware.RequestParser,                     // 解析请求体数据
 			middleware.AuthWithSkip("/login", "/logout"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
@@ -71,12 +69,49 @@ func Register(s *ghttp.Server) {
 			middleware.RateLimit,
 			middleware.ApiSignature,  // API签名校验（可配置开关）
 			middleware.RequestParser, // 解析请求体数据
-			middleware.AuthWithSkip("/frontend-game-list", "/game-categories", "/notice-list", "/ad-list", "/register", "/captcha", "/refresh-token", "/login", "/logout", "/balance/deposit-callback"), // 认证中间件（跳过充值回调接口）
+			middleware.AuthWithSkip("/frontend-game-list", "/game-categories", "/notice-list", "/ad-list", "/register", "/captcha", "/refresh-token", "/login", "/logout", "/sign-session", "/balance/deposit-callback"), // 认证中间件（跳过充值回调接口）
 			middleware.CircuitBreaker,
 		)
 
+		// 前台签名会话密钥
+		group.POST("/app/sign-session", proxy.FrontendSignSessionHandler())
+
 		// 前台接口路由分发（暂时返回未实现）
 		group.ALL("/*any", proxy.FrontendRouteDispatcher())
+	})
+
+	// 兼容路由：余额接口（旧路径）
+	s.Group("/api/balance", func(group *ghttp.RouterGroup) {
+		group.Middleware(
+			middleware.CORS,           // CORS 跨域中间件
+			middleware.DomainResolver, // 域名解析中间件
+			middleware.Logging,
+			middleware.Trace,
+			middleware.RateLimit,
+			middleware.ApiSignature,                      // API签名校验（可配置开关）
+			middleware.RequestParser,                     // 解析请求体数据
+			middleware.AuthWithSkip("/deposit-callback"), // 认证中间件（跳过充值回调接口）
+			middleware.CircuitBreaker,
+		)
+
+		group.ALL("/*any", proxy.BalanceRouteDispatcher())
+	})
+
+	// 兼容路由：游戏接口（旧路径）
+	s.Group("/api/game", func(group *ghttp.RouterGroup) {
+		group.Middleware(
+			middleware.CORS,           // CORS 跨域中间件
+			middleware.DomainResolver, // 域名解析中间件
+			middleware.Logging,
+			middleware.Trace,
+			middleware.RateLimit,
+			middleware.ApiSignature,  // API签名校验（可配置开关）
+			middleware.RequestParser, // 解析请求体数据
+			middleware.AuthWithSkip("/game-categories", "/game-list"), // 认证中间件（公开游戏列表接口放行）
+			middleware.CircuitBreaker,
+		)
+
+		group.ALL("/*any", proxy.GameRouteDispatcher())
 	})
 
 	// 兼容性路由（可选，用于渐进式迁移）

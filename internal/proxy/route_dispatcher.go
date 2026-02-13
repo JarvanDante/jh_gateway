@@ -263,6 +263,60 @@ func FrontendRouteDispatcher() ghttp.HandlerFunc {
 	}
 }
 
+// BalanceRouteDispatcher 兼容路由分发器（/api/balance）
+func BalanceRouteDispatcher() ghttp.HandlerFunc {
+	return func(r *ghttp.Request) {
+		ctx := r.Context()
+		path := r.URL.Path
+		method := r.Method
+
+		ctx, span := tracing.StartSpan(ctx, "balance.request", trace.WithAttributes(
+			attribute.String("http.method", method),
+			attribute.String("http.path", path),
+			attribute.String("route.type", "balance_legacy"),
+		))
+		defer span.End()
+
+		util.LogWithTrace(ctx, "info", "Balance route dispatcher processing: %s %s", method, path)
+		tracing.SetSpanAttributes(span, attribute.String("target.service", "jh_balance_service"))
+
+		if err := callServiceWithRouting(ctx, "jh_balance_service", r); err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteInternalError(r, err.Error())
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
+	}
+}
+
+// GameRouteDispatcher 兼容路由分发器（/api/game）
+func GameRouteDispatcher() ghttp.HandlerFunc {
+	return func(r *ghttp.Request) {
+		ctx := r.Context()
+		path := r.URL.Path
+		method := r.Method
+
+		ctx, span := tracing.StartSpan(ctx, "game.request", trace.WithAttributes(
+			attribute.String("http.method", method),
+			attribute.String("http.path", path),
+			attribute.String("route.type", "game_legacy"),
+		))
+		defer span.End()
+
+		util.LogWithTrace(ctx, "info", "Game route dispatcher processing: %s %s", method, path)
+		tracing.SetSpanAttributes(span, attribute.String("target.service", "jh_game_service"))
+
+		if err := callServiceWithRouting(ctx, "jh_game_service", r); err != nil {
+			tracing.SetSpanError(span, err)
+			util.WriteInternalError(r, err.Error())
+			return
+		}
+
+		tracing.SetSpanAttributes(span, attribute.Bool("success", true))
+	}
+}
+
 // determineManageService 根据路径确定总后台目标服务
 func determineManageService(path string) (string, error) {
 	// 移除 /api/manage 前缀

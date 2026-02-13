@@ -9,7 +9,7 @@ func CORS(r *ghttp.Request) {
 	// 设置 CORS 响应头 - 允许所有域名
 	r.Response.Header().Set("Access-Control-Allow-Origin", "*")
 	r.Response.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH")
-	r.Response.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers")
+	r.Response.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers, X-App-Id, X-Timestamp, X-Nonce, X-Sign, X-Key-Id")
 	r.Response.Header().Set("Access-Control-Max-Age", "86400") // 24小时
 
 	// 处理 OPTIONS 预检请求
@@ -36,7 +36,7 @@ func CORSWithCredentials(r *ghttp.Request) {
 	}
 
 	r.Response.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH")
-	r.Response.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers")
+	r.Response.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers, X-App-Id, X-Timestamp, X-Nonce, X-Sign, X-Key-Id")
 	r.Response.Header().Set("Access-Control-Max-Age", "86400")
 
 	// 处理 OPTIONS 预检请求

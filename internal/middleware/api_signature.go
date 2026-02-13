@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"jh_gateway/internal/util"
@@ -31,6 +32,14 @@ type apiSignatureConfig struct {
 }
 
 var errReplayNonce = errors.New("replay nonce")
+
+type signSessionRecord struct {
+	AppID     string `json:"app_id"`
+	Secret    string `json:"secret"`
+	TokenHash string `json:"token_hash"`
+	UserID    int    `json:"user_id"`
+	SiteID    int    `json:"site_id"`
+}
 
 // ApiSignature 请求签名校验中间件。
 //
@@ -69,18 +78,21 @@ func ApiSignature(r *ghttp.Request) {
 	timestamp := strings.TrimSpace(r.Header.Get("X-Timestamp"))
 	nonce := strings.TrimSpace(r.Header.Get("X-Nonce"))
 	sign := strings.TrimSpace(r.Header.Get("X-Sign"))
+	keyID := strings.TrimSpace(r.Header.Get("X-Key-Id"))
+
+	// 前台接口强制使用动态会话签名（X-Key-Id），不允许静态密钥回退。
+	if strings.HasPrefix(path, "/api/frontend/") && keyID == "" {
+		util.WriteUnauthorized(r, "前台请求缺少签名会话，请重新登录")
+		return
+	}
 
 	// 灰度模式：required=false 时，客户端不带签名头则放行。
-	if !cfg.Required && appID == "" && timestamp == "" && nonce == "" && sign == "" {
+	if !cfg.Required && appID == "" && timestamp == "" && nonce == "" && sign == "" && keyID == "" {
 		r.Middleware.Next()
 		return
 	}
 
-	if appID == "" {
-		appID = cfg.DefaultAppID
-	}
-
-	if appID == "" || timestamp == "" || nonce == "" || sign == "" {
+	if timestamp == "" || nonce == "" || sign == "" {
 		util.WriteUnauthorized(r, "签名参数缺失")
 		return
 	}
@@ -101,9 +113,53 @@ func ApiSignature(r *ghttp.Request) {
 		return
 	}
 
-	secret := cfg.AppSecrets[appID]
+	secret := ""
+	nonceScope := appID
+	if nonceScope == "" {
+		nonceScope = cfg.DefaultAppID
+	}
+
+	if keyID != "" {
+		session, err := getSignSessionRecord(ctx, keyID)
+		if err != nil {
+			util.WriteUnauthorized(r, "签名会话已过期，请刷新后重试")
+			return
+		}
+		if session.Secret == "" {
+			util.WriteUnauthorized(r, "签名会话无效")
+			return
+		}
+		if appID == "" {
+			appID = session.AppID
+		}
+		if session.AppID != "" && appID != "" && appID != session.AppID {
+			util.WriteUnauthorized(r, "签名应用不匹配")
+			return
+		}
+		if session.TokenHash != "" {
+			token, ok := extractBearerToken(r.Header.Get("Authorization"))
+			if !ok {
+				util.WriteUnauthorized(r, "缺少认证token，请先登录")
+				return
+			}
+			if sha256Hex(token) != session.TokenHash {
+				util.WriteUnauthorized(r, "签名会话与当前登录态不匹配")
+				return
+			}
+		}
+		secret = session.Secret
+		nonceScope = fmt.Sprintf("sid:%s", keyID)
+	}
+
+	if appID == "" {
+		appID = cfg.DefaultAppID
+	}
+
 	if secret == "" {
-		secret = cfg.AppSecrets[cfg.DefaultAppID]
+		secret = cfg.AppSecrets[appID]
+		if secret == "" {
+			secret = cfg.AppSecrets[cfg.DefaultAppID]
+		}
 	}
 	if secret == "" {
 		util.WriteUnauthorized(r, "签名应用不存在")
@@ -130,7 +186,7 @@ func ApiSignature(r *ghttp.Request) {
 		return
 	}
 
-	if err = checkAndSetNonce(ctx, appID, nonce, cfg.NonceTTLSeconds); err != nil {
+	if err = checkAndSetNonce(ctx, nonceScope, nonce, cfg.NonceTTLSeconds); err != nil {
 		if errors.Is(err, errReplayNonce) {
 			util.WriteUnauthorized(r, "请求重复提交")
 			return
@@ -141,6 +197,9 @@ func ApiSignature(r *ghttp.Request) {
 
 	r.SetCtxVar("app_id", appID)
 	r.SetCtxVar("sign_verified", true)
+	if keyID != "" {
+		r.SetCtxVar("sign_key_id", keyID)
+	}
 	r.Middleware.Next()
 }
 
@@ -175,6 +234,11 @@ func loadAPISignatureConfig(ctx context.Context) apiSignatureConfig {
 }
 
 func shouldSkipSignaturePath(path string, skipPaths []string) bool {
+	// 内置跳过：签名会话获取接口
+	if strings.HasSuffix(path, "/sign-session") {
+		return true
+	}
+
 	for _, skip := range skipPaths {
 		if skip == "" {
 			continue
@@ -222,6 +286,23 @@ func checkAndSetNonce(ctx context.Context, appID, nonce string, ttlSeconds int) 
 	return nil
 }
 
+func getSignSessionRecord(ctx context.Context, keyID string) (*signSessionRecord, error) {
+	cacheKey := fmt.Sprintf("api_sign_session:%s", keyID)
+	recordVar, err := g.Redis().Get(ctx, cacheKey)
+	if err != nil {
+		return nil, err
+	}
+	if recordVar == nil || recordVar.IsNil() {
+		return nil, errors.New("session key not found")
+	}
+
+	var record signSessionRecord
+	if err = json.Unmarshal([]byte(recordVar.String()), &record); err != nil {
+		return nil, err
+	}
+	return &record, nil
+}
+
 func signHMACSHA256Hex(payload, secret string) string {
 	mac := hmac.New(sha256.New, []byte(secret))
 	_, _ = mac.Write([]byte(payload))
@@ -262,6 +343,23 @@ func decodeSignature(sign string) ([]byte, bool) {
 	}
 
 	return nil, false
+}
+
+func extractBearerToken(authHeader string) (string, bool) {
+	parts := strings.SplitN(strings.TrimSpace(authHeader), " ", 2)
+	if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") {
+		return "", false
+	}
+	token := strings.TrimSpace(parts[1])
+	if token == "" {
+		return "", false
+	}
+	return token, true
+}
+
+func sha256Hex(text string) string {
+	digest := sha256.Sum256([]byte(text))
+	return hex.EncodeToString(digest[:])
 }
 
 func strconvParseInt64(s string) (int64, error) {
