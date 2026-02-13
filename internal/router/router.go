@@ -33,6 +33,7 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
+			middleware.ApiSignature,  // API签名校验（可配置开关）
 			middleware.RequestParser, // 解析请求体数据
 			middleware.AuthManageWithSkip("/login", "/logout"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
@@ -50,6 +51,7 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
+			middleware.ApiSignature,                      // API签名校验（可配置开关）
 			middleware.RequestParser,                     // 解析请求体数据
 			middleware.AuthWithSkip("/login", "/logout"), // 认证中间件（跳过 /login 接口）
 			middleware.CircuitBreaker,
@@ -67,6 +69,7 @@ func Register(s *ghttp.Server) {
 			middleware.Logging,
 			middleware.Trace,
 			middleware.RateLimit,
+			middleware.ApiSignature,  // API签名校验（可配置开关）
 			middleware.RequestParser, // 解析请求体数据
 			middleware.AuthWithSkip("/frontend-game-list", "/game-categories", "/notice-list", "/ad-list", "/register", "/captcha", "/refresh-token", "/login", "/logout", "/balance/deposit-callback"), // 认证中间件（跳过充值回调接口）
 			middleware.CircuitBreaker,

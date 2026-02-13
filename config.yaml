@@ -63,3 +63,21 @@ redis:
     address: 172.19.0.6:6379
     db: 1
     pass: 654321
+
+# API签名校验（灰度开关）
+apiSignature:
+  enabled: true                  # 总开关
+  required: true                 # true=强制所有请求都带签名；false=不带签名头时放行（灰度）
+  allowedTimeSkewSeconds: 300     # 时间戳允许偏移秒数
+  nonceTTLSeconds: 300            # nonce防重放有效期
+  defaultAppId: "default"
+  # 按后缀匹配跳过签名的路径
+  skipPaths:
+    - "/gateway/health"
+    - "/login"
+    - "/logout"
+    - "/refresh-token"
+    - "/captcha"
+  # appId -> secret（请改成真实高强度密钥）
+  appSecrets:
+    default: "ac70e8c26a2556dea1d6a4cb83d8164e2fd2"

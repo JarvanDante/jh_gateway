@@ -47,15 +47,55 @@ func DomainResolver(r *ghttp.Request) {
 				host, siteInfo.SiteID, siteInfo.SiteCode)
 		}
 	} else {
-		// 如果没有找到对应的站点，设置默认值
-		log.Printf("✗ 警告: 域名 %s 未找到对应的站点，使用默认值", host)
-		r.SetCtxVar("site_id", int64(0))
-		r.SetCtxVar("site_code", "")
-		r.SetCtxVar("currency", "")
+		// 域名未命中时，支持通过请求头/参数显式指定站点（用于本地开发或反向代理场景）
+		if fallbackSiteID, fallbackSiteCode, fallbackCurrency, ok := resolveSiteFromRequest(r); ok {
+			r.SetCtxVar("site_id", fallbackSiteID)
+			r.SetCtxVar("site_code", fallbackSiteCode)
+			r.SetCtxVar("currency", fallbackCurrency)
+			log.Printf("⚠ 域名 %s 未命中，使用显式站点: site_id=%d, site_code=%s, currency=%s",
+				host, fallbackSiteID, fallbackSiteCode, fallbackCurrency)
+		} else {
+			// 如果没有找到对应的站点，设置默认值
+			log.Printf("✗ 警告: 域名 %s 未找到对应的站点，使用默认值", host)
+			r.SetCtxVar("site_id", int64(0))
+			r.SetCtxVar("site_code", "")
+			r.SetCtxVar("currency", "")
+		}
 	}
 
 	// 继续处理请求
 	r.Middleware.Next()
+}
+
+// resolveSiteFromRequest 当域名无法解析时，从请求头/参数兜底解析站点
+func resolveSiteFromRequest(r *ghttp.Request) (siteID int64, siteCode, currency string, ok bool) {
+	// 优先使用 site_code 定位站点（最可靠）
+	siteCode = strings.TrimSpace(r.Header.Get("X-Site-Code"))
+	if siteCode == "" {
+		siteCode = strings.TrimSpace(r.Get("site_code").String())
+	}
+	if siteCode != "" {
+		if siteConfig, exists := registry.GetSiteConfig(siteCode); exists && siteConfig != nil {
+			resolvedCode := strings.TrimSpace(siteConfig.Base.Code)
+			if resolvedCode == "" {
+				resolvedCode = siteCode
+			}
+			return int64(siteConfig.Base.SiteId), resolvedCode, strings.TrimSpace(siteConfig.Base.Currency), true
+		}
+	}
+
+	// 兜底使用 site_id
+	siteIDStr := strings.TrimSpace(r.Header.Get("X-Site-Id"))
+	if siteIDStr != "" {
+		if id, err := strconv.ParseInt(siteIDStr, 10, 64); err == nil && id > 0 {
+			return id, siteCode, "", true
+		}
+	}
+	if id := r.Get("site_id").Int64(); id > 0 {
+		return id, siteCode, "", true
+	}
+
+	return 0, "", "", false
 }
 
 // AddSiteIDToGRPCContext 将site_id、site_code、currency和domain添加到gRPC上下文中

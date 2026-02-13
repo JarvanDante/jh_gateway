@@ -278,8 +278,8 @@ func translateMessage(msg string) string {
 	}
 
 	mapping := map[string]string{
-		"success": "success",
-		"申请提现成功":  "Withdraw success",
+		"签名校验失败": "Signature verification failed",
+		"申请提现成功": "Withdraw success",
 		"您还有未完成的流水要求，暂不可提现": "You have unfinished turnover requirements and cannot withdraw",
 		"成功":                            "success",
 		"失败":                            "failed",
