@@ -176,6 +176,12 @@ func initBackendRoutes() {
 	backendRoutes.Register("/update-agent", "POST", backend.CallUpdateAgent)
 	backendRoutes.Register("/delete-agent", "POST", backend.CallDeleteAgent)
 
+	// 代理域名 CRUD
+	backendRoutes.Register("/agent-domains", "GET", backend.CallGetAgentDomainList)
+	backendRoutes.Register("/create-agent-domain", "POST", backend.CallCreateAgentDomain)
+	backendRoutes.Register("/update-agent-domain", "POST", backend.CallUpdateAgentDomain)
+	backendRoutes.Register("/delete-agent-domain", "POST", backend.CallDeleteAgentDomain)
+
 	// 公告列表
 	backendRoutes.Register("/notices", "GET", backend.CallGetNoticeList)
 	// 新增公告

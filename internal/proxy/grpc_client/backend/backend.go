@@ -9,6 +9,7 @@ import (
 	"io"
 	v9 "jh_gateway/api/backend/ad/v1"
 	v12 "jh_gateway/api/backend/agent/v1"
+	v13 "jh_gateway/api/backend/agent_domain/v1"
 	v8 "jh_gateway/api/backend/message/v1"
 	v10 "jh_gateway/api/backend/notice/v1"
 	v11 "jh_gateway/api/backend/option/v1"
@@ -2558,6 +2559,70 @@ func CallDeleteAgent(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	res, err := client.DeleteAgent(ctx, &v12.DeleteAgentReq{Id: gconv.Int64(requestData["id"])})
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC Agent DeleteAgent failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallGetAgentDomainList 代理域名列表
+func CallGetAgentDomainList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	agentID := gconv.Int64(r.GetQuery("agent_id", "0"))
+	status := gconv.Int32(r.GetQuery("status", "-1"))
+	domain := gconv.String(r.GetQuery("domain", ""))
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "20"))
+
+	client := v13.NewAgentDomainClient(conn)
+	res, err := client.GetAgentDomainList(ctx, &v13.GetAgentDomainListReq{
+		Page: page, Size: size, AgentId: agentID, Status: status, Domain: domain,
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentDomain GetAgentDomainList failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallCreateAgentDomain 创建代理域名
+func CallCreateAgentDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v13.NewAgentDomainClient(conn)
+	res, err := client.CreateAgentDomain(ctx, &v13.CreateAgentDomainReq{
+		AgentId: gconv.Int64(requestData["agent_id"]),
+		Domain:  gconv.String(requestData["domain"]),
+		Status:  gconv.Int32(requestData["status"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentDomain CreateAgentDomain failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallUpdateAgentDomain 更新代理域名
+func CallUpdateAgentDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v13.NewAgentDomainClient(conn)
+	res, err := client.UpdateAgentDomain(ctx, &v13.UpdateAgentDomainReq{
+		Id:      gconv.Int64(requestData["id"]),
+		AgentId: gconv.Int64(requestData["agent_id"]),
+		Domain:  gconv.String(requestData["domain"]),
+		Status:  gconv.Int32(requestData["status"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentDomain UpdateAgentDomain failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallDeleteAgentDomain 删除代理域名
+func CallDeleteAgentDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v13.NewAgentDomainClient(conn)
+	res, err := client.DeleteAgentDomain(ctx, &v13.DeleteAgentDomainReq{Id: gconv.Int64(requestData["id"])})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentDomain DeleteAgentDomain failed: %v", err)
 		return err
 	}
 	return writeProtobufResponse(ctx, r, res)
