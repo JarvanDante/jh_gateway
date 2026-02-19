@@ -91,6 +91,37 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		util.LogWithTrace(ctx, "debug", "添加 client_ip 到 gRPC metadata: %s", clientIP)
 	}
 
+	// 透传前端请求上下文，供下游记录登录日志
+	if ua := r.Header.Get("User-Agent"); ua != "" {
+		md.Set("user-agent", ua)
+	}
+	if referer := r.Header.Get("Referer"); referer != "" {
+		md.Set("referer", referer)
+	} else if origin := r.Header.Get("Origin"); origin != "" {
+		md.Set("referer", origin)
+	}
+	if path := r.URL.String(); path != "" {
+		md.Set("path", path)
+	}
+	if network := r.Header.Get("X-Network-Type"); network != "" {
+		md.Set("x-network-type", network)
+	}
+	if screen := r.Header.Get("X-Screen-Resolution"); screen != "" {
+		md.Set("x-screen-resolution", screen)
+	}
+
+	// 登录网址只记录域名（带协议）
+	scheme := r.Header.Get("X-Forwarded-Proto")
+	if scheme == "" {
+		scheme = r.URL.Scheme
+	}
+	if scheme == "" {
+		scheme = "https"
+	}
+	if host := r.Host; host != "" {
+		md.Set("login-domain", scheme+"://"+host)
+	}
+
 	// 如果有metadata，则创建新的outgoing context
 	if len(md) > 0 {
 		return metadata.NewOutgoingContext(ctx, md)
