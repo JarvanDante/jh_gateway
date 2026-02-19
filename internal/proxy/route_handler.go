@@ -183,6 +183,12 @@ func initBackendRoutes() {
 	backendRoutes.Register("/delete-agent-domain", "POST", backend.CallDeleteAgentDomain)
 	backendRoutes.Register("/options-agent", "GET", backend.CallGetAgentListOptions)
 
+	// 代理结算
+	backendRoutes.Register("/agent-settlement-daily", "GET", backend.CallGetAgentSettlementDailyList)
+	backendRoutes.Register("/calc-agent-settlement-daily", "POST", backend.CallCalcAgentSettlementDaily)
+	backendRoutes.Register("/settle-agent-settlement-daily", "POST", backend.CallSettleAgentSettlementDaily)
+	backendRoutes.Register("/settle-agent-settlement-batch", "POST", backend.CallSettleAgentSettlementBatch)
+
 	// 公告列表
 	backendRoutes.Register("/notices", "GET", backend.CallGetNoticeList)
 	// 新增公告

@@ -10,6 +10,7 @@ import (
 	v9 "jh_gateway/api/backend/ad/v1"
 	v12 "jh_gateway/api/backend/agent/v1"
 	v13 "jh_gateway/api/backend/agent_domain/v1"
+	v14 "jh_gateway/api/backend/agent_settlement/v1"
 	v8 "jh_gateway/api/backend/message/v1"
 	v10 "jh_gateway/api/backend/notice/v1"
 	v11 "jh_gateway/api/backend/option/v1"
@@ -2646,6 +2647,75 @@ func CallDeleteAgentDomain(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
 	res, err := client.DeleteAgentDomain(ctx, &v13.DeleteAgentDomainReq{Id: gconv.Int64(requestData["id"])})
 	if err != nil {
 		util.LogWithTrace(ctx, "error", "gRPC AgentDomain DeleteAgentDomain failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallGetAgentSettlementDailyList 代理日结列表
+func CallGetAgentSettlementDailyList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	agentID := gconv.Int64(r.GetQuery("agent_id", "0"))
+	settleStatus := gconv.Int32(r.GetQuery("settle_status", "-1"))
+	startDate := gconv.String(r.GetQuery("start_date", ""))
+	endDate := gconv.String(r.GetQuery("end_date", ""))
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "20"))
+
+	client := v14.NewAgentSettlementClient(conn)
+	res, err := client.GetAgentSettlementDailyList(ctx, &v14.GetAgentSettlementDailyListReq{
+		Page:         page,
+		Size:         size,
+		AgentId:      agentID,
+		SettleStatus: settleStatus,
+		StartDate:    startDate,
+		EndDate:      endDate,
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentSettlement GetList failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallCalcAgentSettlementDaily 生成代理日结统计
+func CallCalcAgentSettlementDaily(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v14.NewAgentSettlementClient(conn)
+	res, err := client.CalcAgentSettlementDaily(ctx, &v14.CalcAgentSettlementDailyReq{
+		StartDate: gconv.String(requestData["start_date"]),
+		EndDate:   gconv.String(requestData["end_date"]),
+		AgentId:   gconv.Int64(requestData["agent_id"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentSettlement Calc failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallSettleAgentSettlementDaily 单条结算
+func CallSettleAgentSettlementDaily(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v14.NewAgentSettlementClient(conn)
+	res, err := client.SettleAgentSettlementDaily(ctx, &v14.SettleAgentSettlementDailyReq{Id: gconv.Int64(requestData["id"])})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentSettlement SettleOne failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallSettleAgentSettlementBatch 批量结算
+func CallSettleAgentSettlementBatch(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v14.NewAgentSettlementClient(conn)
+	res, err := client.SettleAgentSettlementBatch(ctx, &v14.SettleAgentSettlementBatchReq{
+		StartDate: gconv.String(requestData["start_date"]),
+		EndDate:   gconv.String(requestData["end_date"]),
+		AgentId:   gconv.Int64(requestData["agent_id"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC AgentSettlement SettleBatch failed: %v", err)
 		return err
 	}
 	return writeProtobufResponse(ctx, r, res)
