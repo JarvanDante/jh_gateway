@@ -239,7 +239,7 @@ func GetSiteIDByDomain(domain string) (int64, bool) {
 	domainWatcher.mutex.RLock()
 	defer domainWatcher.mutex.RUnlock()
 
-	siteInfo, exists := domainWatcher.domainMap[domain]
+	siteInfo, exists := matchSiteInfoByDomainLocked(domainWatcher.domainMap, domain)
 	if !exists {
 		log.Printf("域名 %s 未找到对应的站点", domain)
 		return 0, false
@@ -259,7 +259,7 @@ func GetSiteCodeByDomain(domain string) (string, bool) {
 	domainWatcher.mutex.RLock()
 	defer domainWatcher.mutex.RUnlock()
 
-	siteInfo, exists := domainWatcher.domainMap[domain]
+	siteInfo, exists := matchSiteInfoByDomainLocked(domainWatcher.domainMap, domain)
 	if !exists {
 		log.Printf("域名 %s 未找到对应的站点", domain)
 		return "", false
@@ -278,12 +278,45 @@ func GetSiteInfoByDomain(domain string) (*SiteInfo, bool) {
 	domainWatcher.mutex.RLock()
 	defer domainWatcher.mutex.RUnlock()
 
-	siteInfo, exists := domainWatcher.domainMap[domain]
+	siteInfo, exists := matchSiteInfoByDomainLocked(domainWatcher.domainMap, domain)
 	if !exists {
 		return nil, false
 	}
 
 	return siteInfo, true
+}
+
+// matchSiteInfoByDomainLocked 域名匹配（先精确匹配，再匹配通配符 *.example.com）
+func matchSiteInfoByDomainLocked(domainMap map[string]*SiteInfo, domain string) (*SiteInfo, bool) {
+	domain = strings.TrimSpace(strings.ToLower(domain))
+	if domain == "" {
+		return nil, false
+	}
+
+	// 1) 精确匹配优先
+	if siteInfo, ok := domainMap[domain]; ok {
+		return siteInfo, true
+	}
+
+	// 2) 通配符匹配：*.example.com
+	for pattern, siteInfo := range domainMap {
+		p := strings.TrimSpace(strings.ToLower(pattern))
+		if !strings.HasPrefix(p, "*.") {
+			continue
+		}
+		suffix := strings.TrimPrefix(p, "*.")
+		if suffix == "" {
+			continue
+		}
+		if domain == suffix {
+			continue // 通配符不匹配裸域名
+		}
+		if strings.HasSuffix(domain, "."+suffix) {
+			return siteInfo, true
+		}
+	}
+
+	return nil, false
 }
 
 // GetSiteConfig 根据site_code获取站点配置
