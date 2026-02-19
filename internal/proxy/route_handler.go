@@ -170,6 +170,12 @@ func initBackendRoutes() {
 	// 删除广告
 	backendRoutes.Register("/delete-ad", "POST", backend.CallDeleteAd)
 
+	// 代理设置 CRUD
+	backendRoutes.Register("/agents", "GET", backend.CallGetAgentList)
+	backendRoutes.Register("/create-agent", "POST", backend.CallCreateAgent)
+	backendRoutes.Register("/update-agent", "POST", backend.CallUpdateAgent)
+	backendRoutes.Register("/delete-agent", "POST", backend.CallDeleteAgent)
+
 	// 公告列表
 	backendRoutes.Register("/notices", "GET", backend.CallGetNoticeList)
 	// 新增公告

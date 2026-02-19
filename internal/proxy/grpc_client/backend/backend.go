@@ -8,6 +8,7 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 	"io"
 	v9 "jh_gateway/api/backend/ad/v1"
+	v12 "jh_gateway/api/backend/agent/v1"
 	v8 "jh_gateway/api/backend/message/v1"
 	v10 "jh_gateway/api/backend/notice/v1"
 	v11 "jh_gateway/api/backend/option/v1"
@@ -2490,6 +2491,75 @@ func CallDeleteAd(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) 
 	}
 
 	// 返回响应
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallGetAgentList 代理列表
+func CallGetAgentList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	status := gconv.Int32(r.GetQuery("status", "-1"))
+	name := gconv.String(r.GetQuery("name", ""))
+	page := gconv.Int32(r.GetQuery("page", "1"))
+	size := gconv.Int32(r.GetQuery("size", "20"))
+
+	client := v12.NewAgentClient(conn)
+	res, err := client.GetAgentList(ctx, &v12.GetAgentListReq{Page: page, Size: size, Status: status, Name: name})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Agent GetAgentList failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallCreateAgent 创建代理
+func CallCreateAgent(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v12.NewAgentClient(conn)
+	res, err := client.CreateAgent(ctx, &v12.CreateAgentReq{
+		ParentId:   gconv.Int64(requestData["parent_id"]),
+		AgentCode:  gconv.String(requestData["agent_code"]),
+		AgentName:  gconv.String(requestData["agent_name"]),
+		Status:     gconv.Int32(requestData["status"]),
+		SettleType: gconv.Int32(requestData["settle_type"]),
+		Rate:       gconv.Float64(requestData["rate"]),
+		Remark:     gconv.String(requestData["remark"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Agent CreateAgent failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallUpdateAgent 更新代理
+func CallUpdateAgent(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v12.NewAgentClient(conn)
+	res, err := client.UpdateAgent(ctx, &v12.UpdateAgentReq{
+		Id:         gconv.Int64(requestData["id"]),
+		ParentId:   gconv.Int64(requestData["parent_id"]),
+		AgentCode:  gconv.String(requestData["agent_code"]),
+		AgentName:  gconv.String(requestData["agent_name"]),
+		Status:     gconv.Int32(requestData["status"]),
+		SettleType: gconv.Int32(requestData["settle_type"]),
+		Rate:       gconv.Float64(requestData["rate"]),
+		Remark:     gconv.String(requestData["remark"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Agent UpdateAgent failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallDeleteAgent 删除代理
+func CallDeleteAgent(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v12.NewAgentClient(conn)
+	res, err := client.DeleteAgent(ctx, &v12.DeleteAgentReq{Id: gconv.Int64(requestData["id"])})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Agent DeleteAgent failed: %v", err)
+		return err
+	}
 	return writeProtobufResponse(ctx, r, res)
 }
 
