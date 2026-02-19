@@ -29,6 +29,8 @@ type apiSignatureConfig struct {
 	DefaultAppID           string
 	SkipPaths              []string
 	AppSecrets             map[string]string
+	DevBypassEnabled       bool
+	DevBypassHosts         []string
 }
 
 var errReplayNonce = errors.New("replay nonce")
@@ -70,6 +72,13 @@ func ApiSignature(r *ghttp.Request) {
 
 	path := r.URL.Path
 	if shouldSkipSignaturePath(path, cfg.SkipPaths) {
+		r.Middleware.Next()
+		return
+	}
+
+	// 本地开发兜底：对指定域名放行签名（仅在显式开启时生效）
+	if shouldBypassSignatureForDev(r, cfg) {
+		r.SetCtxVar("sign_bypassed", true)
 		r.Middleware.Next()
 		return
 	}
@@ -212,10 +221,13 @@ func loadAPISignatureConfig(ctx context.Context) apiSignatureConfig {
 		DefaultAppID:           g.Cfg().MustGet(ctx, "apiSignature.defaultAppId", "default").String(),
 		SkipPaths:              nil,
 		AppSecrets:             map[string]string{},
+		DevBypassEnabled:       g.Cfg().MustGet(ctx, "apiSignature.devBypass.enabled", false).Bool(),
+		DevBypassHosts:         nil,
 	}
 
 	_ = g.Cfg().MustGet(ctx, "apiSignature.skipPaths").Scan(&cfg.SkipPaths)
 	_ = g.Cfg().MustGet(ctx, "apiSignature.appSecrets").Scan(&cfg.AppSecrets)
+	_ = g.Cfg().MustGet(ctx, "apiSignature.devBypass.hosts").Scan(&cfg.DevBypassHosts)
 
 	if cfg.AllowedTimeSkewSeconds <= 0 {
 		cfg.AllowedTimeSkewSeconds = 300
@@ -245,6 +257,40 @@ func shouldSkipSignaturePath(path string, skipPaths []string) bool {
 		}
 		if strings.HasSuffix(path, skip) {
 			return true
+		}
+	}
+	return false
+}
+
+func shouldBypassSignatureForDev(r *ghttp.Request, cfg apiSignatureConfig) bool {
+	if !cfg.DevBypassEnabled || len(cfg.DevBypassHosts) == 0 {
+		return false
+	}
+
+	host := strings.ToLower(strings.TrimSpace(r.Host))
+	if host == "" {
+		host = strings.ToLower(strings.TrimSpace(r.Header.Get("Host")))
+	}
+	if idx := strings.Index(host, ":"); idx > -1 {
+		host = host[:idx]
+	}
+	if host == "" {
+		return false
+	}
+
+	for _, pattern := range cfg.DevBypassHosts {
+		p := strings.ToLower(strings.TrimSpace(pattern))
+		if p == "" {
+			continue
+		}
+		if p == host {
+			return true
+		}
+		if strings.HasPrefix(p, "*.") {
+			suffix := strings.TrimPrefix(p, "*.")
+			if suffix != "" && host != suffix && strings.HasSuffix(host, "."+suffix) {
+				return true
+			}
 		}
 	}
 	return false
