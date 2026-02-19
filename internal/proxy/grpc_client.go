@@ -103,6 +103,12 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 	if path := r.URL.String(); path != "" {
 		md.Set("path", path)
 	}
+	if deviceOS := r.Header.Get("X-Device-OS"); deviceOS != "" {
+		md.Set("x-device-os", deviceOS)
+	}
+	if deviceBrowser := r.Header.Get("X-Device-Browser"); deviceBrowser != "" {
+		md.Set("x-device-browser", deviceBrowser)
+	}
 	if network := r.Header.Get("X-Network-Type"); network != "" {
 		md.Set("x-network-type", network)
 	}
