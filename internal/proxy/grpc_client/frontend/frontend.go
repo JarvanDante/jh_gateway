@@ -97,6 +97,17 @@ func CallQuickRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Requ
 	// 提取字段
 	time, _ := reqData["time"].(string)
 	domain, _ := reqData["domain"].(string)
+	if strings.TrimSpace(domain) == "" {
+		if ctxDomain := r.GetCtxVar("domain"); ctxDomain != nil {
+			domain = strings.TrimSpace(ctxDomain.String())
+		}
+	}
+	if strings.TrimSpace(domain) == "" {
+		domain = r.Host
+	}
+	if idx := strings.Index(domain, ":"); idx >= 0 {
+		domain = domain[:idx]
+	}
 
 	if time == "" {
 		util.WriteBadRequest(r, "时间戳必填")
@@ -177,6 +188,17 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 	birthday, _ := reqData["birthday"].(string)
 	agentSalt, _ := reqData["agent_salt"].(string)
 	domain, _ := reqData["domain"].(string)
+	if strings.TrimSpace(domain) == "" {
+		if ctxDomain := r.GetCtxVar("domain"); ctxDomain != nil {
+			domain = strings.TrimSpace(ctxDomain.String())
+		}
+	}
+	if strings.TrimSpace(domain) == "" {
+		domain = r.Host
+	}
+	if idx := strings.Index(domain, ":"); idx >= 0 {
+		domain = domain[:idx]
+	}
 	inviteCode, _ := reqData["invite_code"].(string)
 
 	if username == "" {
