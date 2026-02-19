@@ -465,6 +465,25 @@ func injectUserInfoToMetadata(ctx context.Context, r *ghttp.Request) context.Con
 		md.Set("client_ip", clientIP)
 	}
 
+	// 透传前端请求上下文，供下游记录登录日志
+	if ua := r.Header.Get("User-Agent"); ua != "" {
+		md.Set("user-agent", ua)
+	}
+	if referer := r.Header.Get("Referer"); referer != "" {
+		md.Set("referer", referer)
+	} else if origin := r.Header.Get("Origin"); origin != "" {
+		md.Set("referer", origin)
+	}
+	if path := r.URL.String(); path != "" {
+		md.Set("path", path)
+	}
+	if network := r.Header.Get("X-Network-Type"); network != "" {
+		md.Set("x-network-type", network)
+	}
+	if screen := r.Header.Get("X-Screen-Resolution"); screen != "" {
+		md.Set("x-screen-resolution", screen)
+	}
+
 	// 如果有现有的metadata，合并
 	if existingMd, ok := metadata.FromOutgoingContext(ctx); ok {
 		md = metadata.Join(existingMd, md)
