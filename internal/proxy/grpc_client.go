@@ -3,6 +3,8 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"strings"
+
 	"github.com/gogf/gf/v2/net/ghttp"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
@@ -53,19 +55,31 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		}
 	}
 
-	// 添加站点ID（从域名解析中间件获取）
+	// 添加站点ID（优先域名解析上下文，兜底读取请求头）
 	if siteIdVar := r.GetCtxVar("site_id"); siteIdVar != nil {
 		if id := siteIdVar.Int64(); id > 0 {
 			md.Set("site_id", fmt.Sprint(id))
-			util.LogWithTrace(ctx, "debug", "添加 site_id 到 gRPC metadata: %d", id)
+			util.LogWithTrace(ctx, "debug", "添加 site_id 到 gRPC metadata(ctx): %d", id)
+		}
+	}
+	if _, ok := md["site_id"]; !ok {
+		if siteID := strings.TrimSpace(r.Header.Get("X-Site-Id")); siteID != "" {
+			md.Set("site_id", siteID)
+			util.LogWithTrace(ctx, "debug", "添加 site_id 到 gRPC metadata(header): %s", siteID)
 		}
 	}
 
-	// 添加站点代码（从域名解析中间件获取）
+	// 添加站点代码（优先域名解析上下文，兜底读取请求头）
 	if siteCodeVar := r.GetCtxVar("site_code"); siteCodeVar != nil {
 		if code := siteCodeVar.String(); code != "" {
 			md.Set("site_code", code)
-			util.LogWithTrace(ctx, "debug", "添加 site_code 到 gRPC metadata: %s", code)
+			util.LogWithTrace(ctx, "debug", "添加 site_code 到 gRPC metadata(ctx): %s", code)
+		}
+	}
+	if _, ok := md["site_code"]; !ok {
+		if siteCode := strings.TrimSpace(r.Header.Get("X-Site-Code")); siteCode != "" {
+			md.Set("site_code", siteCode)
+			util.LogWithTrace(ctx, "debug", "添加 site_code 到 gRPC metadata(header): %s", siteCode)
 		}
 	}
 
