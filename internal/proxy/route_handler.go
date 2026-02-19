@@ -181,6 +181,7 @@ func initBackendRoutes() {
 	backendRoutes.Register("/create-agent-domain", "POST", backend.CallCreateAgentDomain)
 	backendRoutes.Register("/update-agent-domain", "POST", backend.CallUpdateAgentDomain)
 	backendRoutes.Register("/delete-agent-domain", "POST", backend.CallDeleteAgentDomain)
+	backendRoutes.Register("/options-agent", "GET", backend.CallGetAgentListOptions)
 
 	// 公告列表
 	backendRoutes.Register("/notices", "GET", backend.CallGetNoticeList)

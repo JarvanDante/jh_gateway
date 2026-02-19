@@ -2564,6 +2564,29 @@ func CallDeleteAgent(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	return writeProtobufResponse(ctx, r, res)
 }
 
+// CallGetAgentListOptions 代理下拉选项
+func CallGetAgentListOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	client := v12.NewAgentClient(conn)
+	res, err := client.GetAgentList(ctx, &v12.GetAgentListReq{Page: 1, Size: 1000, Status: 1})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Agent GetAgentList(for options) failed: %v", err)
+		return err
+	}
+
+	options := make([]map[string]interface{}, 0, len(res.List))
+	for _, it := range res.List {
+		options = append(options, map[string]interface{}{
+			"value": it.Id,
+			"label": fmt.Sprintf("%s(%s)", it.AgentName, it.AgentCode),
+			"agent_id": it.Id,
+			"agent_name": it.AgentName,
+			"agent_code": it.AgentCode,
+		})
+	}
+	util.WriteSuccess(r, map[string]interface{}{"list": options})
+	return nil
+}
+
 // CallGetAgentDomainList 代理域名列表
 func CallGetAgentDomainList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	agentID := gconv.Int64(r.GetQuery("agent_id", "0"))
