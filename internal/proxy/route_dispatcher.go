@@ -477,6 +477,18 @@ func injectUserInfoToMetadata(ctx context.Context, r *ghttp.Request) context.Con
 	if path := r.URL.String(); path != "" {
 		md.Set("path", path)
 	}
+
+	// 登录网址只记录域名（带协议）
+	scheme := r.Header.Get("X-Forwarded-Proto")
+	if scheme == "" {
+		scheme = r.URL.Scheme
+	}
+	if scheme == "" {
+		scheme = "https"
+	}
+	if host := r.Host; host != "" {
+		md.Set("login-domain", scheme+"://"+host)
+	}
 	if network := r.Header.Get("X-Network-Type"); network != "" {
 		md.Set("x-network-type", network)
 	}
