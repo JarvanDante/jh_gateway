@@ -2577,7 +2577,7 @@ func CallGetAgentListOptions(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 	for _, it := range res.List {
 		options = append(options, map[string]interface{}{
 			"value": it.Id,
-			"label": fmt.Sprintf("%s(%s)", it.AgentName, it.AgentCode),
+			"label": it.AgentName,
 			"agent_id": it.Id,
 			"agent_name": it.AgentName,
 			"agent_code": it.AgentCode,
