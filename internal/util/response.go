@@ -182,8 +182,8 @@ func translateMessage(msg string) string {
 	}
 	if strings.HasPrefix(trimmed, "必须满足最小充值：") {
 		suffix := strings.TrimPrefix(trimmed, "必须满足最小充值：")
-		suffix = strings.ReplaceAll(suffix, " 和最小投注：", " and min valid bet: ")
-		return "Must meet min recharge: " + strings.TrimSpace(suffix)
+		suffix = strings.ReplaceAll(suffix, " 和最小投注：", ", min bet: ")
+		return "Min recharge: " + strings.TrimSpace(suffix)
 	}
 
 	suffixMapping := map[string]string{
