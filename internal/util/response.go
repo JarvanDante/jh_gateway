@@ -180,6 +180,11 @@ func translateMessage(msg string) string {
 		suffix := strings.TrimPrefix(trimmed, "今日有效投注需达到 ")
 		return "Today's valid bet must reach " + strings.TrimSpace(suffix)
 	}
+	if strings.HasPrefix(trimmed, "必须满足最小充值：") {
+		suffix := strings.TrimPrefix(trimmed, "必须满足最小充值：")
+		suffix = strings.ReplaceAll(suffix, " 和最小投注：", " and min valid bet: ")
+		return "Must meet min recharge: " + strings.TrimSpace(suffix)
+	}
 
 	suffixMapping := map[string]string{
 		"游戏关闭维护": "Game is under maintenance",
