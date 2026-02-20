@@ -8,7 +8,6 @@ package v1
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Game_RedirectToGame_FullMethodName    = "/front_game.Game/RedirectToGame"
-	Game_GetGameCategories_FullMethodName = "/front_game.Game/GetGameCategories"
-	Game_GetGameList_FullMethodName       = "/front_game.Game/GetGameList"
-	Game_GetGameBalance_FullMethodName    = "/front_game.Game/GetGameBalance"
-	Game_RecallGameBalance_FullMethodName = "/front_game.Game/RecallGameBalance"
-	Game_GetUserBetHistory_FullMethodName = "/front_game.Game/GetUserBetHistory"
-	Game_GetWashCodeQuota_FullMethodName  = "/front_game.Game/GetWashCodeQuota"
+	Game_RedirectToGame_FullMethodName      = "/front_game.Game/RedirectToGame"
+	Game_GetGameCategories_FullMethodName   = "/front_game.Game/GetGameCategories"
+	Game_GetGameList_FullMethodName         = "/front_game.Game/GetGameList"
+	Game_ToggleFavoriteGame_FullMethodName  = "/front_game.Game/ToggleFavoriteGame"
+	Game_GetFavoriteGameList_FullMethodName = "/front_game.Game/GetFavoriteGameList"
+	Game_GetGameBalance_FullMethodName      = "/front_game.Game/GetGameBalance"
+	Game_RecallGameBalance_FullMethodName   = "/front_game.Game/RecallGameBalance"
+	Game_GetUserBetHistory_FullMethodName   = "/front_game.Game/GetUserBetHistory"
+	Game_GetWashCodeQuota_FullMethodName    = "/front_game.Game/GetWashCodeQuota"
 )
 
 // GameClient is the client API for Game service.
@@ -36,6 +37,8 @@ type GameClient interface {
 	RedirectToGame(ctx context.Context, in *RedirectToGameReq, opts ...grpc.CallOption) (*RedirectToGameRes, error)
 	GetGameCategories(ctx context.Context, in *GetGameCategoriesReq, opts ...grpc.CallOption) (*GetGameCategoriesRes, error)
 	GetGameList(ctx context.Context, in *GetGameListReq, opts ...grpc.CallOption) (*GetGameListRes, error)
+	ToggleFavoriteGame(ctx context.Context, in *ToggleFavoriteGameReq, opts ...grpc.CallOption) (*ToggleFavoriteGameRes, error)
+	GetFavoriteGameList(ctx context.Context, in *GetFavoriteGameListReq, opts ...grpc.CallOption) (*GetFavoriteGameListRes, error)
 	GetGameBalance(ctx context.Context, in *GetGameBalanceReq, opts ...grpc.CallOption) (*GetGameBalanceRes, error)
 	RecallGameBalance(ctx context.Context, in *RecallGameBalanceReq, opts ...grpc.CallOption) (*RecallGameBalanceRes, error)
 	GetUserBetHistory(ctx context.Context, in *GetUserBetHistoryReq, opts ...grpc.CallOption) (*GetUserBetHistoryRes, error)
@@ -74,6 +77,26 @@ func (c *gameClient) GetGameList(ctx context.Context, in *GetGameListReq, opts .
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetGameListRes)
 	err := c.cc.Invoke(ctx, Game_GetGameList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gameClient) ToggleFavoriteGame(ctx context.Context, in *ToggleFavoriteGameReq, opts ...grpc.CallOption) (*ToggleFavoriteGameRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ToggleFavoriteGameRes)
+	err := c.cc.Invoke(ctx, Game_ToggleFavoriteGame_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gameClient) GetFavoriteGameList(ctx context.Context, in *GetFavoriteGameListReq, opts ...grpc.CallOption) (*GetFavoriteGameListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFavoriteGameListRes)
+	err := c.cc.Invoke(ctx, Game_GetFavoriteGameList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,6 +150,8 @@ type GameServer interface {
 	RedirectToGame(context.Context, *RedirectToGameReq) (*RedirectToGameRes, error)
 	GetGameCategories(context.Context, *GetGameCategoriesReq) (*GetGameCategoriesRes, error)
 	GetGameList(context.Context, *GetGameListReq) (*GetGameListRes, error)
+	ToggleFavoriteGame(context.Context, *ToggleFavoriteGameReq) (*ToggleFavoriteGameRes, error)
+	GetFavoriteGameList(context.Context, *GetFavoriteGameListReq) (*GetFavoriteGameListRes, error)
 	GetGameBalance(context.Context, *GetGameBalanceReq) (*GetGameBalanceRes, error)
 	RecallGameBalance(context.Context, *RecallGameBalanceReq) (*RecallGameBalanceRes, error)
 	GetUserBetHistory(context.Context, *GetUserBetHistoryReq) (*GetUserBetHistoryRes, error)
@@ -149,6 +174,12 @@ func (UnimplementedGameServer) GetGameCategories(context.Context, *GetGameCatego
 }
 func (UnimplementedGameServer) GetGameList(context.Context, *GetGameListReq) (*GetGameListRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetGameList not implemented")
+}
+func (UnimplementedGameServer) ToggleFavoriteGame(context.Context, *ToggleFavoriteGameReq) (*ToggleFavoriteGameRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleFavoriteGame not implemented")
+}
+func (UnimplementedGameServer) GetFavoriteGameList(context.Context, *GetFavoriteGameListReq) (*GetFavoriteGameListRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetFavoriteGameList not implemented")
 }
 func (UnimplementedGameServer) GetGameBalance(context.Context, *GetGameBalanceReq) (*GetGameBalanceRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetGameBalance not implemented")
@@ -233,6 +264,42 @@ func _Game_GetGameList_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GameServer).GetGameList(ctx, req.(*GetGameListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Game_ToggleFavoriteGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleFavoriteGameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServer).ToggleFavoriteGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Game_ToggleFavoriteGame_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServer).ToggleFavoriteGame(ctx, req.(*ToggleFavoriteGameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Game_GetFavoriteGameList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFavoriteGameListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GameServer).GetFavoriteGameList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Game_GetFavoriteGameList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GameServer).GetFavoriteGameList(ctx, req.(*GetFavoriteGameListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -327,6 +394,14 @@ var Game_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGameList",
 			Handler:    _Game_GetGameList_Handler,
+		},
+		{
+			MethodName: "ToggleFavoriteGame",
+			Handler:    _Game_ToggleFavoriteGame_Handler,
+		},
+		{
+			MethodName: "GetFavoriteGameList",
+			Handler:    _Game_GetFavoriteGameList_Handler,
 		},
 		{
 			MethodName: "GetGameBalance",

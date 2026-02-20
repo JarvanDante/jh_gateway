@@ -7,12 +7,11 @@
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -24,9 +23,9 @@ const (
 
 type RedirectToGameReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"` // 游戏ID
-	Key           string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key" dc:"电子游戏专用"`                    // 电子游戏专用
-	Mobile        int32                  `protobuf:"varint,3,opt,name=mobile,proto3" json:"mobile" dc:"电子游戏专用"`             // 电子游戏专用
+	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	Key           string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	Mobile        int32                  `protobuf:"varint,3,opt,name=mobile,proto3" json:"mobile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -84,8 +83,8 @@ func (x *RedirectToGameReq) GetMobile() int32 {
 
 type RedirectToGameRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type" dc:"类型"`   // 类型
-	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url" dc:"游戏跳转链接"` // 游戏跳转链接
+	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
+	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -136,7 +135,7 @@ func (x *RedirectToGameRes) GetUrl() string {
 
 type GetGameCategoriesReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          int32                  `protobuf:"varint,1,opt,name=type,proto3" json:"type" dc:"游戏类型（可选）"` // 游戏类型（可选）
+	Type          int32                  `protobuf:"varint,1,opt,name=type,proto3" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -180,7 +179,7 @@ func (x *GetGameCategoriesReq) GetType() int32 {
 
 type GetGameCategoriesRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Categories    []*GameCategory        `protobuf:"bytes,1,rep,name=categories,proto3" json:"categories" dc:"游戏种类列表"` // 游戏种类列表
+	Categories    []*GameCategory        `protobuf:"bytes,1,rep,name=categories,proto3" json:"categories,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -224,14 +223,14 @@ func (x *GetGameCategoriesRes) GetCategories() []*GameCategory {
 
 type GameCategory struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"`         // 游戏ID
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"游戏名称"`                            // 游戏名称
-	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform" dc:"平台"`                      // 平台
-	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type" dc:"游戏类型"`                           // 游戏类型
-	ImageCode     string                 `protobuf:"bytes,5,opt,name=image_code,json=imageCode,proto3" json:"image_code" dc:"图片代码"` // 图片代码
-	DbName        string                 `protobuf:"bytes,6,opt,name=db_name,json=dbName,proto3" json:"db_name" dc:"数据库名称"`         // 数据库名称
-	Sort          int32                  `protobuf:"varint,7,opt,name=sort,proto3" json:"sort" dc:"排序"`                             // 排序
-	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status" dc:"状态"`                         // 状态
+	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform,omitempty"`
+	Type          int32                  `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`
+	ImageCode     string                 `protobuf:"bytes,5,opt,name=image_code,json=imageCode,proto3" json:"image_code,omitempty"`
+	DbName        string                 `protobuf:"bytes,6,opt,name=db_name,json=dbName,proto3" json:"db_name,omitempty"`
+	Sort          int32                  `protobuf:"varint,7,opt,name=sort,proto3" json:"sort,omitempty"`
+	Status        int32                  `protobuf:"varint,8,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -324,12 +323,12 @@ func (x *GameCategory) GetStatus() int32 {
 
 type GetGameListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Platform      string                 `protobuf:"bytes,1,opt,name=platform,proto3" json:"platform" dc:"平台（可选）ONE、IG_JILI"`              // 平台（可选）ONE、IG_JILI
-	Hot           int32                  `protobuf:"varint,2,opt,name=hot,proto3" json:"hot" dc:"是否热门（可选）-1=全部 0=否 1=是"`                   // 是否热门（可选）-1=全部 0=否 1=是
-	IsNew         int32                  `protobuf:"varint,3,opt,name=is_new,json=isNew,proto3" json:"is_new" dc:"是否新游戏（可选）-1=全部 0=否 1=是"` // 是否新游戏（可选）-1=全部 0=否 1=是
-	Recommend     int32                  `protobuf:"varint,4,opt,name=recommend,proto3" json:"recommend" dc:"是否推荐（可选）-1=全部 0=否 1=是"`       // 是否推荐（可选）-1=全部 0=否 1=是
-	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page" dc:"页码"`                                    // 页码
-	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size" dc:"每页数量"`                                  // 每页数量
+	Platform      string                 `protobuf:"bytes,1,opt,name=platform,proto3" json:"platform,omitempty"`
+	Hot           int32                  `protobuf:"varint,2,opt,name=hot,proto3" json:"hot,omitempty"`
+	IsNew         int32                  `protobuf:"varint,3,opt,name=is_new,json=isNew,proto3" json:"is_new,omitempty"`
+	Recommend     int32                  `protobuf:"varint,4,opt,name=recommend,proto3" json:"recommend,omitempty"`
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -408,8 +407,8 @@ func (x *GetGameListReq) GetSize() int32 {
 
 type GetGameListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*GameItem            `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"游戏列表"`  // 游戏列表
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total" dc:"总数"` // 总数
+	List          []*GameItem            `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -460,21 +459,22 @@ func (x *GetGameListRes) GetTotal() int32 {
 
 type GameItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"ID"`                                         // ID
-	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID"`                 // 站点ID
-	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform" dc:"平台"`                              // 平台
-	Vendor        string                 `protobuf:"bytes,4,opt,name=vendor,proto3" json:"vendor" dc:"运营商"`                                 // 运营商
-	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code" dc:"游戏代码"`                                    // 游戏代码
-	Name          string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name" dc:"游戏名称"`                                    // 游戏名称
-	Style         string                 `protobuf:"bytes,7,opt,name=style,proto3" json:"style" dc:"游戏类型"`                                  // 游戏类型
-	Img           string                 `protobuf:"bytes,8,opt,name=img,proto3" json:"img" dc:"图片"`                                        // 图片
-	Img1          string                 `protobuf:"bytes,9,opt,name=img1,proto3" json:"img1" dc:"图片1"`                                     // 图片1
-	Hot           int32                  `protobuf:"varint,10,opt,name=hot,proto3" json:"hot" dc:"是否热门"`                                    // 是否热门
-	Recommend     int32                  `protobuf:"varint,11,opt,name=recommend,proto3" json:"recommend" dc:"是否推荐"`                        // 是否推荐
-	IsNew         int32                  `protobuf:"varint,12,opt,name=is_new,json=isNew,proto3" json:"is_new" dc:"是否新游戏"`                  // 是否新游戏
-	Status        int32                  `protobuf:"varint,13,opt,name=status,proto3" json:"status" dc:"状态"`                                // 状态
-	Sort          int32                  `protobuf:"varint,14,opt,name=sort,proto3" json:"sort" dc:"排序"`                                    // 排序
-	GameId        int32                  `protobuf:"varint,15,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID（从site_game表获取）"` // 游戏ID（从site_game表获取）
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	SiteId        int32                  `protobuf:"varint,2,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Platform      string                 `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform,omitempty"`
+	Vendor        string                 `protobuf:"bytes,4,opt,name=vendor,proto3" json:"vendor,omitempty"`
+	Code          string                 `protobuf:"bytes,5,opt,name=code,proto3" json:"code,omitempty"`
+	Name          string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	Style         string                 `protobuf:"bytes,7,opt,name=style,proto3" json:"style,omitempty"`
+	Img           string                 `protobuf:"bytes,8,opt,name=img,proto3" json:"img,omitempty"`
+	Img1          string                 `protobuf:"bytes,9,opt,name=img1,proto3" json:"img1,omitempty"`
+	Hot           int32                  `protobuf:"varint,10,opt,name=hot,proto3" json:"hot,omitempty"`
+	Recommend     int32                  `protobuf:"varint,11,opt,name=recommend,proto3" json:"recommend,omitempty"`
+	IsNew         int32                  `protobuf:"varint,12,opt,name=is_new,json=isNew,proto3" json:"is_new,omitempty"`
+	Status        int32                  `protobuf:"varint,13,opt,name=status,proto3" json:"status,omitempty"`
+	Sort          int32                  `protobuf:"varint,14,opt,name=sort,proto3" json:"sort,omitempty"`
+	GameId        int32                  `protobuf:"varint,15,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	IsFavorite    int32                  `protobuf:"varint,16,opt,name=is_favorite,json=isFavorite,proto3" json:"is_favorite,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -614,16 +614,263 @@ func (x *GameItem) GetGameId() int32 {
 	return 0
 }
 
+func (x *GameItem) GetIsFavorite() int32 {
+	if x != nil {
+		return x.IsFavorite
+	}
+	return 0
+}
+
+type ToggleFavoriteGameReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Platform      string                 `protobuf:"bytes,1,opt,name=platform,proto3" json:"platform,omitempty"`
+	GameCode      string                 `protobuf:"bytes,2,opt,name=game_code,json=gameCode,proto3" json:"game_code,omitempty"`
+	GameId        int32                  `protobuf:"varint,3,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	GameName      string                 `protobuf:"bytes,4,opt,name=game_name,json=gameName,proto3" json:"game_name,omitempty"`
+	Vendor        string                 `protobuf:"bytes,5,opt,name=vendor,proto3" json:"vendor,omitempty"`
+	Style         string                 `protobuf:"bytes,6,opt,name=style,proto3" json:"style,omitempty"`
+	GameImg       string                 `protobuf:"bytes,7,opt,name=game_img,json=gameImg,proto3" json:"game_img,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToggleFavoriteGameReq) Reset() {
+	*x = ToggleFavoriteGameReq{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToggleFavoriteGameReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToggleFavoriteGameReq) ProtoMessage() {}
+
+func (x *ToggleFavoriteGameReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToggleFavoriteGameReq.ProtoReflect.Descriptor instead.
+func (*ToggleFavoriteGameReq) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ToggleFavoriteGameReq) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *ToggleFavoriteGameReq) GetGameCode() string {
+	if x != nil {
+		return x.GameCode
+	}
+	return ""
+}
+
+func (x *ToggleFavoriteGameReq) GetGameId() int32 {
+	if x != nil {
+		return x.GameId
+	}
+	return 0
+}
+
+func (x *ToggleFavoriteGameReq) GetGameName() string {
+	if x != nil {
+		return x.GameName
+	}
+	return ""
+}
+
+func (x *ToggleFavoriteGameReq) GetVendor() string {
+	if x != nil {
+		return x.Vendor
+	}
+	return ""
+}
+
+func (x *ToggleFavoriteGameReq) GetStyle() string {
+	if x != nil {
+		return x.Style
+	}
+	return ""
+}
+
+func (x *ToggleFavoriteGameReq) GetGameImg() string {
+	if x != nil {
+		return x.GameImg
+	}
+	return ""
+}
+
+type ToggleFavoriteGameRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	IsFavorite    int32                  `protobuf:"varint,3,opt,name=is_favorite,json=isFavorite,proto3" json:"is_favorite,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToggleFavoriteGameRes) Reset() {
+	*x = ToggleFavoriteGameRes{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToggleFavoriteGameRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToggleFavoriteGameRes) ProtoMessage() {}
+
+func (x *ToggleFavoriteGameRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToggleFavoriteGameRes.ProtoReflect.Descriptor instead.
+func (*ToggleFavoriteGameRes) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ToggleFavoriteGameRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *ToggleFavoriteGameRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ToggleFavoriteGameRes) GetIsFavorite() int32 {
+	if x != nil {
+		return x.IsFavorite
+	}
+	return 0
+}
+
+type GetFavoriteGameListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetFavoriteGameListReq) Reset() {
+	*x = GetFavoriteGameListReq{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetFavoriteGameListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFavoriteGameListReq) ProtoMessage() {}
+
+func (x *GetFavoriteGameListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFavoriteGameListReq.ProtoReflect.Descriptor instead.
+func (*GetFavoriteGameListReq) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{10}
+}
+
+type GetFavoriteGameListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*GameItem            `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetFavoriteGameListRes) Reset() {
+	*x = GetFavoriteGameListRes{}
+	mi := &file_frontend_game_v1_game_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetFavoriteGameListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFavoriteGameListRes) ProtoMessage() {}
+
+func (x *GetFavoriteGameListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_frontend_game_v1_game_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFavoriteGameListRes.ProtoReflect.Descriptor instead.
+func (*GetFavoriteGameListRes) Descriptor() ([]byte, []int) {
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetFavoriteGameListRes) GetList() []*GameItem {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *GetFavoriteGameListRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
 type GetGameBalanceReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"游戏ID"` // 游戏ID
+	GameId        int32                  `protobuf:"varint,1,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetGameBalanceReq) Reset() {
 	*x = GetGameBalanceReq{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[8]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -635,7 +882,7 @@ func (x *GetGameBalanceReq) String() string {
 func (*GetGameBalanceReq) ProtoMessage() {}
 
 func (x *GetGameBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[8]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -648,7 +895,7 @@ func (x *GetGameBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameBalanceReq.ProtoReflect.Descriptor instead.
 func (*GetGameBalanceReq) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{8}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetGameBalanceReq) GetGameId() int32 {
@@ -660,16 +907,16 @@ func (x *GetGameBalanceReq) GetGameId() int32 {
 
 type GetGameBalanceRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Balance       float64                `protobuf:"fixed64,1,opt,name=balance,proto3" json:"balance" dc:"游戏余额（使用double保持精度）"` // 游戏余额（使用double保持精度）
-	Success       bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success" dc:"是否成功"`                // 是否成功
-	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message" dc:"消息"`                   // 消息
+	Balance       float64                `protobuf:"fixed64,1,opt,name=balance,proto3" json:"balance,omitempty"`
+	Success       bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetGameBalanceRes) Reset() {
 	*x = GetGameBalanceRes{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[9]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -681,7 +928,7 @@ func (x *GetGameBalanceRes) String() string {
 func (*GetGameBalanceRes) ProtoMessage() {}
 
 func (x *GetGameBalanceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[9]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -694,7 +941,7 @@ func (x *GetGameBalanceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGameBalanceRes.ProtoReflect.Descriptor instead.
 func (*GetGameBalanceRes) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{9}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetGameBalanceRes) GetBalance() float64 {
@@ -726,7 +973,7 @@ type RecallGameBalanceReq struct {
 
 func (x *RecallGameBalanceReq) Reset() {
 	*x = RecallGameBalanceReq{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[10]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -738,7 +985,7 @@ func (x *RecallGameBalanceReq) String() string {
 func (*RecallGameBalanceReq) ProtoMessage() {}
 
 func (x *RecallGameBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[10]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -751,23 +998,23 @@ func (x *RecallGameBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecallGameBalanceReq.ProtoReflect.Descriptor instead.
 func (*RecallGameBalanceReq) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{10}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{14}
 }
 
 type RecallGameBalanceRes struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                                     // 是否成功
-	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                                        // 消息
-	RecalledAmount float64                `protobuf:"fixed64,3,opt,name=recalled_amount,json=recalledAmount,proto3" json:"recalled_amount" dc:"回收的金额（使用double保持精度）"` // 回收的金额（使用double保持精度）
-	GameId         int32                  `protobuf:"varint,4,opt,name=game_id,json=gameId,proto3" json:"game_id" dc:"回收的游戏ID"`                                      // 回收的游戏ID
-	GameName       string                 `protobuf:"bytes,5,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"回收的游戏名称"`                                 // 回收的游戏名称
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	RecalledAmount float64                `protobuf:"fixed64,3,opt,name=recalled_amount,json=recalledAmount,proto3" json:"recalled_amount,omitempty"`
+	GameId         int32                  `protobuf:"varint,4,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	GameName       string                 `protobuf:"bytes,5,opt,name=game_name,json=gameName,proto3" json:"game_name,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *RecallGameBalanceRes) Reset() {
 	*x = RecallGameBalanceRes{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[11]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -779,7 +1026,7 @@ func (x *RecallGameBalanceRes) String() string {
 func (*RecallGameBalanceRes) ProtoMessage() {}
 
 func (x *RecallGameBalanceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[11]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -792,7 +1039,7 @@ func (x *RecallGameBalanceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecallGameBalanceRes.ProtoReflect.Descriptor instead.
 func (*RecallGameBalanceRes) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{11}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *RecallGameBalanceRes) GetSuccess() bool {
@@ -832,17 +1079,17 @@ func (x *RecallGameBalanceRes) GetGameName() string {
 
 type GetUserBetHistoryReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	StartTime     string                 `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time" dc:"开始时间 格式: 2006-01-02 15:04:05（默认当天开始）"` // 开始时间 格式: 2006-01-02 15:04:05（默认当天开始）
-	EndTime       string                 `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time" dc:"结束时间 格式: 2006-01-02 15:04:05（默认当天结束）"`       // 结束时间 格式: 2006-01-02 15:04:05（默认当天结束）
-	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page" dc:"页码（默认1）"`                                                        // 页码（默认1）
-	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size" dc:"每页数量（默认20）"`                                                     // 每页数量（默认20）
+	StartTime     string                 `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       string                 `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetUserBetHistoryReq) Reset() {
 	*x = GetUserBetHistoryReq{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[12]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -854,7 +1101,7 @@ func (x *GetUserBetHistoryReq) String() string {
 func (*GetUserBetHistoryReq) ProtoMessage() {}
 
 func (x *GetUserBetHistoryReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[12]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -867,7 +1114,7 @@ func (x *GetUserBetHistoryReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserBetHistoryReq.ProtoReflect.Descriptor instead.
 func (*GetUserBetHistoryReq) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{12}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetUserBetHistoryReq) GetStartTime() string {
@@ -900,15 +1147,15 @@ func (x *GetUserBetHistoryReq) GetSize() int32 {
 
 type GetUserBetHistoryRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*UserBetHistoryItem  `protobuf:"bytes,1,rep,name=list,proto3" json:"list" dc:"历史投注列表"` // 历史投注列表
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total" dc:"总数"`  // 总数
+	List          []*UserBetHistoryItem  `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetUserBetHistoryRes) Reset() {
 	*x = GetUserBetHistoryRes{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[13]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -920,7 +1167,7 @@ func (x *GetUserBetHistoryRes) String() string {
 func (*GetUserBetHistoryRes) ProtoMessage() {}
 
 func (x *GetUserBetHistoryRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[13]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -933,7 +1180,7 @@ func (x *GetUserBetHistoryRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserBetHistoryRes.ProtoReflect.Descriptor instead.
 func (*GetUserBetHistoryRes) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{13}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetUserBetHistoryRes) GetList() []*UserBetHistoryItem {
@@ -952,20 +1199,20 @@ func (x *GetUserBetHistoryRes) GetTotal() int32 {
 
 type UserBetHistoryItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GameName      string                 `protobuf:"bytes,1,opt,name=game_name,json=gameName,proto3" json:"game_name" dc:"游戏名称"`                  // 游戏名称
-	ValidAmount   float64                `protobuf:"fixed64,2,opt,name=valid_amount,json=validAmount,proto3" json:"valid_amount" dc:"下注金额（有效投注）"` // 下注金额（有效投注）
-	BetTime       string                 `protobuf:"bytes,3,opt,name=bet_time,json=betTime,proto3" json:"bet_time" dc:"下注时间"`                     // 下注时间
-	WinAmount     float64                `protobuf:"fixed64,4,opt,name=win_amount,json=winAmount,proto3" json:"win_amount" dc:"赢取金额"`             // 赢取金额
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"是否结算状态"`                                   // 是否结算状态
-	OrderNo       string                 `protobuf:"bytes,6,opt,name=order_no,json=orderNo,proto3" json:"order_no" dc:"订单号"`                      // 订单号
-	NetAmount     float64                `protobuf:"fixed64,7,opt,name=net_amount,json=netAmount,proto3" json:"net_amount" dc:"净输赢"`              // 净输赢
+	GameName      string                 `protobuf:"bytes,1,opt,name=game_name,json=gameName,proto3" json:"game_name,omitempty"`
+	ValidAmount   float64                `protobuf:"fixed64,2,opt,name=valid_amount,json=validAmount,proto3" json:"valid_amount,omitempty"`
+	BetTime       string                 `protobuf:"bytes,3,opt,name=bet_time,json=betTime,proto3" json:"bet_time,omitempty"`
+	WinAmount     float64                `protobuf:"fixed64,4,opt,name=win_amount,json=winAmount,proto3" json:"win_amount,omitempty"`
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`
+	OrderNo       string                 `protobuf:"bytes,6,opt,name=order_no,json=orderNo,proto3" json:"order_no,omitempty"`
+	NetAmount     float64                `protobuf:"fixed64,7,opt,name=net_amount,json=netAmount,proto3" json:"net_amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UserBetHistoryItem) Reset() {
 	*x = UserBetHistoryItem{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[14]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -977,7 +1224,7 @@ func (x *UserBetHistoryItem) String() string {
 func (*UserBetHistoryItem) ProtoMessage() {}
 
 func (x *UserBetHistoryItem) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[14]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -990,7 +1237,7 @@ func (x *UserBetHistoryItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserBetHistoryItem.ProtoReflect.Descriptor instead.
 func (*UserBetHistoryItem) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{14}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UserBetHistoryItem) GetGameName() string {
@@ -1044,14 +1291,14 @@ func (x *UserBetHistoryItem) GetNetAmount() float64 {
 
 type GetWashCodeQuotaReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	LastBetId     uint64                 `protobuf:"varint,1,opt,name=last_bet_id,json=lastBetId,proto3" json:"last_bet_id" dc:"上次洗码游标（可选，0=自动根据最近洗码时间）"` // 上次洗码游标（可选，0=自动根据最近洗码时间）
+	LastBetId     uint64                 `protobuf:"varint,1,opt,name=last_bet_id,json=lastBetId,proto3" json:"last_bet_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetWashCodeQuotaReq) Reset() {
 	*x = GetWashCodeQuotaReq{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[15]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1063,7 +1310,7 @@ func (x *GetWashCodeQuotaReq) String() string {
 func (*GetWashCodeQuotaReq) ProtoMessage() {}
 
 func (x *GetWashCodeQuotaReq) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[15]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1076,7 +1323,7 @@ func (x *GetWashCodeQuotaReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWashCodeQuotaReq.ProtoReflect.Descriptor instead.
 func (*GetWashCodeQuotaReq) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{15}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetWashCodeQuotaReq) GetLastBetId() uint64 {
@@ -1088,18 +1335,18 @@ func (x *GetWashCodeQuotaReq) GetLastBetId() uint64 {
 
 type GetWashCodeQuotaRes struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success" dc:"是否成功"`                                               // 是否成功
-	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message" dc:"消息"`                                                  // 消息
-	ValidBetAmount float64                `protobuf:"fixed64,3,opt,name=valid_bet_amount,json=validBetAmount,proto3" json:"valid_bet_amount" dc:"当前可洗码有效投注额度"` // 当前可洗码有效投注额度
-	MaxBetId       uint64                 `protobuf:"varint,4,opt,name=max_bet_id,json=maxBetId,proto3" json:"max_bet_id" dc:"本次统计区间最大注单ID"`                   // 本次统计区间最大注单ID
-	LastRebateTime string                 `protobuf:"bytes,5,opt,name=last_rebate_time,json=lastRebateTime,proto3" json:"last_rebate_time" dc:"最近一次洗码时间（无则空）"` // 最近一次洗码时间（无则空）
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message        string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	ValidBetAmount float64                `protobuf:"fixed64,3,opt,name=valid_bet_amount,json=validBetAmount,proto3" json:"valid_bet_amount,omitempty"`
+	MaxBetId       uint64                 `protobuf:"varint,4,opt,name=max_bet_id,json=maxBetId,proto3" json:"max_bet_id,omitempty"`
+	LastRebateTime string                 `protobuf:"bytes,5,opt,name=last_rebate_time,json=lastRebateTime,proto3" json:"last_rebate_time,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *GetWashCodeQuotaRes) Reset() {
 	*x = GetWashCodeQuotaRes{}
-	mi := &file_frontend_game_v1_game_proto_msgTypes[16]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1111,7 +1358,7 @@ func (x *GetWashCodeQuotaRes) String() string {
 func (*GetWashCodeQuotaRes) ProtoMessage() {}
 
 func (x *GetWashCodeQuotaRes) ProtoReflect() protoreflect.Message {
-	mi := &file_frontend_game_v1_game_proto_msgTypes[16]
+	mi := &file_frontend_game_v1_game_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1124,7 +1371,7 @@ func (x *GetWashCodeQuotaRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWashCodeQuotaRes.ProtoReflect.Descriptor instead.
 func (*GetWashCodeQuotaRes) Descriptor() ([]byte, []int) {
-	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{16}
+	return file_frontend_game_v1_game_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetWashCodeQuotaRes) GetSuccess() bool {
@@ -1200,7 +1447,7 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x04size\x18\x06 \x01(\x05R\x04size\"P\n" +
 	"\x0eGetGameListRes\x12(\n" +
 	"\x04list\x18\x01 \x03(\v2\x14.front_game.GameItemR\x04list\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x05R\x05total\"\xd7\x02\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\xf8\x02\n" +
 	"\bGameItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
 	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12\x1a\n" +
@@ -1217,7 +1464,26 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x06is_new\x18\f \x01(\x05R\x05isNew\x12\x16\n" +
 	"\x06status\x18\r \x01(\x05R\x06status\x12\x12\n" +
 	"\x04sort\x18\x0e \x01(\x05R\x04sort\x12\x17\n" +
-	"\agame_id\x18\x0f \x01(\x05R\x06gameId\",\n" +
+	"\agame_id\x18\x0f \x01(\x05R\x06gameId\x12\x1f\n" +
+	"\vis_favorite\x18\x10 \x01(\x05R\n" +
+	"isFavorite\"\xcf\x01\n" +
+	"\x15ToggleFavoriteGameReq\x12\x1a\n" +
+	"\bplatform\x18\x01 \x01(\tR\bplatform\x12\x1b\n" +
+	"\tgame_code\x18\x02 \x01(\tR\bgameCode\x12\x17\n" +
+	"\agame_id\x18\x03 \x01(\x05R\x06gameId\x12\x1b\n" +
+	"\tgame_name\x18\x04 \x01(\tR\bgameName\x12\x16\n" +
+	"\x06vendor\x18\x05 \x01(\tR\x06vendor\x12\x14\n" +
+	"\x05style\x18\x06 \x01(\tR\x05style\x12\x19\n" +
+	"\bgame_img\x18\a \x01(\tR\agameImg\"l\n" +
+	"\x15ToggleFavoriteGameRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x1f\n" +
+	"\vis_favorite\x18\x03 \x01(\x05R\n" +
+	"isFavorite\"\x18\n" +
+	"\x16GetFavoriteGameListReq\"X\n" +
+	"\x16GetFavoriteGameListRes\x12(\n" +
+	"\x04list\x18\x01 \x03(\v2\x14.front_game.GameItemR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\",\n" +
 	"\x11GetGameBalanceReq\x12\x17\n" +
 	"\agame_id\x18\x01 \x01(\x05R\x06gameId\"a\n" +
 	"\x11GetGameBalanceRes\x12\x18\n" +
@@ -1258,15 +1524,17 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x10valid_bet_amount\x18\x03 \x01(\x01R\x0evalidBetAmount\x12\x1c\n" +
 	"\n" +
 	"max_bet_id\x18\x04 \x01(\x04R\bmaxBetId\x12(\n" +
-	"\x10last_rebate_time\x18\x05 \x01(\tR\x0elastRebateTime2\xdc\x04\n" +
+	"\x10last_rebate_time\x18\x05 \x01(\tR\x0elastRebateTime2\x9b\x06\n" +
 	"\x04Game\x12P\n" +
 	"\x0eRedirectToGame\x12\x1d.front_game.RedirectToGameReq\x1a\x1d.front_game.RedirectToGameRes\"\x00\x12Y\n" +
 	"\x11GetGameCategories\x12 .front_game.GetGameCategoriesReq\x1a .front_game.GetGameCategoriesRes\"\x00\x12G\n" +
-	"\vGetGameList\x12\x1a.front_game.GetGameListReq\x1a\x1a.front_game.GetGameListRes\"\x00\x12P\n" +
+	"\vGetGameList\x12\x1a.front_game.GetGameListReq\x1a\x1a.front_game.GetGameListRes\"\x00\x12\\\n" +
+	"\x12ToggleFavoriteGame\x12!.front_game.ToggleFavoriteGameReq\x1a!.front_game.ToggleFavoriteGameRes\"\x00\x12_\n" +
+	"\x13GetFavoriteGameList\x12\".front_game.GetFavoriteGameListReq\x1a\".front_game.GetFavoriteGameListRes\"\x00\x12P\n" +
 	"\x0eGetGameBalance\x12\x1d.front_game.GetGameBalanceReq\x1a\x1d.front_game.GetGameBalanceRes\"\x00\x12Y\n" +
 	"\x11RecallGameBalance\x12 .front_game.RecallGameBalanceReq\x1a .front_game.RecallGameBalanceRes\"\x00\x12Y\n" +
 	"\x11GetUserBetHistory\x12 .front_game.GetUserBetHistoryReq\x1a .front_game.GetUserBetHistoryRes\"\x00\x12V\n" +
-	"\x10GetWashCodeQuota\x12\x1f.front_game.GetWashCodeQuotaReq\x1a\x1f.front_game.GetWashCodeQuotaRes\"\x00B&Z$jh_game_service/api/frontend/game/v1b\x06proto3"
+	"\x10GetWashCodeQuota\x12\x1f.front_game.GetWashCodeQuotaReq\x1a\x1f.front_game.GetWashCodeQuotaRes\"\x00B!Z\x1fjh_gateway/api/frontend/game/v1b\x06proto3"
 
 var (
 	file_frontend_game_v1_game_proto_rawDescOnce sync.Once
@@ -1280,49 +1548,58 @@ func file_frontend_game_v1_game_proto_rawDescGZIP() []byte {
 	return file_frontend_game_v1_game_proto_rawDescData
 }
 
-var file_frontend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_frontend_game_v1_game_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_frontend_game_v1_game_proto_goTypes = []any{
-	(*RedirectToGameReq)(nil),    // 0: front_game.RedirectToGameReq
-	(*RedirectToGameRes)(nil),    // 1: front_game.RedirectToGameRes
-	(*GetGameCategoriesReq)(nil), // 2: front_game.GetGameCategoriesReq
-	(*GetGameCategoriesRes)(nil), // 3: front_game.GetGameCategoriesRes
-	(*GameCategory)(nil),         // 4: front_game.GameCategory
-	(*GetGameListReq)(nil),       // 5: front_game.GetGameListReq
-	(*GetGameListRes)(nil),       // 6: front_game.GetGameListRes
-	(*GameItem)(nil),             // 7: front_game.GameItem
-	(*GetGameBalanceReq)(nil),    // 8: front_game.GetGameBalanceReq
-	(*GetGameBalanceRes)(nil),    // 9: front_game.GetGameBalanceRes
-	(*RecallGameBalanceReq)(nil), // 10: front_game.RecallGameBalanceReq
-	(*RecallGameBalanceRes)(nil), // 11: front_game.RecallGameBalanceRes
-	(*GetUserBetHistoryReq)(nil), // 12: front_game.GetUserBetHistoryReq
-	(*GetUserBetHistoryRes)(nil), // 13: front_game.GetUserBetHistoryRes
-	(*UserBetHistoryItem)(nil),   // 14: front_game.UserBetHistoryItem
-	(*GetWashCodeQuotaReq)(nil),  // 15: front_game.GetWashCodeQuotaReq
-	(*GetWashCodeQuotaRes)(nil),  // 16: front_game.GetWashCodeQuotaRes
+	(*RedirectToGameReq)(nil),      // 0: front_game.RedirectToGameReq
+	(*RedirectToGameRes)(nil),      // 1: front_game.RedirectToGameRes
+	(*GetGameCategoriesReq)(nil),   // 2: front_game.GetGameCategoriesReq
+	(*GetGameCategoriesRes)(nil),   // 3: front_game.GetGameCategoriesRes
+	(*GameCategory)(nil),           // 4: front_game.GameCategory
+	(*GetGameListReq)(nil),         // 5: front_game.GetGameListReq
+	(*GetGameListRes)(nil),         // 6: front_game.GetGameListRes
+	(*GameItem)(nil),               // 7: front_game.GameItem
+	(*ToggleFavoriteGameReq)(nil),  // 8: front_game.ToggleFavoriteGameReq
+	(*ToggleFavoriteGameRes)(nil),  // 9: front_game.ToggleFavoriteGameRes
+	(*GetFavoriteGameListReq)(nil), // 10: front_game.GetFavoriteGameListReq
+	(*GetFavoriteGameListRes)(nil), // 11: front_game.GetFavoriteGameListRes
+	(*GetGameBalanceReq)(nil),      // 12: front_game.GetGameBalanceReq
+	(*GetGameBalanceRes)(nil),      // 13: front_game.GetGameBalanceRes
+	(*RecallGameBalanceReq)(nil),   // 14: front_game.RecallGameBalanceReq
+	(*RecallGameBalanceRes)(nil),   // 15: front_game.RecallGameBalanceRes
+	(*GetUserBetHistoryReq)(nil),   // 16: front_game.GetUserBetHistoryReq
+	(*GetUserBetHistoryRes)(nil),   // 17: front_game.GetUserBetHistoryRes
+	(*UserBetHistoryItem)(nil),     // 18: front_game.UserBetHistoryItem
+	(*GetWashCodeQuotaReq)(nil),    // 19: front_game.GetWashCodeQuotaReq
+	(*GetWashCodeQuotaRes)(nil),    // 20: front_game.GetWashCodeQuotaRes
 }
 var file_frontend_game_v1_game_proto_depIdxs = []int32{
 	4,  // 0: front_game.GetGameCategoriesRes.categories:type_name -> front_game.GameCategory
 	7,  // 1: front_game.GetGameListRes.list:type_name -> front_game.GameItem
-	14, // 2: front_game.GetUserBetHistoryRes.list:type_name -> front_game.UserBetHistoryItem
-	0,  // 3: front_game.Game.RedirectToGame:input_type -> front_game.RedirectToGameReq
-	2,  // 4: front_game.Game.GetGameCategories:input_type -> front_game.GetGameCategoriesReq
-	5,  // 5: front_game.Game.GetGameList:input_type -> front_game.GetGameListReq
-	8,  // 6: front_game.Game.GetGameBalance:input_type -> front_game.GetGameBalanceReq
-	10, // 7: front_game.Game.RecallGameBalance:input_type -> front_game.RecallGameBalanceReq
-	12, // 8: front_game.Game.GetUserBetHistory:input_type -> front_game.GetUserBetHistoryReq
-	15, // 9: front_game.Game.GetWashCodeQuota:input_type -> front_game.GetWashCodeQuotaReq
-	1,  // 10: front_game.Game.RedirectToGame:output_type -> front_game.RedirectToGameRes
-	3,  // 11: front_game.Game.GetGameCategories:output_type -> front_game.GetGameCategoriesRes
-	6,  // 12: front_game.Game.GetGameList:output_type -> front_game.GetGameListRes
-	9,  // 13: front_game.Game.GetGameBalance:output_type -> front_game.GetGameBalanceRes
-	11, // 14: front_game.Game.RecallGameBalance:output_type -> front_game.RecallGameBalanceRes
-	13, // 15: front_game.Game.GetUserBetHistory:output_type -> front_game.GetUserBetHistoryRes
-	16, // 16: front_game.Game.GetWashCodeQuota:output_type -> front_game.GetWashCodeQuotaRes
-	10, // [10:17] is the sub-list for method output_type
-	3,  // [3:10] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	7,  // 2: front_game.GetFavoriteGameListRes.list:type_name -> front_game.GameItem
+	18, // 3: front_game.GetUserBetHistoryRes.list:type_name -> front_game.UserBetHistoryItem
+	0,  // 4: front_game.Game.RedirectToGame:input_type -> front_game.RedirectToGameReq
+	2,  // 5: front_game.Game.GetGameCategories:input_type -> front_game.GetGameCategoriesReq
+	5,  // 6: front_game.Game.GetGameList:input_type -> front_game.GetGameListReq
+	8,  // 7: front_game.Game.ToggleFavoriteGame:input_type -> front_game.ToggleFavoriteGameReq
+	10, // 8: front_game.Game.GetFavoriteGameList:input_type -> front_game.GetFavoriteGameListReq
+	12, // 9: front_game.Game.GetGameBalance:input_type -> front_game.GetGameBalanceReq
+	14, // 10: front_game.Game.RecallGameBalance:input_type -> front_game.RecallGameBalanceReq
+	16, // 11: front_game.Game.GetUserBetHistory:input_type -> front_game.GetUserBetHistoryReq
+	19, // 12: front_game.Game.GetWashCodeQuota:input_type -> front_game.GetWashCodeQuotaReq
+	1,  // 13: front_game.Game.RedirectToGame:output_type -> front_game.RedirectToGameRes
+	3,  // 14: front_game.Game.GetGameCategories:output_type -> front_game.GetGameCategoriesRes
+	6,  // 15: front_game.Game.GetGameList:output_type -> front_game.GetGameListRes
+	9,  // 16: front_game.Game.ToggleFavoriteGame:output_type -> front_game.ToggleFavoriteGameRes
+	11, // 17: front_game.Game.GetFavoriteGameList:output_type -> front_game.GetFavoriteGameListRes
+	13, // 18: front_game.Game.GetGameBalance:output_type -> front_game.GetGameBalanceRes
+	15, // 19: front_game.Game.RecallGameBalance:output_type -> front_game.RecallGameBalanceRes
+	17, // 20: front_game.Game.GetUserBetHistory:output_type -> front_game.GetUserBetHistoryRes
+	20, // 21: front_game.Game.GetWashCodeQuota:output_type -> front_game.GetWashCodeQuotaRes
+	13, // [13:22] is the sub-list for method output_type
+	4,  // [4:13] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_frontend_game_v1_game_proto_init() }
@@ -1336,7 +1613,7 @@ func file_frontend_game_v1_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_frontend_game_v1_game_proto_rawDesc), len(file_frontend_game_v1_game_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

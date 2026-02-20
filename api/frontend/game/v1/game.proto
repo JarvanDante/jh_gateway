@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+package front_game;
+
+option go_package = "jh_gateway/api/frontend/game/v1";
+
+service Game {
+    rpc RedirectToGame(RedirectToGameReq) returns (RedirectToGameRes) {}
+    rpc GetGameCategories(GetGameCategoriesReq) returns (GetGameCategoriesRes) {}
+    rpc GetGameList(GetGameListReq) returns (GetGameListRes) {}
+    rpc ToggleFavoriteGame(ToggleFavoriteGameReq) returns (ToggleFavoriteGameRes) {}
+    rpc GetFavoriteGameList(GetFavoriteGameListReq) returns (GetFavoriteGameListRes) {}
+    rpc GetGameBalance(GetGameBalanceReq) returns (GetGameBalanceRes) {}
+    rpc RecallGameBalance(RecallGameBalanceReq) returns (RecallGameBalanceRes) {}
+    rpc GetUserBetHistory(GetUserBetHistoryReq) returns (GetUserBetHistoryRes) {}
+    rpc GetWashCodeQuota(GetWashCodeQuotaReq) returns (GetWashCodeQuotaRes) {}
+}
+
+message RedirectToGameReq {
+    int32 game_id = 1;
+    string key = 2;
+    int32 mobile = 3;
+}
+
+message RedirectToGameRes {
+    string type = 1;
+    string url = 2;
+}
+
+message GetGameCategoriesReq {
+    int32 type = 1;
+}
+
+message GetGameCategoriesRes {
+    repeated GameCategory categories = 1;
+}
+
+message GameCategory {
+    int32 game_id = 1;
+    string name = 2;
+    string platform = 3;
+    int32 type = 4;
+    string image_code = 5;
+    string db_name = 6;
+    int32 sort = 7;
+    int32 status = 8;
+}
+
+message GetGameListReq {
+    string platform = 1;
+    int32 hot = 2;
+    int32 is_new = 3;
+    int32 recommend = 4;
+    int32 page = 5;
+    int32 size = 6;
+}
+
+message GetGameListRes {
+    repeated GameItem list = 1;
+    int32 total = 2;
+}
+
+message GameItem {
+    int32 id = 1;
+    int32 site_id = 2;
+    string platform = 3;
+    string vendor = 4;
+    string code = 5;
+    string name = 6;
+    string style = 7;
+    string img = 8;
+    string img1 = 9;
+    int32 hot = 10;
+    int32 recommend = 11;
+    int32 is_new = 12;
+    int32 status = 13;
+    int32 sort = 14;
+    int32 game_id = 15;
+    int32 is_favorite = 16;
+}
+
+message ToggleFavoriteGameReq {
+    string platform = 1;
+    string game_code = 2;
+    int32 game_id = 3;
+    string game_name = 4;
+    string vendor = 5;
+    string style = 6;
+    string game_img = 7;
+}
+
+message ToggleFavoriteGameRes {
+    bool success = 1;
+    string message = 2;
+    int32 is_favorite = 3;
+}
+
+message GetFavoriteGameListReq {}
+
+message GetFavoriteGameListRes {
+    repeated GameItem list = 1;
+    int32 total = 2;
+}
+
+message GetGameBalanceReq {
+    int32 game_id = 1;
+}
+
+message GetGameBalanceRes {
+    double balance = 1;
+    bool success = 2;
+    string message = 3;
+}
+
+message RecallGameBalanceReq {}
+
+message RecallGameBalanceRes {
+    bool success = 1;
+    string message = 2;
+    double recalled_amount = 3;
+    int32 game_id = 4;
+    string game_name = 5;
+}
+
+message GetUserBetHistoryReq {
+    string start_time = 1;
+    string end_time = 2;
+    int32 page = 3;
+    int32 size = 4;
+}
+
+message GetUserBetHistoryRes {
+    repeated UserBetHistoryItem list = 1;
+    int32 total = 2;
+}
+
+message UserBetHistoryItem {
+    string game_name = 1;
+    double valid_amount = 2;
+    string bet_time = 3;
+    double win_amount = 4;
+    int32 status = 5;
+    string order_no = 6;
+    double net_amount = 7;
+}
+
+message GetWashCodeQuotaReq {
+    uint64 last_bet_id = 1;
+}
+
+message GetWashCodeQuotaRes {
+    bool success = 1;
+    string message = 2;
+    double valid_bet_amount = 3;
+    uint64 max_bet_id = 4;
+    string last_rebate_time = 5;
+}

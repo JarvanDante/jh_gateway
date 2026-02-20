@@ -592,6 +592,37 @@ func CallGetFrontendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 	return writeProtobufResponse(ctx, r, res)
 }
 
+// CallToggleFavoriteGame 收藏/取消收藏
+func CallToggleFavoriteGame(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	requestData := r.Context().Value("requestData").(map[string]interface{})
+	client := v20.NewGameClient(conn)
+	res, err := client.ToggleFavoriteGame(ctx, &v20.ToggleFavoriteGameReq{
+		Platform: gconv.String(requestData["platform"]),
+		GameCode: gconv.String(requestData["game_code"]),
+		GameId:   gconv.Int32(requestData["game_id"]),
+		GameName: gconv.String(requestData["game_name"]),
+		Vendor:   gconv.String(requestData["vendor"]),
+		Style:    gconv.String(requestData["style"]),
+		GameImg:  gconv.String(requestData["game_img"]),
+	})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game ToggleFavoriteGame failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+// CallGetFavoriteGameList 获取我的收藏游戏
+func CallGetFavoriteGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	client := v20.NewGameClient(conn)
+	res, err := client.GetFavoriteGameList(ctx, &v20.GetFavoriteGameListReq{})
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "gRPC Game GetFavoriteGameList failed: %v", err)
+		return err
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
 /**
  * showdoc
  * @catalog 后台/游戏/游戏平台
