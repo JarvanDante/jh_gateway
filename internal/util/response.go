@@ -172,6 +172,14 @@ func translateMessage(msg string) string {
 		suffix := strings.TrimPrefix(trimmed, "支付失败，通知状态：")
 		return "Payment failed, notify status: " + strings.TrimSpace(suffix)
 	}
+	if strings.HasPrefix(trimmed, "今日充值需达到 ") {
+		suffix := strings.TrimPrefix(trimmed, "今日充值需达到 ")
+		return "Today's recharge must reach " + strings.TrimSpace(suffix)
+	}
+	if strings.HasPrefix(trimmed, "今日有效投注需达到 ") {
+		suffix := strings.TrimPrefix(trimmed, "今日有效投注需达到 ")
+		return "Today's valid bet must reach " + strings.TrimSpace(suffix)
+	}
 
 	suffixMapping := map[string]string{
 		"游戏关闭维护": "Game is under maintenance",
@@ -267,6 +275,8 @@ func translateMessage(msg string) string {
 		"获取成功":                    "Get data success",
 		"签到成功":                    "Sign in success",
 		"今日已签到，请明日再来":             "Signed already today",
+		"查询今日充值金额失败":               "Failed to query today's recharge amount",
+		"查询今日有效投注失败":               "Failed to query today's valid bet amount",
 		"绑定手机号成功":                 "Mobile number successfully bound",
 		"该手机号已被其他用户绑定":            "Phone number has been used by others",
 		"抽奖成功":                    "Lucky Draw Successful",
