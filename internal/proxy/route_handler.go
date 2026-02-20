@@ -464,7 +464,8 @@ func initFrontendRoutes() {
 	// 修改支付密码
 	frontendRoutes.Register("/change-pay-password", "POST", frontend.CallChangePayPassword)
 	// 获取邀请信息
-	frontendRoutes.Register("/invite-info", "GET", frontend.CallGetInviteInfo)
+	// Invite 活动下线：临时注释 invite-info 接口
+	// frontendRoutes.Register("/invite-info", "GET", frontend.CallGetInviteInfo)
 	// 获取邀请列表
 	frontendRoutes.Register("/invite-list", "GET", frontend.CallGetInviteList)
 	// 获取公告列表
