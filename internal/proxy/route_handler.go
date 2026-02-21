@@ -364,6 +364,8 @@ func initManageRoutes() {
 	manageRoutes.Register("/admin/update", "POST", manage.CallManageUpdateAdmin)
 	manageRoutes.Register("/admin/delete", "POST", manage.CallManageDeleteAdmin)
 	manageRoutes.Register("/admin/role-options", "GET", manage.CallManageAdminRoleOptions)
+	manageRoutes.Register("/admin/generate-google2fa", "POST", manage.CallManageGenerateGoogle2FA)
+	manageRoutes.Register("/admin/bind-google2fa", "POST", manage.CallManageBindGoogle2FA)
 	manageRoutes.Register("/role/list", "GET", manage.CallManageRoleList)
 	manageRoutes.Register("/role/create", "POST", manage.CallManageCreateRole)
 	manageRoutes.Register("/role/update", "POST", manage.CallManageUpdateRole)

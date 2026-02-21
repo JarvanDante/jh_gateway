@@ -24,8 +24,9 @@ const (
 
 type ManageLoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" v:"required"` // v: required
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password" v:"required"` // v: required
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username" v:"required"`            // v: required
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password" v:"required"`            // v: required
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"Google 2FA code (optional)"` // Google 2FA code (optional)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -70,6 +71,13 @@ func (x *ManageLoginReq) GetUsername() string {
 func (x *ManageLoginReq) GetPassword() string {
 	if x != nil {
 		return x.Password
+	}
+	return ""
+}
+
+func (x *ManageLoginReq) GetCode() string {
+	if x != nil {
+		return x.Code
 	}
 	return ""
 }
@@ -1781,14 +1789,247 @@ func (*ManageDeleteRoleRes) Descriptor() ([]byte, []int) {
 	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{31}
 }
 
+type ManageGenerateGoogle2FAReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageGenerateGoogle2FAReq) Reset() {
+	*x = ManageGenerateGoogle2FAReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageGenerateGoogle2FAReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageGenerateGoogle2FAReq) ProtoMessage() {}
+
+func (x *ManageGenerateGoogle2FAReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageGenerateGoogle2FAReq.ProtoReflect.Descriptor instead.
+func (*ManageGenerateGoogle2FAReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *ManageGenerateGoogle2FAReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type ManageGenerateGoogle2FARes struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Secret          string                 `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret"`
+	OtpauthUrl      string                 `protobuf:"bytes,3,opt,name=otpauth_url,json=otpauthUrl,proto3" json:"otpauth_url"`
+	QrUrl           string                 `protobuf:"bytes,4,opt,name=qr_url,json=qrUrl,proto3" json:"qr_url"`
+	SwitchGoogle2Fa int32                  `protobuf:"varint,5,opt,name=switch_google2fa,json=switchGoogle2fa,proto3" json:"switch_google2fa"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ManageGenerateGoogle2FARes) Reset() {
+	*x = ManageGenerateGoogle2FARes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageGenerateGoogle2FARes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageGenerateGoogle2FARes) ProtoMessage() {}
+
+func (x *ManageGenerateGoogle2FARes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageGenerateGoogle2FARes.ProtoReflect.Descriptor instead.
+func (*ManageGenerateGoogle2FARes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *ManageGenerateGoogle2FARes) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ManageGenerateGoogle2FARes) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+func (x *ManageGenerateGoogle2FARes) GetOtpauthUrl() string {
+	if x != nil {
+		return x.OtpauthUrl
+	}
+	return ""
+}
+
+func (x *ManageGenerateGoogle2FARes) GetQrUrl() string {
+	if x != nil {
+		return x.QrUrl
+	}
+	return ""
+}
+
+func (x *ManageGenerateGoogle2FARes) GetSwitchGoogle2Fa() int32 {
+	if x != nil {
+		return x.SwitchGoogle2Fa
+	}
+	return 0
+}
+
+type ManageBindGoogle2FAReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Secret        string                 `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret"`
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageBindGoogle2FAReq) Reset() {
+	*x = ManageBindGoogle2FAReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageBindGoogle2FAReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageBindGoogle2FAReq) ProtoMessage() {}
+
+func (x *ManageBindGoogle2FAReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageBindGoogle2FAReq.ProtoReflect.Descriptor instead.
+func (*ManageBindGoogle2FAReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *ManageBindGoogle2FAReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ManageBindGoogle2FAReq) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+func (x *ManageBindGoogle2FAReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type ManageBindGoogle2FARes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageBindGoogle2FARes) Reset() {
+	*x = ManageBindGoogle2FARes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageBindGoogle2FARes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageBindGoogle2FARes) ProtoMessage() {}
+
+func (x *ManageBindGoogle2FARes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageBindGoogle2FARes.ProtoReflect.Descriptor instead.
+func (*ManageBindGoogle2FARes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *ManageBindGoogle2FARes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *ManageBindGoogle2FARes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_manage_admin_v1_admin_proto protoreflect.FileDescriptor
 
 const file_manage_admin_v1_admin_proto_rawDesc = "" +
 	"\n" +
-	"\x1bmanage/admin/v1/admin.proto\x12\fmanage_admin\"H\n" +
+	"\x1bmanage/admin/v1/admin.proto\x12\fmanage_admin\"\\\n" +
 	"\x0eManageLoginReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"@\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\"@\n" +
 	"\x0eManageLoginRes\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"\x17\n" +
@@ -1896,7 +2137,23 @@ const file_manage_admin_v1_admin_proto_rawDesc = "" +
 	"\x13ManageUpdateRoleRes\"%\n" +
 	"\x13ManageDeleteRoleReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x15\n" +
-	"\x13ManageDeleteRoleRes2\xbb\t\n" +
+	"\x13ManageDeleteRoleRes\",\n" +
+	"\x1aManageGenerateGoogle2FAReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xa7\x01\n" +
+	"\x1aManageGenerateGoogle2FARes\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
+	"\x06secret\x18\x02 \x01(\tR\x06secret\x12\x1f\n" +
+	"\votpauth_url\x18\x03 \x01(\tR\n" +
+	"otpauthUrl\x12\x15\n" +
+	"\x06qr_url\x18\x04 \x01(\tR\x05qrUrl\x12)\n" +
+	"\x10switch_google2fa\x18\x05 \x01(\x05R\x0fswitchGoogle2fa\"T\n" +
+	"\x16ManageBindGoogle2FAReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
+	"\x06secret\x18\x02 \x01(\tR\x06secret\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\"L\n" +
+	"\x16ManageBindGoogle2FARes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\x85\v\n" +
 	"\x05Admin\x12E\n" +
 	"\x05Login\x12\x1c.manage_admin.ManageLoginReq\x1a\x1c.manage_admin.ManageLoginRes\"\x00\x12Z\n" +
 	"\fRefreshToken\x12#.manage_admin.ManageRefreshTokenReq\x1a#.manage_admin.ManageRefreshTokenRes\"\x00\x12K\n" +
@@ -1914,7 +2171,9 @@ const file_manage_admin_v1_admin_proto_rawDesc = "" +
 	"\n" +
 	"UpdateRole\x12!.manage_admin.ManageUpdateRoleReq\x1a!.manage_admin.ManageUpdateRoleRes\"\x00\x12T\n" +
 	"\n" +
-	"DeleteRole\x12!.manage_admin.ManageDeleteRoleReq\x1a!.manage_admin.ManageDeleteRoleRes\"\x00B\x17Z\x15./api/manage/admin/v1b\x06proto3"
+	"DeleteRole\x12!.manage_admin.ManageDeleteRoleReq\x1a!.manage_admin.ManageDeleteRoleRes\"\x00\x12i\n" +
+	"\x11GenerateGoogle2FA\x12(.manage_admin.ManageGenerateGoogle2FAReq\x1a(.manage_admin.ManageGenerateGoogle2FARes\"\x00\x12]\n" +
+	"\rBindGoogle2FA\x12$.manage_admin.ManageBindGoogle2FAReq\x1a$.manage_admin.ManageBindGoogle2FARes\"\x00B\x17Z\x15./api/manage/admin/v1b\x06proto3"
 
 var (
 	file_manage_admin_v1_admin_proto_rawDescOnce sync.Once
@@ -1928,7 +2187,7 @@ func file_manage_admin_v1_admin_proto_rawDescGZIP() []byte {
 	return file_manage_admin_v1_admin_proto_rawDescData
 }
 
-var file_manage_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_manage_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
 var file_manage_admin_v1_admin_proto_goTypes = []any{
 	(*ManageLoginReq)(nil),               // 0: manage_admin.ManageLoginReq
 	(*ManageLoginRes)(nil),               // 1: manage_admin.ManageLoginRes
@@ -1962,6 +2221,10 @@ var file_manage_admin_v1_admin_proto_goTypes = []any{
 	(*ManageUpdateRoleRes)(nil),          // 29: manage_admin.ManageUpdateRoleRes
 	(*ManageDeleteRoleReq)(nil),          // 30: manage_admin.ManageDeleteRoleReq
 	(*ManageDeleteRoleRes)(nil),          // 31: manage_admin.ManageDeleteRoleRes
+	(*ManageGenerateGoogle2FAReq)(nil),   // 32: manage_admin.ManageGenerateGoogle2FAReq
+	(*ManageGenerateGoogle2FARes)(nil),   // 33: manage_admin.ManageGenerateGoogle2FARes
+	(*ManageBindGoogle2FAReq)(nil),       // 34: manage_admin.ManageBindGoogle2FAReq
+	(*ManageBindGoogle2FARes)(nil),       // 35: manage_admin.ManageBindGoogle2FARes
 }
 var file_manage_admin_v1_admin_proto_depIdxs = []int32{
 	9,  // 0: manage_admin.MenuInfo.children:type_name -> manage_admin.MenuInfo
@@ -1983,22 +2246,26 @@ var file_manage_admin_v1_admin_proto_depIdxs = []int32{
 	26, // 16: manage_admin.Admin.CreateRole:input_type -> manage_admin.ManageCreateRoleReq
 	28, // 17: manage_admin.Admin.UpdateRole:input_type -> manage_admin.ManageUpdateRoleReq
 	30, // 18: manage_admin.Admin.DeleteRole:input_type -> manage_admin.ManageDeleteRoleReq
-	1,  // 19: manage_admin.Admin.Login:output_type -> manage_admin.ManageLoginRes
-	3,  // 20: manage_admin.Admin.RefreshToken:output_type -> manage_admin.ManageRefreshTokenRes
-	5,  // 21: manage_admin.Admin.GetInfo:output_type -> manage_admin.ManageGetInfoRes
-	7,  // 22: manage_admin.Admin.Logout:output_type -> manage_admin.ManageLogoutRes
-	10, // 23: manage_admin.Admin.Menus:output_type -> manage_admin.ManageMenusRes
-	13, // 24: manage_admin.Admin.GetAdminList:output_type -> manage_admin.ManageGetAdminListRes
-	15, // 25: manage_admin.Admin.CreateAdmin:output_type -> manage_admin.ManageCreateAdminRes
-	17, // 26: manage_admin.Admin.UpdateAdmin:output_type -> manage_admin.ManageUpdateAdminRes
-	19, // 27: manage_admin.Admin.DeleteAdmin:output_type -> manage_admin.ManageDeleteAdminRes
-	22, // 28: manage_admin.Admin.GetAdminRoleOptions:output_type -> manage_admin.ManageGetAdminRoleOptionsRes
-	25, // 29: manage_admin.Admin.GetRoleList:output_type -> manage_admin.ManageGetRoleListRes
-	27, // 30: manage_admin.Admin.CreateRole:output_type -> manage_admin.ManageCreateRoleRes
-	29, // 31: manage_admin.Admin.UpdateRole:output_type -> manage_admin.ManageUpdateRoleRes
-	31, // 32: manage_admin.Admin.DeleteRole:output_type -> manage_admin.ManageDeleteRoleRes
-	19, // [19:33] is the sub-list for method output_type
-	5,  // [5:19] is the sub-list for method input_type
+	32, // 19: manage_admin.Admin.GenerateGoogle2FA:input_type -> manage_admin.ManageGenerateGoogle2FAReq
+	34, // 20: manage_admin.Admin.BindGoogle2FA:input_type -> manage_admin.ManageBindGoogle2FAReq
+	1,  // 21: manage_admin.Admin.Login:output_type -> manage_admin.ManageLoginRes
+	3,  // 22: manage_admin.Admin.RefreshToken:output_type -> manage_admin.ManageRefreshTokenRes
+	5,  // 23: manage_admin.Admin.GetInfo:output_type -> manage_admin.ManageGetInfoRes
+	7,  // 24: manage_admin.Admin.Logout:output_type -> manage_admin.ManageLogoutRes
+	10, // 25: manage_admin.Admin.Menus:output_type -> manage_admin.ManageMenusRes
+	13, // 26: manage_admin.Admin.GetAdminList:output_type -> manage_admin.ManageGetAdminListRes
+	15, // 27: manage_admin.Admin.CreateAdmin:output_type -> manage_admin.ManageCreateAdminRes
+	17, // 28: manage_admin.Admin.UpdateAdmin:output_type -> manage_admin.ManageUpdateAdminRes
+	19, // 29: manage_admin.Admin.DeleteAdmin:output_type -> manage_admin.ManageDeleteAdminRes
+	22, // 30: manage_admin.Admin.GetAdminRoleOptions:output_type -> manage_admin.ManageGetAdminRoleOptionsRes
+	25, // 31: manage_admin.Admin.GetRoleList:output_type -> manage_admin.ManageGetRoleListRes
+	27, // 32: manage_admin.Admin.CreateRole:output_type -> manage_admin.ManageCreateRoleRes
+	29, // 33: manage_admin.Admin.UpdateRole:output_type -> manage_admin.ManageUpdateRoleRes
+	31, // 34: manage_admin.Admin.DeleteRole:output_type -> manage_admin.ManageDeleteRoleRes
+	33, // 35: manage_admin.Admin.GenerateGoogle2FA:output_type -> manage_admin.ManageGenerateGoogle2FARes
+	35, // 36: manage_admin.Admin.BindGoogle2FA:output_type -> manage_admin.ManageBindGoogle2FARes
+	21, // [21:37] is the sub-list for method output_type
+	5,  // [5:21] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -2015,7 +2282,7 @@ func file_manage_admin_v1_admin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_admin_v1_admin_proto_rawDesc), len(file_manage_admin_v1_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   32,
+			NumMessages:   36,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

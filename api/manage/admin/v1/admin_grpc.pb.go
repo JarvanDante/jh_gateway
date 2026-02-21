@@ -34,6 +34,8 @@ const (
 	Admin_CreateRole_FullMethodName          = "/manage_admin.Admin/CreateRole"
 	Admin_UpdateRole_FullMethodName          = "/manage_admin.Admin/UpdateRole"
 	Admin_DeleteRole_FullMethodName          = "/manage_admin.Admin/DeleteRole"
+	Admin_GenerateGoogle2FA_FullMethodName   = "/manage_admin.Admin/GenerateGoogle2FA"
+	Admin_BindGoogle2FA_FullMethodName       = "/manage_admin.Admin/BindGoogle2FA"
 )
 
 // AdminClient is the client API for Admin service.
@@ -54,6 +56,8 @@ type AdminClient interface {
 	CreateRole(ctx context.Context, in *ManageCreateRoleReq, opts ...grpc.CallOption) (*ManageCreateRoleRes, error)
 	UpdateRole(ctx context.Context, in *ManageUpdateRoleReq, opts ...grpc.CallOption) (*ManageUpdateRoleRes, error)
 	DeleteRole(ctx context.Context, in *ManageDeleteRoleReq, opts ...grpc.CallOption) (*ManageDeleteRoleRes, error)
+	GenerateGoogle2FA(ctx context.Context, in *ManageGenerateGoogle2FAReq, opts ...grpc.CallOption) (*ManageGenerateGoogle2FARes, error)
+	BindGoogle2FA(ctx context.Context, in *ManageBindGoogle2FAReq, opts ...grpc.CallOption) (*ManageBindGoogle2FARes, error)
 }
 
 type adminClient struct {
@@ -204,6 +208,26 @@ func (c *adminClient) DeleteRole(ctx context.Context, in *ManageDeleteRoleReq, o
 	return out, nil
 }
 
+func (c *adminClient) GenerateGoogle2FA(ctx context.Context, in *ManageGenerateGoogle2FAReq, opts ...grpc.CallOption) (*ManageGenerateGoogle2FARes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManageGenerateGoogle2FARes)
+	err := c.cc.Invoke(ctx, Admin_GenerateGoogle2FA_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) BindGoogle2FA(ctx context.Context, in *ManageBindGoogle2FAReq, opts ...grpc.CallOption) (*ManageBindGoogle2FARes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ManageBindGoogle2FARes)
+	err := c.cc.Invoke(ctx, Admin_BindGoogle2FA_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility.
@@ -222,6 +246,8 @@ type AdminServer interface {
 	CreateRole(context.Context, *ManageCreateRoleReq) (*ManageCreateRoleRes, error)
 	UpdateRole(context.Context, *ManageUpdateRoleReq) (*ManageUpdateRoleRes, error)
 	DeleteRole(context.Context, *ManageDeleteRoleReq) (*ManageDeleteRoleRes, error)
+	GenerateGoogle2FA(context.Context, *ManageGenerateGoogle2FAReq) (*ManageGenerateGoogle2FARes, error)
+	BindGoogle2FA(context.Context, *ManageBindGoogle2FAReq) (*ManageBindGoogle2FARes, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -273,6 +299,12 @@ func (UnimplementedAdminServer) UpdateRole(context.Context, *ManageUpdateRoleReq
 }
 func (UnimplementedAdminServer) DeleteRole(context.Context, *ManageDeleteRoleReq) (*ManageDeleteRoleRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteRole not implemented")
+}
+func (UnimplementedAdminServer) GenerateGoogle2FA(context.Context, *ManageGenerateGoogle2FAReq) (*ManageGenerateGoogle2FARes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GenerateGoogle2FA not implemented")
+}
+func (UnimplementedAdminServer) BindGoogle2FA(context.Context, *ManageBindGoogle2FAReq) (*ManageBindGoogle2FARes, error) {
+	return nil, status.Error(codes.Unimplemented, "method BindGoogle2FA not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 func (UnimplementedAdminServer) testEmbeddedByValue()               {}
@@ -547,6 +579,42 @@ func _Admin_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_GenerateGoogle2FA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManageGenerateGoogle2FAReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GenerateGoogle2FA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GenerateGoogle2FA_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GenerateGoogle2FA(ctx, req.(*ManageGenerateGoogle2FAReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_BindGoogle2FA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManageBindGoogle2FAReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).BindGoogle2FA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_BindGoogle2FA_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).BindGoogle2FA(ctx, req.(*ManageBindGoogle2FAReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -609,6 +677,14 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRole",
 			Handler:    _Admin_DeleteRole_Handler,
+		},
+		{
+			MethodName: "GenerateGoogle2FA",
+			Handler:    _Admin_GenerateGoogle2FA_Handler,
+		},
+		{
+			MethodName: "BindGoogle2FA",
+			Handler:    _Admin_BindGoogle2FA_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

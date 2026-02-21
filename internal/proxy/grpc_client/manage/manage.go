@@ -105,6 +105,7 @@ func CallManageAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	// 验证必填参数
 	username := gconv.String(reqData["username"])
 	password := gconv.String(reqData["password"])
+	code := gconv.String(reqData["code"])
 
 	if username == "" {
 		util.WriteBadRequest(r, "用户名不能为空")
@@ -120,12 +121,21 @@ func CallManageAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
 	req := &v13.ManageLoginReq{
 		Username: username,
 		Password: password,
+		Code:     code,
 	}
 
 	res, err := client.Login(ctx, req)
 	if err != nil {
-		util.LogWithTrace(ctx, "error", "gRPC Manage Admin Login failed: %v", err)
-		return err
+		msg := util.ExtractGRPCErrorMessage(err)
+		switch {
+		case strings.Contains(msg, "用户名或密码错误"), strings.Contains(msg, "账号已被禁用"):
+			util.WriteForbidden(r, msg)
+		case strings.Contains(msg, "请输入动态验证码"), strings.Contains(msg, "动态验证码错误"), strings.Contains(msg, "二次验证未正确配置"):
+			util.WriteBadRequest(r, msg)
+		default:
+			util.WriteInternalError(r, "登录服务暂时不可用，请稍后重试")
+		}
+		return nil
 	}
 
 	return writeProtobufResponse(ctx, r, res)
@@ -360,6 +370,52 @@ func CallManageAdminRoleOptions(ctx context.Context, conn *grpc.ClientConn, r *g
 		return nil
 	}
 	return writeProtobufResponse(ctx, r, res)
+}
+
+func CallManageGenerateGoogle2FA(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return nil
+	}
+	client := v13.NewAdminClient(conn)
+	res, err := client.GenerateGoogle2FA(ctx, &v13.ManageGenerateGoogle2FAReq{Id: getInt32FromMap(reqData, "id")})
+	if err != nil {
+		util.WriteInternalError(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	util.WriteSuccess(r, map[string]interface{}{
+		"id":               res.Id,
+		"secret":           res.Secret,
+		"otpauth_url":      res.OtpauthUrl,
+		"qr_url":           res.QrUrl,
+		"switch_google2fa": res.SwitchGoogle2Fa,
+	})
+	return nil
+}
+
+func CallManageBindGoogle2FA(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return nil
+	}
+	client := v13.NewAdminClient(conn)
+	res, err := client.BindGoogle2FA(ctx, &v13.ManageBindGoogle2FAReq{
+		Id:     getInt32FromMap(reqData, "id"),
+		Secret: getStringFromMap(reqData, "secret"),
+		Code:   getStringFromMap(reqData, "code"),
+	})
+	if err != nil {
+		util.WriteBadRequest(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
+		return nil
+	}
+	util.WriteSuccess(r, map[string]interface{}{"message": res.Message})
+	return nil
 }
 
 func CallManageRoleList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
