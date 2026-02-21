@@ -869,9 +869,10 @@ func CallGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		return nil
 	}
 
-	// 按前端约定返回字段（url_tg）
+	// 按前端约定返回字段（url_tg / web_url）
 	util.WriteSuccess(r, map[string]interface{}{
 		"url_tg":          res.AgentUrl,
+		"web_url":         res.WebUrl,
 		"site_name":       res.SiteName,
 		"mobile_url":      res.MobileUrl,
 		"switch_register": res.SwitchRegister,

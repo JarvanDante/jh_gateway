@@ -715,8 +715,27 @@ func CallGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		return nil
 	}
 
-	// 使用统一的protobuf JSON序列化函数
-	return writeProtobufResponse(ctx, r, res)
+	// 按前端管理页约定返回字段（url_tg / web_url）
+	util.WriteSuccess(r, map[string]interface{}{
+		"code":                   res.Code,
+		"name":                   res.Name,
+		"register_time_interval": res.RegisterTimeInterval,
+		"switch_register":        res.SwitchRegister,
+		"is_close":               res.IsClose,
+		"close_reason":           res.CloseReason,
+		"url_service":            res.UrlService,
+		"url_tg":                 res.UrlAgentPc,
+		"url_mobile":             res.UrlMobile,
+		"web_url":                res.WebUrl,
+		"min_withdraw":           res.MinWithdraw,
+		"max_withdraw":           res.MaxWithdraw,
+		"mobile_logo":            res.MobileLogo,
+		"default_agent_id":       res.DefaultAgentId,
+		"default_agent_name":     res.DefaultAgentName,
+		"balance":                res.Balance,
+		"balance_reset":          res.BalanceReset,
+	})
+	return nil
 }
 
 /**
@@ -734,7 +753,7 @@ func CallGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
  * @param close_reason 必选 string 关闭原因
  * @param url_tg 必选 string telegram地址
  * @param url_mobile 必选 string 手机域名地址
- * @param url_agent_register 必选 string 代理推广地址
+ * @param web_url 必选 string 网站主域名
  * @param min_withdraw 必选 int 单笔最低提现金额
  * @param max_withdraw 必选 int 单笔最高提现金额
  * @param mobile_logo 必选 string 手机端Logo
@@ -766,7 +785,7 @@ func CallUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 		CloseReason:          getStringFromMap(reqData, "close_reason"),
 		UrlAgentPc:           getStringFromMap(reqData, "url_tg"),
 		UrlMobile:            getStringFromMap(reqData, "url_mobile"),
-		UrlAgentRegister:     getStringFromMap(reqData, "url_agent_register"),
+		WebUrl:               getStringFromMap(reqData, "web_url"),
 		MinWithdraw:          getInt32FromMap(reqData, "min_withdraw"),
 		MaxWithdraw:          getInt32FromMap(reqData, "max_withdraw"),
 		MobileLogo:           getStringFromMap(reqData, "mobile_logo"),
