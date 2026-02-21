@@ -732,7 +732,7 @@ func CallGetBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
  * @param switch_register 必选 bool 同一IP重复注册时间间隔
  * @param is_close 必选 bool 是否关闭站点
  * @param close_reason 必选 string 关闭原因
- * @param url_agent_pc 必选 string 代理链接地址
+ * @param url_tg 必选 string telegram地址
  * @param url_mobile 必选 string 手机域名地址
  * @param url_agent_register 必选 string 代理推广地址
  * @param min_withdraw 必选 int 单笔最低提现金额
@@ -764,7 +764,7 @@ func CallUpdateBasicSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 		SwitchRegister:       getBoolFromMap(reqData, "switch_register"),
 		IsClose:              getBoolFromMap(reqData, "is_close"),
 		CloseReason:          getStringFromMap(reqData, "close_reason"),
-		UrlAgentPc:           getStringFromMap(reqData, "url_agent_pc"),
+		UrlAgentPc:           getStringFromMap(reqData, "url_tg"),
 		UrlMobile:            getStringFromMap(reqData, "url_mobile"),
 		UrlAgentRegister:     getStringFromMap(reqData, "url_agent_register"),
 		MinWithdraw:          getInt32FromMap(reqData, "min_withdraw"),
@@ -2577,9 +2577,9 @@ func CallGetAgentListOptions(ctx context.Context, conn *grpc.ClientConn, r *ghtt
 	options := make([]map[string]interface{}, 0, len(res.List))
 	for _, it := range res.List {
 		options = append(options, map[string]interface{}{
-			"value": it.Id,
-			"label": it.AgentName,
-			"agent_id": it.Id,
+			"value":      it.Id,
+			"label":      it.AgentName,
+			"agent_id":   it.Id,
 			"agent_name": it.AgentName,
 			"agent_code": it.AgentCode,
 		})
