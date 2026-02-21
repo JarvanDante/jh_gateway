@@ -69,7 +69,7 @@ func Register(s *ghttp.Server) {
 			middleware.RateLimit,
 			middleware.ApiSignature,  // API签名校验（可配置开关）
 			middleware.RequestParser, // 解析请求体数据
-			middleware.AuthWithSkip("/frontend-game-list", "/game-categories", "/notice-list", "/ad-list", "/register", "/captcha", "/refresh-token", "/login", "/logout", "/sign-session", "/balance/deposit-callback"), // 认证中间件（跳过充值回调接口）
+			middleware.AuthWithSkip("/frontend-game-list", "/game-categories", "/notice-list", "/ad-list", "/setting-site", "/register", "/captcha", "/refresh-token", "/login", "/logout", "/sign-session", "/balance/deposit-callback"), // 认证中间件（跳过充值回调接口）
 			middleware.CircuitBreaker,
 		)
 

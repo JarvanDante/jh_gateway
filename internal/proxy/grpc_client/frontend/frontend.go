@@ -840,11 +840,11 @@ func CallGetAppAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
  * @description 获取站点设置接口
  * @method get
  * @url /api/frontend/app/setting-site
- * @return {"code":0,"msg":"success","data":{"agent_url":"","site_name":"测试站点","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100.00","max_withdraw":"50000.00","mobile_logo":"","close_reason":"您好，系统正在维护中，估计需要1个小时左右，给您造成不便，敬请谅解！"}}
+ * @return {"code":0,"msg":"success","data":{"url_tg":"","site_name":"测试站点","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100.00","max_withdraw":"50000.00","mobile_logo":"","close_reason":"您好，系统正在维护中，估计需要1个小时左右，给您造成不便，敬请谅解！"}}
  * @return_param code int 状态码
  * @return_param msg string 提示说明
  * @return_param data object 主要数据
- * @return_param data.agent_url string 代理url
+ * @return_param data.url_tg string telegram地址
  * @return_param data.site_name string 站点名称
  * @return_param data.mobile_url string 手机url
  * @return_param data.switch_register int 会员注册开关 0=关闭 1=开启
@@ -869,8 +869,21 @@ func CallGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		return nil
 	}
 
-	// 使用统一的protobuf JSON序列化函数
-	return writeProtobufResponse(ctx, r, res)
+	// 按前端约定返回字段（url_tg）
+	util.WriteSuccess(r, map[string]interface{}{
+		"url_tg":          res.AgentUrl,
+		"site_name":       res.SiteName,
+		"mobile_url":      res.MobileUrl,
+		"switch_register": res.SwitchRegister,
+		"switch_grade":    res.SwitchGrade,
+		"service_url":     res.ServiceUrl,
+		"close":           res.Close,
+		"min_withdraw":    res.MinWithdraw,
+		"max_withdraw":    res.MaxWithdraw,
+		"mobile_logo":     res.MobileLogo,
+		"close_reason":    res.CloseReason,
+	})
+	return nil
 }
 
 /**
