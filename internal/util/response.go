@@ -280,8 +280,8 @@ func translateMessage(msg string) string {
 		"获取成功":                    "Get data success",
 		"签到成功":                    "Sign in success",
 		"今日已签到，请明日再来":             "Signed already today",
-		"查询今日充值金额失败":               "Failed to query today's recharge amount",
-		"查询今日有效投注失败":               "Failed to query today's valid bet amount",
+		"查询今日充值金额失败":              "Failed to query today's recharge amount",
+		"查询今日有效投注失败":              "Failed to query today's valid bet amount",
 		"绑定手机号成功":                 "Mobile number successfully bound",
 		"该手机号已被其他用户绑定":            "Phone number has been used by others",
 		"抽奖成功":                    "Lucky Draw Successful",
@@ -405,6 +405,7 @@ func translateMessage(msg string) string {
 		"refresh token中缺少站点信息":          "Refresh token missing site info",
 		"用户不存在或已禁用":                     "User not found or disabled",
 		"刷新token失败":                     "Failed to refresh token",
+		"注册过于频繁":                        "Registration too frequent, please try again later",
 		"注册服务暂时不可用，请稍后重试":               "Registration service unavailable, please try again later",
 	}
 

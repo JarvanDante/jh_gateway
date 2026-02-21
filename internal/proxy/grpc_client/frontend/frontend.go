@@ -260,6 +260,8 @@ func CallUserRegister(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
 			util.WriteBadRequest(r, errMsg)
 		} else if strings.Contains(errMsg, "已经被注册") {
 			util.WriteBadRequest(r, errMsg)
+		} else if strings.Contains(errMsg, "注册过于频繁") {
+			util.WriteTooManyRequests(r, "注册过于频繁")
 		} else if strings.Contains(errMsg, "注册失败") {
 			util.WriteInternalError(r, "注册失败，请稍后重试")
 		} else {
@@ -379,7 +381,7 @@ func CallGenerateCaptcha(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 		return nil
 	}
 
-	util.LogWithTrace(ctx, "info", "GenerateCaptcha success, image size: %d bytes, content_type: %s", len(res.Image), res.ContentType)
+	//util.LogWithTrace(ctx, "info", "GenerateCaptcha success, image size: %d bytes, content_type: %s", len(res.Image), res.ContentType)
 
 	// 检查图片数据是否为空
 	if len(res.Image) == 0 {
@@ -402,7 +404,7 @@ func CallGenerateCaptcha(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Re
 	r.Response.Write(res.Image)
 	r.ExitAll()
 
-	util.LogWithTrace(ctx, "info", "图片数据已写入响应")
+	//util.LogWithTrace(ctx, "info", "图片数据已写入响应")
 	return nil
 }
 
