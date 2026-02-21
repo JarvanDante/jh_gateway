@@ -1289,6 +1289,498 @@ func (x *ManageGetAdminRoleOptionsRes) GetRoles() []*ManageAdminRoleOption {
 	return nil
 }
 
+type ManageGetRoleListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name"`
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageGetRoleListReq) Reset() {
+	*x = ManageGetRoleListReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageGetRoleListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageGetRoleListReq) ProtoMessage() {}
+
+func (x *ManageGetRoleListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageGetRoleListReq.ProtoReflect.Descriptor instead.
+func (*ManageGetRoleListReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ManageGetRoleListReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ManageGetRoleListReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *ManageGetRoleListReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ManageGetRoleListReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type ManageRoleInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Permissions   string                 `protobuf:"bytes,3,opt,name=permissions,proto3" json:"permissions"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
+	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageRoleInfo) Reset() {
+	*x = ManageRoleInfo{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageRoleInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageRoleInfo) ProtoMessage() {}
+
+func (x *ManageRoleInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageRoleInfo.ProtoReflect.Descriptor instead.
+func (*ManageRoleInfo) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ManageRoleInfo) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ManageRoleInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ManageRoleInfo) GetPermissions() string {
+	if x != nil {
+		return x.Permissions
+	}
+	return ""
+}
+
+func (x *ManageRoleInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *ManageRoleInfo) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+type ManageGetRoleListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*ManageRoleInfo      `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageGetRoleListRes) Reset() {
+	*x = ManageGetRoleListRes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageGetRoleListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageGetRoleListRes) ProtoMessage() {}
+
+func (x *ManageGetRoleListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageGetRoleListRes.ProtoReflect.Descriptor instead.
+func (*ManageGetRoleListRes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ManageGetRoleListRes) GetList() []*ManageRoleInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+func (x *ManageGetRoleListRes) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *ManageGetRoleListRes) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ManageGetRoleListRes) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type ManageCreateRoleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name"`
+	Permissions   string                 `protobuf:"bytes,2,opt,name=permissions,proto3" json:"permissions"`
+	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageCreateRoleReq) Reset() {
+	*x = ManageCreateRoleReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageCreateRoleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageCreateRoleReq) ProtoMessage() {}
+
+func (x *ManageCreateRoleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageCreateRoleReq.ProtoReflect.Descriptor instead.
+func (*ManageCreateRoleReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *ManageCreateRoleReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ManageCreateRoleReq) GetPermissions() string {
+	if x != nil {
+		return x.Permissions
+	}
+	return ""
+}
+
+func (x *ManageCreateRoleReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+type ManageCreateRoleRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageCreateRoleRes) Reset() {
+	*x = ManageCreateRoleRes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageCreateRoleRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageCreateRoleRes) ProtoMessage() {}
+
+func (x *ManageCreateRoleRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageCreateRoleRes.ProtoReflect.Descriptor instead.
+func (*ManageCreateRoleRes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{27}
+}
+
+type ManageUpdateRoleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Permissions   string                 `protobuf:"bytes,3,opt,name=permissions,proto3" json:"permissions"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageUpdateRoleReq) Reset() {
+	*x = ManageUpdateRoleReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageUpdateRoleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageUpdateRoleReq) ProtoMessage() {}
+
+func (x *ManageUpdateRoleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageUpdateRoleReq.ProtoReflect.Descriptor instead.
+func (*ManageUpdateRoleReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ManageUpdateRoleReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ManageUpdateRoleReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ManageUpdateRoleReq) GetPermissions() string {
+	if x != nil {
+		return x.Permissions
+	}
+	return ""
+}
+
+func (x *ManageUpdateRoleReq) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+type ManageUpdateRoleRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageUpdateRoleRes) Reset() {
+	*x = ManageUpdateRoleRes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageUpdateRoleRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageUpdateRoleRes) ProtoMessage() {}
+
+func (x *ManageUpdateRoleRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageUpdateRoleRes.ProtoReflect.Descriptor instead.
+func (*ManageUpdateRoleRes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{29}
+}
+
+type ManageDeleteRoleReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageDeleteRoleReq) Reset() {
+	*x = ManageDeleteRoleReq{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageDeleteRoleReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageDeleteRoleReq) ProtoMessage() {}
+
+func (x *ManageDeleteRoleReq) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageDeleteRoleReq.ProtoReflect.Descriptor instead.
+func (*ManageDeleteRoleReq) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *ManageDeleteRoleReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type ManageDeleteRoleRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ManageDeleteRoleRes) Reset() {
+	*x = ManageDeleteRoleRes{}
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ManageDeleteRoleRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManageDeleteRoleRes) ProtoMessage() {}
+
+func (x *ManageDeleteRoleRes) ProtoReflect() protoreflect.Message {
+	mi := &file_manage_admin_v1_admin_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManageDeleteRoleRes.ProtoReflect.Descriptor instead.
+func (*ManageDeleteRoleRes) Descriptor() ([]byte, []int) {
+	return file_manage_admin_v1_admin_proto_rawDescGZIP(), []int{31}
+}
+
 var File_manage_admin_v1_admin_proto protoreflect.FileDescriptor
 
 const file_manage_admin_v1_admin_proto_rawDesc = "" +
@@ -1373,7 +1865,38 @@ const file_manage_admin_v1_admin_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"Y\n" +
 	"\x1cManageGetAdminRoleOptionsRes\x129\n" +
-	"\x05roles\x18\x01 \x03(\v2#.manage_admin.ManageAdminRoleOptionR\x05roles2\xe0\x06\n" +
+	"\x05roles\x18\x01 \x03(\v2#.manage_admin.ManageAdminRoleOptionR\x05roles\"j\n" +
+	"\x14ManageGetRoleListReq\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\x05R\x06status\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\x8d\x01\n" +
+	"\x0eManageRoleInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vpermissions\x18\x03 \x01(\tR\vpermissions\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\x05R\x06status\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\tR\tcreatedAt\"\x86\x01\n" +
+	"\x14ManageGetRoleListRes\x120\n" +
+	"\x04list\x18\x01 \x03(\v2\x1c.manage_admin.ManageRoleInfoR\x04list\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"c\n" +
+	"\x13ManageCreateRoleReq\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
+	"\vpermissions\x18\x02 \x01(\tR\vpermissions\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\x05R\x06status\"\x15\n" +
+	"\x13ManageCreateRoleRes\"s\n" +
+	"\x13ManageUpdateRoleReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vpermissions\x18\x03 \x01(\tR\vpermissions\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\x05R\x06status\"\x15\n" +
+	"\x13ManageUpdateRoleRes\"%\n" +
+	"\x13ManageDeleteRoleReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\x15\n" +
+	"\x13ManageDeleteRoleRes2\xbb\t\n" +
 	"\x05Admin\x12E\n" +
 	"\x05Login\x12\x1c.manage_admin.ManageLoginReq\x1a\x1c.manage_admin.ManageLoginRes\"\x00\x12Z\n" +
 	"\fRefreshToken\x12#.manage_admin.ManageRefreshTokenReq\x1a#.manage_admin.ManageRefreshTokenRes\"\x00\x12K\n" +
@@ -1384,7 +1907,14 @@ const file_manage_admin_v1_admin_proto_rawDesc = "" +
 	"\vCreateAdmin\x12\".manage_admin.ManageCreateAdminReq\x1a\".manage_admin.ManageCreateAdminRes\"\x00\x12W\n" +
 	"\vUpdateAdmin\x12\".manage_admin.ManageUpdateAdminReq\x1a\".manage_admin.ManageUpdateAdminRes\"\x00\x12W\n" +
 	"\vDeleteAdmin\x12\".manage_admin.ManageDeleteAdminReq\x1a\".manage_admin.ManageDeleteAdminRes\"\x00\x12o\n" +
-	"\x13GetAdminRoleOptions\x12*.manage_admin.ManageGetAdminRoleOptionsReq\x1a*.manage_admin.ManageGetAdminRoleOptionsRes\"\x00B\x17Z\x15./api/manage/admin/v1b\x06proto3"
+	"\x13GetAdminRoleOptions\x12*.manage_admin.ManageGetAdminRoleOptionsReq\x1a*.manage_admin.ManageGetAdminRoleOptionsRes\"\x00\x12W\n" +
+	"\vGetRoleList\x12\".manage_admin.ManageGetRoleListReq\x1a\".manage_admin.ManageGetRoleListRes\"\x00\x12T\n" +
+	"\n" +
+	"CreateRole\x12!.manage_admin.ManageCreateRoleReq\x1a!.manage_admin.ManageCreateRoleRes\"\x00\x12T\n" +
+	"\n" +
+	"UpdateRole\x12!.manage_admin.ManageUpdateRoleReq\x1a!.manage_admin.ManageUpdateRoleRes\"\x00\x12T\n" +
+	"\n" +
+	"DeleteRole\x12!.manage_admin.ManageDeleteRoleReq\x1a!.manage_admin.ManageDeleteRoleRes\"\x00B\x17Z\x15./api/manage/admin/v1b\x06proto3"
 
 var (
 	file_manage_admin_v1_admin_proto_rawDescOnce sync.Once
@@ -1398,7 +1928,7 @@ func file_manage_admin_v1_admin_proto_rawDescGZIP() []byte {
 	return file_manage_admin_v1_admin_proto_rawDescData
 }
 
-var file_manage_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_manage_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_manage_admin_v1_admin_proto_goTypes = []any{
 	(*ManageLoginReq)(nil),               // 0: manage_admin.ManageLoginReq
 	(*ManageLoginRes)(nil),               // 1: manage_admin.ManageLoginRes
@@ -1423,37 +1953,55 @@ var file_manage_admin_v1_admin_proto_goTypes = []any{
 	(*ManageGetAdminRoleOptionsReq)(nil), // 20: manage_admin.ManageGetAdminRoleOptionsReq
 	(*ManageAdminRoleOption)(nil),        // 21: manage_admin.ManageAdminRoleOption
 	(*ManageGetAdminRoleOptionsRes)(nil), // 22: manage_admin.ManageGetAdminRoleOptionsRes
+	(*ManageGetRoleListReq)(nil),         // 23: manage_admin.ManageGetRoleListReq
+	(*ManageRoleInfo)(nil),               // 24: manage_admin.ManageRoleInfo
+	(*ManageGetRoleListRes)(nil),         // 25: manage_admin.ManageGetRoleListRes
+	(*ManageCreateRoleReq)(nil),          // 26: manage_admin.ManageCreateRoleReq
+	(*ManageCreateRoleRes)(nil),          // 27: manage_admin.ManageCreateRoleRes
+	(*ManageUpdateRoleReq)(nil),          // 28: manage_admin.ManageUpdateRoleReq
+	(*ManageUpdateRoleRes)(nil),          // 29: manage_admin.ManageUpdateRoleRes
+	(*ManageDeleteRoleReq)(nil),          // 30: manage_admin.ManageDeleteRoleReq
+	(*ManageDeleteRoleRes)(nil),          // 31: manage_admin.ManageDeleteRoleRes
 }
 var file_manage_admin_v1_admin_proto_depIdxs = []int32{
 	9,  // 0: manage_admin.MenuInfo.children:type_name -> manage_admin.MenuInfo
 	9,  // 1: manage_admin.ManageMenusRes.menus:type_name -> manage_admin.MenuInfo
 	12, // 2: manage_admin.ManageGetAdminListRes.list:type_name -> manage_admin.ManageAdminInfo
 	21, // 3: manage_admin.ManageGetAdminRoleOptionsRes.roles:type_name -> manage_admin.ManageAdminRoleOption
-	0,  // 4: manage_admin.Admin.Login:input_type -> manage_admin.ManageLoginReq
-	2,  // 5: manage_admin.Admin.RefreshToken:input_type -> manage_admin.ManageRefreshTokenReq
-	4,  // 6: manage_admin.Admin.GetInfo:input_type -> manage_admin.ManageGetInfoReq
-	6,  // 7: manage_admin.Admin.Logout:input_type -> manage_admin.ManageLogoutReq
-	8,  // 8: manage_admin.Admin.Menus:input_type -> manage_admin.ManageMenusReq
-	11, // 9: manage_admin.Admin.GetAdminList:input_type -> manage_admin.ManageGetAdminListReq
-	14, // 10: manage_admin.Admin.CreateAdmin:input_type -> manage_admin.ManageCreateAdminReq
-	16, // 11: manage_admin.Admin.UpdateAdmin:input_type -> manage_admin.ManageUpdateAdminReq
-	18, // 12: manage_admin.Admin.DeleteAdmin:input_type -> manage_admin.ManageDeleteAdminReq
-	20, // 13: manage_admin.Admin.GetAdminRoleOptions:input_type -> manage_admin.ManageGetAdminRoleOptionsReq
-	1,  // 14: manage_admin.Admin.Login:output_type -> manage_admin.ManageLoginRes
-	3,  // 15: manage_admin.Admin.RefreshToken:output_type -> manage_admin.ManageRefreshTokenRes
-	5,  // 16: manage_admin.Admin.GetInfo:output_type -> manage_admin.ManageGetInfoRes
-	7,  // 17: manage_admin.Admin.Logout:output_type -> manage_admin.ManageLogoutRes
-	10, // 18: manage_admin.Admin.Menus:output_type -> manage_admin.ManageMenusRes
-	13, // 19: manage_admin.Admin.GetAdminList:output_type -> manage_admin.ManageGetAdminListRes
-	15, // 20: manage_admin.Admin.CreateAdmin:output_type -> manage_admin.ManageCreateAdminRes
-	17, // 21: manage_admin.Admin.UpdateAdmin:output_type -> manage_admin.ManageUpdateAdminRes
-	19, // 22: manage_admin.Admin.DeleteAdmin:output_type -> manage_admin.ManageDeleteAdminRes
-	22, // 23: manage_admin.Admin.GetAdminRoleOptions:output_type -> manage_admin.ManageGetAdminRoleOptionsRes
-	14, // [14:24] is the sub-list for method output_type
-	4,  // [4:14] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	24, // 4: manage_admin.ManageGetRoleListRes.list:type_name -> manage_admin.ManageRoleInfo
+	0,  // 5: manage_admin.Admin.Login:input_type -> manage_admin.ManageLoginReq
+	2,  // 6: manage_admin.Admin.RefreshToken:input_type -> manage_admin.ManageRefreshTokenReq
+	4,  // 7: manage_admin.Admin.GetInfo:input_type -> manage_admin.ManageGetInfoReq
+	6,  // 8: manage_admin.Admin.Logout:input_type -> manage_admin.ManageLogoutReq
+	8,  // 9: manage_admin.Admin.Menus:input_type -> manage_admin.ManageMenusReq
+	11, // 10: manage_admin.Admin.GetAdminList:input_type -> manage_admin.ManageGetAdminListReq
+	14, // 11: manage_admin.Admin.CreateAdmin:input_type -> manage_admin.ManageCreateAdminReq
+	16, // 12: manage_admin.Admin.UpdateAdmin:input_type -> manage_admin.ManageUpdateAdminReq
+	18, // 13: manage_admin.Admin.DeleteAdmin:input_type -> manage_admin.ManageDeleteAdminReq
+	20, // 14: manage_admin.Admin.GetAdminRoleOptions:input_type -> manage_admin.ManageGetAdminRoleOptionsReq
+	23, // 15: manage_admin.Admin.GetRoleList:input_type -> manage_admin.ManageGetRoleListReq
+	26, // 16: manage_admin.Admin.CreateRole:input_type -> manage_admin.ManageCreateRoleReq
+	28, // 17: manage_admin.Admin.UpdateRole:input_type -> manage_admin.ManageUpdateRoleReq
+	30, // 18: manage_admin.Admin.DeleteRole:input_type -> manage_admin.ManageDeleteRoleReq
+	1,  // 19: manage_admin.Admin.Login:output_type -> manage_admin.ManageLoginRes
+	3,  // 20: manage_admin.Admin.RefreshToken:output_type -> manage_admin.ManageRefreshTokenRes
+	5,  // 21: manage_admin.Admin.GetInfo:output_type -> manage_admin.ManageGetInfoRes
+	7,  // 22: manage_admin.Admin.Logout:output_type -> manage_admin.ManageLogoutRes
+	10, // 23: manage_admin.Admin.Menus:output_type -> manage_admin.ManageMenusRes
+	13, // 24: manage_admin.Admin.GetAdminList:output_type -> manage_admin.ManageGetAdminListRes
+	15, // 25: manage_admin.Admin.CreateAdmin:output_type -> manage_admin.ManageCreateAdminRes
+	17, // 26: manage_admin.Admin.UpdateAdmin:output_type -> manage_admin.ManageUpdateAdminRes
+	19, // 27: manage_admin.Admin.DeleteAdmin:output_type -> manage_admin.ManageDeleteAdminRes
+	22, // 28: manage_admin.Admin.GetAdminRoleOptions:output_type -> manage_admin.ManageGetAdminRoleOptionsRes
+	25, // 29: manage_admin.Admin.GetRoleList:output_type -> manage_admin.ManageGetRoleListRes
+	27, // 30: manage_admin.Admin.CreateRole:output_type -> manage_admin.ManageCreateRoleRes
+	29, // 31: manage_admin.Admin.UpdateRole:output_type -> manage_admin.ManageUpdateRoleRes
+	31, // 32: manage_admin.Admin.DeleteRole:output_type -> manage_admin.ManageDeleteRoleRes
+	19, // [19:33] is the sub-list for method output_type
+	5,  // [5:19] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_manage_admin_v1_admin_proto_init() }
@@ -1467,7 +2015,7 @@ func file_manage_admin_v1_admin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_manage_admin_v1_admin_proto_rawDesc), len(file_manage_admin_v1_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   32,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

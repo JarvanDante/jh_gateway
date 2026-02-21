@@ -364,6 +364,10 @@ func initManageRoutes() {
 	manageRoutes.Register("/admin/update", "POST", manage.CallManageUpdateAdmin)
 	manageRoutes.Register("/admin/delete", "POST", manage.CallManageDeleteAdmin)
 	manageRoutes.Register("/admin/role-options", "GET", manage.CallManageAdminRoleOptions)
+	manageRoutes.Register("/role/list", "GET", manage.CallManageRoleList)
+	manageRoutes.Register("/role/create", "POST", manage.CallManageCreateRole)
+	manageRoutes.Register("/role/update", "POST", manage.CallManageUpdateRole)
+	manageRoutes.Register("/role/delete", "POST", manage.CallManageDeleteRole)
 
 	// 商户管理接口
 	manageRoutes.Register("/customer/list", "GET", manage.CallGetCustomerList)
