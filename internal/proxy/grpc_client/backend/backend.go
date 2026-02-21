@@ -2013,7 +2013,7 @@ func CallGetUserLoginLogs(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
  * @return_param data object 主要数据
  * @return_param data.image string 图片访问URL
  * @return_param msg string 提示说明
- * @remark 支持jpg、jpeg、gif、png格式，默认最大2MB，mobile_logo类型支持svg格式最大100KB
+ * @remark 支持jpg、jpeg、gif、png、webp格式，默认最大2MB，mobile_logo类型支持svg/webp/png/jpg/jpeg格式最大100KB
  * @number 10
  */
 func CallUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
@@ -2050,6 +2050,8 @@ func CallUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 			fileContentType = "image/gif"
 		case ".svg":
 			fileContentType = "image/svg+xml"
+		case ".webp":
+			fileContentType = "image/webp"
 		default:
 			util.WriteBadRequest(r, "不支持的文件格式")
 			return nil
