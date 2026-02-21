@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,11 +24,11 @@ const (
 
 type GetAgentDomainListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`
-	Domain        string                 `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
+	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status" dc:"-1 表示不筛选"` // -1 表示不筛选
+	Domain        string                 `protobuf:"bytes,5,opt,name=domain,proto3" json:"domain"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -99,14 +100,14 @@ func (x *GetAgentDomainListReq) GetDomain() string {
 
 type AgentDomainItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	AgentId       int64                  `protobuf:"varint,2,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	AgentName     string                 `protobuf:"bytes,3,opt,name=agent_name,json=agentName,proto3" json:"agent_name,omitempty"`
-	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain,omitempty"`
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`
-	StatusName    string                 `protobuf:"bytes,6,opt,name=status_name,json=statusName,proto3" json:"status_name,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	AgentId       int64                  `protobuf:"varint,2,opt,name=agent_id,json=agentId,proto3" json:"agent_id"`
+	AgentName     string                 `protobuf:"bytes,3,opt,name=agent_name,json=agentName,proto3" json:"agent_name"`
+	Domain        string                 `protobuf:"bytes,4,opt,name=domain,proto3" json:"domain"`
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status"`
+	StatusName    string                 `protobuf:"bytes,6,opt,name=status_name,json=statusName,proto3" json:"status_name"`
+	CreatedAt     string                 `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt     string                 `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -199,8 +200,8 @@ func (x *AgentDomainItem) GetUpdatedAt() string {
 
 type OptionItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -251,11 +252,11 @@ func (x *OptionItem) GetName() string {
 
 type GetAgentDomainListRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	List          []*AgentDomainItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
-	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
-	StatusList    []*OptionItem          `protobuf:"bytes,5,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
+	List          []*AgentDomainItem     `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage   int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage       int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	StatusList    []*OptionItem          `protobuf:"bytes,5,rep,name=status_list,json=statusList,proto3" json:"status_list"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -327,9 +328,9 @@ func (x *GetAgentDomainListRes) GetStatusList() []*OptionItem {
 
 type CreateAgentDomainReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AgentId       int64                  `protobuf:"varint,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	Domain        string                 `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
-	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
+	AgentId       int64                  `protobuf:"varint,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id"`
+	Domain        string                 `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain"`
+	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -423,10 +424,10 @@ func (*CreateAgentDomainRes) Descriptor() ([]byte, []int) {
 
 type UpdateAgentDomainReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	AgentId       int64                  `protobuf:"varint,2,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	Domain        string                 `protobuf:"bytes,3,opt,name=domain,proto3" json:"domain,omitempty"`
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	AgentId       int64                  `protobuf:"varint,2,opt,name=agent_id,json=agentId,proto3" json:"agent_id"`
+	Domain        string                 `protobuf:"bytes,3,opt,name=domain,proto3" json:"domain"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -527,7 +528,7 @@ func (*UpdateAgentDomainRes) Descriptor() ([]byte, []int) {
 
 type DeleteAgentDomainReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -658,7 +659,7 @@ const file_backend_agent_domain_v1_agent_domain_proto_rawDesc = "" +
 	"\x12GetAgentDomainList\x12#.agent_domain.GetAgentDomainListReq\x1a#.agent_domain.GetAgentDomainListRes\"\x00\x12]\n" +
 	"\x11CreateAgentDomain\x12\".agent_domain.CreateAgentDomainReq\x1a\".agent_domain.CreateAgentDomainRes\"\x00\x12]\n" +
 	"\x11UpdateAgentDomain\x12\".agent_domain.UpdateAgentDomainReq\x1a\".agent_domain.UpdateAgentDomainRes\"\x00\x12]\n" +
-	"\x11DeleteAgentDomain\x12\".agent_domain.DeleteAgentDomainReq\x1a\".agent_domain.DeleteAgentDomainRes\"\x00B(Z&jh_gateway/api/backend/agent_domain/v1b\x06proto3"
+	"\x11DeleteAgentDomain\x12\".agent_domain.DeleteAgentDomainReq\x1a\".agent_domain.DeleteAgentDomainRes\"\x00B,Z*jh_app_service/api/backend/agent_domain/v1b\x06proto3"
 
 var (
 	file_backend_agent_domain_v1_agent_domain_proto_rawDescOnce sync.Once

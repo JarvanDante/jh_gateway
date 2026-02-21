@@ -126,12 +126,20 @@ func CallAdminLogin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 	// 调用 gRPC 服务
 	res, err := client.Login(ctx, req)
 	if err != nil {
-		// 根据gRPC错误类型返回不同的HTTP状态码
-		if strings.Contains(err.Error(), "用户名或密码错误") {
+		msg := util.ExtractGRPCErrorMessage(err)
+		// 根据业务错误返回可读提示，避免被前端展示成“服务不可用”
+		switch {
+		case strings.Contains(msg, "用户名或密码错误"):
 			util.WriteForbidden(r, "用户名或密码错误")
-		} else if strings.Contains(err.Error(), "账号已被禁用") {
+		case strings.Contains(msg, "账号已被禁用"):
 			util.WriteForbidden(r, "账号已被禁用")
-		} else {
+		case strings.Contains(msg, "请输入动态验证码"):
+			util.WriteBadRequest(r, "请输入动态验证码")
+		case strings.Contains(msg, "动态验证码错误"):
+			util.WriteBadRequest(r, "动态验证码错误")
+		case strings.Contains(msg, "二次验证未正确配置"):
+			util.WriteBadRequest(r, "二次验证未正确配置，请联系上级管理员")
+		default:
 			util.WriteInternalError(r, "登录服务暂时不可用，请稍后重试")
 		}
 		return nil
@@ -226,6 +234,57 @@ func CallAdminRefreshToken(ctx context.Context, conn *grpc.ClientConn, r *ghttp.
  * @remark 需要在Header中提供有效的JWT token
  * @number 3
  */
+
+func CallGenerateGoogle2FA(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	client := v1.NewAdminClient(conn)
+	res, err := client.GenerateGoogle2FA(ctx, &v1.GenerateGoogle2FAReq{Id: getInt32FromMap(reqData, "id")})
+	if err != nil {
+		util.WriteInternalError(r, "生成谷歌验证码失败")
+		return nil
+	}
+
+	util.WriteSuccess(r, map[string]interface{}{
+		"id":               res.Id,
+		"secret":           res.Secret,
+		"otpauth_url":      res.OtpauthUrl,
+		"qr_url":           res.QrUrl,
+		"switch_google2fa": res.SwitchGoogle2Fa,
+	})
+	return nil
+}
+
+func CallBindGoogle2FA(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据格式错误")
+		return nil
+	}
+
+	client := v1.NewAdminClient(conn)
+	res, err := client.BindGoogle2FA(ctx, &v1.BindGoogle2FAReq{
+		Id:     getInt32FromMap(reqData, "id"),
+		Secret: getStringFromMap(reqData, "secret"),
+		Code:   getStringFromMap(reqData, "code"),
+	})
+	if err != nil {
+		util.WriteInternalError(r, "绑定谷歌验证失败")
+		return nil
+	}
+
+	if !res.Success {
+		util.WriteBadRequest(r, res.Message)
+		return nil
+	}
+	util.WriteSuccess(r, map[string]interface{}{"message": res.Message})
+	return nil
+}
+
 func CallGetInfo(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling gRPC Admin GetInfo")
 
@@ -1502,7 +1561,6 @@ func CallGetUserList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	client := v5.NewUserClient(conn)
 	req := &v5.GetUserListReq{
 		GradeId:       getInt32FromMapWithDefault(reqData, "grade_id", 0),
-		LevelId:       getInt32FromMapWithDefault(reqData, "level_id", 0),
 		Status:        getInt32FromMapWithDefault(reqData, "status", 0),
 		Username:      getStringFromMap(reqData, "username"),
 		AgentUsername: getStringFromMap(reqData, "agent_username"),
@@ -1578,7 +1636,6 @@ func CallUpdateUser(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		LoginPassword: getStringFromMap(reqData, "login_password"),
 		PayPassword:   getStringFromMap(reqData, "pay_password"),
 		GradeId:       getInt32FromMapWithDefault(reqData, "grade_id", 0),
-		LevelId:       getInt32FromMapWithDefault(reqData, "level_id", 0),
 		AgentId:       getInt32FromMapWithDefault(reqData, "agent_id", 0),
 		Mobile:        getStringFromMap(reqData, "mobile"),
 		Email:         getStringFromMap(reqData, "email"),
@@ -1593,8 +1650,8 @@ func CallUpdateUser(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request
 		return nil
 	}
 
-	util.LogWithTrace(ctx, "info", "gRPC请求参数 - ID: %d, GradeId: %d, LevelId: %d",
-		req.Id, req.GradeId, req.LevelId)
+	util.LogWithTrace(ctx, "info", "gRPC请求参数 - ID: %d, GradeId: %d",
+		req.Id, req.GradeId)
 
 	// 调用 gRPC 服务
 	res, err := client.UpdateUser(ctx, req)

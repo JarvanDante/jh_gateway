@@ -1189,6 +1189,152 @@ func (*ReadMessageRes) Descriptor() ([]byte, []int) {
 	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{18}
 }
 
+// 发送用户消息请求
+type SendUserMessageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SiteId        int32                  `protobuf:"varint,1,opt,name=site_id,json=siteId,proto3" json:"site_id" dc:"站点ID(可选, 若metadata携带则忽略)"`                                        // 站点ID(可选, 若metadata携带则忽略)
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id" dc:"用户ID"`                                                            // 用户ID
+	EventCode     string                 `protobuf:"bytes,3,opt,name=event_code,json=eventCode,proto3" json:"event_code" dc:"业务触发编码"`                                                  // 业务触发编码
+	BizId         string                 `protobuf:"bytes,4,opt,name=biz_id,json=bizId,proto3" json:"biz_id" dc:"业务流水号"`                                                               // 业务流水号
+	Amount        float64                `protobuf:"fixed64,5,opt,name=amount,proto3" json:"amount" dc:"金额(可选)"`                                                                       // 金额(可选)
+	GradeName     string                 `protobuf:"bytes,6,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"等级名称(可选)"`                                                // 等级名称(可选)
+	Vars          map[string]string      `protobuf:"bytes,7,rep,name=vars,proto3" json:"vars" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value" dc:"变量替换(可选)"` // 变量替换(可选)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendUserMessageReq) Reset() {
+	*x = SendUserMessageReq{}
+	mi := &file_backend_message_v1_message_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendUserMessageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendUserMessageReq) ProtoMessage() {}
+
+func (x *SendUserMessageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_message_v1_message_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendUserMessageReq.ProtoReflect.Descriptor instead.
+func (*SendUserMessageReq) Descriptor() ([]byte, []int) {
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *SendUserMessageReq) GetSiteId() int32 {
+	if x != nil {
+		return x.SiteId
+	}
+	return 0
+}
+
+func (x *SendUserMessageReq) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *SendUserMessageReq) GetEventCode() string {
+	if x != nil {
+		return x.EventCode
+	}
+	return ""
+}
+
+func (x *SendUserMessageReq) GetBizId() string {
+	if x != nil {
+		return x.BizId
+	}
+	return ""
+}
+
+func (x *SendUserMessageReq) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *SendUserMessageReq) GetGradeName() string {
+	if x != nil {
+		return x.GradeName
+	}
+	return ""
+}
+
+func (x *SendUserMessageReq) GetVars() map[string]string {
+	if x != nil {
+		return x.Vars
+	}
+	return nil
+}
+
+// 发送用户消息响应
+type SendUserMessageRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendUserMessageRes) Reset() {
+	*x = SendUserMessageRes{}
+	mi := &file_backend_message_v1_message_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendUserMessageRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendUserMessageRes) ProtoMessage() {}
+
+func (x *SendUserMessageRes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_message_v1_message_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendUserMessageRes.ProtoReflect.Descriptor instead.
+func (*SendUserMessageRes) Descriptor() ([]byte, []int) {
+	return file_backend_message_v1_message_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *SendUserMessageRes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SendUserMessageRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_backend_message_v1_message_proto protoreflect.FileDescriptor
 
 const file_backend_message_v1_message_proto_rawDesc = "" +
@@ -1284,7 +1430,23 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x1d\n" +
 	"\n" +
 	"message_id\x18\x02 \x01(\x05R\tmessageId\"\x10\n" +
-	"\x0eReadMessageRes2\x8e\x04\n" +
+	"\x0eReadMessageRes\"\xa7\x02\n" +
+	"\x12SendUserMessageReq\x12\x17\n" +
+	"\asite_id\x18\x01 \x01(\x05R\x06siteId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1d\n" +
+	"\n" +
+	"event_code\x18\x03 \x01(\tR\teventCode\x12\x15\n" +
+	"\x06biz_id\x18\x04 \x01(\tR\x05bizId\x12\x16\n" +
+	"\x06amount\x18\x05 \x01(\x01R\x06amount\x12\x1d\n" +
+	"\n" +
+	"grade_name\x18\x06 \x01(\tR\tgradeName\x129\n" +
+	"\x04vars\x18\a \x03(\v2%.message.SendUserMessageReq.VarsEntryR\x04vars\x1a7\n" +
+	"\tVarsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"H\n" +
+	"\x12SendUserMessageRes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xdd\x04\n" +
 	"\aMessage\x12J\n" +
 	"\x0eGetMessageList\x12\x1a.message.GetMessageListReq\x1a\x1a.message.GetMessageListRes\"\x00\x12G\n" +
 	"\rCreateMessage\x12\x19.message.CreateMessageReq\x1a\x19.message.CreateMessageRes\"\x00\x12G\n" +
@@ -1292,7 +1454,8 @@ const file_backend_message_v1_message_proto_rawDesc = "" +
 	"\rDeleteMessage\x12\x19.message.DeleteMessageReq\x1a\x19.message.DeleteMessageRes\"\x00\x12M\n" +
 	"\x0fGetUserMessages\x12\x1b.message.GetUserMessagesReq\x1a\x1b.message.GetUserMessagesRes\"\x00\x12J\n" +
 	"\x0eGetUnreadCount\x12\x1a.message.GetUnreadCountReq\x1a\x1a.message.GetUnreadCountRes\"\x00\x12A\n" +
-	"\vReadMessage\x12\x17.message.ReadMessageReq\x1a\x17.message.ReadMessageRes\"\x00B'Z%jh_app_service/api/backend/message/v1b\x06proto3"
+	"\vReadMessage\x12\x17.message.ReadMessageReq\x1a\x17.message.ReadMessageRes\"\x00\x12M\n" +
+	"\x0fSendUserMessage\x12\x1b.message.SendUserMessageReq\x1a\x1b.message.SendUserMessageRes\"\x00B'Z%jh_app_service/api/backend/message/v1b\x06proto3"
 
 var (
 	file_backend_message_v1_message_proto_rawDescOnce sync.Once
@@ -1306,7 +1469,7 @@ func file_backend_message_v1_message_proto_rawDescGZIP() []byte {
 	return file_backend_message_v1_message_proto_rawDescData
 }
 
-var file_backend_message_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_backend_message_v1_message_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_backend_message_v1_message_proto_goTypes = []any{
 	(*GetMessageListReq)(nil),  // 0: message.GetMessageListReq
 	(*GetMessageListRes)(nil),  // 1: message.GetMessageListRes
@@ -1327,6 +1490,9 @@ var file_backend_message_v1_message_proto_goTypes = []any{
 	(*GetUnreadCountRes)(nil),  // 16: message.GetUnreadCountRes
 	(*ReadMessageReq)(nil),     // 17: message.ReadMessageReq
 	(*ReadMessageRes)(nil),     // 18: message.ReadMessageRes
+	(*SendUserMessageReq)(nil), // 19: message.SendUserMessageReq
+	(*SendUserMessageRes)(nil), // 20: message.SendUserMessageRes
+	nil,                        // 21: message.SendUserMessageReq.VarsEntry
 }
 var file_backend_message_v1_message_proto_depIdxs = []int32{
 	2,  // 0: message.GetMessageListRes.message_list:type_name -> message.MessageItem
@@ -1334,25 +1500,28 @@ var file_backend_message_v1_message_proto_depIdxs = []int32{
 	4,  // 2: message.GetMessageListRes.level_list:type_name -> message.LevelItem
 	5,  // 3: message.GetMessageListRes.status_list:type_name -> message.StatusItem
 	14, // 4: message.GetUserMessagesRes.list:type_name -> message.UserMessageItem
-	0,  // 5: message.Message.GetMessageList:input_type -> message.GetMessageListReq
-	6,  // 6: message.Message.CreateMessage:input_type -> message.CreateMessageReq
-	8,  // 7: message.Message.UpdateMessage:input_type -> message.UpdateMessageReq
-	10, // 8: message.Message.DeleteMessage:input_type -> message.DeleteMessageReq
-	12, // 9: message.Message.GetUserMessages:input_type -> message.GetUserMessagesReq
-	15, // 10: message.Message.GetUnreadCount:input_type -> message.GetUnreadCountReq
-	17, // 11: message.Message.ReadMessage:input_type -> message.ReadMessageReq
-	1,  // 12: message.Message.GetMessageList:output_type -> message.GetMessageListRes
-	7,  // 13: message.Message.CreateMessage:output_type -> message.CreateMessageRes
-	9,  // 14: message.Message.UpdateMessage:output_type -> message.UpdateMessageRes
-	11, // 15: message.Message.DeleteMessage:output_type -> message.DeleteMessageRes
-	13, // 16: message.Message.GetUserMessages:output_type -> message.GetUserMessagesRes
-	16, // 17: message.Message.GetUnreadCount:output_type -> message.GetUnreadCountRes
-	18, // 18: message.Message.ReadMessage:output_type -> message.ReadMessageRes
-	12, // [12:19] is the sub-list for method output_type
-	5,  // [5:12] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	21, // 5: message.SendUserMessageReq.vars:type_name -> message.SendUserMessageReq.VarsEntry
+	0,  // 6: message.Message.GetMessageList:input_type -> message.GetMessageListReq
+	6,  // 7: message.Message.CreateMessage:input_type -> message.CreateMessageReq
+	8,  // 8: message.Message.UpdateMessage:input_type -> message.UpdateMessageReq
+	10, // 9: message.Message.DeleteMessage:input_type -> message.DeleteMessageReq
+	12, // 10: message.Message.GetUserMessages:input_type -> message.GetUserMessagesReq
+	15, // 11: message.Message.GetUnreadCount:input_type -> message.GetUnreadCountReq
+	17, // 12: message.Message.ReadMessage:input_type -> message.ReadMessageReq
+	19, // 13: message.Message.SendUserMessage:input_type -> message.SendUserMessageReq
+	1,  // 14: message.Message.GetMessageList:output_type -> message.GetMessageListRes
+	7,  // 15: message.Message.CreateMessage:output_type -> message.CreateMessageRes
+	9,  // 16: message.Message.UpdateMessage:output_type -> message.UpdateMessageRes
+	11, // 17: message.Message.DeleteMessage:output_type -> message.DeleteMessageRes
+	13, // 18: message.Message.GetUserMessages:output_type -> message.GetUserMessagesRes
+	16, // 19: message.Message.GetUnreadCount:output_type -> message.GetUnreadCountRes
+	18, // 20: message.Message.ReadMessage:output_type -> message.ReadMessageRes
+	20, // 21: message.Message.SendUserMessage:output_type -> message.SendUserMessageRes
+	14, // [14:22] is the sub-list for method output_type
+	6,  // [6:14] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_backend_message_v1_message_proto_init() }
@@ -1366,7 +1535,7 @@ func file_backend_message_v1_message_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_message_v1_message_proto_rawDesc), len(file_backend_message_v1_message_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -27,6 +27,7 @@ const (
 	Message_GetUserMessages_FullMethodName = "/message.Message/GetUserMessages"
 	Message_GetUnreadCount_FullMethodName  = "/message.Message/GetUnreadCount"
 	Message_ReadMessage_FullMethodName     = "/message.Message/ReadMessage"
+	Message_SendUserMessage_FullMethodName = "/message.Message/SendUserMessage"
 )
 
 // MessageClient is the client API for Message service.
@@ -40,6 +41,7 @@ type MessageClient interface {
 	GetUserMessages(ctx context.Context, in *GetUserMessagesReq, opts ...grpc.CallOption) (*GetUserMessagesRes, error)
 	GetUnreadCount(ctx context.Context, in *GetUnreadCountReq, opts ...grpc.CallOption) (*GetUnreadCountRes, error)
 	ReadMessage(ctx context.Context, in *ReadMessageReq, opts ...grpc.CallOption) (*ReadMessageRes, error)
+	SendUserMessage(ctx context.Context, in *SendUserMessageReq, opts ...grpc.CallOption) (*SendUserMessageRes, error)
 }
 
 type messageClient struct {
@@ -120,6 +122,16 @@ func (c *messageClient) ReadMessage(ctx context.Context, in *ReadMessageReq, opt
 	return out, nil
 }
 
+func (c *messageClient) SendUserMessage(ctx context.Context, in *SendUserMessageReq, opts ...grpc.CallOption) (*SendUserMessageRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendUserMessageRes)
+	err := c.cc.Invoke(ctx, Message_SendUserMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MessageServer is the server API for Message service.
 // All implementations must embed UnimplementedMessageServer
 // for forward compatibility.
@@ -131,6 +143,7 @@ type MessageServer interface {
 	GetUserMessages(context.Context, *GetUserMessagesReq) (*GetUserMessagesRes, error)
 	GetUnreadCount(context.Context, *GetUnreadCountReq) (*GetUnreadCountRes, error)
 	ReadMessage(context.Context, *ReadMessageReq) (*ReadMessageRes, error)
+	SendUserMessage(context.Context, *SendUserMessageReq) (*SendUserMessageRes, error)
 	mustEmbedUnimplementedMessageServer()
 }
 
@@ -161,6 +174,9 @@ func (UnimplementedMessageServer) GetUnreadCount(context.Context, *GetUnreadCoun
 }
 func (UnimplementedMessageServer) ReadMessage(context.Context, *ReadMessageReq) (*ReadMessageRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method ReadMessage not implemented")
+}
+func (UnimplementedMessageServer) SendUserMessage(context.Context, *SendUserMessageReq) (*SendUserMessageRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method SendUserMessage not implemented")
 }
 func (UnimplementedMessageServer) mustEmbedUnimplementedMessageServer() {}
 func (UnimplementedMessageServer) testEmbeddedByValue()                 {}
@@ -309,6 +325,24 @@ func _Message_ReadMessage_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Message_SendUserMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendUserMessageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MessageServer).SendUserMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Message_SendUserMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MessageServer).SendUserMessage(ctx, req.(*SendUserMessageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Message_ServiceDesc is the grpc.ServiceDesc for Message service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -343,6 +377,10 @@ var Message_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReadMessage",
 			Handler:    _Message_ReadMessage_Handler,
+		},
+		{
+			MethodName: "SendUserMessage",
+			Handler:    _Message_SendUserMessage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

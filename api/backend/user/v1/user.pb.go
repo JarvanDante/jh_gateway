@@ -26,7 +26,6 @@ const (
 type GetUserListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GradeId       int32                  `protobuf:"varint,1,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID (可选)"`                   // 等级ID (可选)
-	LevelId       int32                  `protobuf:"varint,2,opt,name=level_id,json=levelId,proto3" json:"level_id" dc:"层级ID (可选)"`                   // 层级ID (可选)
 	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status" dc:"状态 (可选)"`                                      // 状态 (可选)
 	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username" dc:"用户名 (可选)"`                                  // 用户名 (可选)
 	Realname      string                 `protobuf:"bytes,5,opt,name=realname,proto3" json:"realname" dc:"真实姓名 (可选)"`                                 // 真实姓名 (可选)
@@ -78,13 +77,6 @@ func (*GetUserListReq) Descriptor() ([]byte, []int) {
 func (x *GetUserListReq) GetGradeId() int32 {
 	if x != nil {
 		return x.GradeId
-	}
-	return 0
-}
-
-func (x *GetUserListReq) GetLevelId() int32 {
-	if x != nil {
-		return x.LevelId
 	}
 	return 0
 }
@@ -194,8 +186,6 @@ type UserInfo struct {
 	Username         string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                               // 用户名
 	GradeId          int32                  `protobuf:"varint,3,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID"`                                // 等级ID
 	GradeName        string                 `protobuf:"bytes,4,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"等级名称"`                           // 等级名称
-	LevelId          int32                  `protobuf:"varint,5,opt,name=level_id,json=levelId,proto3" json:"level_id" dc:"层级ID"`                                // 层级ID
-	LevelName        string                 `protobuf:"bytes,6,opt,name=level_name,json=levelName,proto3" json:"level_name" dc:"层级名称"`                           // 层级名称
 	AgentId          int32                  `protobuf:"varint,7,opt,name=agent_id,json=agentId,proto3" json:"agent_id" dc:"代理ID"`                                // 代理ID
 	AgentUsername    string                 `protobuf:"bytes,8,opt,name=agent_username,json=agentUsername,proto3" json:"agent_username" dc:"代理用户名"`              // 代理用户名
 	Status           int32                  `protobuf:"varint,9,opt,name=status,proto3" json:"status" dc:"状态"`                                                   // 状态
@@ -274,20 +264,6 @@ func (x *UserInfo) GetGradeId() int32 {
 func (x *UserInfo) GetGradeName() string {
 	if x != nil {
 		return x.GradeName
-	}
-	return ""
-}
-
-func (x *UserInfo) GetLevelId() int32 {
-	if x != nil {
-		return x.LevelId
-	}
-	return 0
-}
-
-func (x *UserInfo) GetLevelName() string {
-	if x != nil {
-		return x.LevelName
 	}
 	return ""
 }
@@ -508,7 +484,6 @@ type UpdateUserReq struct {
 	LoginPassword string                 `protobuf:"bytes,2,opt,name=login_password,json=loginPassword,proto3" json:"login_password" dc:"登录密码 (可选)"` // 登录密码 (可选)
 	PayPassword   string                 `protobuf:"bytes,3,opt,name=pay_password,json=payPassword,proto3" json:"pay_password" dc:"资金密码 (可选)"`       // 资金密码 (可选)
 	GradeId       int32                  `protobuf:"varint,4,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID"`                       // 等级ID
-	LevelId       int32                  `protobuf:"varint,5,opt,name=level_id,json=levelId,proto3" json:"level_id" dc:"层级ID"`                       // 层级ID
 	AgentId       int32                  `protobuf:"varint,6,opt,name=agent_id,json=agentId,proto3" json:"agent_id" dc:"代理ID"`                       // 代理ID
 	Realname      string                 `protobuf:"bytes,7,opt,name=realname,proto3" json:"realname" dc:"真实姓名 (可选)"`                                // 真实姓名 (可选)
 	Mobile        string                 `protobuf:"bytes,8,opt,name=mobile,proto3" json:"mobile" dc:"手机号 (可选)"`                                     // 手机号 (可选)
@@ -578,13 +553,6 @@ func (x *UpdateUserReq) GetPayPassword() string {
 func (x *UpdateUserReq) GetGradeId() int32 {
 	if x != nil {
 		return x.GradeId
-	}
-	return 0
-}
-
-func (x *UpdateUserReq) GetLevelId() int32 {
-	if x != nil {
-		return x.LevelId
 	}
 	return 0
 }
@@ -771,7 +739,6 @@ type UserBasicInfo struct {
 	Username         string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username" dc:"用户名"`                                               // 用户名
 	GradeId          int32                  `protobuf:"varint,3,opt,name=grade_id,json=gradeId,proto3" json:"grade_id" dc:"等级ID"`                                // 等级ID
 	GradeName        string                 `protobuf:"bytes,4,opt,name=grade_name,json=gradeName,proto3" json:"grade_name" dc:"等级名称"`                           // 等级名称
-	LevelName        string                 `protobuf:"bytes,5,opt,name=level_name,json=levelName,proto3" json:"level_name" dc:"层级名称"`                           // 层级名称
 	Balance          string                 `protobuf:"bytes,6,opt,name=balance,proto3" json:"balance" dc:"余额"`                                                  // 余额
 	RegisterTime     string                 `protobuf:"bytes,7,opt,name=register_time,json=registerTime,proto3" json:"register_time" dc:"注册时间"`                  // 注册时间
 	RegisterIp       string                 `protobuf:"bytes,8,opt,name=register_ip,json=registerIp,proto3" json:"register_ip" dc:"注册IP"`                        // 注册IP
@@ -849,13 +816,6 @@ func (x *UserBasicInfo) GetGradeId() int32 {
 func (x *UserBasicInfo) GetGradeName() string {
 	if x != nil {
 		return x.GradeName
-	}
-	return ""
-}
-
-func (x *UserBasicInfo) GetLevelName() string {
-	if x != nil {
-		return x.LevelName
 	}
 	return ""
 }
@@ -1963,10 +1923,9 @@ var File_backend_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
-	"\x1abackend/user/v1/user.proto\x12\x04user\"\xbc\x03\n" +
+	"\x1abackend/user/v1/user.proto\x12\x04user\"\xa1\x03\n" +
 	"\x0eGetUserListReq\x12\x19\n" +
-	"\bgrade_id\x18\x01 \x01(\x05R\agradeId\x12\x19\n" +
-	"\blevel_id\x18\x02 \x01(\x05R\alevelId\x12\x16\n" +
+	"\bgrade_id\x18\x01 \x01(\x05R\agradeId\x12\x16\n" +
 	"\x06status\x18\x03 \x01(\x05R\x06status\x12\x1a\n" +
 	"\busername\x18\x04 \x01(\tR\busername\x12\x1a\n" +
 	"\brealname\x18\x05 \x01(\tR\brealname\x12%\n" +
@@ -1983,16 +1942,13 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\n" +
 	"start_date\x18\x0e \x01(\tR\tstartDate\x12\x19\n" +
 	"\bend_date\x18\x0f \x01(\tR\aendDate\x12\x16\n" +
-	"\x06charge\x18\x10 \x01(\x05R\x06charge\"\xa5\x06\n" +
+	"\x06charge\x18\x10 \x01(\x05R\x06charge\"\xeb\x05\n" +
 	"\bUserInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
 	"\bgrade_id\x18\x03 \x01(\x05R\agradeId\x12\x1d\n" +
 	"\n" +
 	"grade_name\x18\x04 \x01(\tR\tgradeName\x12\x19\n" +
-	"\blevel_id\x18\x05 \x01(\x05R\alevelId\x12\x1d\n" +
-	"\n" +
-	"level_name\x18\x06 \x01(\tR\tlevelName\x12\x19\n" +
 	"\bagent_id\x18\a \x01(\x05R\aagentId\x12%\n" +
 	"\x0eagent_username\x18\b \x01(\tR\ragentUsername\x12\x16\n" +
 	"\x06status\x18\t \x01(\x05R\x06status\x12\x1f\n" +
@@ -2021,13 +1977,12 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\x05count\x18\x02 \x01(\x05R\x05count\x12\x1f\n" +
 	"\vtotal_users\x18\x03 \x01(\x05R\n" +
 	"totalUsers\x12,\n" +
-	"\x12total_charge_users\x18\x04 \x01(\x05R\x10totalChargeUsers\"\xba\x03\n" +
+	"\x12total_charge_users\x18\x04 \x01(\x05R\x10totalChargeUsers\"\x9f\x03\n" +
 	"\rUpdateUserReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12%\n" +
 	"\x0elogin_password\x18\x02 \x01(\tR\rloginPassword\x12!\n" +
 	"\fpay_password\x18\x03 \x01(\tR\vpayPassword\x12\x19\n" +
 	"\bgrade_id\x18\x04 \x01(\x05R\agradeId\x12\x19\n" +
-	"\blevel_id\x18\x05 \x01(\x05R\alevelId\x12\x19\n" +
 	"\bagent_id\x18\x06 \x01(\x05R\aagentId\x12\x1a\n" +
 	"\brealname\x18\a \x01(\tR\brealname\x12\x16\n" +
 	"\x06mobile\x18\b \x01(\tR\x06mobile\x12\x14\n" +
@@ -2045,15 +2000,13 @@ const file_backend_user_v1_user_proto_rawDesc = "" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"%\n" +
 	"\x13GetUserBasicInfoReq\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\"\xc2\x05\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xa3\x05\n" +
 	"\rUserBasicInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x19\n" +
 	"\bgrade_id\x18\x03 \x01(\x05R\agradeId\x12\x1d\n" +
 	"\n" +
-	"grade_name\x18\x04 \x01(\tR\tgradeName\x12\x1d\n" +
-	"\n" +
-	"level_name\x18\x05 \x01(\tR\tlevelName\x12\x18\n" +
+	"grade_name\x18\x04 \x01(\tR\tgradeName\x12\x18\n" +
 	"\abalance\x18\x06 \x01(\tR\abalance\x12#\n" +
 	"\rregister_time\x18\a \x01(\tR\fregisterTime\x12\x1f\n" +
 	"\vregister_ip\x18\b \x01(\tR\n" +

@@ -742,18 +742,19 @@ func (x *GetAdminListReq) GetSize() int32 {
 
 // 管理员信息
 type AdminInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username"`
-	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname"`
-	Role          int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role"`
-	RoleName      string                 `protobuf:"bytes,5,opt,name=role_name,json=roleName,proto3" json:"role_name"`
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
-	LastLoginIp   string                 `protobuf:"bytes,7,opt,name=last_login_ip,json=lastLoginIp,proto3" json:"last_login_ip"`
-	LastLoginTime string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time"`
-	CreatedAt     string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Username        string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username"`
+	Nickname        string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname"`
+	Role            int32                  `protobuf:"varint,4,opt,name=role,proto3" json:"role"`
+	RoleName        string                 `protobuf:"bytes,5,opt,name=role_name,json=roleName,proto3" json:"role_name"`
+	Status          int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status"`
+	LastLoginIp     string                 `protobuf:"bytes,7,opt,name=last_login_ip,json=lastLoginIp,proto3" json:"last_login_ip"`
+	LastLoginTime   string                 `protobuf:"bytes,8,opt,name=last_login_time,json=lastLoginTime,proto3" json:"last_login_time"`
+	CreatedAt       string                 `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	SwitchGoogle2Fa int32                  `protobuf:"varint,10,opt,name=switch_google2fa,json=switchGoogle2fa,proto3" json:"switch_google2fa"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *AdminInfo) Reset() {
@@ -849,16 +850,22 @@ func (x *AdminInfo) GetCreatedAt() string {
 	return ""
 }
 
+func (x *AdminInfo) GetSwitchGoogle2Fa() int32 {
+	if x != nil {
+		return x.SwitchGoogle2Fa
+	}
+	return 0
+}
+
 // 获取管理员列表响应
 type GetAdminListRes struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	List            []*AdminInfo           `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
-	Total           int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
-	Page            int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page"`
-	Size            int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size"`
-	Google2FaAccess bool                   `protobuf:"varint,5,opt,name=google2fa_access,json=google2faAccess,proto3" json:"google2fa_access" dc:"Google 2FA 权限"` // Google 2FA 权限
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*AdminInfo           `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetAdminListRes) Reset() {
@@ -917,13 +924,6 @@ func (x *GetAdminListRes) GetSize() int32 {
 		return x.Size
 	}
 	return 0
-}
-
-func (x *GetAdminListRes) GetGoogle2FaAccess() bool {
-	if x != nil {
-		return x.Google2FaAccess
-	}
-	return false
 }
 
 // 更新管理员请求
@@ -1515,6 +1515,238 @@ func (x *GetAdminLogsRes) GetCount() int32 {
 	return 0
 }
 
+type GenerateGoogle2FAReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"目标管理员ID"` // 目标管理员ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateGoogle2FAReq) Reset() {
+	*x = GenerateGoogle2FAReq{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateGoogle2FAReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateGoogle2FAReq) ProtoMessage() {}
+
+func (x *GenerateGoogle2FAReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateGoogle2FAReq.ProtoReflect.Descriptor instead.
+func (*GenerateGoogle2FAReq) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GenerateGoogle2FAReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type GenerateGoogle2FARes struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Secret          string                 `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret"`
+	OtpauthUrl      string                 `protobuf:"bytes,3,opt,name=otpauth_url,json=otpauthUrl,proto3" json:"otpauth_url"`
+	QrUrl           string                 `protobuf:"bytes,4,opt,name=qr_url,json=qrUrl,proto3" json:"qr_url"`
+	SwitchGoogle2Fa int32                  `protobuf:"varint,5,opt,name=switch_google2fa,json=switchGoogle2fa,proto3" json:"switch_google2fa"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GenerateGoogle2FARes) Reset() {
+	*x = GenerateGoogle2FARes{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateGoogle2FARes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateGoogle2FARes) ProtoMessage() {}
+
+func (x *GenerateGoogle2FARes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateGoogle2FARes.ProtoReflect.Descriptor instead.
+func (*GenerateGoogle2FARes) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GenerateGoogle2FARes) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *GenerateGoogle2FARes) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+func (x *GenerateGoogle2FARes) GetOtpauthUrl() string {
+	if x != nil {
+		return x.OtpauthUrl
+	}
+	return ""
+}
+
+func (x *GenerateGoogle2FARes) GetQrUrl() string {
+	if x != nil {
+		return x.QrUrl
+	}
+	return ""
+}
+
+func (x *GenerateGoogle2FARes) GetSwitchGoogle2Fa() int32 {
+	if x != nil {
+		return x.SwitchGoogle2Fa
+	}
+	return 0
+}
+
+type BindGoogle2FAReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" dc:"目标管理员ID"`     // 目标管理员ID
+	Secret        string                 `protobuf:"bytes,2,opt,name=secret,proto3" json:"secret" dc:"谷歌密钥"` // 谷歌密钥
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code" dc:"6位验证码"`    // 6位验证码
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindGoogle2FAReq) Reset() {
+	*x = BindGoogle2FAReq{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindGoogle2FAReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindGoogle2FAReq) ProtoMessage() {}
+
+func (x *BindGoogle2FAReq) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindGoogle2FAReq.ProtoReflect.Descriptor instead.
+func (*BindGoogle2FAReq) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *BindGoogle2FAReq) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *BindGoogle2FAReq) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+func (x *BindGoogle2FAReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type BindGoogle2FARes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BindGoogle2FARes) Reset() {
+	*x = BindGoogle2FARes{}
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BindGoogle2FARes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BindGoogle2FARes) ProtoMessage() {}
+
+func (x *BindGoogle2FARes) ProtoReflect() protoreflect.Message {
+	mi := &file_backend_admin_v1_admin_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BindGoogle2FARes.ProtoReflect.Descriptor instead.
+func (*BindGoogle2FARes) Descriptor() ([]byte, []int) {
+	return file_backend_admin_v1_admin_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *BindGoogle2FARes) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *BindGoogle2FARes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_backend_admin_v1_admin_proto protoreflect.FileDescriptor
 
 const file_backend_admin_v1_admin_proto_rawDesc = "" +
@@ -1571,7 +1803,7 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\x05R\x06status\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size\"\x87\x02\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\xb2\x02\n" +
 	"\tAdminInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
@@ -1582,13 +1814,14 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\rlast_login_ip\x18\a \x01(\tR\vlastLoginIp\x12&\n" +
 	"\x0flast_login_time\x18\b \x01(\tR\rlastLoginTime\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\t \x01(\tR\tcreatedAt\"\xa0\x01\n" +
+	"created_at\x18\t \x01(\tR\tcreatedAt\x12)\n" +
+	"\x10switch_google2fa\x18\n" +
+	" \x01(\x05R\x0fswitchGoogle2fa\"u\n" +
 	"\x0fGetAdminListRes\x12$\n" +
 	"\x04list\x18\x01 \x03(\v2\x10.admin.AdminInfoR\x04list\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size\x12)\n" +
-	"\x10google2fa_access\x18\x05 \x01(\bR\x0fgoogle2faAccess\"\x84\x01\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\x84\x01\n" +
 	"\x0eUpdateAdminReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1a\n" +
@@ -1623,7 +1856,23 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"created_at\x18\x04 \x01(\tR\tcreatedAt\"P\n" +
 	"\x0fGetAdminLogsRes\x12'\n" +
 	"\x04list\x18\x01 \x03(\v2\x13.admin.AdminLogInfoR\x04list\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\x05R\x05count2\x8f\x05\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"&\n" +
+	"\x14GenerateGoogle2FAReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xa1\x01\n" +
+	"\x14GenerateGoogle2FARes\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
+	"\x06secret\x18\x02 \x01(\tR\x06secret\x12\x1f\n" +
+	"\votpauth_url\x18\x03 \x01(\tR\n" +
+	"otpauthUrl\x12\x15\n" +
+	"\x06qr_url\x18\x04 \x01(\tR\x05qrUrl\x12)\n" +
+	"\x10switch_google2fa\x18\x05 \x01(\x05R\x0fswitchGoogle2fa\"N\n" +
+	"\x10BindGoogle2FAReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
+	"\x06secret\x18\x02 \x01(\tR\x06secret\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\"F\n" +
+	"\x10BindGoogle2FARes\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xa5\x06\n" +
 	"\x05Admin\x12+\n" +
 	"\x05Login\x12\x0f.admin.LoginReq\x1a\x0f.admin.LoginRes\"\x00\x12@\n" +
 	"\fRefreshToken\x12\x16.admin.RefreshTokenReq\x1a\x16.admin.RefreshTokenRes\"\x00\x121\n" +
@@ -1635,7 +1884,9 @@ const file_backend_admin_v1_admin_proto_rawDesc = "" +
 	"\vDeleteAdmin\x12\x15.admin.DeleteAdminReq\x1a\x15.admin.DeleteAdminRes\"\x00\x12.\n" +
 	"\x06Logout\x12\x10.admin.LogoutReq\x1a\x10.admin.LogoutRes\"\x00\x12F\n" +
 	"\x0eChangePassword\x12\x18.admin.ChangePasswordReq\x1a\x18.admin.ChangePasswordRes\"\x00\x12@\n" +
-	"\fGetAdminLogs\x12\x16.admin.GetAdminLogsReq\x1a\x16.admin.GetAdminLogsRes\"\x00B%Z#jh_app_service/api/backend/admin/v1b\x06proto3"
+	"\fGetAdminLogs\x12\x16.admin.GetAdminLogsReq\x1a\x16.admin.GetAdminLogsRes\"\x00\x12O\n" +
+	"\x11GenerateGoogle2FA\x12\x1b.admin.GenerateGoogle2FAReq\x1a\x1b.admin.GenerateGoogle2FARes\"\x00\x12C\n" +
+	"\rBindGoogle2FA\x12\x17.admin.BindGoogle2FAReq\x1a\x17.admin.BindGoogle2FARes\"\x00B%Z#jh_app_service/api/backend/admin/v1b\x06proto3"
 
 var (
 	file_backend_admin_v1_admin_proto_rawDescOnce sync.Once
@@ -1649,33 +1900,37 @@ func file_backend_admin_v1_admin_proto_rawDescGZIP() []byte {
 	return file_backend_admin_v1_admin_proto_rawDescData
 }
 
-var file_backend_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_backend_admin_v1_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_backend_admin_v1_admin_proto_goTypes = []any{
-	(*LoginReq)(nil),          // 0: admin.LoginReq
-	(*LoginRes)(nil),          // 1: admin.LoginRes
-	(*RefreshTokenReq)(nil),   // 2: admin.RefreshTokenReq
-	(*RefreshTokenRes)(nil),   // 3: admin.RefreshTokenRes
-	(*GetInfoReq)(nil),        // 4: admin.GetInfoReq
-	(*MenuInfo)(nil),          // 5: admin.MenuInfo
-	(*GetInfoRes)(nil),        // 6: admin.GetInfoRes
-	(*MenusReq)(nil),          // 7: admin.MenusReq
-	(*MenusRes)(nil),          // 8: admin.MenusRes
-	(*CreateAdminReq)(nil),    // 9: admin.CreateAdminReq
-	(*CreateAdminRes)(nil),    // 10: admin.CreateAdminRes
-	(*GetAdminListReq)(nil),   // 11: admin.GetAdminListReq
-	(*AdminInfo)(nil),         // 12: admin.AdminInfo
-	(*GetAdminListRes)(nil),   // 13: admin.GetAdminListRes
-	(*UpdateAdminReq)(nil),    // 14: admin.UpdateAdminReq
-	(*UpdateAdminRes)(nil),    // 15: admin.UpdateAdminRes
-	(*DeleteAdminReq)(nil),    // 16: admin.DeleteAdminReq
-	(*DeleteAdminRes)(nil),    // 17: admin.DeleteAdminRes
-	(*LogoutReq)(nil),         // 18: admin.LogoutReq
-	(*LogoutRes)(nil),         // 19: admin.LogoutRes
-	(*ChangePasswordReq)(nil), // 20: admin.ChangePasswordReq
-	(*ChangePasswordRes)(nil), // 21: admin.ChangePasswordRes
-	(*GetAdminLogsReq)(nil),   // 22: admin.GetAdminLogsReq
-	(*AdminLogInfo)(nil),      // 23: admin.AdminLogInfo
-	(*GetAdminLogsRes)(nil),   // 24: admin.GetAdminLogsRes
+	(*LoginReq)(nil),             // 0: admin.LoginReq
+	(*LoginRes)(nil),             // 1: admin.LoginRes
+	(*RefreshTokenReq)(nil),      // 2: admin.RefreshTokenReq
+	(*RefreshTokenRes)(nil),      // 3: admin.RefreshTokenRes
+	(*GetInfoReq)(nil),           // 4: admin.GetInfoReq
+	(*MenuInfo)(nil),             // 5: admin.MenuInfo
+	(*GetInfoRes)(nil),           // 6: admin.GetInfoRes
+	(*MenusReq)(nil),             // 7: admin.MenusReq
+	(*MenusRes)(nil),             // 8: admin.MenusRes
+	(*CreateAdminReq)(nil),       // 9: admin.CreateAdminReq
+	(*CreateAdminRes)(nil),       // 10: admin.CreateAdminRes
+	(*GetAdminListReq)(nil),      // 11: admin.GetAdminListReq
+	(*AdminInfo)(nil),            // 12: admin.AdminInfo
+	(*GetAdminListRes)(nil),      // 13: admin.GetAdminListRes
+	(*UpdateAdminReq)(nil),       // 14: admin.UpdateAdminReq
+	(*UpdateAdminRes)(nil),       // 15: admin.UpdateAdminRes
+	(*DeleteAdminReq)(nil),       // 16: admin.DeleteAdminReq
+	(*DeleteAdminRes)(nil),       // 17: admin.DeleteAdminRes
+	(*LogoutReq)(nil),            // 18: admin.LogoutReq
+	(*LogoutRes)(nil),            // 19: admin.LogoutRes
+	(*ChangePasswordReq)(nil),    // 20: admin.ChangePasswordReq
+	(*ChangePasswordRes)(nil),    // 21: admin.ChangePasswordRes
+	(*GetAdminLogsReq)(nil),      // 22: admin.GetAdminLogsReq
+	(*AdminLogInfo)(nil),         // 23: admin.AdminLogInfo
+	(*GetAdminLogsRes)(nil),      // 24: admin.GetAdminLogsRes
+	(*GenerateGoogle2FAReq)(nil), // 25: admin.GenerateGoogle2FAReq
+	(*GenerateGoogle2FARes)(nil), // 26: admin.GenerateGoogle2FARes
+	(*BindGoogle2FAReq)(nil),     // 27: admin.BindGoogle2FAReq
+	(*BindGoogle2FARes)(nil),     // 28: admin.BindGoogle2FARes
 }
 var file_backend_admin_v1_admin_proto_depIdxs = []int32{
 	5,  // 0: admin.MenuInfo.children:type_name -> admin.MenuInfo
@@ -1694,19 +1949,23 @@ var file_backend_admin_v1_admin_proto_depIdxs = []int32{
 	18, // 13: admin.Admin.Logout:input_type -> admin.LogoutReq
 	20, // 14: admin.Admin.ChangePassword:input_type -> admin.ChangePasswordReq
 	22, // 15: admin.Admin.GetAdminLogs:input_type -> admin.GetAdminLogsReq
-	1,  // 16: admin.Admin.Login:output_type -> admin.LoginRes
-	3,  // 17: admin.Admin.RefreshToken:output_type -> admin.RefreshTokenRes
-	6,  // 18: admin.Admin.GetInfo:output_type -> admin.GetInfoRes
-	8,  // 19: admin.Admin.Menus:output_type -> admin.MenusRes
-	13, // 20: admin.Admin.GetAdminList:output_type -> admin.GetAdminListRes
-	10, // 21: admin.Admin.CreateAdmin:output_type -> admin.CreateAdminRes
-	15, // 22: admin.Admin.UpdateAdmin:output_type -> admin.UpdateAdminRes
-	17, // 23: admin.Admin.DeleteAdmin:output_type -> admin.DeleteAdminRes
-	19, // 24: admin.Admin.Logout:output_type -> admin.LogoutRes
-	21, // 25: admin.Admin.ChangePassword:output_type -> admin.ChangePasswordRes
-	24, // 26: admin.Admin.GetAdminLogs:output_type -> admin.GetAdminLogsRes
-	16, // [16:27] is the sub-list for method output_type
-	5,  // [5:16] is the sub-list for method input_type
+	25, // 16: admin.Admin.GenerateGoogle2FA:input_type -> admin.GenerateGoogle2FAReq
+	27, // 17: admin.Admin.BindGoogle2FA:input_type -> admin.BindGoogle2FAReq
+	1,  // 18: admin.Admin.Login:output_type -> admin.LoginRes
+	3,  // 19: admin.Admin.RefreshToken:output_type -> admin.RefreshTokenRes
+	6,  // 20: admin.Admin.GetInfo:output_type -> admin.GetInfoRes
+	8,  // 21: admin.Admin.Menus:output_type -> admin.MenusRes
+	13, // 22: admin.Admin.GetAdminList:output_type -> admin.GetAdminListRes
+	10, // 23: admin.Admin.CreateAdmin:output_type -> admin.CreateAdminRes
+	15, // 24: admin.Admin.UpdateAdmin:output_type -> admin.UpdateAdminRes
+	17, // 25: admin.Admin.DeleteAdmin:output_type -> admin.DeleteAdminRes
+	19, // 26: admin.Admin.Logout:output_type -> admin.LogoutRes
+	21, // 27: admin.Admin.ChangePassword:output_type -> admin.ChangePasswordRes
+	24, // 28: admin.Admin.GetAdminLogs:output_type -> admin.GetAdminLogsRes
+	26, // 29: admin.Admin.GenerateGoogle2FA:output_type -> admin.GenerateGoogle2FARes
+	28, // 30: admin.Admin.BindGoogle2FA:output_type -> admin.BindGoogle2FARes
+	18, // [18:31] is the sub-list for method output_type
+	5,  // [5:18] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -1723,7 +1982,7 @@ func file_backend_admin_v1_admin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_backend_admin_v1_admin_proto_rawDesc), len(file_backend_admin_v1_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

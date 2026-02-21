@@ -20,17 +20,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Admin_Login_FullMethodName          = "/admin.Admin/Login"
-	Admin_RefreshToken_FullMethodName   = "/admin.Admin/RefreshToken"
-	Admin_GetInfo_FullMethodName        = "/admin.Admin/GetInfo"
-	Admin_Menus_FullMethodName          = "/admin.Admin/Menus"
-	Admin_GetAdminList_FullMethodName   = "/admin.Admin/GetAdminList"
-	Admin_CreateAdmin_FullMethodName    = "/admin.Admin/CreateAdmin"
-	Admin_UpdateAdmin_FullMethodName    = "/admin.Admin/UpdateAdmin"
-	Admin_DeleteAdmin_FullMethodName    = "/admin.Admin/DeleteAdmin"
-	Admin_Logout_FullMethodName         = "/admin.Admin/Logout"
-	Admin_ChangePassword_FullMethodName = "/admin.Admin/ChangePassword"
-	Admin_GetAdminLogs_FullMethodName   = "/admin.Admin/GetAdminLogs"
+	Admin_Login_FullMethodName             = "/admin.Admin/Login"
+	Admin_RefreshToken_FullMethodName      = "/admin.Admin/RefreshToken"
+	Admin_GetInfo_FullMethodName           = "/admin.Admin/GetInfo"
+	Admin_Menus_FullMethodName             = "/admin.Admin/Menus"
+	Admin_GetAdminList_FullMethodName      = "/admin.Admin/GetAdminList"
+	Admin_CreateAdmin_FullMethodName       = "/admin.Admin/CreateAdmin"
+	Admin_UpdateAdmin_FullMethodName       = "/admin.Admin/UpdateAdmin"
+	Admin_DeleteAdmin_FullMethodName       = "/admin.Admin/DeleteAdmin"
+	Admin_Logout_FullMethodName            = "/admin.Admin/Logout"
+	Admin_ChangePassword_FullMethodName    = "/admin.Admin/ChangePassword"
+	Admin_GetAdminLogs_FullMethodName      = "/admin.Admin/GetAdminLogs"
+	Admin_GenerateGoogle2FA_FullMethodName = "/admin.Admin/GenerateGoogle2FA"
+	Admin_BindGoogle2FA_FullMethodName     = "/admin.Admin/BindGoogle2FA"
 )
 
 // AdminClient is the client API for Admin service.
@@ -48,6 +50,8 @@ type AdminClient interface {
 	Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutRes, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordReq, opts ...grpc.CallOption) (*ChangePasswordRes, error)
 	GetAdminLogs(ctx context.Context, in *GetAdminLogsReq, opts ...grpc.CallOption) (*GetAdminLogsRes, error)
+	GenerateGoogle2FA(ctx context.Context, in *GenerateGoogle2FAReq, opts ...grpc.CallOption) (*GenerateGoogle2FARes, error)
+	BindGoogle2FA(ctx context.Context, in *BindGoogle2FAReq, opts ...grpc.CallOption) (*BindGoogle2FARes, error)
 }
 
 type adminClient struct {
@@ -168,6 +172,26 @@ func (c *adminClient) GetAdminLogs(ctx context.Context, in *GetAdminLogsReq, opt
 	return out, nil
 }
 
+func (c *adminClient) GenerateGoogle2FA(ctx context.Context, in *GenerateGoogle2FAReq, opts ...grpc.CallOption) (*GenerateGoogle2FARes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenerateGoogle2FARes)
+	err := c.cc.Invoke(ctx, Admin_GenerateGoogle2FA_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) BindGoogle2FA(ctx context.Context, in *BindGoogle2FAReq, opts ...grpc.CallOption) (*BindGoogle2FARes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BindGoogle2FARes)
+	err := c.cc.Invoke(ctx, Admin_BindGoogle2FA_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility.
@@ -183,6 +207,8 @@ type AdminServer interface {
 	Logout(context.Context, *LogoutReq) (*LogoutRes, error)
 	ChangePassword(context.Context, *ChangePasswordReq) (*ChangePasswordRes, error)
 	GetAdminLogs(context.Context, *GetAdminLogsReq) (*GetAdminLogsRes, error)
+	GenerateGoogle2FA(context.Context, *GenerateGoogle2FAReq) (*GenerateGoogle2FARes, error)
+	BindGoogle2FA(context.Context, *BindGoogle2FAReq) (*BindGoogle2FARes, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -225,6 +251,12 @@ func (UnimplementedAdminServer) ChangePassword(context.Context, *ChangePasswordR
 }
 func (UnimplementedAdminServer) GetAdminLogs(context.Context, *GetAdminLogsReq) (*GetAdminLogsRes, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAdminLogs not implemented")
+}
+func (UnimplementedAdminServer) GenerateGoogle2FA(context.Context, *GenerateGoogle2FAReq) (*GenerateGoogle2FARes, error) {
+	return nil, status.Error(codes.Unimplemented, "method GenerateGoogle2FA not implemented")
+}
+func (UnimplementedAdminServer) BindGoogle2FA(context.Context, *BindGoogle2FAReq) (*BindGoogle2FARes, error) {
+	return nil, status.Error(codes.Unimplemented, "method BindGoogle2FA not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 func (UnimplementedAdminServer) testEmbeddedByValue()               {}
@@ -445,6 +477,42 @@ func _Admin_GetAdminLogs_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_GenerateGoogle2FA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateGoogle2FAReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GenerateGoogle2FA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GenerateGoogle2FA_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GenerateGoogle2FA(ctx, req.(*GenerateGoogle2FAReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_BindGoogle2FA_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindGoogle2FAReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).BindGoogle2FA(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_BindGoogle2FA_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).BindGoogle2FA(ctx, req.(*BindGoogle2FAReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -495,6 +563,14 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAdminLogs",
 			Handler:    _Admin_GetAdminLogs_Handler,
+		},
+		{
+			MethodName: "GenerateGoogle2FA",
+			Handler:    _Admin_GenerateGoogle2FA_Handler,
+		},
+		{
+			MethodName: "BindGoogle2FA",
+			Handler:    _Admin_BindGoogle2FA_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

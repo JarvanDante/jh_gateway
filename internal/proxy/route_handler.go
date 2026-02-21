@@ -96,6 +96,10 @@ func initBackendRoutes() {
 	backendRoutes.Register("/create-admin", "POST", backend.CallAdminCreate)
 	// 更新员工
 	backendRoutes.Register("/update-admin", "POST", backend.CallUpdateAdmin)
+	// 生成谷歌二次验证二维码
+	backendRoutes.Register("/generate-google2fa", "GET", backend.CallGenerateGoogle2FA)
+	// 绑定谷歌二次验证
+	backendRoutes.Register("/bind-google2fa", "POST", backend.CallBindGoogle2FA)
 	// 删除员工
 	backendRoutes.Register("/delete-admin", "POST", backend.CallDeleteAdmin)
 	// 退出

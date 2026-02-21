@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,8 +24,8 @@ const (
 
 type OptionItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -75,11 +76,11 @@ func (x *OptionItem) GetName() string {
 
 type SettlementSummary struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	MemberCount      int64                  `protobuf:"varint,1,opt,name=member_count,json=memberCount,proto3" json:"member_count,omitempty"`
-	BetAmount        float64                `protobuf:"fixed64,2,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount,omitempty"`
-	ValidAmount      float64                `protobuf:"fixed64,3,opt,name=valid_amount,json=validAmount,proto3" json:"valid_amount,omitempty"`
-	NetAmount        float64                `protobuf:"fixed64,4,opt,name=net_amount,json=netAmount,proto3" json:"net_amount,omitempty"`
-	CommissionAmount float64                `protobuf:"fixed64,5,opt,name=commission_amount,json=commissionAmount,proto3" json:"commission_amount,omitempty"`
+	MemberCount      int64                  `protobuf:"varint,1,opt,name=member_count,json=memberCount,proto3" json:"member_count"`
+	BetAmount        float64                `protobuf:"fixed64,2,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount"`
+	ValidAmount      float64                `protobuf:"fixed64,3,opt,name=valid_amount,json=validAmount,proto3" json:"valid_amount"`
+	NetAmount        float64                `protobuf:"fixed64,4,opt,name=net_amount,json=netAmount,proto3" json:"net_amount"`
+	CommissionAmount float64                `protobuf:"fixed64,5,opt,name=commission_amount,json=commissionAmount,proto3" json:"commission_amount"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -151,21 +152,21 @@ func (x *SettlementSummary) GetCommissionAmount() float64 {
 
 type AgentSettlementDailyItem struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	Id               int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	StatDate         string                 `protobuf:"bytes,2,opt,name=stat_date,json=statDate,proto3" json:"stat_date,omitempty"`
-	AgentId          int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	AgentName        string                 `protobuf:"bytes,4,opt,name=agent_name,json=agentName,proto3" json:"agent_name,omitempty"`
-	MemberCount      int64                  `protobuf:"varint,5,opt,name=member_count,json=memberCount,proto3" json:"member_count,omitempty"`
-	BetAmount        float64                `protobuf:"fixed64,6,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount,omitempty"`
-	ValidAmount      float64                `protobuf:"fixed64,7,opt,name=valid_amount,json=validAmount,proto3" json:"valid_amount,omitempty"`
-	NetAmount        float64                `protobuf:"fixed64,8,opt,name=net_amount,json=netAmount,proto3" json:"net_amount,omitempty"`
-	Rate             float64                `protobuf:"fixed64,9,opt,name=rate,proto3" json:"rate,omitempty"`
-	CommissionAmount float64                `protobuf:"fixed64,10,opt,name=commission_amount,json=commissionAmount,proto3" json:"commission_amount,omitempty"`
-	SettleStatus     int32                  `protobuf:"varint,11,opt,name=settle_status,json=settleStatus,proto3" json:"settle_status,omitempty"`
-	SettleStatusName string                 `protobuf:"bytes,12,opt,name=settle_status_name,json=settleStatusName,proto3" json:"settle_status_name,omitempty"`
-	SettledAt        string                 `protobuf:"bytes,13,opt,name=settled_at,json=settledAt,proto3" json:"settled_at,omitempty"`
-	CreatedAt        string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt        string                 `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id               int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	StatDate         string                 `protobuf:"bytes,2,opt,name=stat_date,json=statDate,proto3" json:"stat_date"`
+	AgentId          int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id"`
+	AgentName        string                 `protobuf:"bytes,4,opt,name=agent_name,json=agentName,proto3" json:"agent_name"`
+	MemberCount      int64                  `protobuf:"varint,5,opt,name=member_count,json=memberCount,proto3" json:"member_count"`
+	BetAmount        float64                `protobuf:"fixed64,6,opt,name=bet_amount,json=betAmount,proto3" json:"bet_amount"`
+	ValidAmount      float64                `protobuf:"fixed64,7,opt,name=valid_amount,json=validAmount,proto3" json:"valid_amount"`
+	NetAmount        float64                `protobuf:"fixed64,8,opt,name=net_amount,json=netAmount,proto3" json:"net_amount"`
+	Rate             float64                `protobuf:"fixed64,9,opt,name=rate,proto3" json:"rate"`
+	CommissionAmount float64                `protobuf:"fixed64,10,opt,name=commission_amount,json=commissionAmount,proto3" json:"commission_amount"`
+	SettleStatus     int32                  `protobuf:"varint,11,opt,name=settle_status,json=settleStatus,proto3" json:"settle_status"`
+	SettleStatusName string                 `protobuf:"bytes,12,opt,name=settle_status_name,json=settleStatusName,proto3" json:"settle_status_name"`
+	SettledAt        string                 `protobuf:"bytes,13,opt,name=settled_at,json=settledAt,proto3" json:"settled_at"`
+	CreatedAt        string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt        string                 `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -307,12 +308,12 @@ func (x *AgentSettlementDailyItem) GetUpdatedAt() string {
 
 type GetAgentSettlementDailyListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	SettleStatus  int32                  `protobuf:"varint,4,opt,name=settle_status,json=settleStatus,proto3" json:"settle_status,omitempty"`
-	StartDate     string                 `protobuf:"bytes,5,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
-	EndDate       string                 `protobuf:"bytes,6,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
+	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id"`
+	SettleStatus  int32                  `protobuf:"varint,4,opt,name=settle_status,json=settleStatus,proto3" json:"settle_status" dc:"-1 不筛选"` // -1 不筛选
+	StartDate     string                 `protobuf:"bytes,5,opt,name=start_date,json=startDate,proto3" json:"start_date"`
+	EndDate       string                 `protobuf:"bytes,6,opt,name=end_date,json=endDate,proto3" json:"end_date"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -391,12 +392,12 @@ func (x *GetAgentSettlementDailyListReq) GetEndDate() string {
 
 type GetAgentSettlementDailyListRes struct {
 	state         protoimpl.MessageState      `protogen:"open.v1"`
-	List          []*AgentSettlementDailyItem `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
-	Total         int32                       `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage   int32                       `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage       int32                       `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
-	StatusList    []*OptionItem               `protobuf:"bytes,5,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
-	Summary       *SettlementSummary          `protobuf:"bytes,6,opt,name=summary,proto3" json:"summary,omitempty"`
+	List          []*AgentSettlementDailyItem `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total         int32                       `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage   int32                       `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage       int32                       `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	StatusList    []*OptionItem               `protobuf:"bytes,5,rep,name=status_list,json=statusList,proto3" json:"status_list"`
+	Summary       *SettlementSummary          `protobuf:"bytes,6,opt,name=summary,proto3" json:"summary"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -475,9 +476,9 @@ func (x *GetAgentSettlementDailyListRes) GetSummary() *SettlementSummary {
 
 type CalcAgentSettlementDailyReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	StartDate     string                 `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
-	EndDate       string                 `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
-	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	StartDate     string                 `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date"`
+	EndDate       string                 `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date"`
+	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id" dc:"可选"` // 可选
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -535,7 +536,7 @@ func (x *CalcAgentSettlementDailyReq) GetAgentId() int64 {
 
 type CalcAgentSettlementDailyRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Affected      int32                  `protobuf:"varint,1,opt,name=affected,proto3" json:"affected,omitempty"`
+	Affected      int32                  `protobuf:"varint,1,opt,name=affected,proto3" json:"affected"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -579,7 +580,7 @@ func (x *CalcAgentSettlementDailyRes) GetAffected() int32 {
 
 type SettleAgentSettlementDailyReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -659,9 +660,9 @@ func (*SettleAgentSettlementDailyRes) Descriptor() ([]byte, []int) {
 
 type SettleAgentSettlementBatchReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	StartDate     string                 `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
-	EndDate       string                 `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
-	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
+	StartDate     string                 `protobuf:"bytes,1,opt,name=start_date,json=startDate,proto3" json:"start_date"`
+	EndDate       string                 `protobuf:"bytes,2,opt,name=end_date,json=endDate,proto3" json:"end_date"`
+	AgentId       int64                  `protobuf:"varint,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id" dc:"可选"` // 可选
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -719,7 +720,7 @@ func (x *SettleAgentSettlementBatchReq) GetAgentId() int64 {
 
 type SettleAgentSettlementBatchRes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Affected      int32                  `protobuf:"varint,1,opt,name=affected,proto3" json:"affected,omitempty"`
+	Affected      int32                  `protobuf:"varint,1,opt,name=affected,proto3" json:"affected"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -838,7 +839,7 @@ const file_backend_agent_settlement_v1_agent_settlement_proto_rawDesc = "" +
 	"\x1bGetAgentSettlementDailyList\x120.agent_settlement.GetAgentSettlementDailyListReq\x1a0.agent_settlement.GetAgentSettlementDailyListRes\"\x00\x12z\n" +
 	"\x18CalcAgentSettlementDaily\x12-.agent_settlement.CalcAgentSettlementDailyReq\x1a-.agent_settlement.CalcAgentSettlementDailyRes\"\x00\x12\x80\x01\n" +
 	"\x1aSettleAgentSettlementDaily\x12/.agent_settlement.SettleAgentSettlementDailyReq\x1a/.agent_settlement.SettleAgentSettlementDailyRes\"\x00\x12\x80\x01\n" +
-	"\x1aSettleAgentSettlementBatch\x12/.agent_settlement.SettleAgentSettlementBatchReq\x1a/.agent_settlement.SettleAgentSettlementBatchRes\"\x00B,Z*jh_gateway/api/backend/agent_settlement/v1b\x06proto3"
+	"\x1aSettleAgentSettlementBatch\x12/.agent_settlement.SettleAgentSettlementBatchReq\x1a/.agent_settlement.SettleAgentSettlementBatchRes\"\x00B0Z.jh_app_service/api/backend/agent_settlement/v1b\x06proto3"
 
 var (
 	file_backend_agent_settlement_v1_agent_settlement_proto_rawDescOnce sync.Once

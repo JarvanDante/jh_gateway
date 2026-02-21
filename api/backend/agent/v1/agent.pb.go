@@ -7,11 +7,12 @@
 package v1
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -23,10 +24,10 @@ const (
 
 type GetAgentListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size"`
+	Status        int32                  `protobuf:"varint,3,opt,name=status,proto3" json:"status" dc:"-1 不筛选"` // -1 不筛选
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -91,18 +92,18 @@ func (x *GetAgentListReq) GetName() string {
 
 type AgentItem struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ParentId       int64                  `protobuf:"varint,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	AgentCode      string                 `protobuf:"bytes,3,opt,name=agent_code,json=agentCode,proto3" json:"agent_code,omitempty"`
-	AgentName      string                 `protobuf:"bytes,4,opt,name=agent_name,json=agentName,proto3" json:"agent_name,omitempty"`
-	Status         int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`
-	StatusName     string                 `protobuf:"bytes,6,opt,name=status_name,json=statusName,proto3" json:"status_name,omitempty"`
-	SettleType     int32                  `protobuf:"varint,7,opt,name=settle_type,json=settleType,proto3" json:"settle_type,omitempty"`
-	SettleTypeName string                 `protobuf:"bytes,8,opt,name=settle_type_name,json=settleTypeName,proto3" json:"settle_type_name,omitempty"`
-	Rate           float64                `protobuf:"fixed64,9,opt,name=rate,proto3" json:"rate,omitempty"`
-	Remark         string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark,omitempty"`
-	CreatedAt      string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt      string                 `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	ParentId       int64                  `protobuf:"varint,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id"`
+	AgentCode      string                 `protobuf:"bytes,3,opt,name=agent_code,json=agentCode,proto3" json:"agent_code"`
+	AgentName      string                 `protobuf:"bytes,4,opt,name=agent_name,json=agentName,proto3" json:"agent_name"`
+	Status         int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status"`
+	StatusName     string                 `protobuf:"bytes,6,opt,name=status_name,json=statusName,proto3" json:"status_name"`
+	SettleType     int32                  `protobuf:"varint,7,opt,name=settle_type,json=settleType,proto3" json:"settle_type"`
+	SettleTypeName string                 `protobuf:"bytes,8,opt,name=settle_type_name,json=settleTypeName,proto3" json:"settle_type_name"`
+	Rate           float64                `protobuf:"fixed64,9,opt,name=rate,proto3" json:"rate"`
+	Remark         string                 `protobuf:"bytes,10,opt,name=remark,proto3" json:"remark"`
+	CreatedAt      string                 `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt      string                 `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -223,8 +224,8 @@ func (x *AgentItem) GetUpdatedAt() string {
 
 type OptionItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Value         int32                  `protobuf:"varint,1,opt,name=value,proto3" json:"value"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -275,12 +276,12 @@ func (x *OptionItem) GetName() string {
 
 type GetAgentListRes struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	List           []*AgentItem           `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
-	Total          int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	CurrentPage    int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	PerPage        int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
-	StatusList     []*OptionItem          `protobuf:"bytes,5,rep,name=status_list,json=statusList,proto3" json:"status_list,omitempty"`
-	SettleTypeList []*OptionItem          `protobuf:"bytes,6,rep,name=settle_type_list,json=settleTypeList,proto3" json:"settle_type_list,omitempty"`
+	List           []*AgentItem           `protobuf:"bytes,1,rep,name=list,proto3" json:"list"`
+	Total          int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total"`
+	CurrentPage    int32                  `protobuf:"varint,3,opt,name=current_page,json=currentPage,proto3" json:"current_page"`
+	PerPage        int32                  `protobuf:"varint,4,opt,name=per_page,json=perPage,proto3" json:"per_page"`
+	StatusList     []*OptionItem          `protobuf:"bytes,5,rep,name=status_list,json=statusList,proto3" json:"status_list"`
+	SettleTypeList []*OptionItem          `protobuf:"bytes,6,rep,name=settle_type_list,json=settleTypeList,proto3" json:"settle_type_list"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -359,13 +360,13 @@ func (x *GetAgentListRes) GetSettleTypeList() []*OptionItem {
 
 type CreateAgentReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ParentId      int64                  `protobuf:"varint,1,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	AgentCode     string                 `protobuf:"bytes,2,opt,name=agent_code,json=agentCode,proto3" json:"agent_code,omitempty"`
-	AgentName     string                 `protobuf:"bytes,3,opt,name=agent_name,json=agentName,proto3" json:"agent_name,omitempty"`
-	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`
-	SettleType    int32                  `protobuf:"varint,5,opt,name=settle_type,json=settleType,proto3" json:"settle_type,omitempty"`
-	Rate          float64                `protobuf:"fixed64,6,opt,name=rate,proto3" json:"rate,omitempty"`
-	Remark        string                 `protobuf:"bytes,7,opt,name=remark,proto3" json:"remark,omitempty"`
+	ParentId      int64                  `protobuf:"varint,1,opt,name=parent_id,json=parentId,proto3" json:"parent_id"`
+	AgentCode     string                 `protobuf:"bytes,2,opt,name=agent_code,json=agentCode,proto3" json:"agent_code"`
+	AgentName     string                 `protobuf:"bytes,3,opt,name=agent_name,json=agentName,proto3" json:"agent_name"`
+	Status        int32                  `protobuf:"varint,4,opt,name=status,proto3" json:"status"`
+	SettleType    int32                  `protobuf:"varint,5,opt,name=settle_type,json=settleType,proto3" json:"settle_type"`
+	Rate          float64                `protobuf:"fixed64,6,opt,name=rate,proto3" json:"rate"`
+	Remark        string                 `protobuf:"bytes,7,opt,name=remark,proto3" json:"remark"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -487,14 +488,14 @@ func (*CreateAgentRes) Descriptor() ([]byte, []int) {
 
 type UpdateAgentReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ParentId      int64                  `protobuf:"varint,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	AgentCode     string                 `protobuf:"bytes,3,opt,name=agent_code,json=agentCode,proto3" json:"agent_code,omitempty"`
-	AgentName     string                 `protobuf:"bytes,4,opt,name=agent_name,json=agentName,proto3" json:"agent_name,omitempty"`
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`
-	SettleType    int32                  `protobuf:"varint,6,opt,name=settle_type,json=settleType,proto3" json:"settle_type,omitempty"`
-	Rate          float64                `protobuf:"fixed64,7,opt,name=rate,proto3" json:"rate,omitempty"`
-	Remark        string                 `protobuf:"bytes,8,opt,name=remark,proto3" json:"remark,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	ParentId      int64                  `protobuf:"varint,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id"`
+	AgentCode     string                 `protobuf:"bytes,3,opt,name=agent_code,json=agentCode,proto3" json:"agent_code"`
+	AgentName     string                 `protobuf:"bytes,4,opt,name=agent_name,json=agentName,proto3" json:"agent_name"`
+	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status"`
+	SettleType    int32                  `protobuf:"varint,6,opt,name=settle_type,json=settleType,proto3" json:"settle_type"`
+	Rate          float64                `protobuf:"fixed64,7,opt,name=rate,proto3" json:"rate"`
+	Remark        string                 `protobuf:"bytes,8,opt,name=remark,proto3" json:"remark"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -623,7 +624,7 @@ func (*UpdateAgentRes) Descriptor() ([]byte, []int) {
 
 type DeleteAgentReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -775,7 +776,7 @@ const file_backend_agent_v1_agent_proto_rawDesc = "" +
 	"\fGetAgentList\x12\x16.agent.GetAgentListReq\x1a\x16.agent.GetAgentListRes\"\x00\x12=\n" +
 	"\vCreateAgent\x12\x15.agent.CreateAgentReq\x1a\x15.agent.CreateAgentRes\"\x00\x12=\n" +
 	"\vUpdateAgent\x12\x15.agent.UpdateAgentReq\x1a\x15.agent.UpdateAgentRes\"\x00\x12=\n" +
-	"\vDeleteAgent\x12\x15.agent.DeleteAgentReq\x1a\x15.agent.DeleteAgentRes\"\x00B!Z\x1fjh_gateway/api/backend/agent/v1b\x06proto3"
+	"\vDeleteAgent\x12\x15.agent.DeleteAgentReq\x1a\x15.agent.DeleteAgentRes\"\x00B%Z#jh_app_service/api/backend/agent/v1b\x06proto3"
 
 var (
 	file_backend_agent_v1_agent_proto_rawDescOnce sync.Once
