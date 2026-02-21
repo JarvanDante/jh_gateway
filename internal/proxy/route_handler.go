@@ -359,6 +359,11 @@ func initManageRoutes() {
 	manageRoutes.Register("/admin/get-info", "GET", manage.CallManageAdminGetInfo)
 	manageRoutes.Register("/admin/logout", "POST", manage.CallManageAdminLogout)
 	manageRoutes.Register("/admin/menus", "GET", manage.CallManageAdminMenus)
+	manageRoutes.Register("/admin/list", "GET", manage.CallManageAdminList)
+	manageRoutes.Register("/admin/create", "POST", manage.CallManageCreateAdmin)
+	manageRoutes.Register("/admin/update", "POST", manage.CallManageUpdateAdmin)
+	manageRoutes.Register("/admin/delete", "POST", manage.CallManageDeleteAdmin)
+	manageRoutes.Register("/admin/role-options", "GET", manage.CallManageAdminRoleOptions)
 
 	// 商户管理接口
 	manageRoutes.Register("/customer/list", "GET", manage.CallGetCustomerList)

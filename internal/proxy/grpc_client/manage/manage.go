@@ -268,6 +268,100 @@ func CallManageAdminMenus(ctx context.Context, conn *grpc.ClientConn, r *ghttp.R
  * @return_param data object 返回数据
  * @number 1
  */
+
+func CallManageAdminList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	client := v13.NewAdminClient(conn)
+
+	status := int32(-1)
+	statusRaw := strings.TrimSpace(r.Get("status").String())
+	if statusRaw != "" {
+		status = gconv.Int32(statusRaw)
+	}
+
+	req := &v13.ManageGetAdminListReq{
+		Username: r.Get("username").String(),
+		Status:   status,
+		Page:     r.Get("page", 1).Int32(),
+		Size:     r.Get("size", 20).Int32(),
+	}
+	res, err := client.GetAdminList(ctx, req)
+	if err != nil {
+		util.WriteInternalError(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
+func CallManageCreateAdmin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return nil
+	}
+	client := v13.NewAdminClient(conn)
+	_, err = client.CreateAdmin(ctx, &v13.ManageCreateAdminReq{
+		Username: getStringFromMap(reqData, "username"),
+		Password: getStringFromMap(reqData, "password"),
+		Nickname: getStringFromMap(reqData, "nickname"),
+		Role:     getInt32FromMap(reqData, "role"),
+		Status:   getInt32FromMap(reqData, "status"),
+	})
+	if err != nil {
+		util.WriteBadRequest(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	util.WriteSuccess(r, map[string]interface{}{"message": "创建成功"})
+	return nil
+}
+
+func CallManageUpdateAdmin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return nil
+	}
+	client := v13.NewAdminClient(conn)
+	_, err = client.UpdateAdmin(ctx, &v13.ManageUpdateAdminReq{
+		Id:       getInt32FromMap(reqData, "id"),
+		Password: getStringFromMap(reqData, "password"),
+		Nickname: getStringFromMap(reqData, "nickname"),
+		Role:     getInt32FromMap(reqData, "role_id"),
+		Status:   getInt32FromMap(reqData, "status"),
+	})
+	if err != nil {
+		util.WriteBadRequest(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	util.WriteSuccess(r, map[string]interface{}{"message": "更新成功"})
+	return nil
+}
+
+func CallManageDeleteAdmin(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	reqData, err := middleware.GetRequestDataWithFallback(ctx, r)
+	if err != nil {
+		util.WriteBadRequest(r, "请求数据解析失败")
+		return nil
+	}
+	client := v13.NewAdminClient(conn)
+	_, err = client.DeleteAdmin(ctx, &v13.ManageDeleteAdminReq{Id: getInt32FromMap(reqData, "id")})
+	if err != nil {
+		util.WriteBadRequest(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	util.WriteSuccess(r, map[string]interface{}{"message": "删除成功"})
+	return nil
+}
+
+func CallManageAdminRoleOptions(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
+	client := v13.NewAdminClient(conn)
+	res, err := client.GetAdminRoleOptions(ctx, &v13.ManageGetAdminRoleOptionsReq{})
+	if err != nil {
+		util.WriteInternalError(r, util.ExtractGRPCErrorMessage(err))
+		return nil
+	}
+	return writeProtobufResponse(ctx, r, res)
+}
+
 func CallGetCustomerList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling gRPC Customer GetCustomerList")
 
