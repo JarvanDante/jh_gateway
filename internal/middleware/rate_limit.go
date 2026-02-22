@@ -70,6 +70,25 @@ func RateLimit(r *ghttp.Request) {
 		return
 	}
 
+	// 启动过期清理协程（只启动一次）
+	cleanOnce.Do(func() { go cleanupRateMap() })
+	now := time.Now()
+
+	// 全局限流（按用户/IP，不分接口）——用于拦截整页F5狂刷
+	globalCfg := g.Cfg().MustGet(ctx, "rateLimit.globalRequestsPerMinute").Int()
+	if globalCfg <= 0 {
+		globalCfg = cfg
+	}
+	globalKey := getGlobalRateKey(r)
+	globalCount, globalReset := hitRateCounter(globalKey, now)
+	if globalCount > globalCfg {
+		r.Response.Header().Set("X-RateLimit-Remaining", "0")
+		r.Response.Header().Set("X-RateLimit-Reset", globalReset.Format(time.RFC3339))
+		recordStrike(clientIP, bCfg)
+		util.WriteTooManyRequests(r, "")
+		return
+	}
+
 	// 按接口配置覆盖默认阈值
 	if routeCfg := getRouteLimit(path, ctx); routeCfg >= 0 {
 		if routeCfg == 0 {
@@ -80,50 +99,18 @@ func RateLimit(r *ghttp.Request) {
 		cfg = routeCfg
 	}
 
-	// 启动过期清理协程（只启动一次）
-	cleanOnce.Do(func() { go cleanupRateMap() })
-
+	// 每接口限流（按用户/IP + path）
 	key := getRateKey(r, path)
-	now := time.Now()
-
-	// 先读锁查找，降低锁竞争
-	rateMutex.RLock()
-	rc, ok := rateMap[key]
-	rateMutex.RUnlock()
-
-	if !ok {
-		// 双重检查，避免并发创建重复
-		rateMutex.Lock()
-		rc, ok = rateMap[key]
-		if !ok {
-			rc = &rateCounter{count: 0, reset: now.Add(time.Minute), lastSeen: now}
-			rateMap[key] = rc
-		}
-		rateMutex.Unlock()
-	}
-
-	rc.mu.Lock()
-	if now.After(rc.reset) {
-		rc.count = 0
-		rc.reset = now.Add(time.Minute)
-	}
-	rc.count++
-	rc.lastSeen = now
-	count := rc.count
-	reset := rc.reset
-	rc.mu.Unlock()
-
+	count, reset := hitRateCounter(key, now)
 	if count > cfg {
 		r.Response.Header().Set("X-RateLimit-Remaining", "0")
 		r.Response.Header().Set("X-RateLimit-Reset", reset.Format(time.RFC3339))
-
-		// 触发超限计数，达到阈值后临时封禁IP
 		recordStrike(clientIP, bCfg)
-
 		util.WriteTooManyRequests(r, "")
 		return
 	}
 
+	// 返回每接口剩余配额
 	r.Response.Header().Set("X-RateLimit-Remaining", fmt.Sprint(cfg-count))
 	r.Response.Header().Set("X-RateLimit-Reset", reset.Format(time.RFC3339))
 
@@ -143,6 +130,50 @@ func getRateKey(r *ghttp.Request, path string) string {
 		}
 	}
 	return fmt.Sprintf("ip:%s:path:%s", r.GetClientIp(), path)
+}
+
+// getGlobalRateKey 全局限流key（不区分path）
+func getGlobalRateKey(r *ghttp.Request) string {
+	if userIdVar := r.GetCtxVar("user_id"); userIdVar != nil {
+		if userID := userIdVar.Int64(); userID > 0 {
+			return fmt.Sprintf("user:%d", userID)
+		}
+	}
+	if adminIdVar := r.GetCtxVar("admin_id"); adminIdVar != nil {
+		if adminID := adminIdVar.Int64(); adminID > 0 {
+			return fmt.Sprintf("admin:%d", adminID)
+		}
+	}
+	return fmt.Sprintf("ip:%s", r.GetClientIp())
+}
+
+// hitRateCounter 统一处理分钟窗口计数
+func hitRateCounter(key string, now time.Time) (count int, reset time.Time) {
+	rateMutex.RLock()
+	rc, ok := rateMap[key]
+	rateMutex.RUnlock()
+
+	if !ok {
+		rateMutex.Lock()
+		rc, ok = rateMap[key]
+		if !ok {
+			rc = &rateCounter{count: 0, reset: now.Add(time.Minute), lastSeen: now}
+			rateMap[key] = rc
+		}
+		rateMutex.Unlock()
+	}
+
+	rc.mu.Lock()
+	if now.After(rc.reset) {
+		rc.count = 0
+		rc.reset = now.Add(time.Minute)
+	}
+	rc.count++
+	rc.lastSeen = now
+	count = rc.count
+	reset = rc.reset
+	rc.mu.Unlock()
+	return
 }
 
 func getBlockConfig(ctx context.Context) blockConfig {
