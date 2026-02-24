@@ -5,7 +5,7 @@ grpcGateway:
   address: ":8003"
 
 consul:
-  addr: "172.19.0.29:8500" # 容器内直接访问Consul
+  addr: "consul:8500" # 容器内直接访问Consul
 
 # Jaeger 配置
 jaeger:
@@ -112,7 +112,7 @@ timezone: "Asia/Shanghai" # 北京时间
 
 # ClickHouse 配置
 clickhouse:
-  host: "172.19.0.35" # ClickHouse服务地址
+  host: "clickhouse" # ClickHouse服务地址
   port: 9000 # ClickHouse原生协议端口（9000）
   database: "game_analytics" # 数据库名称
   username: "default" # 用户名
@@ -122,7 +122,7 @@ clickhouse:
 redis:
   # 单实例配置示例1
   default:
-    address: 172.19.0.6:6379
+    address: redis:6379
     db: 1
     pass: 654321
 
