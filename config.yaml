@@ -116,7 +116,7 @@ clickhouse:
   port: 9000 # ClickHouse原生协议端口（9000）
   database: "game_analytics" # 数据库名称
   username: "default" # 用户名
-  password: "123456" # 密码
+  password: "375445" # 密码
 
 # Redis 配置示例
 redis:
@@ -124,7 +124,7 @@ redis:
   default:
     address: redis:6379
     db: 1
-    pass: 654321
+    pass: 375445
 
 # API签名校验（灰度开关）
 apiSignature:
@@ -149,5 +149,5 @@ apiSignature:
   devBypass:
     enabled: true   #前线前务必，把它关掉：enabled: false
     hosts:
-      - "i.jhh5.com"
-      - "*.jhh5.com"
+      - "h5.panalow.com"
+      - "*.panalow.com"
