@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 
 ############################
 # 1) Build stage
@@ -13,7 +12,7 @@ RUN apk add --no-cache ca-certificates tzdata git
 ENV CGO_ENABLED=0 \
     GOOS=linux \
     GOARCH=amd64 \
-    GOPROXY=https://goproxy.cn,direct
+    GOPROXY=https://proxy.golang.org,direct
 
 # 先拷贝依赖清单，加速缓存
 COPY go.mod go.sum ./
