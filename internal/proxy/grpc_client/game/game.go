@@ -2,6 +2,7 @@ package game
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strconv"
 
@@ -13,11 +14,38 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/util/gconv"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 )
 
 // writeProtobufResponse 统一处理protobuf响应的JSON序列化
 func writeProtobufResponse(ctx context.Context, r *ghttp.Request, pbMessage interface{}) error {
-	util.WriteSuccess(r, pbMessage)
+	msg, ok := pbMessage.(proto.Message)
+	if !ok {
+		util.WriteSuccess(r, pbMessage)
+		return nil
+	}
+
+	marshaler := protojson.MarshalOptions{
+		UseProtoNames:   true,
+		EmitUnpopulated: true,
+	}
+
+	jsonData, err := marshaler.Marshal(msg)
+	if err != nil {
+		util.LogWithTrace(ctx, "error", "protobuf JSON marshal failed: %v", err)
+		util.WriteSuccess(r, pbMessage)
+		return nil
+	}
+
+	var responseData map[string]interface{}
+	if err := json.Unmarshal(jsonData, &responseData); err != nil {
+		util.LogWithTrace(ctx, "error", "JSON parse to map failed: %v", err)
+		util.WriteSuccess(r, pbMessage)
+		return nil
+	}
+
+	util.WriteSuccess(r, responseData)
 	return nil
 }
 

@@ -283,6 +283,8 @@ func translateMessage(msg string) string {
 		"查询今日充值金额失败":              "Failed to query today's recharge amount",
 		"查询今日有效投注失败":              "Failed to query today's valid bet amount",
 		"绑定手机号成功":                 "Mobile number successfully bound",
+		"绑定邮箱成功":                  "Email bound successfully",
+		"绑定登录密码成功":                "Login Password bound successfully",
 		"该手机号已被其他用户绑定":            "Phone number has been used by others",
 		"抽奖成功":                    "Lucky Draw Successful",
 	}
