@@ -7,13 +7,13 @@ data:
   config.yaml: |
     server:
       address: ":8100"
-    
+
     grpcGateway:
       address: ":8003"
-    
+
     consul:
       addr: "172.19.0.29:8500" # 容器内直接访问Consul
-    
+
     # Jaeger 配置
     jaeger:
       endpoint: "jaeger:4317" # Jaeger OTLP gRPC 端点
@@ -21,14 +21,14 @@ data:
       serviceVersion: "1.0.0" # 服务版本
       environment: "development" # 环境
       enabled: true # 是否启用追踪
-    
+
     jwt:
       secret: "be0axSSXmguDZ2Q0EIPgRwq9e5G9nRH3zq3iEw6nllU="
       manageSecret: "d0RegRQwDAeCZlvM4pGRn8eUhSs99Cag+FSZACaj8Fo="
-    
+
     rateLimit:
       # 默认每分钟最多请求次数（优先按 user_id/admin_id，否则按 IP）
-      requestsPerMinute: 60
+      requestsPerMinute: 120
       # 全局每分钟请求上限（不区分接口，用于拦截整页F5狂刷）
       globalRequestsPerMinute: 40
       # 恶意刷流量防护：短时多次触发429后，临时封禁IP
@@ -52,7 +52,7 @@ data:
           requestsPerMinute: 18
         - exactPath: "/api/frontend/app/sign-session"
           requestsPerMinute: 24
-    
+
         # ===== 前台高频读接口（适中） =====
         - exactPath: "/api/frontend/app/user-info"
           requestsPerMinute: 54
@@ -64,7 +64,7 @@ data:
           requestsPerMinute: 36
         - exactPath: "/api/frontend/app/app-unread-count"
           requestsPerMinute: 36
-    
+
         # ===== 前台公共接口（可放宽） =====
         - exactPath: "/api/frontend/app/setting-site"
           requestsPerMinute: 108
@@ -76,7 +76,7 @@ data:
           requestsPerMinute: 72
         - exactPath: "/api/frontend/game/frontend-game-list"
           requestsPerMinute: 72
-    
+
         # ===== 资金敏感接口（严格） =====
         - exactPath: "/api/frontend/balance/deposit-order"
           requestsPerMinute: 18
@@ -86,7 +86,7 @@ data:
           requestsPerMinute: 12
         - exactPath: "/api/frontend/game/redirect-to-game"
           requestsPerMinute: 24
-    
+
         # ===== 兼容旧路由（与前台规则保持一致） =====
         - exactPath: "/api/balance/refresh-balance"
           requestsPerMinute: 36
@@ -100,11 +100,11 @@ data:
           requestsPerMinute: 72
         - exactPath: "/api/game/game-categories"
           requestsPerMinute: 72
-    
+
         # 后台登录接口
         - exactPath: "/api/backend/app/login"
           requestsPerMinute: 18
-    
+
     # 日志配置 - JSON格式
     logger:
       level: "all"
@@ -113,10 +113,10 @@ data:
       format: "json"
       # 时间格式
       timeFormat: "2006-01-02T15:04:05.000Z07:00"
-    
+
     # 时区配置
     timezone: "Asia/Shanghai" # 北京时间
-    
+
     # ClickHouse 配置
     clickhouse:
       host: "172.19.0.35" # ClickHouse服务地址
@@ -124,7 +124,7 @@ data:
       database: "game_analytics" # 数据库名称
       username: "default" # 用户名
       password: "123456" # 密码
-    
+
     # Redis 配置示例
     redis:
       # 单实例配置示例1
@@ -132,7 +132,7 @@ data:
         address: 172.19.0.6:6379
         db: 1
         pass: 654321
-    
+
     # API签名校验（灰度开关）
     apiSignature:
       enabled: true                  # 总开关

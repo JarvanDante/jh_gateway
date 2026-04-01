@@ -21,9 +21,9 @@ jwt:
 
 rateLimit:
   # 默认每分钟最多请求次数（优先按 user_id/admin_id，否则按 IP）
-  requestsPerMinute: 60
+  requestsPerMinute: 120
   # 全局每分钟请求上限（不区分接口，用于拦截整页F5狂刷）
-  globalRequestsPerMinute: 40
+  globalRequestsPerMinute: 80
   # 恶意刷流量防护：短时多次触发429后，临时封禁IP
   block:
     enabled: true
