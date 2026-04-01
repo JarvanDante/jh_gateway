@@ -27,10 +27,10 @@ rateLimit:
   # 恶意刷流量防护：短时多次触发429后，临时封禁IP
   block:
     enabled: true
-    threshold: 5          # 在 windowSeconds 时间窗内，触发429达到该次数即封禁
-    windowSeconds: 300    # 统计时间窗（秒）
+    threshold: 5 # 在 windowSeconds 时间窗内，触发429达到该次数即封禁
+    windowSeconds: 300 # 统计时间窗（秒）
     durationSeconds: 1800 # 封禁时长（秒）
-    whitelistIPs: []      # 白名单IP（如运维出口IP）
+    whitelistIPs: [] # 白名单IP（如运维出口IP）
   # 按接口精确路径或前缀覆盖默认阈值（精确匹配优先，其次最长前缀匹配）
   # requestsPerMinute: 0 表示该接口禁用限流
   routes:
@@ -116,7 +116,7 @@ clickhouse:
   port: 9000 # ClickHouse原生协议端口（9000）
   database: "game_analytics" # 数据库名称
   username: "default" # 用户名
-  password: "375445" # 密码
+  password: "123456" # 密码
 
 # Redis 配置示例
 redis:
@@ -124,15 +124,15 @@ redis:
   default:
     address: redis:6379
     db: 1
-    pass: 375445
+    pass: 654321
 
 # API签名校验（灰度开关）
 apiSignature:
-  enabled: true                  # 总开关
-  required: true                 # true=强制所有请求都带签名；false=不带签名头时放行（灰度）
-  allowedTimeSkewSeconds: 300     # 时间戳允许偏移秒数
-  nonceTTLSeconds: 300            # nonce防重放有效期
-  frontendSessionTTLSeconds: 600  # 前台动态签名会话有效期（秒）
+  enabled: true # 总开关
+  required: true # true=强制所有请求都带签名；false=不带签名头时放行（灰度）
+  allowedTimeSkewSeconds: 300 # 时间戳允许偏移秒数
+  nonceTTLSeconds: 300 # nonce防重放有效期
+  frontendSessionTTLSeconds: 600 # 前台动态签名会话有效期（秒）
   defaultAppId: "default"
   # 按后缀匹配跳过签名的路径
   skipPaths:
@@ -147,7 +147,7 @@ apiSignature:
     default: "ac70e8c26a2556dea1d6a4cb83d8164e2fd2"
   # 本地调试兜底（仅开发环境建议开启）
   devBypass:
-    enabled: true   #前线前务必，把它关掉：enabled: false
+    enabled: true #前线前务必，把它关掉：enabled: false
     hosts:
       - "h5.panalow.com"
       - "*.panalow.com"
