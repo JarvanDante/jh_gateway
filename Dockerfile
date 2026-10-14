@@ -1,15 +1,17 @@
 ############################
 # 1) Build stage
 ############################
-FROM golang:1.25.3-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.25.3-alpine AS builder
 
 WORKDIR /src
 
 RUN apk add --no-cache ca-certificates tzdata git
 
+ARG TARGETOS=linux
+ARG TARGETARCH
 ENV CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64 \
+    GOOS=${TARGETOS} \
+    GOARCH=${TARGETARCH} \
     GOPROXY=https://proxy.golang.org,direct
 
 COPY go.mod go.sum ./
