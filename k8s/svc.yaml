@@ -20,6 +20,24 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: consul
+  namespace: jh-test
+spec:
+  type: ExternalName
+  externalName: host.docker.internal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+  namespace: jh-test
+spec:
+  type: ExternalName
+  externalName: host.docker.internal
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: jh-gateway
   namespace: jh-prod
   labels:
@@ -35,3 +53,21 @@ spec:
     - name: grpc
       port: 8003
       targetPort: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul
+  namespace: jh-prod
+spec:
+  type: ExternalName
+  externalName: host.docker.internal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+  namespace: jh-prod
+spec:
+  type: ExternalName
+  externalName: host.docker.internal
