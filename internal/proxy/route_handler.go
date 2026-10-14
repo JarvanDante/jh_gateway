@@ -331,6 +331,8 @@ func initGameRoutes() {
 	gameRoutes.Register("/game-categories", "GET", game.CallGetGameCategories)
 	// 获取游戏列表（game_list表）- 前台
 	gameRoutes.Register("/frontend-game-list", "GET", game.CallGetFrontendGameList)
+	// 兼容旧 H5：/api/frontend/game/list
+	gameRoutes.Register("/game/list", "GET", game.CallGetFrontendGameList)
 	// 收藏/取消收藏游戏
 	gameRoutes.Register("/favorite-toggle", "POST", game.CallToggleFavoriteGame)
 	// 我的收藏游戏列表

@@ -49,9 +49,12 @@ func CircuitBreaker(r *ghttp.Request) {
 	// 放行
 	r.Middleware.Next()
 
-	// 简单示例：如果下游返回 5xx，则增加失败计数
+	// 判定本次是否为下游故障：
+	// 网关对业务错误统一返回 HTTP 200（错误码在 body），因此不能只看 5xx，
+	// 需同时读取 dispatcher 在基础设施故障（服务发现/连接失败）时设置的 downstreamFailed 标记。
 	status := r.Response.Status
-	if status >= 500 {
+	downstreamFailed := r.GetCtxVar("downstreamFailed").Bool()
+	if status >= 500 || downstreamFailed {
 		breakerMutex.Lock()
 		state.FailCount++
 		if state.FailCount >= 5 {

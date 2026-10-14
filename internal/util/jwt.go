@@ -3,9 +3,11 @@ package util
 import (
 	"context"
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/gogf/gf/v2/frame/g"
 	jwt "github.com/golang-jwt/jwt/v5" // ⭐ 必须有这一行
-	"strings"
 )
 
 type Claims struct {
@@ -16,6 +18,15 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+// getSecret 优先从环境变量读取密钥（安全修复 A2：让密钥可移出代码仓库），
+// 环境变量未设置时回退到配置文件，保证兼容。
+func getSecret(ctx context.Context, envKey, cfgKey string) string {
+	if v := os.Getenv(envKey); v != "" {
+		return v
+	}
+	return g.Cfg().MustGet(ctx, cfgKey).String()
+}
+
 func ParseToken(ctx context.Context, authHeader string) (*Claims, error) {
 	parts := strings.SplitN(authHeader, " ", 2)
 	if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") {
@@ -23,12 +34,13 @@ func ParseToken(ctx context.Context, authHeader string) (*Claims, error) {
 	}
 
 	tokenStr := parts[1]
-	secret := g.Cfg().MustGet(ctx, "jwt.secret").String()
+	secret := getSecret(ctx, "JWT_SECRET", "jwt.secret")
 
 	// 先用MapClaims解析，以便获取jti
+	// 强制校验签名算法为 HS256，防止 alg 混淆 / alg=none 攻击
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		return []byte(secret), nil
-	})
+	}, jwt.WithValidMethods([]string{"HS256"}))
 	if err != nil {
 		return nil, err
 	}
@@ -77,11 +89,11 @@ func ParseManageToken(ctx context.Context, authHeader string) (*Claims, error) {
 	}
 
 	tokenStr := parts[1]
-	secret := g.Cfg().MustGet(ctx, "jwt.manageSecret").String()
+	secret := getSecret(ctx, "JWT_MANAGE_SECRET", "jwt.manageSecret")
 
 	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(secret), nil
-	})
+	}, jwt.WithValidMethods([]string{"HS256"}))
 	if err != nil {
 		return nil, err
 	}
@@ -89,6 +101,15 @@ func ParseManageToken(ctx context.Context, authHeader string) (*Claims, error) {
 	claims, ok := token.Claims.(*Claims)
 	if !ok || !token.Valid {
 		return nil, fmt.Errorf("invalid token")
+	}
+
+	// 检查 token 是否在黑名单中（jti），使后台登出的 token 可即时吊销（M2）
+	if claims.ID != "" {
+		blacklistKey := fmt.Sprintf("token_blacklist:%s", claims.ID)
+		isBlacklisted, err := g.Redis().Exists(ctx, blacklistKey)
+		if err == nil && isBlacklisted > 0 {
+			return nil, fmt.Errorf("token已失效，请重新登录或刷新token")
+		}
 	}
 
 	return claims, nil

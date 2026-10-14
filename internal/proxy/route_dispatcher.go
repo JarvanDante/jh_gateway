@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"sync"
+	"time"
 
 	"jh_gateway/internal/middleware"
 	"jh_gateway/internal/registry"
@@ -19,6 +21,34 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
+
+// grpcConnPool 按后端地址缓存 gRPC 连接，避免每请求新建/销毁连接（H1）。
+// gRPC ClientConn 并发安全且内部自动重连，可安全长期复用。
+var grpcConnPool sync.Map // map[string]*grpc.ClientConn
+
+// downstreamCallTimeout 下游 gRPC 调用整体超时（H2），防止下游 hang 住导致连接/协程堆积。
+const downstreamCallTimeout = 15 * time.Second
+
+// getGRPCConn 返回到指定地址的可复用 gRPC 连接。
+func getGRPCConn(addr string) (*grpc.ClientConn, error) {
+	if v, ok := grpcConnPool.Load(addr); ok {
+		return v.(*grpc.ClientConn), nil
+	}
+	conn, err := grpc.NewClient(
+		addr,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+	)
+	if err != nil {
+		return nil, err
+	}
+	// 若并发下已有其他 goroutine 建好连接，复用它并关闭本次多建的
+	if actual, loaded := grpcConnPool.LoadOrStore(addr, conn); loaded {
+		_ = conn.Close()
+		return actual.(*grpc.ClientConn), nil
+	}
+	return conn, nil
+}
 
 // ServiceRoute 服务路由配置
 type ServiceRoute struct {
@@ -373,29 +403,31 @@ func callServiceWithRouting(ctx context.Context, serviceName string, r *ghttp.Re
 
 	if err != nil {
 		tracing.SetSpanError(discoverySpan, err)
+		// 服务发现失败属基础设施故障，标记以驱动熔断器（H3）
+		r.SetCtxVar("downstreamFailed", true)
 		return fmt.Errorf("service [%s] not available: %v", serviceName, err)
 	}
 
 	tracing.SetSpanAttributes(discoverySpan, attribute.String("service.address", addr))
 	util.LogWithTrace(ctx, "info", "Selected service instance: %s -> %s", serviceName, addr)
 
-	// 连接到 gRPC 服务
+	// 连接到 gRPC 服务（复用连接池，避免每请求新建/销毁，H1）
 	ctx, connSpan := tracing.StartSpan(ctx, "grpc.connect", trace.WithAttributes(
 		attribute.String("grpc.target", addr),
 	))
-	conn, err := grpc.DialContext(
-		ctx,
-		addr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
-	)
+	conn, err := getGRPCConn(addr)
 	connSpan.End()
 
 	if err != nil {
 		tracing.SetSpanError(connSpan, err)
+		// 连接失败属基础设施故障，标记以驱动熔断器（H3）
+		r.SetCtxVar("downstreamFailed", true)
 		return fmt.Errorf("failed to connect to service [%s]: %v", serviceName, err)
 	}
-	defer conn.Close()
+
+	// 下游调用整体超时，避免下游 hang 住时协程与连接无限堆积（H2）
+	ctx, cancel := context.WithTimeout(ctx, downstreamCallTimeout)
+	defer cancel()
 
 	// 根据服务名称调用对应的处理方法
 	switch serviceName {

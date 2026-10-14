@@ -39,6 +39,12 @@ func addUserInfoToGRPCContext(ctx context.Context, r *ghttp.Request) context.Con
 		}
 	}
 
+	// 安全修复(A4)：透传管理员 token 里的权威站点ID，供下游后台接口做租户校验。
+	// 仅来自认证中间件（token），不接受请求头伪造。
+	if adminSiteVar := r.GetCtxVar("admin_site_id"); adminSiteVar != nil {
+		md.Set("admin_site_id", fmt.Sprint(adminSiteVar.Int()))
+	}
+
 	// 添加用户ID
 	if userIdVar := r.GetCtxVar("user_id"); userIdVar != nil {
 		if id := userIdVar.Int(); id > 0 {

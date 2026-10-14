@@ -79,6 +79,13 @@ func RateLimit(r *ghttp.Request) {
 	count, reset, err := hitRedisCounter(ctx, pathKey, 60)
 	if err != nil {
 		g.Log().Warningf(ctx, "rateLimit path counter failed: %v", err)
+		// 资金敏感接口：Redis 故障时 fail-closed（宁可拒绝也不放开限流），
+		// 普通接口 fail-open 以保证 Redis 抖动时可用性。
+		if isFailClosedPath(path, ctx) {
+			r.Response.Header().Set("X-RateLimit-Remaining", "0")
+			util.WriteTooManyRequests(r, "")
+			return
+		}
 		r.Middleware.Next()
 		return
 	}
@@ -206,6 +213,23 @@ func isWhitelistedIP(ip string, whitelist []string) bool {
 	}
 	for _, w := range whitelist {
 		if strings.TrimSpace(w) == ip {
+			return true
+		}
+	}
+	return false
+}
+
+// isFailClosedPath 判断该路径是否为资金敏感接口。
+// 命中时，一旦限流计数器（Redis）不可用，应拒绝请求而非放行，避免限流被 Redis 故障绕过。
+// 默认覆盖提现/充值/洗码返水等资金动作，可通过 rateLimit.failClosedKeywords 覆盖。
+func isFailClosedPath(path string, ctx context.Context) bool {
+	keywords := []string{"withdraw", "deposit", "wash-code-rebate", "transfer"}
+	var cfgKeywords []string
+	if err := g.Cfg().MustGet(ctx, "rateLimit.failClosedKeywords").Scan(&cfgKeywords); err == nil && len(cfgKeywords) > 0 {
+		keywords = cfgKeywords
+	}
+	for _, kw := range keywords {
+		if kw != "" && strings.Contains(path, kw) {
 			return true
 		}
 	}

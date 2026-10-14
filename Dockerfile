@@ -16,7 +16,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN go build -trimpath -ldflags="-s -w" -o /out/jh_gateway .
+RUN mkdir -p pkg && go build -trimpath -ldflags="-s -w" -o pkg/jh_gateway .
 
 ############################
 # 2) Runtime stage
@@ -30,7 +30,7 @@ RUN apk add --no-cache ca-certificates tzdata \
     && addgroup -S app && adduser -S -G app app \
     && mkdir -p /app/config /app/manifest/config
 
-COPY --from=builder /out/jh_gateway /app/jh_gateway
+COPY --from=builder /src/pkg/jh_gateway /app/jh_gateway
 
 # 默认配置（生产建议用 volume 覆盖 /app/config.yaml）
 COPY config.yaml /app/config.yaml
