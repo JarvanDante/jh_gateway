@@ -29,16 +29,11 @@ FROM alpine:3.20
 WORKDIR /app
 
 RUN apk add --no-cache ca-certificates tzdata \
-    && addgroup -S app && adduser -S -G app app \
-    && mkdir -p /app/config /app/manifest/config
+    && addgroup -S app && adduser -S -G app app
 
 COPY --from=builder /src/pkg/jh_gateway /app/jh_gateway
 
-# 默认配置（生产建议用 volume 覆盖 /app/config.yaml）
 COPY config.yaml /app/config.yaml
-# 兼容一些默认搜索路径
-COPY config.yaml /app/config/config.yaml
-COPY config.yaml /app/manifest/config/config.yaml
 
 EXPOSE 8100 8003
 
