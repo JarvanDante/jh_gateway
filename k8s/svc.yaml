@@ -32,8 +32,22 @@ metadata:
   name: jaeger
   namespace: jh-test
 spec:
-  type: ExternalName
-  externalName: host.docker.internal
+  ports:
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: jaeger
+  namespace: jh-test
+subsets:
+  - addresses:
+      - ip: 192.168.65.254
+    ports:
+      - name: otlp-grpc
+        port: 4317
 ---
 apiVersion: v1
 kind: Service
@@ -69,5 +83,19 @@ metadata:
   name: jaeger
   namespace: jh-prod
 spec:
-  type: ExternalName
-  externalName: host.docker.internal
+  ports:
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: jaeger
+  namespace: jh-prod
+subsets:
+  - addresses:
+      - ip: 192.168.65.254
+    ports:
+      - name: otlp-grpc
+        port: 4317
