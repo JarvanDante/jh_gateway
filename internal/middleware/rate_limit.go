@@ -38,8 +38,12 @@ func RateLimit(r *ghttp.Request) {
 
 	bCfg := getBlockConfig(ctx)
 
+	// 前台、子后台、总后台分开计数。本地入口看到的往往是同一个 IP，
+	// 安卓端触发封禁不能把后台请求一起挡住。
+	audience := rateAudience(path)
+
 	// 1) 先检查是否已被封禁
-	blocked, err := isIPBlocked(ctx, clientIP, bCfg)
+	blocked, err := isIPBlocked(ctx, audience, clientIP, bCfg)
 	if err != nil {
 		g.Log().Warningf(ctx, "rateLimit block check failed: %v", err)
 	} else if blocked {
@@ -54,14 +58,14 @@ func RateLimit(r *ghttp.Request) {
 	if globalCfg <= 0 {
 		globalCfg = cfg
 	}
-	globalKey := fmt.Sprintf("rate_limit:global:%s", getGlobalRateSubject(r))
+	globalKey := fmt.Sprintf("rate_limit:global:%s:%s", audience, getGlobalRateSubject(r))
 	globalCount, globalReset, err := hitRedisCounter(ctx, globalKey, 60)
 	if err != nil {
 		g.Log().Warningf(ctx, "rateLimit global counter failed: %v", err)
 	} else if globalCount > int64(globalCfg) {
 		r.Response.Header().Set("X-RateLimit-Remaining", "0")
 		r.Response.Header().Set("X-RateLimit-Reset", globalReset.Format(time.RFC3339))
-		recordStrike(ctx, clientIP, bCfg)
+		recordStrike(ctx, audience, clientIP, bCfg)
 		util.WriteTooManyRequests(r, "")
 		return
 	}
@@ -93,7 +97,7 @@ func RateLimit(r *ghttp.Request) {
 	if count > int64(cfg) {
 		r.Response.Header().Set("X-RateLimit-Remaining", "0")
 		r.Response.Header().Set("X-RateLimit-Reset", reset.Format(time.RFC3339))
-		recordStrike(ctx, clientIP, bCfg)
+		recordStrike(ctx, audience, clientIP, bCfg)
 		util.WriteTooManyRequests(r, "")
 		return
 	}
@@ -169,11 +173,22 @@ func getBlockConfig(ctx context.Context) blockConfig {
 	return cfg
 }
 
-func isIPBlocked(ctx context.Context, ip string, cfg blockConfig) (bool, error) {
+func rateAudience(path string) string {
+	switch {
+	case strings.HasPrefix(path, "/api/manage"):
+		return "manage"
+	case strings.HasPrefix(path, "/api/backend"):
+		return "backend"
+	default:
+		return "app"
+	}
+}
+
+func isIPBlocked(ctx context.Context, audience, ip string, cfg blockConfig) (bool, error) {
 	if !cfg.Enabled || ip == "" || isWhitelistedIP(ip, cfg.WhitelistIPs) {
 		return false, nil
 	}
-	key := fmt.Sprintf("rate_limit:block:%s", ip)
+	key := fmt.Sprintf("rate_limit:block:%s:%s", audience, ip)
 	val, err := g.Redis().Get(ctx, key)
 	if err != nil {
 		return false, err
@@ -184,12 +199,12 @@ func isIPBlocked(ctx context.Context, ip string, cfg blockConfig) (bool, error) 
 	return strings.ToUpper(strings.TrimSpace(val.String())) == "BLOCKED", nil
 }
 
-func recordStrike(ctx context.Context, ip string, cfg blockConfig) {
+func recordStrike(ctx context.Context, audience, ip string, cfg blockConfig) {
 	if !cfg.Enabled || ip == "" || isWhitelistedIP(ip, cfg.WhitelistIPs) {
 		return
 	}
 
-	blockKey := fmt.Sprintf("rate_limit:block:%s", ip)
+	blockKey := fmt.Sprintf("rate_limit:block:%s:%s", audience, ip)
 
 	// 单key方案：先用同一个 key 计数，达到阈值后再改写为 BLOCKED
 	countVar, err := g.Redis().Do(ctx, "INCR", blockKey)
