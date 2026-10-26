@@ -28,13 +28,13 @@ data:
 
     rateLimit:
       # 默认每分钟最多请求次数（优先按 user_id/admin_id，否则按 IP）
-      requestsPerMinute: 120
+      requestsPerMinute: 240
       # 全局每分钟请求上限（不区分接口，用于拦截整页F5狂刷）
-      globalRequestsPerMinute: 40
+      globalRequestsPerMinute: 160
       # 恶意刷流量防护：短时多次触发429后，临时封禁IP
       block:
         enabled: true
-        threshold: 5          # 在 windowSeconds 时间窗内，触发429达到该次数即封禁
+        threshold: 10         # 在 windowSeconds 时间窗内，触发429达到该次数即封禁
         windowSeconds: 300    # 统计时间窗（秒）
         durationSeconds: 1800 # 封禁时长（秒）
         whitelistIPs: []      # 白名单IP（如运维出口IP）
@@ -43,67 +43,67 @@ data:
       routes:
         # ===== 前台认证相关（收紧） =====
         - exactPath: "/api/frontend/app/login"
-          requestsPerMinute: 12
-        - exactPath: "/api/frontend/app/register"
-          requestsPerMinute: 12
-        - exactPath: "/api/frontend/app/captcha"
-          requestsPerMinute: 12
-        - exactPath: "/api/frontend/app/refresh-token"
-          requestsPerMinute: 18
-        - exactPath: "/api/frontend/app/sign-session"
           requestsPerMinute: 24
+        - exactPath: "/api/frontend/app/register"
+          requestsPerMinute: 24
+        - exactPath: "/api/frontend/app/captcha"
+          requestsPerMinute: 24
+        - exactPath: "/api/frontend/app/refresh-token"
+          requestsPerMinute: 36
+        - exactPath: "/api/frontend/app/sign-session"
+          requestsPerMinute: 48
 
         # ===== 前台高频读接口（适中） =====
         - exactPath: "/api/frontend/app/user-info"
-          requestsPerMinute: 54
+          requestsPerMinute: 108
         - exactPath: "/api/frontend/app/grade-list"
-          requestsPerMinute: 54
+          requestsPerMinute: 108
         - exactPath: "/api/frontend/balance/refresh-balance"
-          requestsPerMinute: 36
+          requestsPerMinute: 72
         - exactPath: "/api/frontend/balance/vip-upgrade-progress"
-          requestsPerMinute: 36
+          requestsPerMinute: 72
         - exactPath: "/api/frontend/app/app-unread-count"
-          requestsPerMinute: 36
+          requestsPerMinute: 72
 
         # ===== 前台公共接口（可放宽） =====
         - exactPath: "/api/frontend/app/setting-site"
-          requestsPerMinute: 108
+          requestsPerMinute: 216
         - exactPath: "/api/frontend/app/ad-list"
-          requestsPerMinute: 108
+          requestsPerMinute: 216
         - exactPath: "/api/frontend/app/notice-list"
-          requestsPerMinute: 108
+          requestsPerMinute: 216
         - exactPath: "/api/frontend/game/game-categories"
-          requestsPerMinute: 72
+          requestsPerMinute: 144
         - exactPath: "/api/frontend/game/frontend-game-list"
-          requestsPerMinute: 72
+          requestsPerMinute: 144
 
         # ===== 资金敏感接口（严格） =====
         - exactPath: "/api/frontend/balance/deposit-order"
-          requestsPerMinute: 18
+          requestsPerMinute: 36
         - exactPath: "/api/frontend/balance/withdraw"
-          requestsPerMinute: 12
-        - exactPath: "/api/frontend/balance/wash-code-rebate"
-          requestsPerMinute: 12
-        - exactPath: "/api/frontend/game/redirect-to-game"
           requestsPerMinute: 24
+        - exactPath: "/api/frontend/balance/wash-code-rebate"
+          requestsPerMinute: 24
+        - exactPath: "/api/frontend/game/redirect-to-game"
+          requestsPerMinute: 48
 
         # ===== 兼容旧路由（与前台规则保持一致） =====
         - exactPath: "/api/balance/refresh-balance"
-          requestsPerMinute: 36
+          requestsPerMinute: 72
         - exactPath: "/api/balance/vip-upgrade-progress"
-          requestsPerMinute: 36
+          requestsPerMinute: 72
         - exactPath: "/api/balance/deposit-order"
-          requestsPerMinute: 18
+          requestsPerMinute: 36
         - exactPath: "/api/balance/withdraw"
-          requestsPerMinute: 12
+          requestsPerMinute: 24
         - exactPath: "/api/game/frontend-game-list"
-          requestsPerMinute: 72
+          requestsPerMinute: 144
         - exactPath: "/api/game/game-categories"
-          requestsPerMinute: 72
+          requestsPerMinute: 144
 
         # 后台登录接口
         - exactPath: "/api/backend/app/login"
-          requestsPerMinute: 18
+          requestsPerMinute: 36
 
     # 日志配置 - JSON格式
     logger:
