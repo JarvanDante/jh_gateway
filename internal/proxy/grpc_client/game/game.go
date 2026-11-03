@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 
 	v7 "jh_gateway/api/backend/game/v1"
 	v20 "jh_gateway/api/frontend/game/v1"
@@ -465,13 +466,15 @@ func CallGetBackendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp
  * @param is_new 可选 int 是否新游戏（-1=不修改 0=否 1=是）
  * @param status 可选 int 状态（-1=不修改 0=禁用 1=启用）
  * @param sort 可选 int 排序（-1=不修改，数值越大越靠前）
+ * @param cover_url 可选 string 自有封面地址（upload-image code=game_cover 返回的 image_url；非空则写入 cover_url，不改三方 img/img1）
+ * @param clear_cover 可选 int 1=清空自有封面，恢复三方图片
  * @return {"code":0,"msg":"success","data":{"success":true,"message":"更新成功"}}
  * @return_param code int 状态码
  * @return_param msg string 返回信息
  * @return_param data object 返回数据
  * @return_param data.success bool 是否成功
  * @return_param data.message string 返回消息
- * @remark 注意：此接口只更新后台管理字段（alias_name、hot、recommend、is_new、status、sort），不会更新三方同步字段（name、img、vendor等）
+ * @remark 只更新后台管理字段（alias_name、hot、recommend、is_new、status、sort、cover_url），不会更新三方同步字段（name、img、img1、vendor等）
  * @number 8
  */
 func CallUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
@@ -496,17 +499,21 @@ func CallUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r
 	isNew := gconv.Int32(reqData["is_new"])
 	status := gconv.Int32(reqData["status"])
 	sort := gconv.Int32(reqData["sort"])
+	coverUrl := strings.TrimSpace(gconv.String(reqData["cover_url"]))
+	clearCover := gconv.Int32(reqData["clear_cover"])
 
 	client := v7.NewGameClient(conn)
 	req := &v7.UpdateGameListItemReq{
-		SiteId:    siteId,
-		Id:        id,
-		AliasName: aliasName,
-		Hot:       hot,
-		Recommend: recommend,
-		IsNew:     isNew,
-		Status:    status,
-		Sort:      sort,
+		SiteId:     siteId,
+		Id:         id,
+		AliasName:  aliasName,
+		Hot:        hot,
+		Recommend:  recommend,
+		IsNew:      isNew,
+		Status:     status,
+		Sort:       sort,
+		CoverUrl:   coverUrl,
+		ClearCover: clearCover,
 	}
 
 	util.LogWithTrace(ctx, "info", "更新游戏列表项请求: id=%d, site_id=%d, hot=%d, recommend=%d",

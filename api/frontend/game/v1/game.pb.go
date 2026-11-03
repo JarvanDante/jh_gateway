@@ -475,6 +475,7 @@ type GameItem struct {
 	Sort          int32                  `protobuf:"varint,14,opt,name=sort,proto3" json:"sort,omitempty"`
 	GameId        int32                  `protobuf:"varint,15,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
 	IsFavorite    int32                  `protobuf:"varint,16,opt,name=is_favorite,json=isFavorite,proto3" json:"is_favorite,omitempty"`
+	CoverUrl      string                 `protobuf:"bytes,17,opt,name=cover_url,json=coverUrl,proto3" json:"cover_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -619,6 +620,13 @@ func (x *GameItem) GetIsFavorite() int32 {
 		return x.IsFavorite
 	}
 	return 0
+}
+
+func (x *GameItem) GetCoverUrl() string {
+	if x != nil {
+		return x.CoverUrl
+	}
+	return ""
 }
 
 type ToggleFavoriteGameReq struct {
@@ -1447,7 +1455,7 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x04size\x18\x06 \x01(\x05R\x04size\"P\n" +
 	"\x0eGetGameListRes\x12(\n" +
 	"\x04list\x18\x01 \x03(\v2\x14.front_game.GameItemR\x04list\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x05R\x05total\"\xf8\x02\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\x95\x03\n" +
 	"\bGameItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
 	"\asite_id\x18\x02 \x01(\x05R\x06siteId\x12\x1a\n" +
@@ -1466,7 +1474,8 @@ const file_frontend_game_v1_game_proto_rawDesc = "" +
 	"\x04sort\x18\x0e \x01(\x05R\x04sort\x12\x17\n" +
 	"\agame_id\x18\x0f \x01(\x05R\x06gameId\x12\x1f\n" +
 	"\vis_favorite\x18\x10 \x01(\x05R\n" +
-	"isFavorite\"\xcf\x01\n" +
+	"isFavorite\x12\x1b\n" +
+	"\tcover_url\x18\x11 \x01(\tR\bcoverUrl\"\xcf\x01\n" +
 	"\x15ToggleFavoriteGameReq\x12\x1a\n" +
 	"\bplatform\x18\x01 \x01(\tR\bplatform\x12\x1b\n" +
 	"\tgame_code\x18\x02 \x01(\tR\bgameCode\x12\x17\n" +
