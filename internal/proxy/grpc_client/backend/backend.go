@@ -2036,31 +2036,10 @@ func CallUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 	// 获取上传标识
 	uploadCode := r.Get("code", "default").String()
 
-	// 验证文件类型 - 通过文件扩展名和Content-Type判断
-	fileContentType := file.Header.Get("Content-Type")
-	if fileContentType == "" {
-		// 如果没有 Content-Type，尝试从文件扩展名推断
-		ext := strings.ToLower(filepath.Ext(file.Filename))
-		switch ext {
-		case ".jpg", ".jpeg":
-			fileContentType = "image/jpeg"
-		case ".png":
-			fileContentType = "image/png"
-		case ".gif":
-			fileContentType = "image/gif"
-		case ".svg":
-			fileContentType = "image/svg+xml"
-		case ".webp":
-			fileContentType = "image/webp"
-		default:
-			util.WriteBadRequest(r, "不支持的文件格式")
-			return nil
-		}
-	}
-
-	if !strings.HasPrefix(fileContentType, "image/") {
-		util.WriteBadRequest(r, "请上传图片文件")
-		return nil
+	// 客户端声明的类型仅作参考（用于 svg 兼容），真实类型以内容嗅探为准
+	declaredContentType := file.Header.Get("Content-Type")
+	if declaredContentType == "" && strings.EqualFold(filepath.Ext(file.Filename), ".svg") {
+		declaredContentType = "image/svg+xml"
 	}
 
 	// 读取文件内容
@@ -2090,14 +2069,23 @@ func CallUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 		return nil
 	}
 
+	// 按前 512 字节嗅探真实类型，扩展名以检测结果为准
+	fileContentType, detectedExt, ok := sniffImageType(fileData, declaredContentType)
+	if !ok {
+		util.LogWithTrace(ctx, "warn", "上传文件内容不是有效图片 - 声明类型: %s, 检测类型: %s", declaredContentType, fileContentType)
+		util.WriteBadRequest(r, "不支持的文件格式，仅支持 jpg/png/gif/webp 图片")
+		return nil
+	}
+	fileName := replaceExt(file.Filename, detectedExt)
+
 	util.LogWithTrace(ctx, "info", "上传文件信息 - 文件名: %s, 大小: %d, 类型: %s, 上传标识: %s",
-		file.Filename, len(fileData), fileContentType, uploadCode)
+		fileName, len(fileData), fileContentType, uploadCode)
 
 	// 创建 gRPC 客户端
 	client := v4.NewUploadClient(conn)
 	req := &v4.UploadImageReq{
 		FileData:    fileData,
-		FileName:    file.Filename,
+		FileName:    fileName,
 		ContentType: fileContentType,
 		FileSize:    int64(len(fileData)),
 		UploadCode:  uploadCode,

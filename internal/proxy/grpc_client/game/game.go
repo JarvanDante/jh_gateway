@@ -451,6 +451,18 @@ func CallGetBackendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	return writeProtobufResponse(ctx, r, res)
 }
 
+// optionalInt32 读取可选整型字段：键不存在、值为 nil 或空字符串时返回 -1（表示不修改）
+func optionalInt32(data map[string]interface{}, key string) int32 {
+	v, ok := data[key]
+	if !ok || v == nil {
+		return -1
+	}
+	if str, isStr := v.(string); isStr && strings.TrimSpace(str) == "" {
+		return -1
+	}
+	return gconv.Int32(v)
+}
+
 /**
  * showdoc
  * @catalog 后台/游戏/游戏资源管理
@@ -494,11 +506,12 @@ func CallUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r
 
 	siteId := gconv.Int32(reqData["site_id"])
 	aliasName := gconv.String(reqData["alias_name"])
-	hot := gconv.Int32(reqData["hot"])
-	recommend := gconv.Int32(reqData["recommend"])
-	isNew := gconv.Int32(reqData["is_new"])
-	status := gconv.Int32(reqData["status"])
-	sort := gconv.Int32(reqData["sort"])
+	// 未传的字段按 -1（不修改）处理，显式传 0 仍写入 0
+	hot := optionalInt32(reqData, "hot")
+	recommend := optionalInt32(reqData, "recommend")
+	isNew := optionalInt32(reqData, "is_new")
+	status := optionalInt32(reqData, "status")
+	sort := optionalInt32(reqData, "sort")
 	coverUrl := strings.TrimSpace(gconv.String(reqData["cover_url"]))
 	clearCover := gconv.Int32(reqData["clear_cover"])
 
