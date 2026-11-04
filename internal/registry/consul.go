@@ -36,7 +36,7 @@ func InitConsul() {
 
 // GetServiceAddr 获取服务地址，支持负载均衡
 func GetServiceAddr(serviceName string) (string, error) {
-	services, _, err := client.Health().Service(serviceName, "", true, nil)
+	services, _, err := client.Health().Service(EnvServiceName(serviceName), "", true, nil)
 	if err != nil || len(services) == 0 {
 		return "", fmt.Errorf("no healthy instance for service: %s", serviceName)
 	}
@@ -79,7 +79,7 @@ func getServiceAddrWithRoundRobin(serviceName string, services []*api.ServiceEnt
 
 // GetServiceAddrWithRandom 随机负载均衡选择服务实例（备选方案）
 func GetServiceAddrWithRandom(serviceName string) (string, error) {
-	services, _, err := client.Health().Service(serviceName, "", true, nil)
+	services, _, err := client.Health().Service(EnvServiceName(serviceName), "", true, nil)
 	if err != nil || len(services) == 0 {
 		return "", fmt.Errorf("no healthy instance for service: %s", serviceName)
 	}
@@ -97,7 +97,7 @@ func GetServiceAddrWithRandom(serviceName string) (string, error) {
 
 // GetAllServiceInstances 获取服务的所有健康实例信息（用于调试和监控）
 func GetAllServiceInstances(serviceName string) ([]string, error) {
-	services, _, err := client.Health().Service(serviceName, "", true, nil)
+	services, _, err := client.Health().Service(EnvServiceName(serviceName), "", true, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get service instances: %v", err)
 	}
@@ -114,7 +114,7 @@ func GetAllServiceInstances(serviceName string) ([]string, error) {
 
 // GetServiceInstanceCount 获取服务的健康实例数量
 func GetServiceInstanceCount(serviceName string) (int, error) {
-	services, _, err := client.Health().Service(serviceName, "", true, nil)
+	services, _, err := client.Health().Service(EnvServiceName(serviceName), "", true, nil)
 	if err != nil {
 		return 0, fmt.Errorf("failed to get service instances: %v", err)
 	}
