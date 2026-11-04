@@ -1,7 +1,6 @@
 package backend
 
 import (
-	"bytes"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -15,8 +14,8 @@ var sniffedImageExt = map[string]string{
 }
 
 // sniffImageType 根据前 512 字节检测真实图片类型，返回 mime 与对应扩展名。
-// 仅接受 jpeg/png/gif/webp；客户端声明为 image/svg+xml 且内容确为 SVG 时保持原有 svg 支持
-// （是否允许 svg 由 app_service 按 upload code 决定）。
+// 仅接受 jpeg/png/gif/webp；客户端声明为 image/svg+xml 且根元素确为 SVG 时保持 svg 支持
+// （是否允许由 app_service 按 upload code 决定；网关在转发前会 sanitize）。
 func sniffImageType(data []byte, declaredType string) (mimeType, ext string, ok bool) {
 	head := data
 	if len(head) > 512 {
@@ -26,15 +25,8 @@ func sniffImageType(data []byte, declaredType string) (mimeType, ext string, ok 
 	if e, found := sniffedImageExt[detected]; found {
 		return detected, e, true
 	}
-	if strings.EqualFold(strings.TrimSpace(declaredType), "image/svg+xml") &&
-		(strings.HasPrefix(detected, "text/xml") || strings.HasPrefix(detected, "text/plain")) {
-		h := data
-		if len(h) > 1024 {
-			h = h[:1024]
-		}
-		if bytes.Contains(bytes.ToLower(h), []byte("<svg")) {
-			return "image/svg+xml", ".svg", true
-		}
+	if strings.EqualFold(strings.TrimSpace(declaredType), "image/svg+xml") && looksLikeSVG(data) {
+		return "image/svg+xml", ".svg", true
 	}
 	return detected, "", false
 }

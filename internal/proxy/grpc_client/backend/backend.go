@@ -2069,12 +2069,25 @@ func CallUploadImage(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reques
 		return nil
 	}
 
-	// 按前 512 字节嗅探真实类型，扩展名以检测结果为准
+	// 按前 512 字节嗅探真实类型，扩展名以检测结果为准；SVG 仅接受根元素为 <svg 的文档
 	fileContentType, detectedExt, ok := sniffImageType(fileData, declaredContentType)
 	if !ok {
 		util.LogWithTrace(ctx, "warn", "上传文件内容不是有效图片 - 声明类型: %s, 检测类型: %s", declaredContentType, fileContentType)
-		util.WriteBadRequest(r, "不支持的文件格式，仅支持 jpg/png/gif/webp 图片")
+		util.WriteBadRequest(r, "不支持的文件格式，仅支持 jpg/png/gif/webp 图片（mobile_logo 另支持安全 SVG）")
 		return nil
+	}
+	if fileContentType == "image/svg+xml" {
+		if uploadCode != "mobile_logo" {
+			util.WriteBadRequest(r, "该上传类型不支持 SVG")
+			return nil
+		}
+		cleaned, err := sanitizeSVG(fileData)
+		if err != nil {
+			util.LogWithTrace(ctx, "warn", "SVG 清洗失败: %v", err)
+			util.WriteBadRequest(r, "SVG 内容不安全或无效")
+			return nil
+		}
+		fileData = cleaned
 	}
 	fileName := replaceExt(file.Filename, detectedExt)
 

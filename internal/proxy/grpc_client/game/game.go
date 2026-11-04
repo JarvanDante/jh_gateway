@@ -451,16 +451,55 @@ func CallGetBackendGameList(ctx context.Context, conn *grpc.ClientConn, r *ghttp
 	return writeProtobufResponse(ctx, r, res)
 }
 
-// optionalInt32 读取可选整型字段：键不存在、值为 nil 或空字符串时返回 -1（表示不修改）
-func optionalInt32(data map[string]interface{}, key string) int32 {
+// optionalInt32 读取可选整型字段：键不存在、值为 nil 或空字符串时返回 -1（表示不修改）。
+// 非数字值（如 "abc"）返回错误，由调用方回 HTTP 400；显式数字 0 仍写入 0。
+func optionalInt32(data map[string]interface{}, key string) (int32, error) {
 	v, ok := data[key]
 	if !ok || v == nil {
-		return -1
+		return -1, nil
 	}
-	if str, isStr := v.(string); isStr && strings.TrimSpace(str) == "" {
-		return -1
+	switch x := v.(type) {
+	case string:
+		s := strings.TrimSpace(x)
+		if s == "" {
+			return -1, nil
+		}
+		n, err := strconv.ParseInt(s, 10, 32)
+		if err != nil {
+			return 0, fmt.Errorf("%s 必须是整数", key)
+		}
+		return int32(n), nil
+	case float64:
+		if x != float64(int64(x)) {
+			return 0, fmt.Errorf("%s 必须是整数", key)
+		}
+		return int32(x), nil
+	case float32:
+		if float64(x) != float64(int32(x)) {
+			return 0, fmt.Errorf("%s 必须是整数", key)
+		}
+		return int32(x), nil
+	case int:
+		return int32(x), nil
+	case int32:
+		return x, nil
+	case int64:
+		if x < -2147483648 || x > 2147483647 {
+			return 0, fmt.Errorf("%s 超出范围", key)
+		}
+		return int32(x), nil
+	case json.Number:
+		n, err := x.Int64()
+		if err != nil {
+			return 0, fmt.Errorf("%s 必须是整数", key)
+		}
+		if n < -2147483648 || n > 2147483647 {
+			return 0, fmt.Errorf("%s 超出范围", key)
+		}
+		return int32(n), nil
+	default:
+		return 0, fmt.Errorf("%s 必须是整数", key)
 	}
-	return gconv.Int32(v)
 }
 
 /**
@@ -506,12 +545,32 @@ func CallUpdateBackendGameListItem(ctx context.Context, conn *grpc.ClientConn, r
 
 	siteId := gconv.Int32(reqData["site_id"])
 	aliasName := gconv.String(reqData["alias_name"])
-	// 未传的字段按 -1（不修改）处理，显式传 0 仍写入 0
-	hot := optionalInt32(reqData, "hot")
-	recommend := optionalInt32(reqData, "recommend")
-	isNew := optionalInt32(reqData, "is_new")
-	status := optionalInt32(reqData, "status")
-	sort := optionalInt32(reqData, "sort")
+	// 未传的字段按 -1（不修改）处理，显式传 0 仍写入 0；非法非数字在调用 game_service 前返回 400
+	hot, err := optionalInt32(reqData, "hot")
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
+	}
+	recommend, err := optionalInt32(reqData, "recommend")
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
+	}
+	isNew, err := optionalInt32(reqData, "is_new")
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
+	}
+	status, err := optionalInt32(reqData, "status")
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
+	}
+	sort, err := optionalInt32(reqData, "sort")
+	if err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
+	}
 	coverUrl := strings.TrimSpace(gconv.String(reqData["cover_url"]))
 	clearCover := gconv.Int32(reqData["clear_cover"])
 

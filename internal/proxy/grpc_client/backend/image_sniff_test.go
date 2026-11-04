@@ -17,6 +17,7 @@ func TestSniffImageType(t *testing.T) {
 		{"text as png", "image/png", []byte("plain text"), "", "", false},
 		{"svg", "image/svg+xml", []byte(`<svg xmlns="http://www.w3.org/2000/svg"/>`), "image/svg+xml", ".svg", true},
 		{"svg as png", "image/png", []byte(`<svg xmlns="http://www.w3.org/2000/svg"/>`), "", "", false},
+		{"text contains svg", "image/svg+xml", []byte(`not an image but has <svg inside`), "", "", false},
 	}
 	for _, c := range cases {
 		m, e, ok := sniffImageType(c.data, c.declared)
