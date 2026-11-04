@@ -840,7 +840,7 @@ func CallGetAppAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
  * @description 获取站点设置接口
  * @method get
  * @url /api/frontend/app/setting-site
- * @return {"code":0,"msg":"success","data":{"url_tg":"","web_url":"","site_name":"极好","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100","max_withdraw":"50000","mobile_logo":"","close_reason":"","currency":{"code":"MMK","symbol":"K","symbol_position":1,"decimals":0,"thousand_sep":",","decimal_sep":".","rounding_mode":"HALF_UP","locked":true},"timezone":"UTC","locale":"en-US","default_lang":"en","supported_langs":["en","zh"],"phone_prefix":"+95"}}
+ * @return {"code":0,"msg":"success","data":{"url_tg":"","web_url":"","site_name":"极好","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100.00","max_withdraw":"50000.00","mobile_logo":"","close_reason":"","currency":{"code":"MMK","symbol":"K","symbol_position":1,"decimals":2,"thousand_sep":",","decimal_sep":".","rounding_mode":"HALF_UP","locked":true},"timezone":"UTC","locale":"en-US","default_lang":"en","supported_langs":["en","zh"],"phone_prefix":"+95"}}
  * @return_param code int 状态码
  * @return_param msg string 提示说明
  * @return_param data object 主要数据
