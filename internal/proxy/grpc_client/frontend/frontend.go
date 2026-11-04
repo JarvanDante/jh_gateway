@@ -840,7 +840,7 @@ func CallGetAppAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
  * @description 获取站点设置接口
  * @method get
  * @url /api/frontend/app/setting-site
- * @return {"code":0,"msg":"success","data":{"url_tg":"","site_name":"测试站点","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100.00","max_withdraw":"50000.00","mobile_logo":"","close_reason":"您好，系统正在维护中，估计需要1个小时左右，给您造成不便，敬请谅解！"}}
+ * @return {"code":0,"msg":"success","data":{"url_tg":"","web_url":"","site_name":"极好","mobile_url":"","switch_register":1,"switch_grade":1,"service_url":"","close":0,"min_withdraw":"100","max_withdraw":"50000","mobile_logo":"","close_reason":"","currency":{"code":"MMK","symbol":"K","symbol_position":1,"decimals":0,"thousand_sep":",","decimal_sep":".","rounding_mode":"HALF_UP","locked":true},"timezone":"UTC","locale":"en-US","default_lang":"en","supported_langs":["en","zh"],"phone_prefix":"+95"}}
  * @return_param code int 状态码
  * @return_param msg string 提示说明
  * @return_param data object 主要数据
@@ -855,8 +855,46 @@ func CallGetAppAdList(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Reque
  * @return_param data.max_withdraw string 单笔最大提现金额
  * @return_param data.mobile_logo string 手机端logo
  * @return_param data.close_reason string 站点关闭理由
+ * @return_param data.currency object 站点币种与数字格式
+ * @return_param data.currency.code string ISO-4217 币种代码，如 MMK/USD
+ * @return_param data.currency.symbol string 币种符号，如 K/$
+ * @return_param data.currency.symbol_position int 符号位置 1=金额前 2=金额后
+ * @return_param data.currency.decimals int 小数位（min_withdraw/max_withdraw 已按此格式化）
+ * @return_param data.currency.thousand_sep string 千分位分隔符
+ * @return_param data.currency.decimal_sep string 小数点符号
+ * @return_param data.currency.rounding_mode string 舍入规则 HALF_UP/HALF_EVEN/DOWN/UP
+ * @return_param data.currency.locked bool 币种是否已锁定（站点已有用户）
+ * @return_param data.timezone string 站点时区（IANA，如 UTC、Asia/Dubai）
+ * @return_param data.locale string 地区格式，如 en-US
+ * @return_param data.default_lang string 默认语言 en/zh
+ * @return_param data.supported_langs array 支持的语言
+ * @return_param data.phone_prefix string 手机号国际区号，如 +95
  * @number 111
  */
+// siteCurrencyMap renders the site currency object with stable field names.
+func siteCurrencyMap(c *v15.SiteCurrency) map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return map[string]interface{}{
+		"code":            c.Code,
+		"symbol":          c.Symbol,
+		"symbol_position": c.SymbolPosition,
+		"decimals":        c.Decimals,
+		"thousand_sep":    c.ThousandSep,
+		"decimal_sep":     c.DecimalSep,
+		"rounding_mode":   c.RoundingMode,
+		"locked":          c.Locked,
+	}
+}
+
+func nonNilStrings(v []string) []string {
+	if v == nil {
+		return []string{}
+	}
+	return v
+}
+
 func CallGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Request) error {
 	util.LogWithTrace(ctx, "info", "calling gRPC GetSiteSetting")
 
@@ -883,6 +921,12 @@ func CallGetSiteSetting(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		"max_withdraw":    res.MaxWithdraw,
 		"mobile_logo":     res.MobileLogo,
 		"close_reason":    res.CloseReason,
+		"currency":        siteCurrencyMap(res.Currency),
+		"timezone":        res.Timezone,
+		"locale":          res.Locale,
+		"default_lang":    res.DefaultLang,
+		"supported_langs": nonNilStrings(res.SupportedLangs),
+		"phone_prefix":    res.PhonePrefix,
 	})
 	return nil
 }

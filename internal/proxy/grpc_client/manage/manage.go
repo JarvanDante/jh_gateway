@@ -597,6 +597,27 @@ func CallUpdateCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		DbLinkBalance: gconv.String(reqData["db_link_balance"]),
 		DbLinkGame:    gconv.String(reqData["db_link_game"]),
 		IsSync:        gconv.Int32(reqData["is_sync"]),
+		// 币种/数字格式/语言配置（未传则不修改）
+		CurrencyCode:   gconv.String(reqData["currency_code"]),
+		CurrencySymbol: gconv.String(reqData["currency_symbol"]),
+		ThousandSep:    gconv.String(reqData["thousand_sep"]),
+		DecimalSep:     gconv.String(reqData["decimal_sep"]),
+		RoundingMode:   gconv.String(reqData["rounding_mode"]),
+		Locale:         gconv.String(reqData["locale"]),
+		DefaultLang:    gconv.String(reqData["default_lang"]),
+		SupportedLangs: gconv.String(reqData["supported_langs"]),
+	}
+	if v, ok := reqData["symbol_position"]; ok && v != nil {
+		p := gconv.Int32(v)
+		req.SymbolPosition = &p
+	}
+	if v, ok := reqData["decimals"]; ok && v != nil {
+		d := gconv.Int32(v)
+		req.Decimals = &d
+	}
+	if v, ok := reqData["phone_prefix"]; ok && v != nil {
+		p := gconv.String(v)
+		req.PhonePrefix = &p
 	}
 
 	res, err := client.UpdateCustomer(ctx, req)

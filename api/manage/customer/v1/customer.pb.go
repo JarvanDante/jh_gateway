@@ -196,22 +196,34 @@ func (x *GetCustomerDetailRes) GetData() *CustomerItem {
 
 // 商户项
 type CustomerItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
-	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Timezone      string                 `protobuf:"bytes,4,opt,name=timezone,proto3" json:"timezone"`
-	Currency      string                 `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency"`
-	Status        int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                                     // 状态。1=正常；0=禁用
-	KvConfig      string                 `protobuf:"bytes,7,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`                        // KV配置详情
-	DbLinkSite    string                 `protobuf:"bytes,8,opt,name=db_link_site,json=dbLinkSite,proto3" json:"db_link_site" dc:"site数据库连接"`             // site数据库连接
-	DbLinkBalance string                 `protobuf:"bytes,9,opt,name=db_link_balance,json=dbLinkBalance,proto3" json:"db_link_balance" dc:"balance数据库连接"` // balance数据库连接
-	DbLinkGame    string                 `protobuf:"bytes,10,opt,name=db_link_game,json=dbLinkGame,proto3" json:"db_link_game" dc:"game数据库连接"`            // game数据库连接
-	IsSync        int32                  `protobuf:"varint,11,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"`             // 是否发布同步。1=发布同步；0=未发布同步
-	CreatedAt     string                 `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                      // 创建时间
-	UpdatedAt     string                 `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`                      // 更新时间
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	Code           string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code"`
+	Name           string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
+	Timezone       string                 `protobuf:"bytes,4,opt,name=timezone,proto3" json:"timezone"`
+	Currency       string                 `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency"`
+	Status         int32                  `protobuf:"varint,6,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                                              // 状态。1=正常；0=禁用
+	KvConfig       string                 `protobuf:"bytes,7,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`                                 // KV配置详情
+	DbLinkSite     string                 `protobuf:"bytes,8,opt,name=db_link_site,json=dbLinkSite,proto3" json:"db_link_site" dc:"site数据库连接"`                      // site数据库连接
+	DbLinkBalance  string                 `protobuf:"bytes,9,opt,name=db_link_balance,json=dbLinkBalance,proto3" json:"db_link_balance" dc:"balance数据库连接"`          // balance数据库连接
+	DbLinkGame     string                 `protobuf:"bytes,10,opt,name=db_link_game,json=dbLinkGame,proto3" json:"db_link_game" dc:"game数据库连接"`                     // game数据库连接
+	IsSync         int32                  `protobuf:"varint,11,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"`                      // 是否发布同步。1=发布同步；0=未发布同步
+	CreatedAt      string                 `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"created_at" dc:"创建时间"`                               // 创建时间
+	UpdatedAt      string                 `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" dc:"更新时间"`                               // 更新时间
+	CurrencyCode   string                 `protobuf:"bytes,14,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code" dc:"币种代码 ISO-4217，例如 MMK/USD"`  // 币种代码 ISO-4217，例如 MMK/USD
+	CurrencySymbol string                 `protobuf:"bytes,15,opt,name=currency_symbol,json=currencySymbol,proto3" json:"currency_symbol" dc:"币种符号，例如 K/$"`         // 币种符号，例如 K/$
+	SymbolPosition int32                  `protobuf:"varint,16,opt,name=symbol_position,json=symbolPosition,proto3" json:"symbol_position" dc:"符号位置。1=金额前；2=金额后"`   // 符号位置。1=金额前；2=金额后
+	Decimals       int32                  `protobuf:"varint,17,opt,name=decimals,proto3" json:"decimals" dc:"金额小数位 0-4"`                                            // 金额小数位 0-4
+	ThousandSep    string                 `protobuf:"bytes,18,opt,name=thousand_sep,json=thousandSep,proto3" json:"thousand_sep" dc:"千分位分隔符"`                       // 千分位分隔符
+	DecimalSep     string                 `protobuf:"bytes,19,opt,name=decimal_sep,json=decimalSep,proto3" json:"decimal_sep" dc:"小数点符号"`                           // 小数点符号
+	RoundingMode   string                 `protobuf:"bytes,20,opt,name=rounding_mode,json=roundingMode,proto3" json:"rounding_mode" dc:"舍入规则，默认 HALF_UP"`           // 舍入规则，默认 HALF_UP
+	Locale         string                 `protobuf:"bytes,21,opt,name=locale,proto3" json:"locale" dc:"数字格式 locale（BCP-47），例如 en-US"`                              // 数字格式 locale（BCP-47），例如 en-US
+	DefaultLang    string                 `protobuf:"bytes,22,opt,name=default_lang,json=defaultLang,proto3" json:"default_lang" dc:"默认语言 en/zh"`                   // 默认语言 en/zh
+	SupportedLangs string                 `protobuf:"bytes,23,opt,name=supported_langs,json=supportedLangs,proto3" json:"supported_langs" dc:"支持的语言，逗号分隔，仅 en/zh"`  // 支持的语言，逗号分隔，仅 en/zh
+	PhonePrefix    string                 `protobuf:"bytes,24,opt,name=phone_prefix,json=phonePrefix,proto3" json:"phone_prefix" dc:"手机号前缀，例如 +95"`                 // 手机号前缀，例如 +95
+	CurrencyLocked int32                  `protobuf:"varint,25,opt,name=currency_locked,json=currencyLocked,proto3" json:"currency_locked" dc:"币种锁定。1=已锁定（站点已有用户）"` // 币种锁定。1=已锁定（站点已有用户）
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CustomerItem) Reset() {
@@ -335,21 +347,116 @@ func (x *CustomerItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *CustomerItem) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetCurrencySymbol() string {
+	if x != nil {
+		return x.CurrencySymbol
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetSymbolPosition() int32 {
+	if x != nil {
+		return x.SymbolPosition
+	}
+	return 0
+}
+
+func (x *CustomerItem) GetDecimals() int32 {
+	if x != nil {
+		return x.Decimals
+	}
+	return 0
+}
+
+func (x *CustomerItem) GetThousandSep() string {
+	if x != nil {
+		return x.ThousandSep
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetDecimalSep() string {
+	if x != nil {
+		return x.DecimalSep
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetRoundingMode() string {
+	if x != nil {
+		return x.RoundingMode
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetLocale() string {
+	if x != nil {
+		return x.Locale
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetDefaultLang() string {
+	if x != nil {
+		return x.DefaultLang
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetSupportedLangs() string {
+	if x != nil {
+		return x.SupportedLangs
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetPhonePrefix() string {
+	if x != nil {
+		return x.PhonePrefix
+	}
+	return ""
+}
+
+func (x *CustomerItem) GetCurrencyLocked() int32 {
+	if x != nil {
+		return x.CurrencyLocked
+	}
+	return 0
+}
+
 // 更新商户请求
 type UpdateCustomerReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                                            // v: required|min:1
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                                  // 商户名称
-	Timezone      string                 `protobuf:"bytes,3,opt,name=timezone,proto3" json:"timezone" dc:"时区"`                                            // 时区
-	Currency      string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency" dc:"币种"`                                            // 币种
-	Status        int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                                     // 状态。1=正常；0=禁用
-	KvConfig      string                 `protobuf:"bytes,6,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`                        // KV配置详情
-	DbLinkSite    string                 `protobuf:"bytes,7,opt,name=db_link_site,json=dbLinkSite,proto3" json:"db_link_site" dc:"site数据库连接"`             // site数据库连接
-	DbLinkBalance string                 `protobuf:"bytes,8,opt,name=db_link_balance,json=dbLinkBalance,proto3" json:"db_link_balance" dc:"balance数据库连接"` // balance数据库连接
-	DbLinkGame    string                 `protobuf:"bytes,9,opt,name=db_link_game,json=dbLinkGame,proto3" json:"db_link_game" dc:"game数据库连接"`             // game数据库连接
-	IsSync        int32                  `protobuf:"varint,10,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"`             // 是否发布同步。1=发布同步；0=未发布同步
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id" v:"required|min:1"`                                                          // v: required|min:1
+	Name           string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name" dc:"商户名称"`                                                                // 商户名称
+	Timezone       string                 `protobuf:"bytes,3,opt,name=timezone,proto3" json:"timezone" dc:"时区"`                                                          // 时区
+	Currency       string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency" dc:"币种"`                                                          // 币种
+	Status         int32                  `protobuf:"varint,5,opt,name=status,proto3" json:"status" dc:"状态。1=正常；0=禁用"`                                                   // 状态。1=正常；0=禁用
+	KvConfig       string                 `protobuf:"bytes,6,opt,name=kv_config,json=kvConfig,proto3" json:"kv_config" dc:"KV配置详情"`                                      // KV配置详情
+	DbLinkSite     string                 `protobuf:"bytes,7,opt,name=db_link_site,json=dbLinkSite,proto3" json:"db_link_site" dc:"site数据库连接"`                           // site数据库连接
+	DbLinkBalance  string                 `protobuf:"bytes,8,opt,name=db_link_balance,json=dbLinkBalance,proto3" json:"db_link_balance" dc:"balance数据库连接"`               // balance数据库连接
+	DbLinkGame     string                 `protobuf:"bytes,9,opt,name=db_link_game,json=dbLinkGame,proto3" json:"db_link_game" dc:"game数据库连接"`                           // game数据库连接
+	IsSync         int32                  `protobuf:"varint,10,opt,name=is_sync,json=isSync,proto3" json:"is_sync" dc:"是否发布同步。1=发布同步；0=未发布同步"`                           // 是否发布同步。1=发布同步；0=未发布同步
+	CurrencyCode   string                 `protobuf:"bytes,11,opt,name=currency_code,json=currencyCode,proto3" json:"currency_code" dc:"币种代码 ISO-4217；站点已有用户后不可修改"`      // 币种代码 ISO-4217；站点已有用户后不可修改
+	CurrencySymbol string                 `protobuf:"bytes,12,opt,name=currency_symbol,json=currencySymbol,proto3" json:"currency_symbol" dc:"币种符号"`                     // 币种符号
+	SymbolPosition *int32                 `protobuf:"varint,13,opt,name=symbol_position,json=symbolPosition,proto3,oneof" json:"symbol_position" dc:"符号位置。1=金额前；2=金额后"`  // 符号位置。1=金额前；2=金额后
+	Decimals       *int32                 `protobuf:"varint,14,opt,name=decimals,proto3,oneof" json:"decimals" dc:"金额小数位 0-4；站点已有用户后不可修改"`                               // 金额小数位 0-4；站点已有用户后不可修改
+	ThousandSep    string                 `protobuf:"bytes,15,opt,name=thousand_sep,json=thousandSep,proto3" json:"thousand_sep" dc:"千分位分隔符"`                            // 千分位分隔符
+	DecimalSep     string                 `protobuf:"bytes,16,opt,name=decimal_sep,json=decimalSep,proto3" json:"decimal_sep" dc:"小数点符号"`                                // 小数点符号
+	RoundingMode   string                 `protobuf:"bytes,17,opt,name=rounding_mode,json=roundingMode,proto3" json:"rounding_mode" dc:"舍入规则 HALF_UP/HALF_EVEN/DOWN/UP"` // 舍入规则 HALF_UP/HALF_EVEN/DOWN/UP
+	Locale         string                 `protobuf:"bytes,18,opt,name=locale,proto3" json:"locale" dc:"数字格式 locale（BCP-47）"`                                            // 数字格式 locale（BCP-47）
+	DefaultLang    string                 `protobuf:"bytes,19,opt,name=default_lang,json=defaultLang,proto3" json:"default_lang" dc:"默认语言 en/zh"`                        // 默认语言 en/zh
+	SupportedLangs string                 `protobuf:"bytes,20,opt,name=supported_langs,json=supportedLangs,proto3" json:"supported_langs" dc:"支持的语言，逗号分隔，仅 en/zh"`       // 支持的语言，逗号分隔，仅 en/zh
+	PhonePrefix    *string                `protobuf:"bytes,21,opt,name=phone_prefix,json=phonePrefix,proto3,oneof" json:"phone_prefix" dc:"手机号前缀，例如 +95（传空串表示清空）"`       // 手机号前缀，例如 +95（传空串表示清空）
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UpdateCustomerReq) Reset() {
@@ -450,6 +557,83 @@ func (x *UpdateCustomerReq) GetIsSync() int32 {
 		return x.IsSync
 	}
 	return 0
+}
+
+func (x *UpdateCustomerReq) GetCurrencyCode() string {
+	if x != nil {
+		return x.CurrencyCode
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetCurrencySymbol() string {
+	if x != nil {
+		return x.CurrencySymbol
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetSymbolPosition() int32 {
+	if x != nil && x.SymbolPosition != nil {
+		return *x.SymbolPosition
+	}
+	return 0
+}
+
+func (x *UpdateCustomerReq) GetDecimals() int32 {
+	if x != nil && x.Decimals != nil {
+		return *x.Decimals
+	}
+	return 0
+}
+
+func (x *UpdateCustomerReq) GetThousandSep() string {
+	if x != nil {
+		return x.ThousandSep
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetDecimalSep() string {
+	if x != nil {
+		return x.DecimalSep
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetRoundingMode() string {
+	if x != nil {
+		return x.RoundingMode
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetLocale() string {
+	if x != nil {
+		return x.Locale
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetDefaultLang() string {
+	if x != nil {
+		return x.DefaultLang
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetSupportedLangs() string {
+	if x != nil {
+		return x.SupportedLangs
+	}
+	return ""
+}
+
+func (x *UpdateCustomerReq) GetPhonePrefix() string {
+	if x != nil && x.PhonePrefix != nil {
+		return *x.PhonePrefix
+	}
+	return ""
 }
 
 // 更新商户响应
@@ -1091,7 +1275,7 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\x14GetCustomerDetailReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"B\n" +
 	"\x14GetCustomerDetailRes\x12*\n" +
-	"\x04data\x18\x01 \x01(\v2\x16.customer.CustomerItemR\x04data\"\xf6\x02\n" +
+	"\x04data\x18\x01 \x01(\v2\x16.customer.CustomerItemR\x04data\"\xa2\x06\n" +
 	"\fCustomerItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
@@ -1110,7 +1294,20 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\r \x01(\tR\tupdatedAt\"\xa9\x02\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\x12#\n" +
+	"\rcurrency_code\x18\x0e \x01(\tR\fcurrencyCode\x12'\n" +
+	"\x0fcurrency_symbol\x18\x0f \x01(\tR\x0ecurrencySymbol\x12'\n" +
+	"\x0fsymbol_position\x18\x10 \x01(\x05R\x0esymbolPosition\x12\x1a\n" +
+	"\bdecimals\x18\x11 \x01(\x05R\bdecimals\x12!\n" +
+	"\fthousand_sep\x18\x12 \x01(\tR\vthousandSep\x12\x1f\n" +
+	"\vdecimal_sep\x18\x13 \x01(\tR\n" +
+	"decimalSep\x12#\n" +
+	"\rrounding_mode\x18\x14 \x01(\tR\froundingMode\x12\x16\n" +
+	"\x06locale\x18\x15 \x01(\tR\x06locale\x12!\n" +
+	"\fdefault_lang\x18\x16 \x01(\tR\vdefaultLang\x12'\n" +
+	"\x0fsupported_langs\x18\x17 \x01(\tR\x0esupportedLangs\x12!\n" +
+	"\fphone_prefix\x18\x18 \x01(\tR\vphonePrefix\x12'\n" +
+	"\x0fcurrency_locked\x18\x19 \x01(\x05R\x0ecurrencyLocked\"\xed\x05\n" +
 	"\x11UpdateCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -1124,7 +1321,22 @@ const file_manage_customer_v1_customer_proto_rawDesc = "" +
 	"\fdb_link_game\x18\t \x01(\tR\n" +
 	"dbLinkGame\x12\x17\n" +
 	"\ais_sync\x18\n" +
-	" \x01(\x05R\x06isSync\"\x13\n" +
+	" \x01(\x05R\x06isSync\x12#\n" +
+	"\rcurrency_code\x18\v \x01(\tR\fcurrencyCode\x12'\n" +
+	"\x0fcurrency_symbol\x18\f \x01(\tR\x0ecurrencySymbol\x12,\n" +
+	"\x0fsymbol_position\x18\r \x01(\x05H\x00R\x0esymbolPosition\x88\x01\x01\x12\x1f\n" +
+	"\bdecimals\x18\x0e \x01(\x05H\x01R\bdecimals\x88\x01\x01\x12!\n" +
+	"\fthousand_sep\x18\x0f \x01(\tR\vthousandSep\x12\x1f\n" +
+	"\vdecimal_sep\x18\x10 \x01(\tR\n" +
+	"decimalSep\x12#\n" +
+	"\rrounding_mode\x18\x11 \x01(\tR\froundingMode\x12\x16\n" +
+	"\x06locale\x18\x12 \x01(\tR\x06locale\x12!\n" +
+	"\fdefault_lang\x18\x13 \x01(\tR\vdefaultLang\x12'\n" +
+	"\x0fsupported_langs\x18\x14 \x01(\tR\x0esupportedLangs\x12&\n" +
+	"\fphone_prefix\x18\x15 \x01(\tH\x02R\vphonePrefix\x88\x01\x01B\x12\n" +
+	"\x10_symbol_positionB\v\n" +
+	"\t_decimalsB\x0f\n" +
+	"\r_phone_prefix\"\x13\n" +
 	"\x11UpdateCustomerRes\"#\n" +
 	"\x11DeleteCustomerReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\x13\n" +
@@ -1238,6 +1450,7 @@ func file_manage_customer_v1_customer_proto_init() {
 	if File_manage_customer_v1_customer_proto != nil {
 		return
 	}
+	file_manage_customer_v1_customer_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
