@@ -607,13 +607,14 @@ func CallUpdateCustomer(ctx context.Context, conn *grpc.ClientConn, r *ghttp.Req
 		DefaultLang:    gconv.String(reqData["default_lang"]),
 		SupportedLangs: gconv.String(reqData["supported_langs"]),
 	}
-	if v, ok := reqData["symbol_position"]; ok && v != nil {
-		p := gconv.Int32(v)
-		req.SymbolPosition = &p
+	// 未传/null/空串不修改，显式 0 照常传递；非数字在调用 manage_service 前返回 400
+	if req.SymbolPosition, err = optionalInt32Ptr(reqData, "symbol_position"); err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
 	}
-	if v, ok := reqData["decimals"]; ok && v != nil {
-		d := gconv.Int32(v)
-		req.Decimals = &d
+	if req.Decimals, err = optionalInt32Ptr(reqData, "decimals"); err != nil {
+		util.WriteBadRequest(r, err.Error())
+		return err
 	}
 	if v, ok := reqData["phone_prefix"]; ok && v != nil {
 		p := gconv.String(v)
